@@ -1,0 +1,463 @@
+@font-face {
+  font-family: "Akkurat";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url(https://centrale.jeremiedupuis.com/fonts/akkurat/Akkurat-Regular.woff2) format("woff2"),
+       url(https://centrale.jeremiedupuis.com/fonts/akkurat/Akkurat-Regular.woff) format("woff")
+}
+
+@font-face {
+  font-family: "Akkurat";
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  src: url(https://centrale.jeremiedupuis.com/fonts/akkurat/Akkurat-Italic.woff2) format("woff2"),
+       url(https://centrale.jeremiedupuis.com/fonts/akkurat/Akkurat-Italic.woff) format("woff")
+}
+
+@font-face {
+  font-family: "Akkurat";
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url(https://centrale.jeremiedupuis.com/fonts/akkurat/Akkurat-Bold.woff2) format("woff2"),
+       url(https://centrale.jeremiedupuis.com/fonts/akkurat/Akkurat-Bold.woff) format("woff")
+}
+
+@font-face {
+  font-family: "Akkurat Mono";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url(https://centrale.jeremiedupuis.com/fonts/akkurat-mono/AkkuratMono-Regular.woff2) format("woff2"),
+       url(https://centrale.jeremiedupuis.com/fonts/akkurat-mono/AkkuratMono-Regular.woff) format("woff")
+}
+
+@font-face {
+  font-family: "Akkurat Mono";
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url(https://centrale.jeremiedupuis.com/fonts/akkurat-mono/AkkuratMono-Bold.woff2) format("woff2"),
+       url(https://centrale.jeremiedupuis.com/fonts/akkurat-mono/AkkuratMono-Bold.woff) format("woff")
+}
+
+:root {
+  --height-header: 176px;
+  --width-pagepadding: 192px;
+  --ratio-thumbnail: 8 / 5
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-top: calc(var(--height-header) + 32px);
+  background: inherit
+}
+
+main {
+  width: 100%;
+  padding: 0 var(--width-pagepadding);
+  flex-grow: 1
+}
+
+section+section {
+  margin-top: 128px
+}
+
+::selection {
+  color: var(--color-light1);
+  background-color: var(--color-accent)
+}
+
+:focus-visible:not([tabindex="-1"]) {
+  box-shadow: 0 0 0 6px var(--color-background), 0 0 0 10px var(--color-accent), 0 0 0 12px var(--color-background);
+  border-radius: 1px;
+  background: var(--color-background);
+  transition: .2s ease box-shadow;
+  z-index: 5;
+}
+
+@media(max-width: 1600px) {
+  :root {
+    --height-header: 128px;
+    --width-pagepadding: 128px
+  }
+}
+
+@media(max-width: 1080px) {
+  :root {
+    --height-header: 72px;
+    --width-pagepadding: 32px
+  }
+
+  body {
+    padding-top: calc(var(--height-header) + 16px)
+  }
+
+  section+section {
+    margin-top: 80px
+  }
+}
+
+@media(max-width: 368px) {
+  :root {
+    --width-pagepadding: 24px
+  }
+}
+
+:root {
+  --color-dark1: #111;
+  --color-dark3: #1C1C1C;
+  --color-dark5: #272727;
+  --color-grey: #777;
+  --color-light5: #D4D4D4;
+  --color-light3: #E3E3E3;
+  --color-light1: #EEE;
+  --color-purple: #83F;
+  --color-blue: #25F;
+  --color-cyan: #1BC;
+  --color-green: #1A1;
+  --color-yellow: #DC0;
+  --color-orange: #E82;
+  --color-red: #C22;
+  --color-pink: #E4A;
+  --color-brown: #663D0A;
+
+  --color-background: var(--color-light1);
+  --color-foreground: var(--color-light3);
+  --color-interactive: var(--color-light5);
+  --color-inverse: var(--color-dark5);
+  --color-text: var(--color-dark1);
+  --color-subdued: var(--color-grey);
+  --color-accent: var(--color-purple);
+
+  color: var(--color-text);
+  background: var(--color-background)
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: var(--color-dark1);
+    --color-foreground: var(--color-dark3);
+    --color-interactive: var(--color-dark5);
+    --color-inverse: var(--color-light5);
+    --color-text: var(--color-light1);
+  }
+}
+
+:root {
+  --font-family: "Akkurat", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-size-display-big: 4rem;
+  --font-size-display: 1.75rem;
+  --font-lead-display-big: 1;
+  --font-lead-display: 1.2;
+  --font-tracking-display: -0.01rem;
+  --font-size-body-big: 1.25rem;
+  --font-size-body: 16px;
+  --font-size-body-small: 0.875rem;
+  --font-size-body-xsmall: 0.75rem;
+  --font-lead-body-big: 1.333;
+  --font-lead-body: 1.5;
+  --font-lead-body-small: 1.5;
+  --font-lead-body-xsmall: 1.5;
+  font-family: var(--font-family);
+  font-size: var(--font-size-body);
+  line-height: var(--font-lead-body);
+  font-feature-settings: "ss04" on
+}
+
+h1, h2, h3, h4, em {
+  font-weight: bold
+}
+
+h1, h2 {
+  letter-spacing: var(--font-tracking-display)
+}
+
+@media(max-width: 600px) {
+  :root {
+    --font-size-body: 15px;
+    --font-size-display-big: 2.75rem;
+    --font-size-display: 1.625rem;
+    --font-size-body-big: 1.25rem
+  }
+}
+
+@media(max-width: 368px) {
+  :root {
+    --font-size-body: 14px;
+    --font-size-body-big: 1.125rem
+  }
+
+  p {
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto
+  }
+}
+
+a {
+  position: relative;
+  text-decoration-line: underline;
+    -webkit-text-decoration-line: underline;
+    -moz-text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+    -webkit-text-decoration-thickness: 1px;
+    -moz-text-decoration-thickness: 1px;
+  text-decoration-color: var(--color-grey);
+    -webkit-text-decoration-color: var(--color-grey);
+    -moz-text-decoration-color: var(--color-grey);
+  text-underline-position: from-font;
+  transition-timing-function: ease;
+  transition-duration: .2s;
+  transition-property: color, text-decoration, -webkit-text-decoration, -moz-text-decoration;
+  cursor: pointer;
+}
+
+a:hover {
+  color: var(--color-text);
+  text-decoration-color: var(--color-text);
+    -webkit-text-decoration-color: var(--color-text);
+    -moz-text-decoration-color: var(--color-text)
+}
+
+header {
+  --color-text: white;
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 var(--width-pagepadding);
+  height: var(--height-header);
+  z-index: 50;
+  color: var(--color-text);
+  font-weight: bold;
+  mix-blend-mode: difference;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  pointer-events: none
+}
+
+header :is(a, select) {
+  pointer-events: auto;
+  text-decoration-color: transparent;
+  -webkit-text-decoration-color: transparent;
+  -moz-text-decoration-color: transparent
+}
+
+header a.selected:not(:hover) {
+  text-decoration-color: var(--color-grey);
+  -webkit-text-decoration-color: var(--color-grey);
+  -moz-text-decoration-color: var(--color-grey)
+}
+
+header ul {
+  display: flex;
+  gap: 3em
+}
+
+@media(prefers-color-scheme: light) {
+  header :focus:not(:active):not(:hover):not([tabindex="-1"]) {
+    box-shadow: 0 0 0 6px #fff, 0 0 0 10px var(--color-accent);
+    background: #fff;
+    color: #000;
+    filter: invert(1)
+  }
+}
+
+#logo {
+  font-size: var(--font-size-body-big);
+  line-height: var(--font-lead-body-big);
+  position: relative
+}
+
+#logo::before {
+  position: absolute;
+  content: "";
+  width: 65px;
+  height: 1px;
+  left: 0;
+  top: 50%;
+  transform: translate(-80%) rotateZ(112.5deg);
+  background-color: currentColor;
+  pointer-events: none
+}
+
+#symbol {
+  position: fixed;
+  width: 44px;
+  height: 44px;
+  top: calc(var(--height-header)/2 - 22px);
+  left: calc(var(--width-pagepadding) - 84px);
+  z-index: 50;
+  background: url(https://jeremiedupuis.com/resources/graphics/logo.svg);
+  background-repeat: no-repeat
+}
+
+@media(max-width: 1080px) {
+  #symbol {
+    width: 32px;
+    height: 32px;
+    top: calc(var(--height-header)/2 - 16px);
+    left: var(--width-pagepadding)
+  }
+
+  header {
+    justify-content: flex-end
+  }
+
+  header #logo {
+    display: none
+  }
+
+  header ul {
+    gap: 2em
+  }
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  width: calc(100% - 2*var(--width-pagepadding));
+  padding: 16px 0 32px;
+  margin: 128px auto 0;
+  border-top: 1px solid var(--color-grey)
+}
+
+footer p {
+  font-size: var(--font-size-body-small);
+  line-height: var(--font-lead-body-small);
+  color: var(--color-grey)
+}
+
+@media(max-width: 1080px) {
+  footer {
+    flex-wrap: wrap;
+    margin-top: 64px
+  }
+}
+
+.icon-purple::before {
+  color: var(--color-accent)
+}
+
+:is(.icon-arrow-left, .icon-carriagereturn, .icon-x)::before,
+:is(.icon-arrow-upright, .project-info aside a, .icon-arrow-right, .icon-arrow-down, .icon-loop)::after {
+  display: inline-block;
+  font-weight: normal;
+  white-space: pre
+}
+
+.icon-arrow-left::before {
+  content: "← "
+}
+
+.icon-carriagereturn::before {
+  content: "↳ "
+}
+
+.icon-x::before {
+  content: "✕ "
+}
+
+:is(.icon-arrow-upright, .project-info aside a)::after {
+  content: " ↗"
+}
+
+.icon-arrow-right::after {
+  content: " →"
+}
+
+.icon-arrow-down::after {
+  content: " ↓"
+}
+
+.icon-loop::after {
+  content: " "
+}
+
+:root {
+  --media-border-radius: 8px
+}
+
+@media(max-width: 600px) {
+  :root {
+    --media-border-radius: 4px
+  }
+
+  picture, img, video {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none
+  }
+}
+
+picture, img, video {
+  width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  border-radius: var(--media-border-radius);
+  overflow: clip
+}
+
+footer>nav {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  min-height: 128px;
+  margin: 32px 0 64px
+}
+
+footer>nav a {
+  font-size: var(--font-size-body-big);
+  line-height: var(--font-lead-body-big);
+  font-weight: bold;
+  text-decoration-color: transparent;
+  -webkit-text-decoration-color: transparent;
+  -moz-text-decoration-color: transparent;
+  padding-left: 8px
+}
+
+footer>nav a:only-child {
+  grid-column-start: 2
+}
+
+footer>nav a:first-child:not(:only-child) {
+  text-align: right;
+  padding: 0 8px 0 0
+}
+
+footer>nav::before {
+  content: "";
+  position: absolute;
+  top: 51%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  transform: rotateZ(112.5deg);
+  width: 128px;
+  height: 1px;
+  background-color: var(--color-grey)
+}
+
+@media(max-width: 600px) {
+  footer>nav {
+    gap: 32px;
+    margin: 16px 0 32px
+  }
+}

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="8" height="12" viewBox="0 0 8 12">
+  <style>
+    path {
+      transition: .5s cubic-bezier(.75,0,0,1.75);
+      transition-property: stroke-dashoffset, transform;
+      stroke-dasharray: 9px;
+    }
+    [selected] path {
+      transform: translateY(1px);
+      stroke-dashoffset: -2px;
+    }
+    [selected] svg {
+      animation: .25s .25s bounce;
+    }
+    @keyframes bounce {
+      50% { transform: translateY(.75px); }
+      75% { transform: translateY(-.2px); }
+      90% { transform: translateY(.05px); }
+    }
+  </style>
+  <rect width="8" height="6" rx="1.5" transform="translate(0 5)" fill="currentColor" />
+  <path d="M6,6v-3a2,2,0,0,0-4,0v3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" />
+</svg>

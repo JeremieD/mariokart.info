@@ -1,0 +1,2 @@
+#!/bin/bash
+pm2 start --name "MK8DX Combo Builder" server.js

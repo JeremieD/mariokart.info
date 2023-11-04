@@ -1,0 +1,231 @@
+<!doctype html>
+<html dir="ltr" lang="en-CA">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Mario Kart 8 Deluxe Combo Builder</title>
+  <meta name="description" content="Find, optimize, and compare Mario Kart 8 Deluxe builds according to your personal stats preferences. This is the best MK8DX Combo Builder out there!">
+  <meta name="keywords" content="mario, kart, 8, deluxe, combo, build, character, vehicle, best, stats, meta">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="https://centrale.jeremiedupuis.com/graphics/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://centrale.jeremiedupuis.com/graphics/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://centrale.jeremiedupuis.com/graphics/favicon/favicon-16x16.png">
+  <link rel="manifest" href="https://centrale.jeremiedupuis.com/graphics/favicon/site.webmanifest">
+  <link rel="mask-icon" href="https://centrale.jeremiedupuis.com/graphics/favicon/safari-pinned-tab.svg" color="#8833ff">
+  <link rel="shortcut icon" href="https://centrale.jeremiedupuis.com/graphics/favicon/favicon.ico">
+  <meta name="msapplication-TileColor" content="#603cba">
+  <meta name="msapplication-config" content="https://centrale.jeremiedupuis.com/graphics/favicon/browserconfig.xml">
+  <meta name="theme-color" content="#eee">
+
+  <!-- Styling -->
+  <link rel="stylesheet" href="/resources/stylesheets/power.css">
+  <link rel="stylesheet" href="/resources/stylesheets/jd.css">
+  <link rel="stylesheet" href="/resources/stylesheets/mk8dx.css">
+
+  <!-- Scripts -->
+  <script src="/resources/scripts/utilities.js"></script>
+  <script src="/resources/scripts/icon.js"></script>
+  <script src="/resources/scripts/toggle.js"></script>
+  <script src="/resources/scripts/data.js"></script>
+  <script src="/resources/scripts/strings.js"></script>
+  <script src="/resources/scripts/stats.js"></script>
+  <script src="/resources/scripts/radio.js"></script>
+  <script src="/resources/scripts/interface.js" async></script>
+
+  <script src="https://analytique.jeremiedupuis.com/collect?o=mk8dx.jeremiedupuis.com" async></script>
+</head>
+
+<body>
+  <a href="/" id="symbol" aria-labelledby="logo" tabindex="-1"></a>
+
+  <header>
+    <a href="/" id="logo"><h1>Mario Kart 8 Deluxe Combo Builder<sup>β</sup></h1></a>
+    <nav>
+      <!-- <jd-icon icon="language"></jd-icon>
+      <select id="locl">
+        <option value="en-US" selected>English (NOA)</option>
+        <option value="en-UK">English (NOE)</option>
+        <option value="fr-FR">Français (NOE)</option>
+        <option value="fr-CA">Français (NOA)</option>
+      </select> -->
+    </nav>
+  </header>
+
+  <main>
+    <aside>
+      <div id="combo-tabs" class="button-group radio">
+        <button value="a" class="selected" accesskey="a">A</button>
+        <button value="b" accesskey="b">B</button>
+      </div>
+    </aside>
+
+    <section id="builder">
+      <div id="combo-info">
+        <div id="combo-display">
+          <div id="combo-top">
+            <div id="combo-info-secondary">
+              <div id="combo-tier" title="The tier indicates how many combos have equal or better stats. S tier means there are no combos which have a better stat without a worse stat. Tiers other than S indicates that there are combos which give you more stats without compromising other stats."></div>
+              <div id="combo-details"></div>
+            </div>
+            <div id="combo-options">
+              <button id="random-button">Random</button>
+              <button id="optimize-button" disabled title="Working on it...">Optimize...</button>
+            </div>
+          </div>
+
+          <div id="current-combo">
+            <div id="combo-driver">
+              <img id="current-driver-img" src="" width="128" height="128"/>
+              <jd-toggle id="driver-lock"><jd-icon icon="lock"></jd-icon><label id="current-driver-label"></label></jd-toggle>
+            </div>
+            <div id="combo-body">
+              <img id="current-body-img" src="" width="200" height="128"/>
+              <jd-toggle id="body-lock"><jd-icon icon="lock"></jd-icon><label id="current-body-label"></label></jd-toggle>
+            </div>
+            <div id="combo-tire">
+              <img id="current-tire-img" src="" width="200" height="128"/>
+              <jd-toggle id="tire-lock"><jd-icon icon="lock"></jd-icon><label id="current-tire-label"></label></jd-toggle>
+            </div>
+            <div id="combo-glider">
+              <img id="current-glider-img" src="" width="200" height="128"/>
+              <jd-toggle id="glider-lock"><jd-icon icon="lock"></jd-icon><label id="current-glider-label"></label></jd-toggle>
+            </div>
+          </div>
+        </div>
+
+        <div id="combo-stats">
+          <div>
+            <label id="mintb-label" title="Mini-Turbo">MINTB</label>
+            <div class="meter" id="mintb-meter"></div>
+          </div>
+          <div>
+            <label id="spd-label" title="Speed">SPEED</label>
+            <div class="multimeter">
+              <div class="meter green" id="spdGr-meter"></div>
+              <div class="meter cyan" id="spdAr-meter"></div>
+              <div class="meter blue" id="spdWt-meter"></div>
+              <div class="meter" id="spdAg-meter"></div>
+            </div>
+          </div>
+          <div>
+            <label id="accel-label" title="Acceleration">ACCEL</label>
+            <div class="meter" id="accel-meter"></div>
+          </div>
+          <div>
+            <label id="weigt-label" title="Weight">WEIGT</label>
+            <div class="meter" id="weigt-meter"></div>
+          </div>
+          <div>
+            <label id="hnd-label" title="Handling">HNDLG</label>
+            <div class="multimeter">
+              <div class="meter green" id="hndGr-meter"></div>
+              <div class="meter cyan" id="hndAr-meter"></div>
+              <div class="meter blue" id="hndWt-meter"></div>
+              <div class="meter" id="hndAg-meter"></div>
+            </div>
+          </div>
+          <div>
+            <label id="trctn-label" title="Traction">TRCTN</label>
+            <div class="meter" id="trctn-meter"></div>
+          </div>
+          <div>
+            <label id="invul-label" title="Invincibility">INVCB</label>
+            <div class="meter" id="invul-meter"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="combo-parts">
+        <div>
+          <h3>Drivers</h3>
+          <div id="drivers" class="parts-grid"></div>
+        </div>
+
+        <div>
+          <h3>Vehicles</h3>
+          <div id="bodies"></div>
+        </div>
+
+        <div>
+          <h3>Tires</h3>
+          <div id="tires" class="parts-grid"></div>
+        </div>
+
+        <div>
+          <h3>Gliders</h3>
+          <div id="gliders" class="parts-grid"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="table" id="better-combos">
+      <table>
+        <thead>
+          <tr>
+            <th>
+              <h2>Better Combos</h2>
+              <p>These have the same value or better for every stat.</p>
+            </th>
+            <th title="Mini-Turbo">MINTB</th>
+            <th title="Ground Speed">SPDGR</th>
+            <th title="Underwater Speed">SPDWT</th>
+            <th title="Air Speed">SPDAR</th>
+            <th title="Anti-Gravity Speed">SPDAG</th>
+            <th title="Acceleration">ACCEL</th>
+            <th title="Weight">WEIGT</th>
+            <th title="Ground Handling">HNDGR</th>
+            <th title="Underwater Handling">HNDWT</th>
+            <th title="Air Handling">HNDAR</th>
+            <th title="Anti-Gravity Handling">HNDAG</th>
+            <th title="Traction">TRCTN</th>
+            <th title="Invincibility">INVCB</th>
+          </tr>
+        </thead>
+        <tbody id="better-combos-rows"></tbody>
+      </table>
+    </section>
+
+    <section class="table" id="similar-combos">
+      <table>
+        <thead>
+          <tr>
+            <th>
+              <h2>Similar Combos</h2>
+              <p></p>
+            </th>
+            <th title="Mini-Turbo">MINTB</th>
+            <th title="Ground Speed">SPDGR</th>
+            <th title="Underwater Speed">SPDWT</th>
+            <th title="Air Speed">SPDAR</th>
+            <th title="Anti-Gravity Speed">SPDAG</th>
+            <th title="Acceleration">ACCEL</th>
+            <th title="Weight">WEIGT</th>
+            <th title="Ground Handling">HNDGR</th>
+            <th title="Underwater Handling">HNDWT</th>
+            <th title="Air Handling">HNDAR</th>
+            <th title="Anti-Gravity Handling">HNDAG</th>
+            <th title="Traction">TRCTN</th>
+            <th title="Invincibility">INVCB</th>
+          </tr>
+        </thead>
+        <tbody id="similar-combos-rows"></tbody>
+      </table>
+    </section>
+
+    <section id="wip">
+      <p>This app is a work in progress.<br>
+      Feel free to send any bugs or suggestions my way. I am <a class="invisible-link" href="https://discord.com/users/198249043141328897"><span class="accent">🅹🅴🅹</span> (jeremied)</a> on the <a href="https://discord.gg/mariokart" target="_blank">Mario Kart Discord</a>.</p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© Design & Code by <a href="https://jeremiedupuis.com" target="_blank">Jérémie Dupuis</a> 🏳️‍🌈 — Data & Images from <a href="https://www.mariowiki.com/Mario_Kart_8_Deluxe_in-game_statistics" target="_blank">Mario Wiki</a>, licensed under <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank">CC-BY-SA</a></p>
+    <p><a href="">Last updated 4 Nov 2023</a> – <a href="">v0.5</a> — MK8DX v2.4.0 ★</p>
+  </footer>
+
+</body>
+
+</html>
