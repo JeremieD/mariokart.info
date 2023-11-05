@@ -1,7 +1,7 @@
 // Raw data from Mario Wiki (mariowiki.com/Mario_Kart_8_Deluxe_in-game_statistics), licensed under CC-BY-SA
 
-// "stats" are unique per class (there are no exceptions for invul or size)
-// "group" is used to highlight parts in the grids. they correspond to the class but ignore invul and size.
+// "stats" are unique per class (there are no exceptions for invcb or size)
+// "group" is used to highlight parts in the grids. they correspond to the class but ignore invcb and size.
 
 const comboPartsS = [ "driver", "body", "tire", "glider" ];
 const comboPartsP = [ "drivers", "bodies", "tires", "gliders" ];
@@ -23,7 +23,7 @@ const gameStats = {
         hndWt: 4,
         hndAg: 4,
         hndAr: 4,
-        invul: 3,
+        invcb: 3,
         size: 1
       },
       luigi: {
@@ -40,7 +40,7 @@ const gameStats = {
         hndWt: 5,
         hndAg: 5,
         hndAr: 5,
-        invul: 3,
+        invcb: 3,
         size: 1
       },
       peach: {
@@ -57,7 +57,7 @@ const gameStats = {
         hndWt: 5,
         hndAg: 5,
         hndAr: 5,
-        invul: 1,
+        invcb: 1,
         size: 1
       },
       rosalina: {
@@ -74,7 +74,7 @@ const gameStats = {
         hndWt: 3,
         hndAg: 3,
         hndAr: 3,
-        invul: 4,
+        invcb: 4,
         size: 2
       },
       petey: {
@@ -91,7 +91,7 @@ const gameStats = {
         hndWt: 3,
         hndAg: 3,
         hndAr: 3,
-        invul: 6,
+        invcb: 6,
         size: 2
       },
       marioTan: {
@@ -108,7 +108,7 @@ const gameStats = {
         hndWt: 5,
         hndAg: 5,
         hndAr: 5,
-        invul: 1,
+        invcb: 1,
         size: 1
       },
       peachCat: {
@@ -125,7 +125,7 @@ const gameStats = {
         hndWt: 6,
         hndAg: 6,
         hndAr: 6,
-        invul: 3,
+        invcb: 3,
         size: 1
       },
       toad: {
@@ -142,7 +142,7 @@ const gameStats = {
         hndWt: 7,
         hndAg: 7,
         hndAr: 7,
-        invul: 3,
+        invcb: 3,
         size: 0
       },
       koopa: {
@@ -159,7 +159,7 @@ const gameStats = {
         hndWt: 8,
         hndAg: 8,
         hndAr: 8,
-        invul: 4,
+        invcb: 4,
         size: 0
       },
       toadette: {
@@ -176,7 +176,7 @@ const gameStats = {
         hndWt: 7,
         hndAg: 7,
         hndAr: 7,
-        invul: 3,
+        invcb: 3,
         size: 0
       },
       marioBb: {
@@ -193,7 +193,7 @@ const gameStats = {
         hndWt: 8,
         hndAg: 8,
         hndAr: 8,
-        invul: 5,
+        invcb: 5,
         size: 0
       },
       peachBb: {
@@ -210,7 +210,7 @@ const gameStats = {
         hndWt: 10,
         hndAg: 10,
         hndAr: 10,
-        invul: 6,
+        invcb: 6,
         size: 0
       },
       rosalinaBb: {
@@ -227,7 +227,7 @@ const gameStats = {
         hndWt: 9,
         hndAg: 9,
         hndAr: 9,
-        invul: 6,
+        invcb: 6,
         size: 0
       },
       marioMetal: {
@@ -244,7 +244,7 @@ const gameStats = {
         hndWt: 3,
         hndAg: 3,
         hndAr: 3,
-        invul: 3,
+        invcb: 3,
         size: 1
       },
       wiggler: {
@@ -261,7 +261,7 @@ const gameStats = {
         hndWt: 2,
         hndAg: 2,
         hndAr: 2,
-        invul: 4,
+        invcb: 4,
         size: 1
       },
       wario: {
@@ -278,7 +278,7 @@ const gameStats = {
         hndWt: 1,
         hndAg: 1,
         hndAr: 1,
-        invul: 5,
+        invcb: 5,
         size: 2
       },
       waluigi: {
@@ -295,7 +295,7 @@ const gameStats = {
         hndWt: 2,
         hndAg: 2,
         hndAr: 2,
-        invul: 4,
+        invcb: 4,
         size: 2
       },
       bowser: {
@@ -312,7 +312,7 @@ const gameStats = {
         hndWt: 0,
         hndAg: 0,
         hndAr: 0,
-        invul: 6,
+        invcb: 6,
         size: 2
       }
     },
@@ -331,7 +331,7 @@ const gameStats = {
         hndWt: 2,
         hndAg: 3,
         hndAr: 3,
-        invul: 3
+        invcb: 3
       },
       gla300: {
         weigt: 2,
@@ -347,7 +347,7 @@ const gameStats = {
         hndWt: 2,
         hndAg: 3,
         hndAr: 3,
-        invul: 4
+        invcb: 4
       },
       pipe: {
         weigt: 1,
@@ -363,7 +363,7 @@ const gameStats = {
         hndWt: 4,
         hndAg: 4,
         hndAr: 2,
-        invul: 2
+        invcb: 2
       },
       varmint: {
         weigt: 1,
@@ -379,7 +379,7 @@ const gameStats = {
         hndWt: 4,
         hndAg: 4,
         hndAr: 2,
-        invul: 1
+        invcb: 1
       },
       mach: {
         weigt: 3,
@@ -395,7 +395,7 @@ const gameStats = {
         hndWt: 2,
         hndAg: 4,
         hndAr: 2,
-        invul: 4
+        invcb: 4
       },
       ink: {
         weigt: 3,
@@ -411,7 +411,7 @@ const gameStats = {
         hndWt: 2,
         hndAg: 4,
         hndAr: 2,
-        invul: 3
+        invcb: 3
       },
       steel: {
         weigt: 4,
@@ -427,7 +427,7 @@ const gameStats = {
         hndWt: 5,
         hndAg: 1,
         hndAr: 1,
-        invul: 6
+        invcb: 6
       },
       rattler: {
         weigt: 4,
@@ -443,7 +443,7 @@ const gameStats = {
         hndWt: 5,
         hndAg: 1,
         hndAr: 1,
-        invul: 5
+        invcb: 5
       },
       cat: {
         weigt: 2,
@@ -459,7 +459,7 @@ const gameStats = {
         hndWt: 2,
         hndAg: 3,
         hndAr: 4,
-        invul: 3
+        invcb: 3
       },
       comet: {
         weigt: 2,
@@ -475,7 +475,7 @@ const gameStats = {
         hndWt: 2,
         hndAg: 3,
         hndAr: 4,
-        invul: 2
+        invcb: 2
       },
       circuit: {
         weigt: 3,
@@ -491,7 +491,7 @@ const gameStats = {
         hndWt: 1,
         hndAg: 2,
         hndAr: 0,
-        invul: 6
+        invcb: 6
       },
       wagon: {
         weigt: 4,
@@ -507,7 +507,7 @@ const gameStats = {
         hndWt: 1,
         hndAg: 1,
         hndAr: 0,
-        invul: 7
+        invcb: 7
       },
       atvStd: {
         weigt: 4,
@@ -523,7 +523,7 @@ const gameStats = {
         hndWt: 1,
         hndAg: 1,
         hndAr: 0,
-        invul: 6
+        invcb: 6
       },
       prancer: {
         weigt: 1,
@@ -539,7 +539,7 @@ const gameStats = {
         hndWt: 3,
         hndAg: 2,
         hndAr: 3,
-        invul: 5
+        invcb: 5
       },
       bikeSport: {
         weigt: 1,
@@ -555,7 +555,7 @@ const gameStats = {
         hndWt: 3,
         hndAg: 2,
         hndAr: 3,
-        invul: 3
+        invcb: 3
       },
       biddy: {
         weigt: 0,
@@ -571,7 +571,7 @@ const gameStats = {
         hndWt: 4,
         hndAg: 5,
         hndAr: 4,
-        invul: 0
+        invcb: 0
       },
       sneeker: {
         weigt: 2,
@@ -587,7 +587,7 @@ const gameStats = {
         hndWt: 2,
         hndAg: 3,
         hndAr: 2,
-        invul: 5
+        invcb: 5
       },
       gold: {
         weigt: 2,
@@ -603,7 +603,7 @@ const gameStats = {
         hndWt: 2,
         hndAg: 3,
         hndAr: 2,
-        invul: 4
+        invcb: 4
       },
       master: {
         weigt: 2,
@@ -619,7 +619,7 @@ const gameStats = {
         hndWt: 2,
         hndAg: 3,
         hndAr: 2,
-        invul: 3
+        invcb: 3
       },
       gla25: {
         weigt: 1,
@@ -635,7 +635,7 @@ const gameStats = {
         hndWt: 3,
         hndAg: 4,
         hndAr: 3,
-        invul: 3
+        invcb: 3
       },
       bikeStd: {
         weigt: 1,
@@ -651,7 +651,7 @@ const gameStats = {
         hndWt: 3,
         hndAg: 4,
         hndAr: 3,
-        invul: 2
+        invcb: 2
       },
       wiggler: {
         weigt: 1,
@@ -667,7 +667,7 @@ const gameStats = {
         hndWt: 3,
         hndAg: 4,
         hndAr: 3,
-        invul: 1
+        invcb: 1
       },
       falcon: {
         weigt: 0,
@@ -683,7 +683,7 @@ const gameStats = {
         hndWt: 3,
         hndAg: 5,
         hndAr: 1,
-        invul: 4
+        invcb: 4
       },
       splat: {
         weigt: 0,
@@ -699,7 +699,7 @@ const gameStats = {
         hndWt: 3,
         hndAg: 5,
         hndAr: 1,
-        invul: 3
+        invcb: 3
       },
       tanooki: {
         weigt: 3,
@@ -715,7 +715,7 @@ const gameStats = {
         hndWt: 4,
         hndAg: 3,
         hndAr: 3,
-        invul: 4
+        invcb: 4
       },
       koopa: {
         weigt: 3,
@@ -731,7 +731,7 @@ const gameStats = {
         hndWt: 4,
         hndAg: 3,
         hndAr: 3,
-        invul: 3
+        invcb: 3
       },
       streetle: {
         weigt: 0,
@@ -747,7 +747,7 @@ const gameStats = {
         hndWt: 5,
         hndAg: 2,
         hndAr: 3,
-        invul: 2
+        invcb: 2
       },
       landship: {
         weigt: 0,
@@ -763,7 +763,7 @@ const gameStats = {
         hndWt: 5,
         hndAg: 2,
         hndAr: 3,
-        invul: 1
+        invcb: 1
       }
     },
     tires: {
@@ -781,7 +781,7 @@ const gameStats = {
         hndWt: 3,
         hndAg: 3,
         hndAr: 3,
-        invul: 3
+        invcb: 3
       },
       gla: {
         weigt: 2,
@@ -797,7 +797,7 @@ const gameStats = {
         hndWt: 3,
         hndAg: 3,
         hndAr: 3,
-        invul: 4
+        invcb: 4
       },
       monster: {
         weigt: 4,
@@ -813,7 +813,7 @@ const gameStats = {
         hndWt: 1,
         hndAg: 0,
         hndAr: 1,
-        invul: 5
+        invcb: 5
       },
       ancient: {
         weigt: 4,
@@ -829,7 +829,7 @@ const gameStats = {
         hndWt: 1,
         hndAg: 0,
         hndAr: 1,
-        invul: 4
+        invcb: 4
       },
       roller: {
         weigt: 0,
@@ -845,7 +845,7 @@ const gameStats = {
         hndWt: 4,
         hndAg: 4,
         hndAr: 4,
-        invul: 0
+        invcb: 0
       },
       slim: {
         weigt: 2,
@@ -861,7 +861,7 @@ const gameStats = {
         hndWt: 4,
         hndAg: 3,
         hndAr: 4,
-        invul: 4
+        invcb: 4
       },
       slick: {
         weigt: 3,
@@ -877,7 +877,7 @@ const gameStats = {
         hndWt: 0,
         hndAg: 2,
         hndAr: 1,
-        invul: 4
+        invcb: 4
       },
       metal: {
         weigt: 4,
@@ -893,7 +893,7 @@ const gameStats = {
         hndWt: 2,
         hndAg: 1,
         hndAr: 0,
-        invul: 5
+        invcb: 5
       },
       gold: {
         weigt: 4,
@@ -909,7 +909,7 @@ const gameStats = {
         hndWt: 2,
         hndAg: 1,
         hndAr: 0,
-        invul: 4
+        invcb: 4
       },
       button: {
         weigt: 0,
@@ -925,7 +925,7 @@ const gameStats = {
         hndWt: 3,
         hndAg: 4,
         hndAr: 2,
-        invul: 2
+        invcb: 2
       },
       offroad: {
         weigt: 3,
@@ -941,7 +941,7 @@ const gameStats = {
         hndWt: 1,
         hndAg: 2,
         hndAr: 2,
-        invul: 6
+        invcb: 6
       },
       triforce: {
         weigt: 3,
@@ -957,7 +957,7 @@ const gameStats = {
         hndWt: 1,
         hndAg: 2,
         hndAr: 2,
-        invul: 5
+        invcb: 5
       },
       cushion: {
         weigt: 1,
@@ -973,7 +973,7 @@ const gameStats = {
         hndWt: 1,
         hndAg: 2,
         hndAr: 3,
-        invul: 5
+        invcb: 5
       },
       sponge: {
         weigt: 1,
@@ -989,7 +989,7 @@ const gameStats = {
         hndWt: 1,
         hndAg: 2,
         hndAr: 3,
-        invul: 3
+        invcb: 3
       }
     },
     gliders: {
@@ -1007,7 +1007,7 @@ const gameStats = {
         hndWt: 0,
         hndAg: 1,
         hndAr: 1,
-        invul: 1
+        invcb: 1
       },
       cloud: {
         weigt: 0,
@@ -1023,7 +1023,7 @@ const gameStats = {
         hndWt: 0,
         hndAg: 1,
         hndAr: 2,
-        invul: 0
+        invcb: 0
       },
       parafoil: {
         weigt: 1,
@@ -1039,7 +1039,7 @@ const gameStats = {
         hndWt: 1,
         hndAg: 0,
         hndAr: 2,
-        invul: 0
+        invcb: 0
       },
       gold: {
         weigt: 2,
@@ -1055,7 +1055,7 @@ const gameStats = {
         hndWt: 1,
         hndAg: 0,
         hndAr: 1,
-        invul: 1
+        invcb: 1
       }
     }
   },

@@ -1,83 +1,298 @@
 // There is ?????? parts combinations (excluding color variants).
 // There is 649440 parts combinations (excluding driver variants).
 // There is  28224 class combinations.
-// There is   8064 group combinations (excluding size and invul stats).
+// There is   8064 group combinations (excluding size and invcb stats).
 
-class Combo {
+// Represents a combo class (with unique stats).
+class ComboC {
+  #parts = {};
+  #classes = {};
+  #code = "";
+
   constructor(driver = "mario", body = "std", tire = "std", glider = "super") {
     if (gameStats.parts.drivers[driver] !== undefined) {
-      this.driver = driver;
+      this.#parts.driver = driver;
+      this.#classes.driver = gameStats.parts.drivers[driver].stats;
     } else { throw "Unknown driver: " + driver }
-
     if (gameStats.parts.bodies[body] !== undefined) {
-      this.body = body;
+      this.#parts.body = body;
+      this.#classes.body = gameStats.parts.bodies[body].stats;
     } else { throw "Unknown body: " + body }
-
     if (gameStats.parts.tires[tire] !== undefined) {
-      this.tire = tire;
+      this.#parts.tire = tire;
+      this.#classes.tire = gameStats.parts.tires[tire].stats;
     } else { throw "Unknown tire: " + tire }
-
     if (gameStats.parts.gliders[glider] !== undefined) {
-      this.glider = glider;
+      this.#parts.glider = glider;
+      this.#classes.glider = gameStats.parts.gliders[glider].stats;
     } else { throw "Unknown glider: " + glider }
+
+    this.lvl = {};
+    this.size;
+    this.#calculateLvls();
+    this.#assignCode();
   }
 
-  // TODO: Add cache? Store value?
-  getLevel(stat) {
-    if (stat == "spd") {
-      return this.getLevel("spdGr")*.85 + this.getLevel("spdAg")*.12 +
-      this.getLevel("spdWt")*.02 + this.getLevel("spdAr")*.01;
+  get code() { return this.#code; }
+  get driver() { return this.#parts.driver; }
+  get body() { return this.#parts.body; }
+  get tire() { return this.#parts.tire; }
+  get glider() { return this.#parts.glider; }
+
+  #assignCode() {
+    const driverCode = driverCodes[this.driver];
+    const bodyCode = bodyCodes[this.body];
+    const tireCode = tireCodes[this.tire];
+    const gliderCode = gliderCodes[this.glider];
+    this.#code = driverCode + bodyCode + tireCode + gliderCode;
+  }
+
+  #calculateLvls() {
+    for (const stat of ["weigt", "accel", "trctn", "mintb",
+                        "spdGr", "spdWt", "spdAg", "spdAr",
+                        "hndGr", "hndWt", "hndAg", "hndAr", "invcb"]) {
+      let sum = 0;
+      for (let i = 0; i < comboPartsS.length; i++) {
+        sum += gameStats.classes[comboPartsP[i]][this.#classes[comboPartsS[i]]][stat];
+      }
+      const lvl = (sum + 3) / 4;
+      if (!Number.isInteger(lvl*4) || lvl > 5.75 || lvl < .75) {
+        console.error("Level calculation for " + stat + " returned " + lvl);
+      }
+      this.lvl[stat] = lvl;
     }
 
-    if (stat == "hnd") {
-      return this.getLevel("spdGr")*.85 + this.getLevel("spdAg")*.12 +
-      this.getLevel("spdWt")*.02 + this.getLevel("spdAr")*.01;
-    }
+    this.lvl.spd = round(this.lvl.spdGr*ComboC.PERCENT_GR +
+                         this.lvl.spdAg*ComboC.PERCENT_AG +
+                         this.lvl.spdWt*ComboC.PERCENT_WT +
+                         this.lvl.spdAr*ComboC.PERCENT_AR, 3);
+    this.lvl.hnd = round(this.lvl.hndGr*ComboC.PERCENT_GR +
+                         this.lvl.hndAg*ComboC.PERCENT_AG +
+                         this.lvl.hndWt*ComboC.PERCENT_WT +
+                         this.lvl.hndAr*ComboC.PERCENT_AR, 3);
 
-    let sum = 0;
-    for (let i = 0; i < comboPartsS.length; i++) {
-      const part = gameStats.parts[comboPartsP[i]][this[comboPartsS[i]]];
-      const statsClass = part.stats;
-      sum += gameStats.classes[comboPartsP[i]][statsClass][stat];
-      if (stat == "size") return sum;
-    }
-    const level = (sum + 3) / 4;
-    if (!Number.isInteger(level*4) || level > 5.75 || level < .75) {
-      console.error("Level calculation for " + stat + " returned " + level);
-    }
-    return level;
+    // The driver's size [0-2] is converted to the lvl range [.75-5.75]
+    this.size = gameStats.classes.drivers[this.#classes.driver].size;
+    this.lvl.size = this.size*2.5 + .75;
   }
 
   getScore(stats = ["weigt", "accel", "trctn", "mintb",
                     "spdGr", "spdWt", "spdAg", "spdAr",
-                    "hndGr", "hndWt", "hndAg", "hndAr", "invul"]) {
+                    "hndGr", "hndWt", "hndAg", "hndAr", "invcb"]) {
     let sum = 0;
     for (const stat of stats) {
-      sum += this.getLevel(stat);
+      sum += this.lvl[stat];
     }
     return sum;
   }
 
   getOptiScore() {
     let sum = 0;
-    sum += 8 * this.getLevel("mintb");
-    sum += 7.5 * this.getLevel("spd");
-    sum += this.getLevel("accel");
-    sum += this.getLevel("hnd");
-    sum += this.getLevel("weigt") / 8;
-    sum += this.getLevel("trctn") / 8;
-    // sum += this.getLevel("invul") / 16;
+    sum += this.lvl.mintb * 8;
+    sum += this.lvl.spd * 7.5;
+    sum += this.lvl.accel;
+    sum += this.lvl.hnd;
+    sum += this.lvl.weigt / 8;
+    sum += this.lvl.trctn / 8;
+    // sum += this.lvl.invcb / 16;
     // sum -= gameStats.parts.bodies[this.body].type == "sport" ? 4 : 0;
-    // sum -= this.getLevel("size");
+    // sum -= this.lvl.size;
     return sum;
   }
 
-  getCode() {
-    const driverCode = driverCodes[this.driver];
-    const bodyCode = bodyCodes[this.body];
-    const tireCode = tireCodes[this.tire];
-    const gliderCode = gliderCodes[this.glider];
-    return driverCode + bodyCode + tireCode + gliderCode;
+  static PERCENT_GR = .85; // Best estimate for percent of time on ground.
+  static PERCENT_AG = .12; // Best estimate for percent of time in anti-gravity.
+  static PERCENT_WT = .02; // Best estimate for percent of time underwater.
+  static PERCENT_AR = .01; // Best estimate for percent of time airborne.
+}
+
+const AllCombos = {};
+for (const driver of Object.keys(gameStats.classes.drivers)) {
+  for (const body of Object.keys(gameStats.classes.bodies)) {
+    for (const tire of Object.keys(gameStats.classes.tires)) {
+      for (const glider of Object.keys(gameStats.classes.gliders)) {
+        const combo = new ComboC(driver, body, tire, glider);
+        AllCombos[combo.code] = combo;
+      }
+    }
+  }
+}
+
+function listCombos(opts = {}) {
+  opts.mustDiffer ??= false; opts.maxAbsDiff ??= Infinity;
+  opts.minDiff ??= -Infinity; opts.maxDiff ??= Infinity;
+  opts.sortBy ??= "diff";
+  opts.mintbMin ??= 0; opts.mintbMax ??= 6; opts.mintb ??= opts.mintbMin;
+  opts.spdGrMin ??= 0; opts.spdGrMax ??= 6; opts.spdGr ??= opts.spdGrMin;
+  opts.spdWtMin ??= 0; opts.spdWtMax ??= 6; opts.spdWt ??= opts.spdWtMin;
+  opts.spdAgMin ??= 0; opts.spdAgMax ??= 6; opts.spdAg ??= opts.spdAgMin;
+  opts.spdArMin ??= 0; opts.spdArMax ??= 6; opts.spdAr ??= opts.spdArMin;
+  opts.accelMin ??= 0; opts.accelMax ??= 6; opts.accel ??= opts.accelMin;
+  opts.weigtMin ??= 0; opts.weigtMax ??= 6; opts.weigt ??= opts.weigtMin;
+  opts.hndGrMin ??= 0; opts.hndGrMax ??= 6; opts.hndGr ??= opts.hndGrMin;
+  opts.hndWtMin ??= 0; opts.hndWtMax ??= 6; opts.hndWt ??= opts.hndWtMin;
+  opts.hndAgMin ??= 0; opts.hndAgMax ??= 6; opts.hndAg ??= opts.hndAgMin;
+  opts.hndArMin ??= 0; opts.hndArMax ??= 6; opts.hndAr ??= opts.hndArMin;
+  opts.trctnMin ??= 0; opts.trctnMax ??= 6; opts.trctn ??= opts.trctnMin;
+  opts.invcbMin ??= 0; opts.invcbMax ??= 6; opts.invcb ??= opts.invcbMin;
+  opts.sizeMin ??= 0; opts.sizeMax ??= 2; opts.size ??= opts.sizeMin;
+
+  const list = [];
+
+  for (const combo of Object.values(AllCombos)) {
+    const mintb = combo.lvl.mintb; const accel = combo.lvl.accel;
+    const spdGr = combo.lvl.spdGr; const spdWt = combo.lvl.spdWt;
+    const spdAg = combo.lvl.spdAg; const spdAr = combo.lvl.spdAr;
+    const weigt = combo.lvl.weigt; const trctn = combo.lvl.trctn;
+    const hndGr = combo.lvl.hndGr; const hndWt = combo.lvl.hndWt;
+    const hndAg = combo.lvl.hndAg; const hndAr = combo.lvl.hndAr;
+    const invcb = combo.lvl.invcb;
+    const size = combo.size;
+
+    const absDiff = Math.abs(mintb - opts.mintb) +
+    Math.abs(spdGr - opts.spdGr) + Math.abs(spdWt - opts.spdWt) +
+    Math.abs(spdAg - opts.spdAg) + Math.abs(spdAr - opts.spdAr) +
+    Math.abs(accel - opts.accel) + Math.abs(weigt - opts.weigt) +
+    Math.abs(hndGr - opts.hndGr) + Math.abs(hndWt - opts.hndWt) +
+    Math.abs(hndAg - opts.hndAg) + Math.abs(hndAr - opts.hndAr) +
+    Math.abs(trctn - opts.trctn) + Math.abs(invcb - opts.invcb);
+    if (absDiff > opts.maxAbsDiff) continue;
+    if (opts.mustDiffer && absDiff == 0) continue;
+
+    combo.diff = (mintb - opts.mintb) +
+    (spdGr - opts.spdGr) + (spdWt - opts.spdWt) +
+    (spdAg - opts.spdAg) + (spdAr - opts.spdAr) +
+    (accel - opts.accel) + (weigt - opts.weigt) +
+    (hndGr - opts.hndGr) + (hndWt - opts.hndWt) +
+    (hndAg - opts.hndAg) + (hndAr - opts.hndAr) +
+    (trctn - opts.trctn) + (invcb - opts.invcb);
+    if (combo.diff < opts.minDiff) continue;
+    if (combo.diff > opts.maxDiff) continue;
+
+    if (mintb < opts.mintbMin || mintb > opts.mintbMax) continue;
+    if (spdGr < opts.spdGrMin || spdGr > opts.spdGrMax) continue;
+    if (spdWt < opts.spdWtMin || spdWt > opts.spdWtMax) continue;
+    if (spdAg < opts.spdAgMin || spdAg > opts.spdAgMax) continue;
+    if (spdAr < opts.spdArMin || spdAr > opts.spdArMax) continue;
+    if (accel < opts.accelMin || accel > opts.accelMax) continue;
+    if (weigt < opts.weigtMin || weigt > opts.weigtMax) continue;
+    if (hndGr < opts.hndGrMin || hndGr > opts.hndGrMax) continue;
+    if (hndWt < opts.hndWtMin || hndWt > opts.hndWtMax) continue;
+    if (hndAg < opts.hndAgMin || hndAg > opts.hndAgMax) continue;
+    if (hndAr < opts.hndArMin || hndAr > opts.hndArMax) continue;
+    if (trctn < opts.trctnMin || trctn > opts.trctnMax) continue;
+    if (invcb < opts.invcbMin || invcb > opts.invcbMax) continue;
+    if (size < opts.sizeMin || size > opts.sizeMax) continue;
+
+    list.push(combo);
+  }
+
+  if (!(opts.sortBy instanceof Array)) opts.sortBy = [opts.sortBy];
+  const compare = function(a, b) {
+      for (const stat of opts.sortBy) {
+        let statA, statB;
+        if (stat == "diff") {
+          statA = a.diff;
+          statB = b.diff;
+
+        } else if (stat == "score") {
+          const stats = ["mintb", "spd"];
+          statA = a.getScore(stats);
+          statB = b.getScore(stats);
+
+        } else if (stat == "optiScore") {
+          statA = a.getOptiScore();
+          statB = b.getOptiScore();
+
+        } else {
+          statA = a.lvl[stat];
+          statB = b.lvl[stat];
+        }
+
+        if (statA == statB) continue;
+        return statB - statA;
+      }
+      return 0;
+  }
+
+  list.sort(compare);
+
+  return list;
+}
+
+// Represents a visually unique combo that points to a class in AllCombos.
+class Combo {
+  #code = "MAAA";
+  #class = {};
+  #parts = {};
+  #classes = {};
+
+  #setDriver(val) {
+    if (gameStats.parts.drivers[val] == undefined) throw "Unknown driver: " + val;
+    this.#parts.driver = val;
+    this.#classes.driver = gameStats.parts.drivers[val].stats;
+    this.#code = this.#code.replaceAt(0, driverCodes[val]);
+  }
+  set driver(val) {
+    this.#setDriver(val)
+    this.#assignClass();
+  }
+  #setBody(val) {
+    if (gameStats.parts.bodies[val] == undefined) throw "Unknown body: " + val;
+    this.#parts.body = val;
+    this.#classes.body = gameStats.parts.bodies[val].stats;
+    this.#code = this.#code.replaceAt(1, bodyCodes[val]);
+  }
+  set body(val) {
+    this.#setBody(val);
+    this.#assignClass();
+  }
+  #setTire(val) {
+    if (gameStats.parts.tires[val] == undefined) throw "Unknown tire: " + val;
+    this.#parts.tire = val;
+    this.#classes.tire = gameStats.parts.tires[val].stats;
+    this.#code = this.#code.replaceAt(2, tireCodes[val]);
+  }
+  set tire(val) {
+   this.#setTire(val);
+    this.#assignClass();
+  }
+  #setGlider(val) {
+    if (gameStats.parts.gliders[val] == undefined) throw "Unknown glider: " + val;
+    this.#parts.glider = val;
+    this.#classes.glider = gameStats.parts.gliders[val].stats;
+    this.#code = this.#code.replaceAt(3, gliderCodes[val]);
+  }
+  set glider(val) {
+    this.#setGlider(val);
+    this.#assignClass();
+  }
+
+  constructor(driver = "mario", body = "std", tire = "std", glider = "super") {
+    this.#setDriver(driver);
+    this.#setBody(body);
+    this.#setTire(tire);
+    this.#setGlider(glider);
+    this.#assignClass();
+  }
+
+  get code() { return this.#code; }
+  get driver() { return this.#parts.driver; }
+  get body() { return this.#parts.body; }
+  get tire() { return this.#parts.tire; }
+  get glider() { return this.#parts.glider; }
+
+  get lvl() { return this.#class.lvl }
+  get size() { return this.#class.size }
+
+  #assignClass() {
+    const driverClass = gameStats.parts.drivers[this.driver].stats;
+    const bodyClass = gameStats.parts.bodies[this.body].stats;
+    const tireClass = gameStats.parts.tires[this.tire].stats;
+    const gliderClass = gameStats.parts.gliders[this.glider].stats;
+    const classCode = driverCodes[driverClass] + bodyCodes[bodyClass] +
+                      tireCodes[tireClass] + gliderCodes[gliderClass]
+    this.#class = AllCombos[classCode];
   }
 
   static fromCode(comboCode) {
@@ -102,134 +317,16 @@ class Combo {
     const keys = Object.keys(gameStats.parts.drivers);
     return keys[randomInt(keys.length-1)];
   }
-
   static randomBody() {
     const keys = Object.keys(gameStats.parts.bodies);
     return keys[randomInt(keys.length-1)];
   }
-
   static randomTire() {
     const keys = Object.keys(gameStats.parts.tires);
     return keys[randomInt(keys.length-1)];
   }
-
   static randomGlider() {
     const keys = Object.keys(gameStats.parts.gliders);
     return keys[randomInt(keys.length-1)];
   }
-}
-
-function listCombos(opts = {}) {
-  opts.mustDiffer ??= false; opts.maxAbsDiff ??= Infinity;
-  opts.minDiff ??= -Infinity; opts.maxDiff ??= Infinity;
-  opts.sortBy ??= "diff";
-  opts.mintbMin ??= 0; opts.mintbMax ??= 6; opts.mintb ??= opts.mintbMin;
-  opts.spdGrMin ??= 0; opts.spdGrMax ??= 6; opts.spdGr ??= opts.spdGrMin;
-  opts.spdWtMin ??= 0; opts.spdWtMax ??= 6; opts.spdWt ??= opts.spdWtMin;
-  opts.spdAgMin ??= 0; opts.spdAgMax ??= 6; opts.spdAg ??= opts.spdAgMin;
-  opts.spdArMin ??= 0; opts.spdArMax ??= 6; opts.spdAr ??= opts.spdArMin;
-  opts.accelMin ??= 0; opts.accelMax ??= 6; opts.accel ??= opts.accelMin;
-  opts.weigtMin ??= 0; opts.weigtMax ??= 6; opts.weigt ??= opts.weigtMin;
-  opts.hndGrMin ??= 0; opts.hndGrMax ??= 6; opts.hndGr ??= opts.hndGrMin;
-  opts.hndWtMin ??= 0; opts.hndWtMax ??= 6; opts.hndWt ??= opts.hndWtMin;
-  opts.hndAgMin ??= 0; opts.hndAgMax ??= 6; opts.hndAg ??= opts.hndAgMin;
-  opts.hndArMin ??= 0; opts.hndArMax ??= 6; opts.hndAr ??= opts.hndArMin;
-  opts.trctnMin ??= 0; opts.trctnMax ??= 6; opts.trctn ??= opts.trctnMin;
-  opts.invulMin ??= 0; opts.invulMax ??= 6; opts.invul ??= opts.invulMin;
-  opts.sizeMin ??= 0; opts.sizeMax ??= 2; opts.size ??= opts.sizeMin;
-
-  const list = [];
-
-  for (const driver of Object.keys(gameStats.classes.drivers)) {
-    for (const body of Object.keys(gameStats.classes.bodies)) {
-      for (const tire of Object.keys(gameStats.classes.tires)) {
-        for (const glider of Object.keys(gameStats.classes.gliders)) {
-          const combo = new Combo(driver, body, tire, glider);
-          const mintb = combo.getLevel("mintb");
-          const spdGr = combo.getLevel("spdGr");
-          const spdWt = combo.getLevel("spdWt");
-          const spdAg = combo.getLevel("spdAg");
-          const spdAr = combo.getLevel("spdAr");
-          const accel = combo.getLevel("accel");
-          const weigt = combo.getLevel("weigt");
-          const hndGr = combo.getLevel("hndGr");
-          const hndWt = combo.getLevel("hndWt");
-          const hndAg = combo.getLevel("hndAg");
-          const hndAr = combo.getLevel("hndAr");
-          const trctn = combo.getLevel("trctn");
-          const invul = combo.getLevel("invul");
-          const size = combo.getLevel("size");
-
-          const absDiff = Math.abs(mintb - opts.mintb) +
-          Math.abs(spdGr - opts.spdGr) + Math.abs(spdWt - opts.spdWt) +
-          Math.abs(spdAg - opts.spdAg) + Math.abs(spdAr - opts.spdAr) +
-          Math.abs(accel - opts.accel) + Math.abs(weigt - opts.weigt) +
-          Math.abs(hndGr - opts.hndGr) + Math.abs(hndWt - opts.hndWt) +
-          Math.abs(hndAg - opts.hndAg) + Math.abs(hndAr - opts.hndAr) +
-          Math.abs(trctn - opts.trctn) + Math.abs(invul - opts.invul);
-          if (absDiff > opts.maxAbsDiff) continue;
-          if (opts.mustDiffer && absDiff == 0) continue;
-
-          combo.diff = (mintb - opts.mintb) +
-          (spdGr - opts.spdGr) + (spdWt - opts.spdWt) +
-          (spdAg - opts.spdAg) + (spdAr - opts.spdAr) +
-          (accel - opts.accel) + (weigt - opts.weigt) +
-          (hndGr - opts.hndGr) + (hndWt - opts.hndWt) +
-          (hndAg - opts.hndAg) + (hndAr - opts.hndAr) +
-          (trctn - opts.trctn) + (invul - opts.invul);
-          if (combo.diff < opts.minDiff) continue;
-          if (combo.diff > opts.maxDiff) continue;
-
-          if (mintb < opts.mintbMin || mintb > opts.mintbMax) continue;
-          if (spdGr < opts.spdGrMin || spdGr > opts.spdGrMax) continue;
-          if (spdWt < opts.spdWtMin || spdWt > opts.spdWtMax) continue;
-          if (spdAg < opts.spdAgMin || spdAg > opts.spdAgMax) continue;
-          if (spdAr < opts.spdArMin || spdAr > opts.spdArMax) continue;
-          if (accel < opts.accelMin || accel > opts.accelMax) continue;
-          if (weigt < opts.weigtMin || weigt > opts.weigtMax) continue;
-          if (hndGr < opts.hndGrMin || hndGr > opts.hndGrMax) continue;
-          if (hndWt < opts.hndWtMin || hndWt > opts.hndWtMax) continue;
-          if (hndAg < opts.hndAgMin || hndAg > opts.hndAgMax) continue;
-          if (hndAr < opts.hndArMin || hndAr > opts.hndArMax) continue;
-          if (trctn < opts.trctnMin || trctn > opts.trctnMax) continue;
-          if (invul < opts.invulMin || invul > opts.invulMax) continue;
-          if (size < opts.sizeMin || size > opts.sizeMax) continue;
-
-          list.push(combo);
-        }
-      }
-    }
-  }
-
-  if (!(opts.sortBy instanceof Array)) opts.sortBy = [opts.sortBy];
-  const compare = function(a, b) {
-      for (const stat of opts.sortBy) {
-        let statA, statB;
-        if (stat == "diff") {
-          statA = a.diff;
-          statB = b.diff;
-
-        } else if (stat == "score") {
-          const stats = ["mintb", "spd"];
-          statA = a.getScore(stats);
-          statB = b.getScore(stats);
-
-        } else if (stat == "optiScore") {
-          statA = a.getOptiScore();
-          statB = b.getOptiScore();
-
-        } else {
-          statA = a.getLevel(stat);
-          statB = b.getLevel(stat);
-        }
-
-        if (statA == statB) continue;
-        return statB - statA;
-      }
-      return 0;
-  }
-
-  list.sort(compare);
-
-  return list;
 }

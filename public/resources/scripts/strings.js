@@ -167,7 +167,7 @@ const strings = {
       hndWt: "Underwater Handling",
       hndAg: "Anti-Gravity Handling",
       hndAr: "Air Handling",
-      invul: "Invincibility",
+      invcb: "Invincibility",
       size: "Vehicle Size"
     },
     statsCode: {
@@ -185,7 +185,7 @@ const strings = {
       hndWt: "HNDWT",
       hndAg: "HNDAG",
       hndAr: "HNDAR",
-      invul: "INVCB"
+      invcb: "INVCB"
     },
     statsTooltip: {
       weigt: "Affects collisions with other racers. Higher weights push lower weights.",
@@ -195,7 +195,7 @@ const strings = {
       mintb: "Determines the length of mini-turbo boosts and trick boosts, as well as how fast mini-turbo charges.",
       spd: "Maximum speed.",
       hnd: "Higher handling means more range of angle for drifts and turns.",
-      invul: "Affects how long you are invincible after taking a hit."
+      invcb: "Affects how long you are invincible after taking a hit."
     },
     size: {
       0: "Small Frame",

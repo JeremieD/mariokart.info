@@ -19,7 +19,7 @@ let driverImg,   bodyImg,   tireImg,   gliderImg,
 let mintbMeter, accelMeter, weigtMeter, // Stat bars
     spdGrMeter, spdAgMeter, spdWtMeter, spdArMeter,
     hndGrMeter, hndAgMeter, hndWtMeter, hndArMeter,
-    trctnMeter, invulMeter;
+    trctnMeter, invcbMeter;
 let driverSelect, bodySelect, tireSelect, gliderSelect; // Part grids
 let betterCombosRows, similarCombosRows; // Table bodies
 
@@ -57,7 +57,7 @@ whenDOMReady(() => {
   hndWtMeter = document.getElementById("hndWt-meter");
   hndArMeter = document.getElementById("hndAr-meter");
   trctnMeter = document.getElementById("trctn-meter");
-  invulMeter = document.getElementById("invul-meter");
+  invcbMeter = document.getElementById("invcb-meter");
 
   driverSelect = document.getElementById("drivers");
   bodySelect   = document.getElementById("bodies");
@@ -169,7 +169,7 @@ whenDOMReady(() => {
 // Updates view output to the currently selected combo (a/b).
 function drawCurrentCombo(updateURL = true) {
   comboTier.className = getTier();
-  comboDetails.innerText = strings[locl].size[selectedCombo.getLevel("size")];
+  comboDetails.innerText = strings[locl].size[selectedCombo.size];
   if (gameStats.parts.bodies[selectedCombo.body].type == "sport") {
     comboDetails.innerText += ", " + strings[locl].driftStyle.in;
   }
@@ -192,96 +192,96 @@ function drawCurrentCombo(updateURL = true) {
   gliderLabel.innerText = gliderName;
 
   // Stats
-  const mintbA = selectedCombo.getLevel("mintb");
-  const mintbB = otherCombo.getLevel("mintb");
+  const mintbA = selectedCombo.lvl.mintb;
+  const mintbB = otherCombo.lvl.mintb;
   mintbMeter.classList.toggle("dominant", mintbA > mintbB);
   mintbMeter.style.setProperty("--value", mintbA);
   mintbMeter.style.setProperty("--secondary-value", mintbB);
   mintbMeter.title = strings[locl].stats["mintb"] + ": " + mintbA;
 
-  const accelA = selectedCombo.getLevel("accel");
-  const accelB = otherCombo.getLevel("accel");
+  const accelA = selectedCombo.lvl.accel;
+  const accelB = otherCombo.lvl.accel;
   accelMeter.classList.toggle("dominant", accelA > accelB);
   accelMeter.style.setProperty("--value", accelA);
   accelMeter.style.setProperty("--secondary-value", accelB);
   accelMeter.title = strings[locl].stats["accel"] + ": " + accelA;
 
-  const weigtA = selectedCombo.getLevel("weigt");
-  const weigtB = otherCombo.getLevel("weigt");
+  const weigtA = selectedCombo.lvl.weigt;
+  const weigtB = otherCombo.lvl.weigt;
   weigtMeter.classList.toggle("dominant", weigtA > weigtB);
   weigtMeter.style.setProperty("--value", weigtA);
   weigtMeter.style.setProperty("--secondary-value", weigtB);
   weigtMeter.title = strings[locl].stats["weigt"] + ": " + weigtA;
 
-  const spdGrA = selectedCombo.getLevel("spdGr");
-  const spdGrB = otherCombo.getLevel("spdGr");
+  const spdGrA = selectedCombo.lvl.spdGr;
+  const spdGrB = otherCombo.lvl.spdGr;
   spdGrMeter.classList.toggle("dominant", spdGrA > spdGrB);
   spdGrMeter.style.setProperty("--value", spdGrA);
   spdGrMeter.style.setProperty("--secondary-value", spdGrB);
   spdGrMeter.title = strings[locl].stats["spdGr"] + ": " + spdGrA;
 
-  const spdAgA = selectedCombo.getLevel("spdAg");
-  const spdAgB = otherCombo.getLevel("spdAg");
+  const spdAgA = selectedCombo.lvl.spdAg;
+  const spdAgB = otherCombo.lvl.spdAg;
   spdAgMeter.classList.toggle("dominant", spdAgA > spdAgB);
   spdAgMeter.style.setProperty("--value", spdAgA);
   spdAgMeter.style.setProperty("--secondary-value", spdAgB);
   spdAgMeter.title = strings[locl].stats["spdAg"] + ": " + spdAgA;
 
-  const spdWtA = selectedCombo.getLevel("spdWt");
-  const spdWtB = otherCombo.getLevel("spdWt");
+  const spdWtA = selectedCombo.lvl.spdWt;
+  const spdWtB = otherCombo.lvl.spdWt;
   spdWtMeter.classList.toggle("dominant", spdWtA > spdWtB);
   spdWtMeter.style.setProperty("--value", spdWtA);
   spdWtMeter.style.setProperty("--secondary-value", spdWtB);
   spdWtMeter.title = strings[locl].stats["spdWt"] + ": " + spdWtA;
 
-  const spdArA = selectedCombo.getLevel("spdAr");
-  const spdArB = otherCombo.getLevel("spdAr");
+  const spdArA = selectedCombo.lvl.spdAr;
+  const spdArB = otherCombo.lvl.spdAr;
   spdArMeter.classList.toggle("dominant", spdArA > spdArB);
   spdArMeter.style.setProperty("--value", spdArA);
   spdArMeter.style.setProperty("--secondary-value", spdArB);
   spdArMeter.title = strings[locl].stats["spdAr"] + ": " + spdArA;
 
-  const hndGrA = selectedCombo.getLevel("hndGr");
-  const hndGrB = otherCombo.getLevel("hndGr");
+  const hndGrA = selectedCombo.lvl.hndGr;
+  const hndGrB = otherCombo.lvl.hndGr;
   hndGrMeter.classList.toggle("dominant", hndGrA > hndGrB);
   hndGrMeter.style.setProperty("--value", hndGrA);
   hndGrMeter.style.setProperty("--secondary-value", hndGrB);
   hndGrMeter.title = strings[locl].stats["hndGr"] + ": " + hndGrA;
 
-  const hndAgA = selectedCombo.getLevel("hndAg");
-  const hndAgB = otherCombo.getLevel("hndAg");
+  const hndAgA = selectedCombo.lvl.hndAg;
+  const hndAgB = otherCombo.lvl.hndAg;
   hndAgMeter.classList.toggle("dominant", hndAgA > hndAgB);
   hndAgMeter.style.setProperty("--value", hndAgA);
   hndAgMeter.style.setProperty("--secondary-value", hndAgB);
   hndAgMeter.title = strings[locl].stats["hndAg"] + ": " + hndAgA;
 
-  const hndWtA = selectedCombo.getLevel("hndWt");
-  const hndWtB = otherCombo.getLevel("hndWt");
+  const hndWtA = selectedCombo.lvl.hndWt;
+  const hndWtB = otherCombo.lvl.hndWt;
   hndWtMeter.classList.toggle("dominant", hndWtA > hndWtB);
   hndWtMeter.style.setProperty("--value", hndWtA);
   hndWtMeter.style.setProperty("--secondary-value", hndWtB);
   hndWtMeter.title = strings[locl].stats["hndWt"] + ": " + hndWtA;
 
-  const hndArA = selectedCombo.getLevel("hndAr");
-  const hndArB = otherCombo.getLevel("hndAr");
+  const hndArA = selectedCombo.lvl.hndAr;
+  const hndArB = otherCombo.lvl.hndAr;
   hndArMeter.classList.toggle("dominant", hndArA > hndArB);
   hndArMeter.style.setProperty("--value", hndArA);
   hndArMeter.style.setProperty("--secondary-value", hndArB);
   hndArMeter.title = strings[locl].stats["hndAr"] + ": " + hndArA;
 
-  const trctnA = selectedCombo.getLevel("trctn");
-  const trctnB = otherCombo.getLevel("trctn");
+  const trctnA = selectedCombo.lvl.trctn;
+  const trctnB = otherCombo.lvl.trctn;
   trctnMeter.classList.toggle("dominant", trctnA > trctnB);
   trctnMeter.style.setProperty("--value", trctnA);
   trctnMeter.style.setProperty("--secondary-value", trctnB);
   trctnMeter.title = strings[locl].stats["trctn"] + ": " + trctnA;
 
-  const invulA = selectedCombo.getLevel("invul");
-  const invulB = otherCombo.getLevel("invul");
-  invulMeter.classList.toggle("dominant", invulA > invulB);
-  invulMeter.style.setProperty("--value", invulA);
-  invulMeter.style.setProperty("--secondary-value", invulB);
-  invulMeter.title = strings[locl].stats["invul"] + ": " + invulA;
+  const invcbA = selectedCombo.lvl.invcb;
+  const invcbB = otherCombo.lvl.invcb;
+  invcbMeter.classList.toggle("dominant", invcbA > invcbB);
+  invcbMeter.style.setProperty("--value", invcbA);
+  invcbMeter.style.setProperty("--secondary-value", invcbB);
+  invcbMeter.title = strings[locl].stats["invcb"] + ": " + invcbA;
 
   if (updateURL) updateURLParams();
 
@@ -471,58 +471,58 @@ function randomCombo() {
 function getBetterCombos() {
   return listCombos({
     mustDiffer: true,
-    mintbMin: selectedCombo.getLevel("mintb"),
-    spdGrMin: selectedCombo.getLevel("spdGr"),
-    spdWtMin: selectedCombo.getLevel("spdWt"),
-    spdAgMin: selectedCombo.getLevel("spdAg"),
-    spdArMin: selectedCombo.getLevel("spdAr"),
-    accelMin: selectedCombo.getLevel("accel"),
-    weigtMin: selectedCombo.getLevel("weigt"),
-    hndGrMin: selectedCombo.getLevel("hndGr"),
-    hndWtMin: selectedCombo.getLevel("hndWt"),
-    hndAgMin: selectedCombo.getLevel("hndAg"),
-    hndArMin: selectedCombo.getLevel("hndAr"),
-    trctnMin: selectedCombo.getLevel("trctn"),
-    invulMin: selectedCombo.getLevel("invul")
+    mintbMin: selectedCombo.lvl.mintb,
+    spdGrMin: selectedCombo.lvl.spdGr,
+    spdWtMin: selectedCombo.lvl.spdWt,
+    spdAgMin: selectedCombo.lvl.spdAg,
+    spdArMin: selectedCombo.lvl.spdAr,
+    accelMin: selectedCombo.lvl.accel,
+    weigtMin: selectedCombo.lvl.weigt,
+    hndGrMin: selectedCombo.lvl.hndGr,
+    hndWtMin: selectedCombo.lvl.hndWt,
+    hndAgMin: selectedCombo.lvl.hndAg,
+    hndArMin: selectedCombo.lvl.hndAr,
+    trctnMin: selectedCombo.lvl.trctn,
+    invcbMin: selectedCombo.lvl.invcb
   });
 }
 
 function getWorseCombos() {
   return listCombos({
     mustDiffer: true,
-    mintbMax: selectedCombo.getLevel("mintb"),
-    spdGrMax: selectedCombo.getLevel("spdGr"),
-    spdWtMax: selectedCombo.getLevel("spdWt"),
-    spdAgMax: selectedCombo.getLevel("spdAg"),
-    spdArMax: selectedCombo.getLevel("spdAr"),
-    accelMax: selectedCombo.getLevel("accel"),
-    weigtMax: selectedCombo.getLevel("weigt"),
-    hndGrMax: selectedCombo.getLevel("hndGr"),
-    hndWtMax: selectedCombo.getLevel("hndWt"),
-    hndAgMax: selectedCombo.getLevel("hndAg"),
-    hndArMax: selectedCombo.getLevel("hndAr"),
-    trctnMax: selectedCombo.getLevel("trctn"),
-    invulMax: selectedCombo.getLevel("invul")
+    mintbMax: selectedCombo.lvl.mintb,
+    spdGrMax: selectedCombo.lvl.spdGr,
+    spdWtMax: selectedCombo.lvl.spdWt,
+    spdAgMax: selectedCombo.lvl.spdAg,
+    spdArMax: selectedCombo.lvl.spdAr,
+    accelMax: selectedCombo.lvl.accel,
+    weigtMax: selectedCombo.lvl.weigt,
+    hndGrMax: selectedCombo.lvl.hndGr,
+    hndWtMax: selectedCombo.lvl.hndWt,
+    hndAgMax: selectedCombo.lvl.hndAg,
+    hndArMax: selectedCombo.lvl.hndAr,
+    trctnMax: selectedCombo.lvl.trctn,
+    invcbMax: selectedCombo.lvl.invcb
   });
 }
 
 function getSimilarCombos() {
-  const mintb = selectedCombo.getLevel("mintb");
-  const spdGr = selectedCombo.getLevel("spdGr");
-  const spdWt = selectedCombo.getLevel("spdWt");
-  const spdAg = selectedCombo.getLevel("spdAg");
-  const spdAr = selectedCombo.getLevel("spdAr");
-  const accel = selectedCombo.getLevel("accel");
-  const weigt = selectedCombo.getLevel("weigt");
-  const hndGr = selectedCombo.getLevel("hndGr");
-  const hndWt = selectedCombo.getLevel("hndWt");
-  const hndAg = selectedCombo.getLevel("hndAg");
-  const hndAr = selectedCombo.getLevel("hndAr");
-  const trctn = selectedCombo.getLevel("trctn");
-  const invul = selectedCombo.getLevel("invul");
+  const mintb = selectedCombo.lvl.mintb;
+  const spdGr = selectedCombo.lvl.spdGr;
+  const spdWt = selectedCombo.lvl.spdWt;
+  const spdAg = selectedCombo.lvl.spdAg;
+  const spdAr = selectedCombo.lvl.spdAr;
+  const accel = selectedCombo.lvl.accel;
+  const weigt = selectedCombo.lvl.weigt;
+  const hndGr = selectedCombo.lvl.hndGr;
+  const hndWt = selectedCombo.lvl.hndWt;
+  const hndAg = selectedCombo.lvl.hndAg;
+  const hndAr = selectedCombo.lvl.hndAr;
+  const trctn = selectedCombo.lvl.trctn;
+  const invcb = selectedCombo.lvl.invcb;
   return listCombos({
     maxAbsDiff: 2, minDiff: -.5,
-    mintb: mintb, accel: accel, weigt: weigt, trctn: trctn, invul: invul,
+    mintb: mintb, accel: accel, weigt: weigt, trctn: trctn, invcb: invcb,
     spdGr: spdGr, spdWt: spdWt, spdAg: spdAg, spdAr: spdAr,
     hndGr: hndGr, hndWt: hndWt, hndAg: hndAg, hndAr: hndAr
   });
@@ -634,9 +634,9 @@ function fillTable(tableEl, data) {
     row.append(comboDisplay);
 
     for (const stat of ["mintb", "spdGr", "spdWt", "spdAg", "spdAr",
-    "accel", "weigt", "hndGr", "hndWt", "hndAg", "hndAr", "trctn", "invul"]) {
+    "accel", "weigt", "hndGr", "hndWt", "hndAg", "hndAr", "trctn", "invcb"]) {
       const cell = document.createElement("td");
-      const diff = combo.getLevel(stat) - selectedCombo.getLevel(stat);
+      const diff = combo.lvl[stat] - selectedCombo.lvl[stat];
       cell.dataset.value = diff;
       cell.classList.toggle("positive", diff > 0);
       cell.classList.toggle("negative", diff < 0);
@@ -665,8 +665,8 @@ function readURLParams() {
 }
 
 function updateURLParams() {
-  const aCode = combos.a.getCode();
-  const bCode = combos.b.getCode();
+  const aCode = combos.a.code;
+  const bCode = combos.b.code;
 
   const url = new URL(window.location.href);
   url.searchParams.set("a", aCode);
