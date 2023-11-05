@@ -4,10 +4,11 @@
       transition: .5s cubic-bezier(.75,0,0,1.75);
       transition-property: stroke-dashoffset, transform;
       stroke-dasharray: 9px;
+      stroke-dashoffset: 18px;
     }
     [selected] path {
       transform: translateY(1px);
-      stroke-dashoffset: -2px;
+      stroke-dashoffset: 16px;
     }
     [selected] svg {
       animation: .25s .25s bounce;
