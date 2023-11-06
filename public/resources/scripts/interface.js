@@ -9,6 +9,7 @@ const combos = {
 readURLParams();
 let selectedCombo = combos.a;
 let otherCombo = combos.b;
+let lastStateUrl = "";
 
 let comboSelect;
 let comboTier, comboDetails;
@@ -669,15 +670,18 @@ function readURLParams() {
   if (aCode != undefined) combos.a = Combo.fromCode(aCode);
   const bCode = url.searchParams.get("b");
   if (bCode != undefined) combos.b = Combo.fromCode(bCode);
+  lastState = location.href;
 }
 
 function updateURLParams() {
   const aCode = combos.a.code;
   const bCode = combos.b.code;
 
-  const url = new URL(window.location.href);
+  const url = new URL(location.href);
   url.searchParams.set("a", aCode);
   url.searchParams.set("b", bCode);
-  const paramStr = url.toString();
-  window.history.pushState({}, "", paramStr);
+  const urlStr = url.toString();
+  if (urlStr != lastState) {
+    history.pushState({}, "", urlStr);
+  }
 }
