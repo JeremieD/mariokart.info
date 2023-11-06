@@ -39,6 +39,7 @@
   <script src="/resources/scripts/strings.js"></script>
   <script src="/resources/scripts/stats.js"></script>
   <script src="/resources/scripts/radio.js"></script>
+  <script src="/resources/scripts/tooltip.js"></script>
   <script src="/resources/scripts/interface.js" async></script>
 
   <script src="https://analytique.jeremiedupuis.com/collect?o=mk8dx.jeremiedupuis.com" async></script>
@@ -73,12 +74,12 @@
         <div id="combo-display">
           <div id="combo-top">
             <div id="combo-info-secondary">
-              <div id="combo-tier" title="The tier indicates how many combos have equal or better stats. S tier means there are no combos which have a better stat without a worse stat. Tiers other than S indicates that there are combos which give you more stats without compromising other stats."></div>
+              <div id="combo-tier" tooltip="<p>The tier indicates how many combos have equal or better stats.</p><p><span class='tier-icon S'></span> means there are no combos which have a better stat without a tradeoff.</p><p><span class='tier-icon A'></span> means that there are just a few better combos, usually in the invincibility stat. You’re probably ok using this combo!</p><p><span class='tier-icon B'></span> <span class='tier-icon C'></span> <span class='tier-icon D'></span> means that there are a lot of combos with strictly better stats. You&nbsp;should probably see if there’s one you like.</p>"></div>
               <div id="combo-details"></div>
             </div>
             <div id="combo-options">
               <button id="random-button">Random</button>
-              <button id="optimize-button" disabled title="Working on it...">Optimize...</button>
+              <button id="optimize-button" disabled class="tooltip top-center" tooltip="Working on it...">Optimize...</button>
             </div>
           </div>
 

@@ -225,6 +225,10 @@ a:hover {
     -moz-text-decoration-color: var(--color-text)
 }
 
+p + p {
+  margin-top: .25em;
+}
+
 header {
   --color-text: white;
   position: fixed;
