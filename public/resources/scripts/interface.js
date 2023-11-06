@@ -123,7 +123,7 @@ whenDOMReady(() => {
   drawPartsGrids();
 
   const driverFolders = driverSelect.querySelectorAll(".folder");
-  closeAllDriverFolders = () => {
+  const closeAllDriverFolders = () => {
     for (const folder of driverFolders) {
       folder.classList.remove("open");
     }
@@ -293,8 +293,7 @@ function drawCurrentCombo(updateURL = true) {
 
   if (updateURL) updateURLParams();
 
-  drawBetterCombos();
-  drawSimilarCombos();
+  drawTables();
 }
 
 function drawPartsGrids() {
@@ -546,6 +545,11 @@ function getTier() {
   if (nbBetterCombos / nbCombos < .002) return "B";
   if (nbBetterCombos / nbCombos < .0035) return "C";
   return "D";
+}
+
+function drawTables() {
+  drawBetterCombos();
+  drawSimilarCombos();
 }
 
 function drawBetterCombos() {
