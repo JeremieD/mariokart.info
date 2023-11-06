@@ -287,7 +287,12 @@ jd-icon svg {
   background-color: var(--color-inverse);
   opacity: 0;
 }
-.compare .meter::before { opacity: 12.5%; }
+.compare .meter::before { opacity: 10%; }
+
+.meter:not(.dominant)::before {
+  mask: url(/resources/graphics/diffmask.svg) right;
+    -webkit-mask: url(/resources/graphics/diffmask.svg) right;
+}
 
 .meter.dominant::before {
   right: calc(100% - var(--value) / 6 * 100%);
