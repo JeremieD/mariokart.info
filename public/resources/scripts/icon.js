@@ -26,7 +26,7 @@ class JDIcon extends HTMLElement {
 
     this.classList.add("placeholder");
 
-    const iconPath = `/resources/graphics/icons/${safeIconName}.svg`;
+    const iconPath = `https://centrale.jeremiedupuis.com/graphics/icons/${safeIconName}.svg`;
     JDIcon.cache[safeIconName] = httpGet(iconPath).then(svg => {
       this.innerHTML = svg;
       this.classList.remove("placeholder");
