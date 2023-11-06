@@ -206,6 +206,33 @@ jd-icon svg {
   background-color: var(--color-interactive);
 }
 
+#combo-options>div {
+  display: flex;
+  gap: .5rem;
+  align-items: center;
+  margin-right: .5rem;
+}
+
+.checkbox {
+  display: inline-block;
+  position: relative;
+  width: 1.5rem;
+  height: 1.5rem;
+  vertical-align: middle;
+  background-color: var(--color-interactive);
+  border-radius: 4px;
+}
+
+.checkbox svg {
+  position: absolute;
+  width: 66%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.checkbox + label { font-size: .875rem; }
+
 #combo-stats {
   display: flex;
   flex-direction: column;
@@ -258,17 +285,18 @@ jd-icon svg {
 .meter::before {
   width: calc(var(--secondary-value) / 6 * 100%);
   background-color: var(--color-inverse);
-  opacity: 12.5%;
+  opacity: 0;
 }
+.compare .meter::before { opacity: 12.5%; }
 
 .meter.dominant::before {
   right: calc(100% - var(--value) / 6 * 100%);
   width: calc((var(--value) - var(--secondary-value)) / 6 * 100%);
   background-color: var(--color-light1);
-  opacity: 75%;
   mix-blend-mode: overlay;
   z-index: 1;
 }
+.compare .meter.dominant::before { opacity: 75%; }
 
 .multimeter {
   display: grid;

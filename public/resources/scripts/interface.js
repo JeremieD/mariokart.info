@@ -45,6 +45,9 @@ whenDOMReady(() => {
   gliderLock = document.getElementById("glider-lock");
   gliderLabel = document.getElementById("current-glider-label");
 
+  compareSwitch = document.getElementById("compare");
+  comboStats = document.getElementById("combo-stats");
+
   mintbMeter = document.getElementById("mintb-meter");
   accelMeter = document.getElementById("accel-meter");
   weigtMeter = document.getElementById("weigt-meter");
@@ -102,6 +105,10 @@ whenDOMReady(() => {
 
   randomButton.addEventListener("click", () => {
     randomCombo();
+  });
+
+  compareSwitch.addEventListener("change", e => {
+    comboStats.classList.toggle("compare", e.target.state);
   });
 
   addEventListener("popstate", () => {
