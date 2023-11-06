@@ -112,6 +112,11 @@ whenDOMReady(() => {
     comboStats.classList.toggle("compare", e.target.state);
   });
 
+  driverLock.addEventListener("change", drawTables);
+  bodyLock.addEventListener("change", drawTables);
+  tireLock.addEventListener("change", drawTables);
+  gliderLock.addEventListener("change", drawTables);
+
   addEventListener("popstate", () => {
     readURLParams();
     selectedCombo = combos.a;
@@ -475,70 +480,70 @@ function randomCombo() {
   selectCombo();
 }
 
-function getBetterCombos() {
-  return listCombos({
+function getBetterCombos(ignoreLocks = false) {
+  let opts = {
     mustDiffer: true,
     mintbMin: selectedCombo.lvl.mintb,
-    spdGrMin: selectedCombo.lvl.spdGr,
-    spdWtMin: selectedCombo.lvl.spdWt,
-    spdAgMin: selectedCombo.lvl.spdAg,
-    spdArMin: selectedCombo.lvl.spdAr,
-    accelMin: selectedCombo.lvl.accel,
-    weigtMin: selectedCombo.lvl.weigt,
-    hndGrMin: selectedCombo.lvl.hndGr,
-    hndWtMin: selectedCombo.lvl.hndWt,
-    hndAgMin: selectedCombo.lvl.hndAg,
-    hndArMin: selectedCombo.lvl.hndAr,
-    trctnMin: selectedCombo.lvl.trctn,
-    invcbMin: selectedCombo.lvl.invcb
-  });
+    spdGrMin: selectedCombo.lvl.spdGr, spdWtMin: selectedCombo.lvl.spdWt,
+    spdAgMin: selectedCombo.lvl.spdAg, spdArMin: selectedCombo.lvl.spdAr,
+    accelMin: selectedCombo.lvl.accel, weigtMin: selectedCombo.lvl.weigt,
+    hndGrMin: selectedCombo.lvl.hndGr, hndWtMin: selectedCombo.lvl.hndWt,
+    hndAgMin: selectedCombo.lvl.hndAg, hndArMin: selectedCombo.lvl.hndAr,
+    trctnMin: selectedCombo.lvl.trctn, invcbMin: selectedCombo.lvl.invcb
+  };
+  if (!ignoreLocks) {
+    if (driverLock.state) opts.driverLock = selectedCombo.driver;
+    if (bodyLock.state) opts.bodyLock = selectedCombo.body;
+    if (tireLock.state) opts.tireLock = selectedCombo.tire;
+    if (gliderLock.state) opts.gliderLock = selectedCombo.glider;
+  }
+  return listCombos(opts);
 }
 
-function getWorseCombos() {
-  return listCombos({
+function getWorseCombos(ignoreLocks = false) {
+  let opts = {
     mustDiffer: true,
     mintbMax: selectedCombo.lvl.mintb,
-    spdGrMax: selectedCombo.lvl.spdGr,
-    spdWtMax: selectedCombo.lvl.spdWt,
-    spdAgMax: selectedCombo.lvl.spdAg,
-    spdArMax: selectedCombo.lvl.spdAr,
-    accelMax: selectedCombo.lvl.accel,
-    weigtMax: selectedCombo.lvl.weigt,
-    hndGrMax: selectedCombo.lvl.hndGr,
-    hndWtMax: selectedCombo.lvl.hndWt,
-    hndAgMax: selectedCombo.lvl.hndAg,
-    hndArMax: selectedCombo.lvl.hndAr,
-    trctnMax: selectedCombo.lvl.trctn,
-    invcbMax: selectedCombo.lvl.invcb
-  });
+    spdGrMax: selectedCombo.lvl.spdGr, spdWtMax: selectedCombo.lvl.spdWt,
+    spdAgMax: selectedCombo.lvl.spdAg, spdArMax: selectedCombo.lvl.spdAr,
+    accelMax: selectedCombo.lvl.accel, weigtMax: selectedCombo.lvl.weigt,
+    hndGrMax: selectedCombo.lvl.hndGr, hndWtMax: selectedCombo.lvl.hndWt,
+    hndAgMax: selectedCombo.lvl.hndAg, hndArMax: selectedCombo.lvl.hndAr,
+    trctnMax: selectedCombo.lvl.trctn, invcbMax: selectedCombo.lvl.invcb
+  };
+  if (!ignoreLocks) {
+    if (driverLock.state) opts.driverLock = selectedCombo.driver;
+    if (bodyLock.state) opts.bodyLock = selectedCombo.body;
+    if (tireLock.state) opts.tireLock = selectedCombo.tire;
+    if (gliderLock.state) opts.gliderLock = selectedCombo.glider;
+  }
+  return listCombos(opts);
 }
 
-function getSimilarCombos() {
-  const mintb = selectedCombo.lvl.mintb;
-  const spdGr = selectedCombo.lvl.spdGr;
-  const spdWt = selectedCombo.lvl.spdWt;
-  const spdAg = selectedCombo.lvl.spdAg;
-  const spdAr = selectedCombo.lvl.spdAr;
-  const accel = selectedCombo.lvl.accel;
-  const weigt = selectedCombo.lvl.weigt;
-  const hndGr = selectedCombo.lvl.hndGr;
-  const hndWt = selectedCombo.lvl.hndWt;
-  const hndAg = selectedCombo.lvl.hndAg;
-  const hndAr = selectedCombo.lvl.hndAr;
-  const trctn = selectedCombo.lvl.trctn;
-  const invcb = selectedCombo.lvl.invcb;
-  return listCombos({
-    maxAbsDiff: 2, minDiff: -.5,
-    mintb: mintb, accel: accel, weigt: weigt, trctn: trctn, invcb: invcb,
-    spdGr: spdGr, spdWt: spdWt, spdAg: spdAg, spdAr: spdAr,
-    hndGr: hndGr, hndWt: hndWt, hndAg: hndAg, hndAr: hndAr
-  });
+function getSimilarCombos(ignoreLocks = false) {
+  let opts = {
+    mustDiffer: true, maxAbsDiff: 2, minDiff: -.5,
+    mintb: selectedCombo.lvl.mintb,
+    spdGr: selectedCombo.lvl.spdGr, spdWt: selectedCombo.lvl.spdWt,
+    spdAg: selectedCombo.lvl.spdAg, spdAr: selectedCombo.lvl.spdAr,
+    accel: selectedCombo.lvl.accel, weigt: selectedCombo.lvl.weigt,
+    hndGr: selectedCombo.lvl.hndGr, hndWt: selectedCombo.lvl.hndWt,
+    hndAg: selectedCombo.lvl.hndAg, hndAr: selectedCombo.lvl.hndAr,
+    trctn: selectedCombo.lvl.trctn, invcb: selectedCombo.lvl.invcb
+ };
+  if (!ignoreLocks) {
+    if (driverLock.state) opts.driverLock = selectedCombo.driver;
+    if (bodyLock.state) opts.bodyLock = selectedCombo.body;
+    if (tireLock.state) opts.tireLock = selectedCombo.tire;
+    if (gliderLock.state) opts.gliderLock = selectedCombo.glider;
+  }
+  return listCombos(opts);
 }
 
 // TODO: Abstract this and avoid repeated calls to listCombos.
 function getTier() {
   const nbCombos = 28224; // Nb of different *class* combinations
-  const nbBetterCombos = getBetterCombos().length;
+  const nbBetterCombos = getBetterCombos(true).length;
 
   if (nbBetterCombos == 0) return "S";
   if (nbBetterCombos / nbCombos < .0003) return "A";

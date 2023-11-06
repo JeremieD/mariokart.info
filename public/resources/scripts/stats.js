@@ -136,10 +136,21 @@ function listCombos(opts = {}) {
   opts.trctnMin ??= 0; opts.trctnMax ??= 6; opts.trctn ??= opts.trctnMin;
   opts.invcbMin ??= 0; opts.invcbMax ??= 6; opts.invcb ??= opts.invcbMin;
   opts.sizeMin ??= 0; opts.sizeMax ??= 2; opts.size ??= opts.sizeMin;
+  opts.driverLock ??= undefined; opts.bodyLock ??= undefined;
+  opts.tireLock ??= undefined; opts.gliderLock ??= undefined;
 
   const list = [];
 
   for (const combo of Object.values(AllCombos)) {
+    if (opts.driverLock !== undefined &&
+        gameStats.parts.drivers[opts.driverLock].stats !== combo.driver) continue;
+    if (opts.bodyLock !== undefined &&
+        gameStats.parts.bodies[opts.bodyLock].stats !== combo.body) continue;
+    if (opts.tireLock !== undefined &&
+        gameStats.parts.tires[opts.tireLock].stats !== combo.tire) continue;
+    if (opts.gliderLock !== undefined &&
+        gameStats.parts.gliders[opts.gliderLock].stats !== combo.glider) continue;
+
     const mintb = combo.lvl.mintb; const accel = combo.lvl.accel;
     const spdGr = combo.lvl.spdGr; const spdWt = combo.lvl.spdWt;
     const spdAg = combo.lvl.spdAg; const spdAr = combo.lvl.spdAr;
