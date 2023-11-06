@@ -3,8 +3,8 @@ console.log("★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★
 const locl = "en-US";
 
 const combos = {
-  a: new Combo(),
-  b: new Combo()
+  a: Combo.fromCode("MAAA"),
+  b: Combo.fromCode("LMSA")
 };
 readURLParams();
 let selectedCombo = combos.a;
