@@ -502,7 +502,7 @@ function getBetterCombos(ignoreLocks = false) {
 
 function getSimilarCombos(ignoreLocks = false) {
   let opts = {
-    mustDiffer: true, maxAbsDiff: 2, minDiff: -.5,
+    mustDiffer: true, maxAbsDiff: 2.5, minDiff: -.75,
     mintb: selectedCombo.lvl.mintb,
     spdGr: selectedCombo.lvl.spdGr, spdWt: selectedCombo.lvl.spdWt,
     spdAg: selectedCombo.lvl.spdAg, spdAr: selectedCombo.lvl.spdAr,
