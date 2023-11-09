@@ -500,26 +500,6 @@ function getBetterCombos(ignoreLocks = false) {
   return listCombos(opts);
 }
 
-function getWorseCombos(ignoreLocks = false) {
-  let opts = {
-    mustDiffer: true,
-    mintbMax: selectedCombo.lvl.mintb,
-    spdGrMax: selectedCombo.lvl.spdGr, spdWtMax: selectedCombo.lvl.spdWt,
-    spdAgMax: selectedCombo.lvl.spdAg, spdArMax: selectedCombo.lvl.spdAr,
-    accelMax: selectedCombo.lvl.accel, weigtMax: selectedCombo.lvl.weigt,
-    hndGrMax: selectedCombo.lvl.hndGr, hndWtMax: selectedCombo.lvl.hndWt,
-    hndAgMax: selectedCombo.lvl.hndAg, hndArMax: selectedCombo.lvl.hndAr,
-    trctnMax: selectedCombo.lvl.trctn, invcbMax: selectedCombo.lvl.invcb
-  };
-  if (!ignoreLocks) {
-    if (driverLock.state) opts.driverLock = selectedCombo.driver;
-    if (bodyLock.state) opts.bodyLock = selectedCombo.body;
-    if (tireLock.state) opts.tireLock = selectedCombo.tire;
-    if (gliderLock.state) opts.gliderLock = selectedCombo.glider;
-  }
-  return listCombos(opts);
-}
-
 function getSimilarCombos(ignoreLocks = false) {
   let opts = {
     mustDiffer: true, maxAbsDiff: 2, minDiff: -.5,
