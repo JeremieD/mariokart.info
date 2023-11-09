@@ -102,9 +102,14 @@ section+section {
   }
 }
 
-@media(max-width: 368px) {
+@media (max-width: 800px) {
   :root {
-    --width-pagepadding: 24px
+    --height-header: 64px;
+    --width-pagepadding: 24px;
+    --font-size-body: 15px;
+    --font-size-display-big: 2.75rem;
+    --font-size-display: 1.625rem;
+    --font-size-body-big: 1.25rem;
   }
 }
 
@@ -178,15 +183,6 @@ h1, h2 {
 }
 
 @media(max-width: 600px) {
-  :root {
-    --font-size-body: 15px;
-    --font-size-display-big: 2.75rem;
-    --font-size-display: 1.625rem;
-    --font-size-body-big: 1.25rem
-  }
-}
-
-@media(max-width: 368px) {
   :root {
     --font-size-body: 14px;
     --font-size-body-big: 1.125rem
@@ -316,17 +312,10 @@ header ul {
     left: var(--width-pagepadding)
   }
 
-  header {
-    justify-content: flex-end
-  }
+  #symbol { display: none; }
+  #logo::before { display: none; }
 
-  header #logo {
-    display: none
-  }
-
-  header ul {
-    gap: 2em
-  }
+  header ul { gap: 2em }
 }
 
 footer {

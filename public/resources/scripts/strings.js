@@ -203,8 +203,8 @@ const strings = {
       2: "Large Frame"
     },
     driftStyle: {
-      in: "Inside Drift",
-      out: "Outside Drift"
+      in: "Inside&nbsp;Drift",
+      out: "Outside&nbsp;Drift"
     },
     tierTooltip: "The tier indicates how many combos have equal or better stats. S tier means there are no combos which have a better stat without a worse stat. Tiers other than S indicates that there are combos which give you more stats without compromising other stats."
   }

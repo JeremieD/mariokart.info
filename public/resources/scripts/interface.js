@@ -2,6 +2,8 @@ console.log("★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★
 
 const locl = "en-US";
 
+const mobile = innerWidth <= 800;
+
 const combos = {
   a: Combo.fromCode("MAAA"),
   b: Combo.fromCode("LMSA")
@@ -14,13 +16,15 @@ let lastStateUrl = "";
 let comboSelect;
 let comboTier, comboDetails;
 let randomButton, optimizeButton;
-let driverImg,   bodyImg,   tireImg,   gliderImg,
-    driverLock,  bodyLock,  tireLock,  gliderLock,
-    driverLabel, bodyLabel, tireLabel, gliderLabel; // Current combo display
+let driverButton, bodyButton, tireButton, gliderButton,
+    driverImg,    bodyImg,    tireImg,    gliderImg,
+    driverLock,   bodyLock,   tireLock,   gliderLock,
+    driverLabel,  bodyLabel,  tireLabel,  gliderLabel; // Current combo display
 let mintbMeter, accelMeter, weigtMeter, // Stat bars
     spdGrMeter, spdAgMeter, spdWtMeter, spdArMeter,
     hndGrMeter, hndAgMeter, hndWtMeter, hndArMeter,
     trctnMeter, invcbMeter;
+let partsGrid;
 let driverSelect, bodySelect, tireSelect, gliderSelect; // Part grids
 let betterCombosRows, similarCombosRows; // Table bodies
 
@@ -33,15 +37,19 @@ whenDOMReady(() => {
   randomButton = document.getElementById("random-button");
   optimizeButton = document.getElementById("optimize-button");
 
+  driverButton = document.getElementById("combo-driver");
   driverImg = document.getElementById("current-driver-img");
   driverLock = document.getElementById("driver-lock");
   driverLabel = document.getElementById("current-driver-label");
+  bodyButton = document.getElementById("combo-body");
   bodyImg = document.getElementById("current-body-img");
   bodyLock = document.getElementById("body-lock");
   bodyLabel = document.getElementById("current-body-label");
+  tireButton = document.getElementById("combo-tire");
   tireImg = document.getElementById("current-tire-img");
   tireLock = document.getElementById("tire-lock");
   tireLabel = document.getElementById("current-tire-label");
+  gliderButton = document.getElementById("combo-glider");
   gliderImg = document.getElementById("current-glider-img");
   gliderLock = document.getElementById("glider-lock");
   gliderLabel = document.getElementById("current-glider-label");
@@ -63,6 +71,7 @@ whenDOMReady(() => {
   trctnMeter = document.getElementById("trctn-meter");
   invcbMeter = document.getElementById("invcb-meter");
 
+  partsGrid    = document.getElementById("combo-parts");
   driverSelect = document.getElementById("drivers");
   bodySelect   = document.getElementById("bodies");
   tireSelect   = document.getElementById("tires");
@@ -112,6 +121,43 @@ whenDOMReady(() => {
     comboStats.classList.toggle("compare", e.target.state);
   });
 
+
+  const closePartsPopup = () => {
+    partsGrid.classList.remove("open");
+    for (const grid of partsGrid.children) {
+      grid.classList.remove("open");
+    }
+  };
+
+  partsGrid.addEventListener("click", () => {
+    closePartsPopup();
+  });
+
+  driverButton.addEventListener("click", () => {
+    if (!mobile) return;
+    partsGrid.classList.add("open");
+    partsGrid.children[0].classList.add("open");
+  });
+
+  bodyButton.addEventListener("click", () => {
+    if (!mobile) return;
+    partsGrid.classList.add("open");
+    partsGrid.children[1].classList.add("open");
+  });
+
+  tireButton.addEventListener("click", () => {
+    if (!mobile) return;
+    partsGrid.classList.add("open");
+    partsGrid.children[2].classList.add("open");
+  });
+
+  gliderButton.addEventListener("click", () => {
+    if (!mobile) return;
+    partsGrid.classList.add("open");
+    partsGrid.children[3].classList.add("open");
+  });
+
+
   driverLock.addEventListener("change", drawTables);
   bodyLock.addEventListener("change", drawTables);
   tireLock.addEventListener("change", drawTables);
@@ -132,7 +178,7 @@ whenDOMReady(() => {
     for (const folder of driverFolders) {
       folder.classList.remove("open");
     }
-  }
+  };
   for (const folder of driverFolders) {
     for (const button of folder.children[1].children) {
       button.addEventListener("click", e => {
@@ -155,12 +201,14 @@ whenDOMReady(() => {
     selectDriver(value);
     drawCurrentCombo();
     closeAllDriverFolders();
+    closePartsPopup();
   });
   initRadioGroup(bodySelect).addEventListener("change", e => {
     const value = e.target.dataset.value;
     selectedCombo.body = value;
     selectBody(value);
     drawCurrentCombo();
+    closePartsPopup();
   });
   initRadioGroup(tireSelect).addEventListener("change", e => {
     const value = e.target.dataset.value;
@@ -173,6 +221,7 @@ whenDOMReady(() => {
     selectedCombo.glider = value;
     selectGlider(value);
     drawCurrentCombo();
+    closePartsPopup();
   });
 
   selectCombo();
@@ -182,9 +231,9 @@ whenDOMReady(() => {
 // Updates view output to the currently selected combo (a/b).
 function drawCurrentCombo(updateURL = true) {
   comboTier.className = getTier();
-  comboDetails.innerText = strings[locl].size[selectedCombo.size];
+  comboDetails.innerHTML = strings[locl].size[selectedCombo.size];
   if (gameStats.parts.bodies[selectedCombo.body].type == "sport") {
-    comboDetails.innerText += ", " + strings[locl].driftStyle.in;
+    comboDetails.innerHTML += ", " + strings[locl].driftStyle.in;
   }
 
   driverImg.src = "/resources/graphics/drivers/" + selectedCombo.driver + ".webp";
@@ -619,6 +668,7 @@ function fillTable(tableEl, data) {
 
     // Slot Buttons
     const pickSlot = document.createElement("div");
+    pickSlot.classList.add("pick-slot");
     const toSlotA = document.createElement("button");
     if (selectedCombo == combos.a) toSlotA.classList.add("primary");
     toSlotA.innerText = "→A";
@@ -646,16 +696,31 @@ function fillTable(tableEl, data) {
     comboDisplay.append(driverDisplay, bodyDisplay, tireDisplay, gliderDisplay, pickSlot);
     row.append(comboDisplay);
 
+    const mobileStats = document.createElement("div");
+    mobileStats.classList.add("only-mobile", "mobile-stats");
     for (const stat of ["mintb", "spdGr", "spdWt", "spdAg", "spdAr",
     "accel", "weigt", "hndGr", "hndWt", "hndAg", "hndAr", "trctn", "invcb"]) {
       const cell = document.createElement("td");
       const diff = combo.lvl[stat] - selectedCombo.lvl[stat];
+      const formattedDiff = formatStatDiff(diff);
       cell.dataset.value = diff;
       cell.classList.toggle("positive", diff > 0);
       cell.classList.toggle("negative", diff < 0);
-      cell.innerText = formatStatDiff(diff);
+      cell.innerText = formattedDiff;
       row.append(cell);
+      if (diff !== 0) {
+        const label = document.createElement("label");
+        label.innerText = strings[locl].statsCode[stat];
+        const value = document.createElement("span");
+        value.innerText = formattedDiff;
+        value.classList.toggle("positive", diff > 0);
+        value.classList.toggle("negative", diff < 0);
+        const statOutput = document.createElement("div");
+        statOutput.append(label, value);
+        mobileStats.append(statOutput);
+      }
     }
+    comboDisplay.append(mobileStats);
 
     tableEl.append(row);
   }

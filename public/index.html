@@ -12,7 +12,7 @@
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "Mario Kart 8 Deluxe Combo Builder",
-    "alternateName": "Jej’s MK8DX Combo Builder",
+    "alternateName": ["MK8DX Combo Builder", "Jej’s MK8DX Combo Builder"],
     "url": "https://mk8dx.jeremiedupuis.com"
   }</script>
 
@@ -49,7 +49,7 @@
   <a href="/" id="symbol" aria-labelledby="logo" tabindex="-1"></a>
 
   <header>
-    <a href="/" id="logo"><h1>Mario Kart 8 Deluxe Combo Builder<sup title="Beta">β</sup></h1></a>
+    <a href="/" id="logo"><h1 class="not-mobile">Mario Kart 8 Deluxe Combo Builder<sup title="Beta">β</sup></h1><h1 class="only-mobile">MK8DX Combo Builder<sup title="Beta">β</sup></h1></a>
     <nav>
       <!-- <jd-icon icon="language"></jd-icon>
       <select id="locl">
@@ -73,33 +73,33 @@
       <div id="combo-info">
         <div id="combo-display">
           <div id="combo-top">
-            <div id="combo-info-secondary">
+            <div id="combo-info-secondary" class="tooltip bottom-right">
               <div id="combo-tier" tooltip="<p>The tier indicates how many combos have equal or better stats.</p><p><span class='tier-icon S'></span> means there are no combos which have a better stat without a tradeoff.</p><p><span class='tier-icon A'></span> means that there are just a few better combos, usually in the invincibility stat. You’re probably ok using this combo!</p><p><span class='tier-icon B'></span> <span class='tier-icon C'></span> <span class='tier-icon D'></span> means that there are a lot of combos with strictly better stats. You&nbsp;should probably see if there’s one you like.</p>"></div>
               <div id="combo-details"></div>
             </div>
             <div id="combo-options">
-              <div><jd-toggle class="checkbox" id="compare"><jd-icon icon="checkmark"></jd-icon></jd-toggle><label>Compare</label></div>
+              <div class="not-mobile"><jd-toggle class="checkbox" id="compare"><jd-icon icon="checkmark"></jd-icon></jd-toggle><label>Compare</label></div>
               <button id="random-button">Random</button>
-              <button id="optimize-button" disabled class="tooltip top-center" tooltip="Working on it...">Optimize...</button>
+              <button id="optimize-button" disabled class="tooltip top-center not-mobile" tooltip="Working on it...">Optimize...</button>
             </div>
           </div>
 
           <div id="current-combo">
             <div id="combo-driver">
-              <jd-toggle id="driver-lock"><jd-icon icon="lock"></jd-icon><label id="current-driver-label"></label></jd-toggle>
               <img id="current-driver-img" src="" width="128" height="128" loading="lazy"/>
+              <jd-toggle class="not-mobile" id="driver-lock"><jd-icon icon="lock"></jd-icon><label id="current-driver-label"></label></jd-toggle>
             </div>
             <div id="combo-body">
-              <jd-toggle id="body-lock"><jd-icon icon="lock"></jd-icon><label id="current-body-label"></label></jd-toggle>
               <img id="current-body-img" src="" width="200" height="128" loading="lazy"/>
+              <jd-toggle class="not-mobile" id="body-lock"><jd-icon icon="lock"></jd-icon><label id="current-body-label"></label></jd-toggle>
             </div>
             <div id="combo-tire">
-              <jd-toggle id="tire-lock"><jd-icon icon="lock"></jd-icon><label id="current-tire-label"></label></jd-toggle>
               <img id="current-tire-img" src="" width="200" height="128" loading="lazy"/>
+              <jd-toggle class="not-mobile" id="tire-lock"><jd-icon icon="lock"></jd-icon><label id="current-tire-label"></label></jd-toggle>
             </div>
             <div id="combo-glider">
-              <jd-toggle id="glider-lock"><jd-icon icon="lock"></jd-icon><label id="current-glider-label"></label></jd-toggle>
               <img id="current-glider-img" src="" width="200" height="128" loading="lazy"/>
+              <jd-toggle class="not-mobile" id="glider-lock"><jd-icon icon="lock"></jd-icon><label id="current-glider-label"></label></jd-toggle>
             </div>
           </div>
         </div>
