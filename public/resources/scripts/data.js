@@ -363,7 +363,7 @@ const gameStats = {
         hndWt: 4,
         hndAg: 4,
         hndAr: 2,
-        invcb: 2
+        invcb: 3
       },
       varmint: {
         weigt: 1,
@@ -379,7 +379,7 @@ const gameStats = {
         hndWt: 4,
         hndAg: 4,
         hndAr: 2,
-        invcb: 1
+        invcb: 2
       },
       mach: {
         weigt: 3,
@@ -395,7 +395,7 @@ const gameStats = {
         hndWt: 2,
         hndAg: 4,
         hndAr: 2,
-        invcb: 4
+        invcb: 3
       },
       ink: {
         weigt: 3,
@@ -411,7 +411,7 @@ const gameStats = {
         hndWt: 2,
         hndAg: 4,
         hndAr: 2,
-        invcb: 3
+        invcb: 1
       },
       steel: {
         weigt: 4,
@@ -461,7 +461,7 @@ const gameStats = {
         hndAr: 4,
         invcb: 3
       },
-      comet: {
+      yoshi: {
         weigt: 2,
         accel: 5,
         trctnOn: 4,
@@ -476,6 +476,22 @@ const gameStats = {
         hndAg: 3,
         hndAr: 4,
         invcb: 2
+      },
+      teddy: {
+        weigt: 2,
+        accel: 5,
+        trctnOn: 4,
+        trctn: 3,
+        mintb: 6,
+        spdGr: 2,
+        spdWt: 2,
+        spdAg: 3,
+        spdAr: 4,
+        hndGr: 4,
+        hndWt: 2,
+        hndAg: 3,
+        hndAr: 4,
+        invcb: 1
       },
       circuit: {
         weigt: 3,
@@ -635,7 +651,7 @@ const gameStats = {
         hndWt: 3,
         hndAg: 4,
         hndAr: 3,
-        invcb: 3
+        invcb: 4
       },
       bikeStd: {
         weigt: 1,
@@ -651,7 +667,7 @@ const gameStats = {
         hndWt: 3,
         hndAg: 4,
         hndAr: 3,
-        invcb: 2
+        invcb: 4
       },
       wiggler: {
         weigt: 1,
@@ -667,7 +683,7 @@ const gameStats = {
         hndWt: 3,
         hndAg: 4,
         hndAr: 3,
-        invcb: 1
+        invcb: 4
       },
       falcon: {
         weigt: 0,
@@ -747,7 +763,7 @@ const gameStats = {
         hndWt: 5,
         hndAg: 2,
         hndAr: 3,
-        invcb: 2
+        invcb: 3
       },
       landship: {
         weigt: 0,
@@ -763,7 +779,7 @@ const gameStats = {
         hndWt: 5,
         hndAg: 2,
         hndAr: 3,
-        invcb: 1
+        invcb: 2
       }
     },
     tires: {
@@ -781,7 +797,7 @@ const gameStats = {
         hndWt: 3,
         hndAg: 3,
         hndAr: 3,
-        invcb: 3
+        invcb: 4
       },
       gla: {
         weigt: 2,
@@ -797,7 +813,7 @@ const gameStats = {
         hndWt: 3,
         hndAg: 3,
         hndAr: 3,
-        invcb: 4
+        invcb: 5
       },
       monster: {
         weigt: 4,
@@ -813,7 +829,7 @@ const gameStats = {
         hndWt: 1,
         hndAg: 0,
         hndAr: 1,
-        invcb: 5
+        invcb: 6
       },
       ancient: {
         weigt: 4,
@@ -829,7 +845,7 @@ const gameStats = {
         hndWt: 1,
         hndAg: 0,
         hndAr: 1,
-        invcb: 4
+        invcb: 5
       },
       roller: {
         weigt: 0,
@@ -861,7 +877,7 @@ const gameStats = {
         hndWt: 4,
         hndAg: 3,
         hndAr: 4,
-        invcb: 4
+        invcb: 5
       },
       slick: {
         weigt: 3,
@@ -877,7 +893,7 @@ const gameStats = {
         hndWt: 0,
         hndAg: 2,
         hndAr: 1,
-        invcb: 4
+        invcb: 5
       },
       metal: {
         weigt: 4,
@@ -893,7 +909,7 @@ const gameStats = {
         hndWt: 2,
         hndAg: 1,
         hndAr: 0,
-        invcb: 5
+        invcb: 6
       },
       gold: {
         weigt: 4,
@@ -909,7 +925,7 @@ const gameStats = {
         hndWt: 2,
         hndAg: 1,
         hndAr: 0,
-        invcb: 4
+        invcb: 5
       },
       button: {
         weigt: 0,
@@ -925,7 +941,7 @@ const gameStats = {
         hndWt: 3,
         hndAg: 4,
         hndAr: 2,
-        invcb: 2
+        invcb: 3
       },
       offroad: {
         weigt: 3,
@@ -943,22 +959,6 @@ const gameStats = {
         hndAr: 2,
         invcb: 6
       },
-      triforce: {
-        weigt: 3,
-        accel: 3,
-        trctnOn: 3,
-        trctn: 6,
-        mintb: 3,
-        spdGr: 3,
-        spdWt: 4,
-        spdAg: 2,
-        spdAr: 1,
-        hndGr: 1,
-        hndWt: 1,
-        hndAg: 2,
-        hndAr: 2,
-        invcb: 5
-      },
       cushion: {
         weigt: 1,
         accel: 4,
@@ -973,7 +973,7 @@ const gameStats = {
         hndWt: 1,
         hndAg: 2,
         hndAr: 3,
-        invcb: 5
+        invcb: 6
       },
       sponge: {
         weigt: 1,
@@ -989,7 +989,7 @@ const gameStats = {
         hndWt: 1,
         hndAg: 2,
         hndAr: 3,
-        invcb: 3
+        invcb: 4
       }
     },
     gliders: {
@@ -1223,10 +1223,10 @@ const gameStats = {
         stats: "bowser",
         group: "bowser"
       },
-      // peachette: {
-      //   stats: "",
-      //   group: ""
-      // },
+      peachette: {
+        stats: "peach",
+        group: "peach"
+      },
       inklingF: {
         stats: "peachCat",
         group: "peachCat",
@@ -1261,18 +1261,18 @@ const gameStats = {
         group: "rosalina",
         folder: "link"
       },
-      // ddk: {
-      //   stats: "",
-      //   group: ""
-      // },
-      // fk: {
-      //   stats: "",
-      //   group: ""
-      // },
-      // pauline: {
-      //   stats: "",
-      //   group: ""
-      // },
+      ddk: {
+        stats: "peachCat",
+        group: "peachCat"
+      },
+      fk: {
+        stats: "wario",
+        group: "wario"
+      },
+      pauline: {
+        stats: "rosalina",
+        group: "rosalina"
+      },
       miiS: {
         stats: "marioBb",
         group: "marioBb",
@@ -1372,7 +1372,7 @@ const gameStats = {
       },
       comet: {
         type: "sport",
-        stats: "comet",
+        stats: "cat",
         group: "cat"
       },
       duke: {
@@ -1402,7 +1402,7 @@ const gameStats = {
       },
       yoshi: {
         type: "sport",
-        stats: "comet",
+        stats: "yoshi",
         group: "cat"
       },
       atvStd: {
@@ -1417,7 +1417,7 @@ const gameStats = {
       },
       teddy: {
         type: "atv",
-        stats: "cat",
+        stats: "teddy",
         group: "cat"
       },
       gla: {
@@ -1574,7 +1574,7 @@ const gameStats = {
         group: "std"
       },
       triforce: {
-        stats: "triforce",
+        stats: "offroad",
         group: "offroad"
       },
       leaf: {
