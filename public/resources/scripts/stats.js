@@ -76,12 +76,17 @@ class ComboC {
     this.lvl.size = this.size*2.5 + .75;
   }
 
-  getScore(stats = ["weigt", "accel", "trctn", "mintb",
-                    "spdGr", "spdWt", "spdAg", "spdAr",
-                    "hndGr", "hndWt", "hndAg", "hndAr", "invcb"]) {
+  getScore(weights = {}) {
+    weights ??= {
+      mintb: 1, accel: 1, weigt: 1, trctn: 1,
+      spd: 1, spdGr: 0, spdWt: 0, spdAg: 0, spdAr: 0,
+      hnd: 1, hndGr: 0, hndWt: 0, hndAg: 0, hndAr: 0,
+      invcb: 1, size: 0
+    }
+
     let sum = 0;
-    for (const stat of stats) {
-      sum += this.lvl[stat];
+    for (const stat of Object.keys(weights)) {
+      sum += this.lvl[stat] * weights[stat];
     }
     return sum;
   }
