@@ -89,20 +89,17 @@ class ComboC {
   getOptiScore() {
     let sum = 0;
     sum += this.lvl.mintb * 8;
-    sum += this.lvl.spd * 7.5;
-    sum += this.lvl.accel;
-    sum += this.lvl.hnd;
-    sum += this.lvl.weigt / 8;
-    sum += this.lvl.trctn / 8;
-    // sum += this.lvl.invcb / 16;
-    // sum -= gameStats.parts.bodies[this.body].type == "sport" ? 4 : 0;
-    // sum -= this.lvl.size;
+    sum += this.lvl.spd   * 7.5;
+    sum += this.lvl.accel * .5;
+    sum += this.lvl.hnd   * .5;
+    sum += this.lvl.weigt * .125;
+    sum += this.lvl.trctn * .125;
     return sum;
   }
 
-  static PERCENT_GR = .85; // Best estimate for percent of time on ground.
-  static PERCENT_AG = .12; // Best estimate for percent of time in anti-gravity.
-  static PERCENT_WT = .02; // Best estimate for percent of time underwater.
+  static PERCENT_GR = .80; // Best estimate for percent of time on ground.
+  static PERCENT_AG = .15; // Best estimate for percent of time in anti-gravity.
+  static PERCENT_WT = .04; // Best estimate for percent of time underwater.
   static PERCENT_AR = .01; // Best estimate for percent of time airborne.
 }
 
