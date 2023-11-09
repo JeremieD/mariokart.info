@@ -311,6 +311,7 @@ function drawPartsGrids() {
     button.title = driverName;
 
     const icon = document.createElement("img");
+    icon.loading = "lazy";
     icon.src = "/resources/graphics/drivers/" + driver + ".webp";
     icon.alt = driverName;
     icon.width = 40;
@@ -354,6 +355,7 @@ function drawPartsGrids() {
     button.title = bodyName;
 
     const icon = document.createElement("img");
+    icon.loading = "lazy";
     icon.src = "/resources/graphics/bodies/" + body + ".webp";
     icon.alt = bodyName;
     icon.width = 200;
@@ -388,6 +390,7 @@ function drawPartsGrids() {
     button.title = tireName;
 
     const icon = document.createElement("img");
+    icon.loading = "lazy";
     icon.src = "/resources/graphics/tires/" + tire + ".webp";
     icon.alt = tireName;
     icon.width = 200;
@@ -405,6 +408,7 @@ function drawPartsGrids() {
     button.title = gliderName;
 
     const icon = document.createElement("img");
+    icon.loading = "lazy";
     icon.src = "/resources/graphics/gliders/" + glider + ".webp";
     icon.alt = gliderName;
     icon.width = 200;
@@ -589,15 +593,27 @@ function fillTable(tableEl, data) {
 
     const comboDisplay = document.createElement("td");
     const driverDisplay = document.createElement("img");
+    driverDisplay.loading = "lazy";
+    driverDisplay.width = 128;
+    driverDisplay.height = 128;
     driverDisplay.src = "/resources/graphics/drivers/" + driver + ".webp";
     driverDisplay.title = strings[locl].drivers[driver];
     const bodyDisplay = document.createElement("img");
+    bodyDisplay.loading = "lazy";
+    bodyDisplay.width = 200;
+    bodyDisplay.height = 128;
     bodyDisplay.src = "/resources/graphics/bodies/" + body + ".webp";
     bodyDisplay.title = strings[locl].bodies[body];
     const tireDisplay = document.createElement("img");
+    tireDisplay.loading = "lazy";
+    tireDisplay.width = 200;
+    tireDisplay.height = 128;
     tireDisplay.src = "/resources/graphics/tires/" + tire + ".webp";
     tireDisplay.title = strings[locl].tires[tire];
     const gliderDisplay = document.createElement("img");
+    gliderDisplay.loading = "lazy";
+    gliderDisplay.width = 200;
+    gliderDisplay.height = 128;
     gliderDisplay.src = "/resources/graphics/gliders/" + glider + ".webp";
     gliderDisplay.title = strings[locl].gliders[glider];
 
