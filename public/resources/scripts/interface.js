@@ -619,6 +619,7 @@ function fillTable(tableEl, data) {
     return;
   }
 
+  let sortIndex = 0;
   for (const combo of data) {
     const row = document.createElement("tr");
 
@@ -641,6 +642,7 @@ function fillTable(tableEl, data) {
     }
 
     const comboDisplay = document.createElement("td");
+    comboDisplay.dataset.value = sortIndex--;
     const driverDisplay = document.createElement("img");
     driverDisplay.loading = "lazy";
     driverDisplay.width = 128;

@@ -41,6 +41,7 @@
   <script src="/resources/scripts/radio.js"></script>
   <script src="/resources/scripts/tooltip.js"></script>
   <script src="/resources/scripts/interface.js" async></script>
+  <script src="/resources/scripts/sortable.js" async></script>
 
   <script src="https://analytique.jeremiedupuis.com/collect?o=mk8dx.jeremiedupuis.com" async></script>
 </head>
@@ -170,26 +171,26 @@
     </section>
 
     <section class="table" id="better-combos">
-      <table>
+      <table class="sortable">
         <thead>
           <tr>
-            <th>
+            <th data-sort="false">
               <h2>Better Combos</h2>
               <p>These have the same value or better for every stat.</p>
             </th>
-            <th title="Mini-Turbo">MINTB</th>
-            <th title="Ground Speed">SPDGR</th>
-            <th title="Underwater Speed">SPDWT</th>
-            <th title="Air Speed">SPDAR</th>
-            <th title="Anti-Gravity Speed">SPDAG</th>
-            <th title="Acceleration">ACCEL</th>
-            <th title="Weight">WEIGT</th>
-            <th title="Ground Handling">HNDGR</th>
-            <th title="Underwater Handling">HNDWT</th>
-            <th title="Air Handling">HNDAR</th>
-            <th title="Anti-Gravity Handling">HNDAG</th>
-            <th title="Traction">TRCTN</th>
-            <th title="Invincibility">INVCB</th>
+            <th title="Mini-Turbo"><jd-icon icon="triangle-up"></jd-icon>MINTB</th>
+            <th title="Ground Speed"><jd-icon icon="triangle-up"></jd-icon>SPDGR</th>
+            <th title="Underwater Speed"><jd-icon icon="triangle-up"></jd-icon>SPDWT</th>
+            <th title="Air Speed"><jd-icon icon="triangle-up"></jd-icon>SPDAR</th>
+            <th title="Anti-Gravity Speed"><jd-icon icon="triangle-up"></jd-icon>SPDAG</th>
+            <th title="Acceleration"><jd-icon icon="triangle-up"></jd-icon>ACCEL</th>
+            <th title="Weight"><jd-icon icon="triangle-up"></jd-icon>WEIGT</th>
+            <th title="Ground Handling"><jd-icon icon="triangle-up"></jd-icon>HNDGR</th>
+            <th title="Underwater Handling"><jd-icon icon="triangle-up"></jd-icon>HNDWT</th>
+            <th title="Air Handling"><jd-icon icon="triangle-up"></jd-icon>HNDAR</th>
+            <th title="Anti-Gravity Handling"><jd-icon icon="triangle-up"></jd-icon>HNDAG</th>
+            <th title="Traction"><jd-icon icon="triangle-up"></jd-icon>TRCTN</th>
+            <th title="Invincibility"><jd-icon icon="triangle-up"></jd-icon>INVCB</th>
           </tr>
         </thead>
         <tbody id="better-combos-rows"></tbody>
@@ -197,26 +198,26 @@
     </section>
 
     <section class="table" id="similar-combos">
-      <table>
+      <table class="sortable">
         <thead>
           <tr>
             <th>
               <h2>Similar Combos</h2>
               <p></p>
             </th>
-            <th title="Mini-Turbo">MINTB</th>
-            <th title="Ground Speed">SPDGR</th>
-            <th title="Underwater Speed">SPDWT</th>
-            <th title="Air Speed">SPDAR</th>
-            <th title="Anti-Gravity Speed">SPDAG</th>
-            <th title="Acceleration">ACCEL</th>
-            <th title="Weight">WEIGT</th>
-            <th title="Ground Handling">HNDGR</th>
-            <th title="Underwater Handling">HNDWT</th>
-            <th title="Air Handling">HNDAR</th>
-            <th title="Anti-Gravity Handling">HNDAG</th>
-            <th title="Traction">TRCTN</th>
-            <th title="Invincibility">INVCB</th>
+            <th title="Mini-Turbo"><jd-icon icon="triangle-up"></jd-icon>MINTB</th>
+            <th title="Ground Speed"><jd-icon icon="triangle-up"></jd-icon>SPDGR</th>
+            <th title="Underwater Speed"><jd-icon icon="triangle-up"></jd-icon>SPDWT</th>
+            <th title="Air Speed"><jd-icon icon="triangle-up"></jd-icon>SPDAR</th>
+            <th title="Anti-Gravity Speed"><jd-icon icon="triangle-up"></jd-icon>SPDAG</th>
+            <th title="Acceleration"><jd-icon icon="triangle-up"></jd-icon>ACCEL</th>
+            <th title="Weight"><jd-icon icon="triangle-up"></jd-icon>WEIGT</th>
+            <th title="Ground Handling"><jd-icon icon="triangle-up"></jd-icon>HNDGR</th>
+            <th title="Underwater Handling"><jd-icon icon="triangle-up"></jd-icon>HNDWT</th>
+            <th title="Air Handling"><jd-icon icon="triangle-up"></jd-icon>HNDAR</th>
+            <th title="Anti-Gravity Handling"><jd-icon icon="triangle-up"></jd-icon>HNDAG</th>
+            <th title="Traction"><jd-icon icon="triangle-up"></jd-icon>TRCTN</th>
+            <th title="Invincibility"><jd-icon icon="triangle-up"></jd-icon>INVCB</th>
           </tr>
         </thead>
         <tbody id="similar-combos-rows"></tbody>
@@ -231,8 +232,8 @@
   </main>
 
   <footer>
-    <p>© Design & Code by <a href="https://jeremiedupuis.com" target="_blank">Jérémie Dupuis</a> 🏳️‍🌈 — Data & Images from <a href="https://www.mariowiki.com/Mario_Kart_8_Deluxe_in-game_statistics" target="_blank">Mario Wiki</a>, licensed under <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank">CC-BY-SA</a></p>
-    <p>Last updated 9 Nov 2023 – v0.6 — MK8DX v3.0.0 ★</p>
+    <p>© Design & Code by <a href="https://jeremiedupuis.com" target="_blank">Jérémie Dupuis</a> 🏳️‍🌈 / Data & Images from <a href="https://www.mariowiki.com/Mario_Kart_8_Deluxe_in-game_statistics" target="_blank">Mario Wiki</a>, licensed under <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank">CC-BY-SA</a></p>
+    <p>Last updated 11 Dec 2023 / v0.7 / MK8DX v3.0.1 ★</p>
   </footer>
 
 </body>

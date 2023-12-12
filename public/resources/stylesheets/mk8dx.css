@@ -571,6 +571,43 @@ jd-tooltip.out {
   transition: .2s .375s ease opacity;
 }
 
+.sortable thead th:not([data-sort="false"]) { cursor: pointer; }
+
+.sortable thead th { position: relative; }
+.sortable thead th jd-icon {
+  display: inline-block;
+  height: 6px;
+  position: absolute;
+  left: 0;
+  translate: -90% 80%;
+  transform-origin: 50% 60%;
+  transition: .2s ease transform, .2s ease opacity;
+  opacity: 0;
+}
+.sortable thead th jd-icon svg { height: 100%; }
+
+.sortable[data-sort-dir=">"] thead th jd-icon { transform: rotate(180deg); }
+.sortable[data-sort-by="1"] thead th:nth-of-type(1) jd-icon { opacity: 1; }
+.sortable[data-sort-by="2"] thead th:nth-of-type(2) jd-icon { opacity: 1; }
+.sortable[data-sort-by="3"] thead th:nth-of-type(3) jd-icon { opacity: 1; }
+.sortable[data-sort-by="4"] thead th:nth-of-type(4) jd-icon { opacity: 1; }
+.sortable[data-sort-by="5"] thead th:nth-of-type(5) jd-icon { opacity: 1; }
+.sortable[data-sort-by="6"] thead th:nth-of-type(6) jd-icon { opacity: 1; }
+.sortable[data-sort-by="7"] thead th:nth-of-type(7) jd-icon { opacity: 1; }
+.sortable[data-sort-by="8"] thead th:nth-of-type(8) jd-icon { opacity: 1; }
+.sortable[data-sort-by="9"] thead th:nth-of-type(9) jd-icon { opacity: 1; }
+.sortable[data-sort-by="10"] thead th:nth-of-type(10) jd-icon { opacity: 1; }
+.sortable[data-sort-by="11"] thead th:nth-of-type(11) jd-icon { opacity: 1; }
+.sortable[data-sort-by="12"] thead th:nth-of-type(12) jd-icon { opacity: 1; }
+.sortable[data-sort-by="13"] thead th:nth-of-type(13) jd-icon { opacity: 1; }
+.sortable[data-sort-by="14"] thead th:nth-of-type(14) jd-icon { opacity: 1; }
+.sortable[data-sort-by="15"] thead th:nth-of-type(15) jd-icon { opacity: 1; }
+.sortable[data-sort-by="16"] thead th:nth-of-type(16) jd-icon { opacity: 1; }
+.sortable[data-sort-by="17"] thead th:nth-of-type(17) jd-icon { opacity: 1; }
+.sortable[data-sort-by="18"] thead th:nth-of-type(18) jd-icon { opacity: 1; }
+.sortable[data-sort-by="19"] thead th:nth-of-type(19) jd-icon { opacity: 1; }
+.sortable[data-sort-by="20"] thead th:nth-of-type(20) jd-icon { opacity: 1; }
+
 
 @media (max-width: 1440px) {
   #current-combo img {
