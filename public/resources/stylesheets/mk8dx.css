@@ -275,12 +275,13 @@ jd-icon svg {
 .meter::after {
   width: calc(var(--value) / 6 * 100%);
   transition: .2s ease width;
-  background-color: var(--color-accent);
+  background-color: var(--color-yellow);
 }
 
-.meter.green::after { background-color: var(--color-green); }
-.meter.cyan::after { background-color: var(--color-cyan); }
-.meter.blue::after { background-color: var(--color-blue); }
+.meter.ground::after { background-color: var(--color-orange); }
+.meter.anti-gravity::after { background-color: var(--color-purple); }
+.meter.water::after { background-color: var(--color-blue); }
+.meter.air::after { background-color: var(--color-cyan); }
 
 .meter::before {
   width: calc(var(--secondary-value) / 6 * 100%);
@@ -421,11 +422,8 @@ td:not(:first-child) {
   color: var(--color-grey);
 }
 
-.positive { color: var(--color-accent) !important; }
+.positive { color: var(--color-green) !important; }
 .negative { color: var(--color-orange) !important; }
-@media (prefers-color-scheme: dark) {
-  .negative { color: var(--color-yellow) !important; }
-}
 
 tbody td:first-child:not(.empty) {
   display: flex;
