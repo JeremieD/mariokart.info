@@ -1,59 +1,61 @@
-// Display a tooltip when hovering an element with the “tooltip” attribute.
-whenDOMReady(() => {
-  const elementsWithTooltips = document.querySelectorAll("[tooltip]");
+const tooltip = document.createElement("jd-tooltip");
 
+whenDOMReady(() => {
+  document.body.append(tooltip);
+  const elementsWithTooltips = document.querySelectorAll("[tooltip]");
   for (const el of elementsWithTooltips) {
     attachTooltip(el);
   }
 });
 
 function attachTooltip(el) {
-  if (!el.hasAttribute("tabindex")) { el.tabIndex = 0; }
-
-  el.abortController;
-
-  el.tooltipElement = document.createElement("jd-tooltip");
-  el.tooltipElement.innerHTML = el.getAttribute("tooltip");
-
-  const show = el => {
-    if (el.tooltipElement.classList.contains("out")) {
-      el.abortController?.abort();
-      el.tooltipElement.classList.remove("out");
-    }
-
-    if (!el.tooltipElement.classList.contains("in")) {
-      el.appendChild(el.tooltipElement);
-      el.tooltipElement.classList.add("in");
-    }
-  };
-
-  const hide = el => {
-    // Reset AbortController
-    el.abortController = new AbortController();
-
-    el.tooltipElement.addEventListener("transitionend", () => {
-      el.tooltipElement.remove();
-      el.tooltipElement.classList.remove("in");
-    }, { passive: true, once: true, signal: el.abortController.signal });
-
-    el.tooltipElement.classList.add("out");
-  };
-
   el.addEventListener("mouseenter", () => {
-    show(el);
+    showTooltip(el);
   }, { passive: true });
 
   el.addEventListener("mouseleave", () => {
-    hide(el);
+    hideTooltip();
   }, { passive: true });
 
   el.addEventListener("focus", e => {
     if (e.target.matches(":focus-visible")) {
-      show(el);
+      showTooltip(el);
     }
   }, { passive: true });
 
   el.addEventListener("blur", () => {
-    hide(el);
+    hideTooltip();
   }, { passive: true });
+}
+
+function showTooltip(el) {
+  tooltip.className = "";
+
+  // Set tooltip content
+  tooltip.innerHTML = el.getAttribute("tooltip");
+
+  // Set tooltip style
+  const elRect = el.getBoundingClientRect();
+  const tooltipAlign = el.getAttribute("tooltip-align")?.trim() ?? "";
+
+  if (tooltipAlign == "top-right") {
+    tooltip.className = "top-right";
+    tooltip.style.top = elRect.top - 20 + "px";
+    tooltip.style.left = elRect.left + "px";
+  } else if (tooltipAlign == "left-middle") {
+    tooltip.className = "left-middle";
+    tooltip.style.top = elRect.top + elRect.height/2 + "px";
+    tooltip.style.left = elRect.left - 20 + "px";
+  } else {
+    tooltip.className = "top-center";
+    tooltip.style.top = elRect.top - 20 + "px";
+    tooltip.style.left = elRect.left + elRect.width/2 + "px";
+  }
+
+  // Show tooltip
+  tooltip.classList.add("shown");
+}
+
+function hideTooltip() {
+  tooltip.classList.remove("shown");
 }

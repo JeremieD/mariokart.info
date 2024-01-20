@@ -259,91 +259,91 @@ function drawCurrentCombo(updateURL = true) {
   mintbMeter.classList.toggle("dominant", mintbA > mintbB);
   mintbMeter.style.setProperty("--value", mintbA);
   mintbMeter.style.setProperty("--secondary-value", mintbB);
-  mintbMeter.title = strings[locl].stats["mintb"] + ": " + mintbA;
+  mintbMeter.setAttribute("tooltip", strings[locl].stats["mintb"] + ": " + mintbA);
 
   const accelA = selectedCombo.lvl.accel;
   const accelB = otherCombo.lvl.accel;
   accelMeter.classList.toggle("dominant", accelA > accelB);
   accelMeter.style.setProperty("--value", accelA);
   accelMeter.style.setProperty("--secondary-value", accelB);
-  accelMeter.title = strings[locl].stats["accel"] + ": " + accelA;
+  accelMeter.setAttribute("tooltip", strings[locl].stats["accel"] + ": " + accelA);
 
   const weigtA = selectedCombo.lvl.weigt;
   const weigtB = otherCombo.lvl.weigt;
   weigtMeter.classList.toggle("dominant", weigtA > weigtB);
   weigtMeter.style.setProperty("--value", weigtA);
   weigtMeter.style.setProperty("--secondary-value", weigtB);
-  weigtMeter.title = strings[locl].stats["weigt"] + ": " + weigtA;
+  weigtMeter.setAttribute("tooltip", strings[locl].stats["weigt"] + ": " + weigtA);
 
   const spdGrA = selectedCombo.lvl.spdGr;
   const spdGrB = otherCombo.lvl.spdGr;
   spdGrMeter.classList.toggle("dominant", spdGrA > spdGrB);
   spdGrMeter.style.setProperty("--value", spdGrA);
   spdGrMeter.style.setProperty("--secondary-value", spdGrB);
-  spdGrMeter.title = strings[locl].stats["spdGr"] + ": " + spdGrA;
+  spdGrMeter.setAttribute("tooltip", strings[locl].stats["spdGr"] + ": " + spdGrA);
 
   const spdAgA = selectedCombo.lvl.spdAg;
   const spdAgB = otherCombo.lvl.spdAg;
   spdAgMeter.classList.toggle("dominant", spdAgA > spdAgB);
   spdAgMeter.style.setProperty("--value", spdAgA);
   spdAgMeter.style.setProperty("--secondary-value", spdAgB);
-  spdAgMeter.title = strings[locl].stats["spdAg"] + ": " + spdAgA;
+  spdAgMeter.setAttribute("tooltip", strings[locl].stats["spdAg"] + ": " + spdAgA);
 
   const spdWtA = selectedCombo.lvl.spdWt;
   const spdWtB = otherCombo.lvl.spdWt;
   spdWtMeter.classList.toggle("dominant", spdWtA > spdWtB);
   spdWtMeter.style.setProperty("--value", spdWtA);
   spdWtMeter.style.setProperty("--secondary-value", spdWtB);
-  spdWtMeter.title = strings[locl].stats["spdWt"] + ": " + spdWtA;
+  spdWtMeter.setAttribute("tooltip", strings[locl].stats["spdWt"] + ": " + spdWtA);
 
   const spdArA = selectedCombo.lvl.spdAr;
   const spdArB = otherCombo.lvl.spdAr;
   spdArMeter.classList.toggle("dominant", spdArA > spdArB);
   spdArMeter.style.setProperty("--value", spdArA);
   spdArMeter.style.setProperty("--secondary-value", spdArB);
-  spdArMeter.title = strings[locl].stats["spdAr"] + ": " + spdArA;
+  spdArMeter.setAttribute("tooltip", strings[locl].stats["spdAr"] + ": " + spdArA);
 
   const hndGrA = selectedCombo.lvl.hndGr;
   const hndGrB = otherCombo.lvl.hndGr;
   hndGrMeter.classList.toggle("dominant", hndGrA > hndGrB);
   hndGrMeter.style.setProperty("--value", hndGrA);
   hndGrMeter.style.setProperty("--secondary-value", hndGrB);
-  hndGrMeter.title = strings[locl].stats["hndGr"] + ": " + hndGrA;
+  hndGrMeter.setAttribute("tooltip", strings[locl].stats["hndGr"] + ": " + hndGrA);
 
   const hndAgA = selectedCombo.lvl.hndAg;
   const hndAgB = otherCombo.lvl.hndAg;
   hndAgMeter.classList.toggle("dominant", hndAgA > hndAgB);
   hndAgMeter.style.setProperty("--value", hndAgA);
   hndAgMeter.style.setProperty("--secondary-value", hndAgB);
-  hndAgMeter.title = strings[locl].stats["hndAg"] + ": " + hndAgA;
+  hndAgMeter.setAttribute("tooltip", strings[locl].stats["hndAg"] + ": " + hndAgA);
 
   const hndWtA = selectedCombo.lvl.hndWt;
   const hndWtB = otherCombo.lvl.hndWt;
   hndWtMeter.classList.toggle("dominant", hndWtA > hndWtB);
   hndWtMeter.style.setProperty("--value", hndWtA);
   hndWtMeter.style.setProperty("--secondary-value", hndWtB);
-  hndWtMeter.title = strings[locl].stats["hndWt"] + ": " + hndWtA;
+  hndWtMeter.setAttribute("tooltip", strings[locl].stats["hndWt"] + ": " + hndWtA);
 
   const hndArA = selectedCombo.lvl.hndAr;
   const hndArB = otherCombo.lvl.hndAr;
   hndArMeter.classList.toggle("dominant", hndArA > hndArB);
   hndArMeter.style.setProperty("--value", hndArA);
   hndArMeter.style.setProperty("--secondary-value", hndArB);
-  hndArMeter.title = strings[locl].stats["hndAr"] + ": " + hndArA;
+  hndArMeter.setAttribute("tooltip", strings[locl].stats["hndAr"] + ": " + hndArA);
 
   const trctnA = selectedCombo.lvl.trctn;
   const trctnB = otherCombo.lvl.trctn;
   trctnMeter.classList.toggle("dominant", trctnA > trctnB);
   trctnMeter.style.setProperty("--value", trctnA);
   trctnMeter.style.setProperty("--secondary-value", trctnB);
-  trctnMeter.title = strings[locl].stats["trctn"] + ": " + trctnA;
+  trctnMeter.setAttribute("tooltip", strings[locl].stats["trctn"] + ": " + trctnA);
 
   const invcbA = selectedCombo.lvl.invcb;
   const invcbB = otherCombo.lvl.invcb;
   invcbMeter.classList.toggle("dominant", invcbA > invcbB);
   invcbMeter.style.setProperty("--value", invcbA);
   invcbMeter.style.setProperty("--secondary-value", invcbB);
-  invcbMeter.title = strings[locl].stats["invcb"] + ": " + invcbA;
+  invcbMeter.setAttribute("tooltip", strings[locl].stats["invcb"] + ": " + invcbA);
 
   if (updateURL) updateURLParams();
 
