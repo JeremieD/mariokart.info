@@ -151,6 +151,7 @@ section+section { margin-top: 1.5rem; }
 #current-combo {
   display: flex;
   align-items: start;
+  justify-content: center;
   gap: 1rem;
   font-size: 12px;
   font-weight: bold;
@@ -600,7 +601,7 @@ jd-tooltip.out {
   #combo-tabs button:last-child { border-radius: 2px .5rem .5rem 2px; }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1366px) {
   .not-mobile { display: none !important; }
 
   section:not(.table) {
@@ -616,10 +617,6 @@ jd-tooltip.out {
     width: 100%;
   }
 
-  #current-combo {
-    width: 100%;
-  }
-
   #current-combo img {
     width: 100%;
     height: auto;
@@ -628,6 +625,7 @@ jd-tooltip.out {
 
   #combo-stats {
     width: 100%;
+    max-width: 640px;
   }
 
   #combo-stats>div {
@@ -696,6 +694,6 @@ jd-tooltip.out {
   }
 }
 
-@media (min-width: 801px) {
+@media (min-width: 1367px) {
   .only-mobile { display: none !important; }
 }
