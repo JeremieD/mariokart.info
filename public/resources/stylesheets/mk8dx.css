@@ -151,6 +151,7 @@ section+section { margin-top: 1.5rem; }
 #current-combo {
   display: flex;
   align-items: start;
+  justify-content: center;
   gap: 1rem;
   font-size: 12px;
   font-weight: bold;
@@ -275,12 +276,13 @@ jd-icon svg {
 .meter::after {
   width: calc(var(--value) / 6 * 100%);
   transition: .2s ease width;
-  background-color: var(--color-accent);
+  background-color: var(--color-yellow);
 }
 
-.meter.green::after { background-color: var(--color-green); }
-.meter.cyan::after { background-color: var(--color-cyan); }
-.meter.blue::after { background-color: var(--color-blue); }
+.meter.ground::after { background-color: var(--color-orange); }
+.meter.anti-gravity::after { background-color: var(--color-purple); }
+.meter.water::after { background-color: var(--color-blue); }
+.meter.air::after { background-color: var(--color-cyan); }
 
 .meter::before {
   width: calc(var(--secondary-value) / 6 * 100%);
@@ -421,11 +423,8 @@ td:not(:first-child) {
   color: var(--color-grey);
 }
 
-.positive { color: var(--color-accent) !important; }
+.positive { color: var(--color-green) !important; }
 .negative { color: var(--color-orange) !important; }
-@media (prefers-color-scheme: dark) {
-  .negative { color: var(--color-yellow) !important; }
-}
 
 tbody td:first-child:not(.empty) {
   display: flex;
@@ -509,18 +508,11 @@ tbody td:first-child:not(.empty) {
   text-decoration: none;
 }
 
-[tooltip] { position: relative; }
-
 jd-tooltip {
   position: absolute;
-  top: auto;
-  bottom: 100%;
-  left: 0;
-  right: auto;
-  min-width: 16ch;
+  min-width: 12ch;
   width: max-content;
   max-width: min(64ch, 85vw);
-  transform: translate(-8px, -24px);
   padding: 12px 16px;
   background-color: var(--color-interactive);
   box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.33);
@@ -531,8 +523,10 @@ jd-tooltip {
   letter-spacing: 0;
   color: var(--color-text);
   cursor: default;
-  transition: .2s ease opacity;
+  transition: .2s .375s ease opacity;
   z-index: 100;
+  opacity: 0;
+  pointer-events: none;
 }
 
 jd-tooltip::before {
@@ -544,31 +538,29 @@ jd-tooltip::before {
   right: auto;
   width: 16px;
   height: 16px;
+  box-shadow: 3px 3px 3px 0 rgba(0, 0, 0, 0.15);
   transform: translate(-50%, -50%) rotate(45deg);
   border-radius: 4px 0;
   background-color: var(--color-interactive);
 }
 
-.tooltip.top-center jd-tooltip {
-  top: auto;
-  bottom: 100%;
-  left: 50%;
-  right: auto;
-  transform: translate(-50%, -24px);
-}
-.tooltip.top-center jd-tooltip::before { left: 50%; }
+jd-tooltip.top-right { transform: translateY(-100%) translateX(-8px); }
 
-.tooltip.bottom-right jd-tooltip {
-  top: 100%;
-  bottom: auto;
-  transform: translate(-8px, 16px);
-}
-.tooltip.bottom-right jd-tooltip::before { top: 0; }
+jd-tooltip.top-center { transform: translateY(-100%) translateX(-50%); }
+jd-tooltip.top-center::before { left: 50%; }
 
-jd-tooltip.in { opacity: 1; }
-jd-tooltip.out {
-  opacity: 0;
-  transition: .2s .375s ease opacity;
+jd-tooltip.left-middle { transform: translateY(-50%) translateX(-100%); text-align: right; }
+jd-tooltip.left-middle::before {
+  top: 50%;
+  left: 100%;
+  box-shadow: 3px -3px 3px 0 rgba(0, 0, 0, 0.15);
+  border-radius: 0 4px;
+}
+
+jd-tooltip:is(.shown, :hover) {
+  transition: .2s ease opacity;
+  pointer-events: auto;
+  opacity: 1;
 }
 
 .sortable thead th:not([data-sort="false"]) { cursor: pointer; }
@@ -639,7 +631,7 @@ jd-tooltip.out {
   #combo-tabs button:last-child { border-radius: 2px .5rem .5rem 2px; }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1366px) {
   .not-mobile { display: none !important; }
 
   section:not(.table) {
@@ -655,10 +647,6 @@ jd-tooltip.out {
     width: 100%;
   }
 
-  #current-combo {
-    width: 100%;
-  }
-
   #current-combo img {
     width: 100%;
     height: auto;
@@ -667,6 +655,7 @@ jd-tooltip.out {
 
   #combo-stats {
     width: 100%;
+    max-width: 640px;
   }
 
   #combo-stats>div {
@@ -735,6 +724,6 @@ jd-tooltip.out {
   }
 }
 
-@media (min-width: 801px) {
+@media (min-width: 1367px) {
   .only-mobile { display: none !important; }
 }
