@@ -26,7 +26,7 @@ let mintbMeter, accelMeter, weigtMeter, // Stat bars
     trctnMeter, invcbMeter;
 let partsGrid;
 let driverSelect, bodySelect, tireSelect, gliderSelect; // Part grids
-let betterCombosRows, similarCombosRows; // Table bodies
+let dominantCombosRows, similarCombosRows; // Table bodies
 
 whenDOMReady(() => {
   comboSelect = document.getElementById("combo-tabs");
@@ -77,7 +77,7 @@ whenDOMReady(() => {
   tireSelect   = document.getElementById("tires");
   gliderSelect = document.getElementById("gliders");
 
-  betterCombosRows = document.getElementById("better-combos-rows");
+  dominantCombosRows = document.getElementById("dominant-combos-rows");
   similarCombosRows = document.getElementById("similar-combos-rows");
 
   initRadioGroup(comboSelect).addEventListener("change", e => {
@@ -533,7 +533,7 @@ function randomCombo() {
   selectCombo();
 }
 
-function getBetterCombos(ignoreLocks = false) {
+function getDominantCombos(ignoreLocks = false) {
   let opts = {
     mustDiffer: true,
     mintbMin: selectedCombo.lvl.mintb,
@@ -576,25 +576,25 @@ function getSimilarCombos(ignoreLocks = false) {
 // TODO: Abstract this and avoid repeated calls to listCombos.
 function getTier() {
   const nbCombos = 28224; // Nb of different *class* combinations
-  const nbBetterCombos = getBetterCombos(true).length;
+  const nbDominantCombos = getDominantCombos(true).length;
 
-  if (nbBetterCombos == 0) return "S";
-  if (nbBetterCombos / nbCombos < .0003) return "A";
-  if (nbBetterCombos / nbCombos < .002) return "B";
-  if (nbBetterCombos / nbCombos < .0035) return "C";
+  if (nbDominantCombos == 0) return "S";
+  if (nbDominantCombos / nbCombos < .0003) return "A";
+  if (nbDominantCombos / nbCombos < .002) return "B";
+  if (nbDominantCombos / nbCombos < .0035) return "C";
   return "D";
 }
 
 function drawTables() {
-  drawBetterCombos();
+  drawDominantCombos();
   drawSimilarCombos();
 }
 
-function drawBetterCombos() {
-  const betterCombos = getBetterCombos();
-  betterCombosRows.innerHTML = "";
+function drawDominantCombos() {
+  const dominantCombos = getDominantCombos();
+  dominantCombosRows.innerHTML = "";
 
-  fillTable(betterCombosRows, betterCombos);
+  fillTable(dominantCombosRows, dominantCombos);
 }
 
 function drawSimilarCombos() {
