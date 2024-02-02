@@ -509,7 +509,7 @@ tbody td:first-child:not(.empty) {
 }
 
 jd-tooltip {
-  position: absolute;
+  position: fixed;
   min-width: 12ch;
   width: max-content;
   max-width: min(64ch, 85vw);
