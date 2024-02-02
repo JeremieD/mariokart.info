@@ -229,7 +229,11 @@ jd-icon svg {
   transform: translate(-50%, -50%);
 }
 
-.checkbox + label { font-size: .875rem; }
+.checkbox + label {
+  font-size: .875rem;
+  vertical-align: middle;
+  margin-left: .375em;
+}
 
 #combo-stats {
   display: flex;
