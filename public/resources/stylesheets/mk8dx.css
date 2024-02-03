@@ -69,8 +69,8 @@ section {
   background-color: var(--color-foreground);
   border-radius: .5rem;
 }
-section:not(.table) { padding: 4rem; }
-section+section { margin-top: 1.5rem; }
+section:not(.tab-panels) { padding: 4rem; }
+section+* { margin-top: 1.5rem; }
 
 #builder {
   display: flex;
@@ -393,7 +393,49 @@ jd-icon svg {
   height: 2.5rem;
 }
 
-section.table {
+.tab-panels {
+  border-radius: 2px 8px 8px 8px;
+  overflow: clip;
+}
+
+.tab-panels>*:not(.selected) {
+  display: none;
+}
+
+.tab-handles {
+  display: flex;
+  gap: .25rem;
+  padding-bottom: .25rem;
+}
+
+.tab-handles a {
+  display: inline-block;
+  height: 3.5rem;
+  padding: 1.2rem 1.5rem;
+  background-color: color-mix(in srgb, var(--color-foreground) 66%, transparent);
+  font-size: 1.125rem;
+  line-height: 1;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 2px;
+}
+
+.tab-handles a.selected { background-color: var(--color-foreground); }
+.tab-handles a.selected::after {
+  display: block;
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 100%;
+  height: 1em;
+  background-color: inherit;
+}
+
+.tab-handles a:first-child { border-radius: 8px 2px 2px 2px; }
+.tab-handles a:last-child { border-radius: 2px 8px 2px 2px; }
+
+div.table {
   height: 40rem;
   overflow: scroll;
 }
@@ -424,7 +466,7 @@ th p { font-size: .875rem; }
 th, td { padding: .325rem; }
 th {
   padding-top: 3rem;
-  padding-bottom: .5rem;
+  padding-bottom: .75rem;
   vertical-align: bottom;
 }
 :is(th, td):first-child { padding-left: 4rem; }
@@ -460,8 +502,8 @@ td.empty {
 }
 
 table button {
-  height: 2rem;
-  padding: 0 .5rem;
+  height: 2.25rem;
+  padding: 0 .75rem;
   text-align: center;
   background-color: var(--color-interactive);
 }

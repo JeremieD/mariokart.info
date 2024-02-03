@@ -40,6 +40,7 @@
   <script src="/resources/scripts/stats.js"></script>
   <script src="/resources/scripts/radio.js"></script>
   <script src="/resources/scripts/tooltip.js"></script>
+  <script src="/resources/scripts/tabs.js"></script>
   <script src="/resources/scripts/interface.js" async></script>
   <script src="/resources/scripts/sortable.js" async></script>
 
@@ -169,88 +170,92 @@
       </div>
     </section>
 
-    <section class="table" id="dominant-combos">
-      <table class="sortable">
-        <thead>
-          <tr>
-            <th data-sort="false">
-              <h2>Dominant Combos</h2>
-              <p>These have the same value or better for every stat.</p>
-            </th>
-            <th tooltip-align="top-center" tooltip="Mini-Turbo"><jd-icon icon="triangle-up"></jd-icon>MINTB</th>
-            <th tooltip-align="top-center" tooltip="Ground Speed"><jd-icon icon="triangle-up"></jd-icon>SPDGR</th>
-            <th tooltip-align="top-center" tooltip="Anti-Gravity Speed"><jd-icon icon="triangle-up"></jd-icon>SPDAG</th>
-            <th tooltip-align="top-center" tooltip="Underwater Speed"><jd-icon icon="triangle-up"></jd-icon>SPDWT</th>
-            <th tooltip-align="top-center" tooltip="Air Speed"><jd-icon icon="triangle-up"></jd-icon>SPDAR</th>
-            <th tooltip-align="top-center" tooltip="Acceleration"><jd-icon icon="triangle-up"></jd-icon>ACCEL</th>
-            <th tooltip-align="top-center" tooltip="Weight"><jd-icon icon="triangle-up"></jd-icon>WEIGT</th>
-            <th tooltip-align="top-center" tooltip="Ground Handling"><jd-icon icon="triangle-up"></jd-icon>HNDGR</th>
-            <th tooltip-align="top-center" tooltip="Anti-Gravity Handling"><jd-icon icon="triangle-up"></jd-icon>HNDAG</th>
-            <th tooltip-align="top-center" tooltip="Underwater Handling"><jd-icon icon="triangle-up"></jd-icon>HNDWT</th>
-            <th tooltip-align="top-center" tooltip="Air Handling"><jd-icon icon="triangle-up"></jd-icon>HNDAR</th>
-            <th tooltip-align="top-center" tooltip="Traction"><jd-icon icon="triangle-up"></jd-icon>TRCTN</th>
-            <th tooltip-align="top-center" tooltip="Invincibility"><jd-icon icon="triangle-up"></jd-icon>INVCB</th>
-          </tr>
-        </thead>
-        <tbody id="dominant-combos-rows"></tbody>
-      </table>
-    </section>
-
-    <section class="table" id="similar-combos">
-      <table class="sortable">
-        <thead>
-          <tr>
-            <th>
-              <h2>Similar Combos</h2>
-              <p></p>
-            </th>
-            <th tooltip-align="top-center" tooltip="Mini-Turbo"><jd-icon icon="triangle-up"></jd-icon>MINTB</th>
-            <th tooltip-align="top-center" tooltip="Ground Speed"><jd-icon icon="triangle-up"></jd-icon>SPDGR</th>
-            <th tooltip-align="top-center" tooltip="Anti-Gravity Speed"><jd-icon icon="triangle-up"></jd-icon>SPDAG</th>
-            <th tooltip-align="top-center" tooltip="Underwater Speed"><jd-icon icon="triangle-up"></jd-icon>SPDWT</th>
-            <th tooltip-align="top-center" tooltip="Air Speed"><jd-icon icon="triangle-up"></jd-icon>SPDAR</th>
-            <th tooltip-align="top-center" tooltip="Acceleration"><jd-icon icon="triangle-up"></jd-icon>ACCEL</th>
-            <th tooltip-align="top-center" tooltip="Weight"><jd-icon icon="triangle-up"></jd-icon>WEIGT</th>
-            <th tooltip-align="top-center" tooltip="Ground Handling"><jd-icon icon="triangle-up"></jd-icon>HNDGR</th>
-            <th tooltip-align="top-center" tooltip="Anti-Gravity Handling"><jd-icon icon="triangle-up"></jd-icon>HNDAG</th>
-            <th tooltip-align="top-center" tooltip="Underwater Handling"><jd-icon icon="triangle-up"></jd-icon>HNDWT</th>
-            <th tooltip-align="top-center" tooltip="Air Handling"><jd-icon icon="triangle-up"></jd-icon>HNDAR</th>
-            <th tooltip-align="top-center" tooltip="Traction"><jd-icon icon="triangle-up"></jd-icon>TRCTN</th>
-            <th tooltip-align="top-center" tooltip="Invincibility"><jd-icon icon="triangle-up"></jd-icon>INVCB</th>
-          </tr>
-        </thead>
-        <tbody id="similar-combos-rows"></tbody>
-      </table>
-    </section>
-
-    <section class="table" id="custom-combos">
-      <table>
-        <thead>
-          <tr>
-            <th>
-              <h2>Custom Formula</h2>
-              <p>Find the best combo according to a custom formula.</p>
-              <p id="custom-combo-formula"></p>
-              <button id="cutomize-formula-button">Customize...</button>
-            </th>
-            <th tooltip-align="top-center" tooltip="Mini-Turbo">MINTB</th>
-            <th tooltip-align="top-center" tooltip="Ground Speed">SPDGR</th>
-            <th tooltip-align="top-center" tooltip="Anti-Gravity Speed">SPDAG</th>
-            <th tooltip-align="top-center" tooltip="Underwater Speed">SPDWT</th>
-            <th tooltip-align="top-center" tooltip="Air Speed">SPDAR</th>
-            <th tooltip-align="top-center" tooltip="Acceleration">ACCEL</th>
-            <th tooltip-align="top-center" tooltip="Weight">WEIGT</th>
-            <th tooltip-align="top-center" tooltip="Ground Handling">HNDGR</th>
-            <th tooltip-align="top-center" tooltip="Anti-Gravity Handling">HNDAG</th>
-            <th tooltip-align="top-center" tooltip="Underwater Handling">HNDWT</th>
-            <th tooltip-align="top-center" tooltip="Air Handling">HNDAR</th>
-            <th tooltip-align="top-center" tooltip="Traction">TRCTN</th>
-            <th tooltip-align="top-center" tooltip="Invincibility">INVCB</th>
-          </tr>
-        </thead>
-        <tbody id="custom-combos-rows"></tbody>
-      </table>
-    </section>
+    <div class="tab-container">
+      <nav class="tab-handles">
+        <a data-tab-id="dominant-combos" class="selected">Dominant</a>
+        <a data-tab-id="similar-combos">Similar</a>
+        <a data-tab-id="custom-combos">Custom Search</a>
+      </nav>
+      <section class="tab-panels">
+        <div class="table selected" id="dominant-combos">
+          <table class="sortable">
+            <thead>
+              <tr>
+                <th data-sort="false">
+                  <p>These have the same value or better for every stat.</p>
+                </th>
+                <th tooltip-align="top-center" tooltip="Mini-Turbo"><jd-icon icon="triangle-up"></jd-icon>MINTB</th>
+                <th tooltip-align="top-center" tooltip="Ground Speed"><jd-icon icon="triangle-up"></jd-icon>SPDGR</th>
+                <th tooltip-align="top-center" tooltip="Anti-Gravity Speed"><jd-icon icon="triangle-up"></jd-icon>SPDAG</th>
+                <th tooltip-align="top-center" tooltip="Underwater Speed"><jd-icon icon="triangle-up"></jd-icon>SPDWT</th>
+                <th tooltip-align="top-center" tooltip="Air Speed"><jd-icon icon="triangle-up"></jd-icon>SPDAR</th>
+                <th tooltip-align="top-center" tooltip="Acceleration"><jd-icon icon="triangle-up"></jd-icon>ACCEL</th>
+                <th tooltip-align="top-center" tooltip="Weight"><jd-icon icon="triangle-up"></jd-icon>WEIGT</th>
+                <th tooltip-align="top-center" tooltip="Ground Handling"><jd-icon icon="triangle-up"></jd-icon>HNDGR</th>
+                <th tooltip-align="top-center" tooltip="Anti-Gravity Handling"><jd-icon icon="triangle-up"></jd-icon>HNDAG</th>
+                <th tooltip-align="top-center" tooltip="Underwater Handling"><jd-icon icon="triangle-up"></jd-icon>HNDWT</th>
+                <th tooltip-align="top-center" tooltip="Air Handling"><jd-icon icon="triangle-up"></jd-icon>HNDAR</th>
+                <th tooltip-align="top-center" tooltip="Traction"><jd-icon icon="triangle-up"></jd-icon>TRCTN</th>
+                <th tooltip-align="top-center" tooltip="Invincibility"><jd-icon icon="triangle-up"></jd-icon>INVCB</th>
+              </tr>
+            </thead>
+            <tbody id="dominant-combos-rows"></tbody>
+          </table>
+        </div>
+        <div class="table" id="similar-combos">
+          <table class="sortable">
+            <thead>
+              <tr>
+                <th>
+                  <p>These have very similar stats.</p>
+                </th>
+                <th tooltip-align="top-center" tooltip="Mini-Turbo"><jd-icon icon="triangle-up"></jd-icon>MINTB</th>
+                <th tooltip-align="top-center" tooltip="Ground Speed"><jd-icon icon="triangle-up"></jd-icon>SPDGR</th>
+                <th tooltip-align="top-center" tooltip="Anti-Gravity Speed"><jd-icon icon="triangle-up"></jd-icon>SPDAG</th>
+                <th tooltip-align="top-center" tooltip="Underwater Speed"><jd-icon icon="triangle-up"></jd-icon>SPDWT</th>
+                <th tooltip-align="top-center" tooltip="Air Speed"><jd-icon icon="triangle-up"></jd-icon>SPDAR</th>
+                <th tooltip-align="top-center" tooltip="Acceleration"><jd-icon icon="triangle-up"></jd-icon>ACCEL</th>
+                <th tooltip-align="top-center" tooltip="Weight"><jd-icon icon="triangle-up"></jd-icon>WEIGT</th>
+                <th tooltip-align="top-center" tooltip="Ground Handling"><jd-icon icon="triangle-up"></jd-icon>HNDGR</th>
+                <th tooltip-align="top-center" tooltip="Anti-Gravity Handling"><jd-icon icon="triangle-up"></jd-icon>HNDAG</th>
+                <th tooltip-align="top-center" tooltip="Underwater Handling"><jd-icon icon="triangle-up"></jd-icon>HNDWT</th>
+                <th tooltip-align="top-center" tooltip="Air Handling"><jd-icon icon="triangle-up"></jd-icon>HNDAR</th>
+                <th tooltip-align="top-center" tooltip="Traction"><jd-icon icon="triangle-up"></jd-icon>TRCTN</th>
+                <th tooltip-align="top-center" tooltip="Invincibility"><jd-icon icon="triangle-up"></jd-icon>INVCB</th>
+              </tr>
+            </thead>
+            <tbody id="similar-combos-rows"></tbody>
+          </table>
+        </div>
+        <div class="table" id="custom-combos">
+          <table>
+            <thead>
+              <tr>
+                <th>
+                  <p>Find the best combo according to a custom formula.</p>
+                  <p id="custom-combo-formula"></p>
+                  <button id="cutomize-formula-button">Customize...</button>
+                </th>
+                <th tooltip-align="top-center" tooltip="Mini-Turbo">MINTB</th>
+                <th tooltip-align="top-center" tooltip="Ground Speed">SPDGR</th>
+                <th tooltip-align="top-center" tooltip="Anti-Gravity Speed">SPDAG</th>
+                <th tooltip-align="top-center" tooltip="Underwater Speed">SPDWT</th>
+                <th tooltip-align="top-center" tooltip="Air Speed">SPDAR</th>
+                <th tooltip-align="top-center" tooltip="Acceleration">ACCEL</th>
+                <th tooltip-align="top-center" tooltip="Weight">WEIGT</th>
+                <th tooltip-align="top-center" tooltip="Ground Handling">HNDGR</th>
+                <th tooltip-align="top-center" tooltip="Anti-Gravity Handling">HNDAG</th>
+                <th tooltip-align="top-center" tooltip="Underwater Handling">HNDWT</th>
+                <th tooltip-align="top-center" tooltip="Air Handling">HNDAR</th>
+                <th tooltip-align="top-center" tooltip="Traction">TRCTN</th>
+                <th tooltip-align="top-center" tooltip="Invincibility">INVCB</th>
+              </tr>
+            </thead>
+            <tbody id="custom-combos-rows"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
 
     <section id="wip">
       <p>This app is a work in progress.<br>
