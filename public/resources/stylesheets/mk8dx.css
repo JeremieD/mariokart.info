@@ -235,6 +235,19 @@ jd-icon svg {
   margin-left: .375em;
 }
 
+#custom-combos thead>:first-child td { padding-top: 2rem; }
+#custom-combos thead>:first-child td:first-child {
+  padding-left: 4rem;
+  padding-bottom: 0;
+  margin-bottom: -.25rem;
+  font-size: .875rem;
+}
+#custom-combos thead>:first-child td:last-child {
+  padding-right: 4rem;
+  text-align: right;
+}
+#custom-combos th { padding-top: 0; }
+
 #combo-stats {
   display: flex;
   flex-direction: column;
@@ -258,8 +271,13 @@ jd-icon svg {
 }
 
 #custom-combo-formula {
-  margin: 1em 0;
+  vertical-align: baseline;
   font-size: .75rem;
+}
+
+#customize-formula-button {
+  font-size: .875rem;
+  margin-top: .75rem;
 }
 
 .coefficient-separator { padding: 0 .333em; }
