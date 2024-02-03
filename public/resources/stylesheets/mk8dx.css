@@ -420,6 +420,12 @@ jd-icon svg {
   border-radius: 2px;
 }
 
+.tab-handles a>sup {
+  font-weight: normal;
+  margin-left: .125em;
+  color: var(--color-grey);
+}
+
 .tab-handles a.selected { background-color: var(--color-foreground); }
 .tab-handles a.selected::after {
   display: block;
@@ -465,7 +471,7 @@ tr { position: relative; }
 th p { font-size: .875rem; }
 th, td { padding: .325rem; }
 th {
-  padding-top: 3rem;
+  padding-top: 2rem;
   padding-bottom: .75rem;
   vertical-align: bottom;
 }
@@ -684,20 +690,18 @@ dialog {
 
 dialog::backdrop { background-color: rgba(0,0,0,.5); }
 
-dialog>header {
-  padding: 4rem 4rem 2rem;
-  border-bottom: 1px solid var(--color-interactive);
-}
+dialog>header { padding: 4rem 4rem 0; }
 
-dialog>header>* { max-width: 60ch; }
+dialog>header p {
+  max-width: 60ch;
+  color: var(--color-grey);
+}
 
 dialog h2 {
   font-size: 1.5em;
   line-height: 1;
   margin-bottom: .5em;
 }
-
-dialog>* { padding: 0 4rem; }
 
 dialog>footer {
   padding: 2rem 4rem 4rem;
@@ -706,23 +710,38 @@ dialog>footer {
 
 dialog>footer div {
   display: flex;
-  gap: .5em;
+  flex-wrap: wrap;
+  gap: 1.5em .5em;
 }
 
 dialog>footer>div:last-child { justify-content: space-between; }
 
-.coefficient-widget {
-  display: flex;
-  align-items: baseline;
-  justify-content: end;
-  gap: .5em;
+dialog>.formula-numbers {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto auto;
+  justify-content: space-between;
+  gap: .25em 1em;
+}
+
+dialog>.formula-numbers>* {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / 6;
+  padding: 0 4rem;
+}
+
+dialog>.formula-numbers>:first-child {
+  border-bottom: 1px solid var(--color-interactive);
+  padding-bottom: .375em;
+  margin-bottom: 1em;
+}
+
+dialog>.formula-numbers>:first-child, .coefficient-widget output {
+  text-align: right;
+  font-size: .875rem;
 }
 
 .coefficient-widget+.coefficient-widget { margin-top: .25em; }
-
-.coefficient-widget output {
-  font-size: .9em;
-}
 
 .coefficient-widget h3 {
   font-size: 1.125em;
@@ -730,7 +749,7 @@ dialog>footer>div:last-child { justify-content: space-between; }
 }
 
 .coefficient-widget input {
-  width: 12ch;
+  width: 8ch;
   height: 2em;
   font-family: "Akkurat Mono", monospace;
   font-size: .9em;
@@ -743,6 +762,7 @@ dialog>footer>div:last-child { justify-content: space-between; }
   display: flex;
   gap: 1em;
   flex-wrap: wrap;
+  padding: 0 4rem;
 }
 
 .button {
@@ -758,6 +778,8 @@ dialog>footer>div:last-child { justify-content: space-between; }
   background-color: var(--color-accent);
   color: var(--color-light1);
 }
+
+:placeholder-shown { color: var(--color-grey); }
 
 
 @media (max-width: 1440px) {

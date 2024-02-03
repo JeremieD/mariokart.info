@@ -10,6 +10,13 @@ const combos = {
 };
 let customFormula = {
   scoreFormula: structuredClone(ComboC.OPTISCORE),
+  mintbMin: 0, mintbMax: 6, spdMin: 0, spdMax: 6,
+  spdGrMin: 0, spdGrMax: 6, spdAgMin: 0, spdAgMax: 6,
+  spdWtMin: 0, spdWtMax: 6, spdArMin: 0, spdArMax: 6,
+  accelMin: 0, accelMax: 6, weigtMin: 0, weigtMax: 6, hndMin: 0, hndMax: 6,
+  hndGrMin: 0, hndGrMax: 6, hndAgMin: 0, hndAgMax: 6,
+  hndWtMin: 0, hndWtMax: 6, hndArMin: 0, hndArMax: 6,
+  trctnMin: 0, trctnMax: 6, invcbMin: 0, invcbMax: 6, sizeMin: 0, sizeMax: 2,
   excludeKarts: false, excludeATVs: false,
   excludeBikes: false, excludeSportBikes: true,
   ignoreLocks: true };
@@ -33,10 +40,17 @@ let mintbMeter, accelMeter, weigtMeter, // Stat bars
 let partsGrid;
 let driverSelect, bodySelect, tireSelect, gliderSelect; // Part grids
 let dominantCombosRows, similarCombosRows; // Table bodies
+let dominantCombosCount, similarCombosCount, customCombosCount;
 let customFormulaDialog;
 let mintbWeight, spdWeight, accelWeight,
     weigtWeight, hndWeight, trctnWeight,
     invcbWeight, sizeWeight;
+let mintbMin, spdMin, accelMin,
+    weigtMin, hndMin, trctnMin,
+    invcbMin, sizeMin;
+let mintbMax, spdMax, accelMax,
+    weigtMax, hndMax, trctnMax,
+    invcbMax, sizeMax;
 let mintbMode, spdMode, accelMode,
     weigtMode, hndMode, trctnMode,
     invcbMode, sizeMode;
@@ -92,6 +106,10 @@ whenDOMReady(() => {
   tireSelect   = document.getElementById("tires");
   gliderSelect = document.getElementById("gliders");
 
+  dominantCombosCount = document.getElementById("dominant-combos-count");
+  similarCombosCount  = document.getElementById("similar-combos-count");
+  customCombosCount   = document.getElementById("custom-combos-count");
+
   dominantCombosRows = document.getElementById("dominant-combos-rows");
   similarCombosRows  = document.getElementById("similar-combos-rows");
   customCombosRows   = document.getElementById("custom-combos-rows");
@@ -102,13 +120,29 @@ whenDOMReady(() => {
   customFormulaDialog = document.getElementById("custom-formula-dialog");
 
   mintbWeight = document.getElementById("formula-mintb-weight");
+  mintbMin = document.getElementById("formula-mintb-min");
+  mintbMax = document.getElementById("formula-mintb-max");
   spdWeight = document.getElementById("formula-spd-weight");
+  spdMin = document.getElementById("formula-spd-min");
+  spdMax = document.getElementById("formula-spd-max");
   accelWeight = document.getElementById("formula-accel-weight");
+  accelMin = document.getElementById("formula-accel-min");
+  accelMax = document.getElementById("formula-accel-max");
   weigtWeight = document.getElementById("formula-weigt-weight");
+  weigtMin = document.getElementById("formula-weigt-min");
+  weigtMax = document.getElementById("formula-weigt-max");
   hndWeight = document.getElementById("formula-hnd-weight");
+  hndMin = document.getElementById("formula-hnd-min");
+  hndMax = document.getElementById("formula-hnd-max");
   trctnWeight = document.getElementById("formula-trctn-weight");
+  trctnMin = document.getElementById("formula-trctn-min");
+  trctnMax = document.getElementById("formula-trctn-max");
   invcbWeight = document.getElementById("formula-invcb-weight");
+  invcbMin = document.getElementById("formula-invcb-min");
+  invcbMax = document.getElementById("formula-invcb-max");
   sizeWeight = document.getElementById("formula-size-weight");
+  sizeMin = document.getElementById("formula-size-min");
+  sizeMax = document.getElementById("formula-size-max");
 
   mintbMode = document.getElementById("formula-mintb-mode");
   spdMode = document.getElementById("formula-spd-mode");
@@ -707,6 +741,7 @@ async function drawRelatedTables() {
 async function drawDominantCombos() {
   return getDominantCombos().then(dominantCombos => {
     dominantCombosRows.innerHTML = "";
+    dominantCombosCount.innerText = dominantCombos.length;
     fillTable(dominantCombosRows, dominantCombos);
   });
 }
@@ -714,6 +749,7 @@ async function drawDominantCombos() {
 async function drawSimilarCombos() {
   return getSimilarCombos().then(similarCombos => {
     similarCombosRows.innerHTML = "";
+    similarCombosCount.innerText = similarCombos.length;
     fillTable(similarCombosRows, similarCombos);
   });
 }
@@ -721,6 +757,7 @@ async function drawSimilarCombos() {
 async function drawCustomCombos() {
   return getCustomCombos().then(customCombos => {
     customCombosRows.innerHTML = "";
+    customCombosCount.innerText = customCombos.length;
     customComboFormula.innerHTML = formatFormula(customFormula);
     fillTable(customCombosRows, customCombos.slice(0, 100));
   });
@@ -948,6 +985,13 @@ function drawCustomFormulaInterface() {
 function resetCustomFormula() {
   customFormula = {
     scoreFormula: structuredClone(ComboC.OPTISCORE),
+    mintbMin: 0, mintbMax: 6, spdMin: 0, spdMax: 6,
+    spdGrMin: 0, spdGrMax: 6, spdAgMin: 0, spdAgMax: 6,
+    spdWtMin: 0, spdWtMax: 6, spdArMin: 0, spdArMax: 6,
+    accelMin: 0, accelMax: 6, weigtMin: 0, weigtMax: 6, hndMin: 0, hndMax: 6,
+    hndGrMin: 0, hndGrMax: 6, hndAgMin: 0, hndAgMax: 6,
+    hndWtMin: 0, hndWtMax: 6, hndArMin: 0, hndArMax: 6,
+    trctnMin: 0, trctnMax: 6, invcbMin: 0, invcbMax: 6, sizeMin: 0, sizeMax: 2,
     excludeKarts: false, excludeATVs: false,
     excludeBikes: false, excludeSportBikes: true,
     ignoreLocks: true
@@ -972,6 +1016,38 @@ function commitFormula() {
   customFormula.scoreFormula.trctn = trctnWeight.value;
   customFormula.scoreFormula.invcb = invcbWeight.value;
   customFormula.scoreFormula.size = sizeWeight.value;
+  customFormula.mintbMin = mintbMin.value != "" ? mintbMin.value : mintbMin.placeholder;
+  customFormula.mintbMax = mintbMax.value != "" ? mintbMax.value : mintbMax.placeholder;
+  customFormula.spdMin = spdMin.value != "" ? spdMin.value : spdMin.placeholder;
+  customFormula.spdMax = spdMax.value != "" ? spdMax.value : spdMax.placeholder;
+  // customFormula.spdGrMin = spdGrMin.value != "" ? spdGrMin.value : spdGrMin.placeholder;
+  // customFormula.spdGrMax = spdGrMax.value != "" ? spdGrMax.value : spdGrMax.placeholder;
+  // customFormula.spdAgMin = spdAgMin.value != "" ? spdAgMin.value : spdAgMin.placeholder;
+  // customFormula.spdAgMax = spdAgMax.value != "" ? spdAgMax.value : spdAgMax.placeholder;
+  // customFormula.spdWtMin = spdWtMin.value != "" ? spdWtMin.value : spdWtMin.placeholder;
+  // customFormula.spdWtMax = spdWtMax.value != "" ? spdWtMax.value : spdWtMax.placeholder;
+  // customFormula.spdArMin = spdArMin.value != "" ? spdArMin.value : spdArMin.placeholder;
+  // customFormula.spdArMax = spdArMax.value != "" ? spdArMax.value : spdArMax.placeholder;
+  customFormula.accelMin = accelMin.value != "" ? accelMin.value : accelMin.placeholder;
+  customFormula.accelMax = accelMax.value != "" ? accelMax.value : accelMax.placeholder;
+  customFormula.weigtMin = weigtMin.value != "" ? weigtMin.value : weigtMin.placeholder;
+  customFormula.weigtMax = weigtMax.value != "" ? weigtMax.value : weigtMax.placeholder;
+  customFormula.hndMin = hndMin.value != "" ? hndMin.value : hndMin.placeholder;
+  customFormula.hndMax = hndMax.value != "" ? hndMax.value : hndMax.placeholder;
+  // customFormula.hndGrMin = hndGrMin.value != "" ? hndGrMin.value : hndGrMin.placeholder;
+  // customFormula.hndGrMax = hndGrMax.value != "" ? hndGrMax.value : hndGrMax.placeholder;
+  // customFormula.hndAgMin = hndAgMin.value != "" ? hndAgMin.value : hndAgMin.placeholder;
+  // customFormula.hndAgMax = hndAgMax.value != "" ? hndAgMax.value : hndAgMax.placeholder;
+  // customFormula.hndWtMin = hndWtMin.value != "" ? hndWtMin.value : hndWtMin.placeholder;
+  // customFormula.hndWtMax = hndWtMax.value != "" ? hndWtMax.value : hndWtMax.placeholder;
+  // customFormula.hndArMin = hndArMin.value != "" ? hndArMin.value : hndArMin.placeholder;
+  // customFormula.hndArMax = hndArMax.value != "" ? hndArMax.value : hndArMax.placeholder;
+  customFormula.trctnMin = trctnMin.value != "" ? trctnMin.value : trctnMin.placeholder;
+  customFormula.trctnMax = trctnMax.value != "" ? trctnMax.value : trctnMax.placeholder;
+  customFormula.invcbMin = invcbMin.value != "" ? invcbMin.value : invcbMin.placeholder;
+  customFormula.invcbMax = invcbMax.value != "" ? invcbMax.value : invcbMax.placeholder;
+  customFormula.sizeMin = sizeMin.value != "" ? sizeMin.value : sizeMin.placeholder;
+  customFormula.sizeMax = sizeMax.value != "" ? sizeMax.value : sizeMax.placeholder;
 
   customFormula.excludeKarts = !includeKarts.state;
   customFormula.excludeATVs = !includeATVs.state;

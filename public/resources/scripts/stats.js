@@ -117,12 +117,14 @@ async function listCombos(opts = {}) {
     opts.minDiff ??= -Infinity; opts.maxDiff ??= Infinity;
     opts.sortBy ??= "diff";
     opts.mintbMin ??= 0; opts.mintbMax ??= 6; opts.mintb ??= opts.mintbMin;
+    opts.spdMin ??= 0; opts.spdMax ??= 6;
     opts.spdGrMin ??= 0; opts.spdGrMax ??= 6; opts.spdGr ??= opts.spdGrMin;
     opts.spdWtMin ??= 0; opts.spdWtMax ??= 6; opts.spdWt ??= opts.spdWtMin;
     opts.spdAgMin ??= 0; opts.spdAgMax ??= 6; opts.spdAg ??= opts.spdAgMin;
     opts.spdArMin ??= 0; opts.spdArMax ??= 6; opts.spdAr ??= opts.spdArMin;
     opts.accelMin ??= 0; opts.accelMax ??= 6; opts.accel ??= opts.accelMin;
     opts.weigtMin ??= 0; opts.weigtMax ??= 6; opts.weigt ??= opts.weigtMin;
+    opts.hndMin ??= 0; opts.hndMax ??= 6;
     opts.hndGrMin ??= 0; opts.hndGrMax ??= 6; opts.hndGr ??= opts.hndGrMin;
     opts.hndWtMin ??= 0; opts.hndWtMax ??= 6; opts.hndWt ??= opts.hndWtMin;
     opts.hndAgMin ??= 0; opts.hndAgMax ??= 6; opts.hndAg ??= opts.hndAgMin;
@@ -155,9 +157,11 @@ async function listCombos(opts = {}) {
       if (opts.excludeSportBikes && bodyType == "sport") continue;
 
       const mintb = combo.lvl.mintb; const accel = combo.lvl.accel;
+      const spd = combo.lvl.spd;
       const spdGr = combo.lvl.spdGr; const spdWt = combo.lvl.spdWt;
       const spdAg = combo.lvl.spdAg; const spdAr = combo.lvl.spdAr;
       const weigt = combo.lvl.weigt; const trctn = combo.lvl.trctn;
+      const hnd = combo.lvl.hnd;
       const hndGr = combo.lvl.hndGr; const hndWt = combo.lvl.hndWt;
       const hndAg = combo.lvl.hndAg; const hndAr = combo.lvl.hndAr;
       const invcb = combo.lvl.invcb;
@@ -184,12 +188,14 @@ async function listCombos(opts = {}) {
       if (combo.diff > opts.maxDiff) continue;
 
       if (mintb < opts.mintbMin || mintb > opts.mintbMax) continue;
+      if (spd < opts.spdMin || spd > opts.spdMax) continue;
       if (spdGr < opts.spdGrMin || spdGr > opts.spdGrMax) continue;
       if (spdWt < opts.spdWtMin || spdWt > opts.spdWtMax) continue;
       if (spdAg < opts.spdAgMin || spdAg > opts.spdAgMax) continue;
       if (spdAr < opts.spdArMin || spdAr > opts.spdArMax) continue;
       if (accel < opts.accelMin || accel > opts.accelMax) continue;
       if (weigt < opts.weigtMin || weigt > opts.weigtMax) continue;
+      if (hnd < opts.hndMin || hnd > opts.hndMax) continue;
       if (hndGr < opts.hndGrMin || hndGr > opts.hndGrMax) continue;
       if (hndWt < opts.hndWtMin || hndWt > opts.hndWtMax) continue;
       if (hndAg < opts.hndAgMin || hndAg > opts.hndAgMax) continue;
