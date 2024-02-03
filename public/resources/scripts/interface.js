@@ -776,30 +776,45 @@ function formatFormula(formula) {
   }
   let s = '<span class="formula">' + stats.join(" + ") + "</span>";
 
-  const exclusions = [];
-  if (formula.excludeKarts) exclusions.push("karts");
-  if (formula.excludeATVs) exclusions.push("ATVs");
-  if (formula.excludeBikes) exclusions.push("outside drifting bikes");
-  if (formula.excludeSportBikes) exclusions.push("inside drifting bikes");
-
-  if (exclusions.length == 3) {
-    s += "<br>";
-    if (!formula.excludeKarts) s += "Karts only";
-    else if (!formula.excludeATVs) s += "ATVs only";
-    else if (!formula.excludeBikes) s += "Outside drifting bikes only";
-    else if (!formula.excludeSportBikes) s += "Inside drifting bikes only";
-  } else if (!formula.excludeKarts && !formula.excludeATVs &&
-              formula.excludeBikes && formula.excludeSportBikes) {
-    s += "<br>No bikes";
-  } else if (formula.excludeKarts && formula.excludeATVs &&
-            !formula.excludeBikes && !formula.excludeSportBikes) {
-  s += "<br>Bikes only";
-  } else if (exclusions.length > 0) {
-    s += "<br>No ";
-    s += exclusions.slice(0, -1).join(", ");
-    if (exclusions.length > 1) s += " or ";
-    s += exclusions.at(-1);
+  const locks = [];
+  if (!formula.ignoreLocks) {
+    if (driverLock.state) locks.push(strings[locl].drivers[selectedCombo.driver]);
+    if (bodyLock.state) locks.push(strings[locl].bodies[selectedCombo.body]);
+    if (tireLock.state) locks.push(strings[locl].tires[selectedCombo.tire]);
+    if (gliderLock.state) locks.push(strings[locl].gliders[selectedCombo.glider]);
   }
+
+  let exclusionsString = "";
+  if (formula.ignoreLocks || !bodyLock.state) {
+    const exclusions = [];
+    if (formula.excludeKarts) exclusions.push("karts");
+    if (formula.excludeATVs) exclusions.push("ATVs");
+    if (formula.excludeBikes) exclusions.push("outside drifting bikes");
+    if (formula.excludeSportBikes) exclusions.push("inside drifting bikes");
+
+    if (exclusions.length == 3) {
+      if (!formula.excludeKarts) exclusionsString = "Karts only";
+      else if (!formula.excludeATVs) exclusionsString = "ATVs only";
+      else if (!formula.excludeBikes) exclusionsString = "Outside drifting bikes only";
+      else if (!formula.excludeSportBikes) exclusionsString = "Inside drifting bikes only";
+      } else if (!formula.excludeKarts && !formula.excludeATVs &&
+                  formula.excludeBikes && formula.excludeSportBikes) {
+        exclusionsString = "No bikes";
+      } else if (formula.excludeKarts && formula.excludeATVs &&
+                !formula.excludeBikes && !formula.excludeSportBikes) {
+        exclusionsString = "Bikes only";
+      } else if (exclusions.length > 0) {
+        exclusionsString = "No ";
+        exclusionsString += exclusions.slice(0, -1).join(", ");
+        if (exclusions.length > 1) exclusionsString += " or ";
+        exclusionsString += exclusions.at(-1);
+    }
+  }
+
+  if (locks.length > 0 || exclusionsString.length > 0) s += "<br>";
+  s += locks.join(", ");
+  if (locks.length > 0 && exclusionsString.length > 0) s += " — ";
+  s += exclusionsString;
 
   return s;
 }
