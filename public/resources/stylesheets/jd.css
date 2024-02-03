@@ -225,7 +225,7 @@ p + p {
   margin-top: .25em;
 }
 
-header {
+body>header {
   --color-text: white;
   position: absolute;
   top: 0;
@@ -248,26 +248,26 @@ header {
   pointer-events: none
 }
 
-header :is(a, select) {
+body>header :is(a, select) {
   pointer-events: auto;
   text-decoration-color: transparent;
   -webkit-text-decoration-color: transparent;
   -moz-text-decoration-color: transparent
 }
 
-header a.selected:not(:hover) {
+body>header a.selected:not(:hover) {
   text-decoration-color: var(--color-grey);
   -webkit-text-decoration-color: var(--color-grey);
   -moz-text-decoration-color: var(--color-grey)
 }
 
-header ul {
+body>header ul {
   display: flex;
   gap: 3em
 }
 
 @media(prefers-color-scheme: light) {
-  header :focus:not(:active):not(:hover):not([tabindex="-1"]) {
+  body>header :focus:not(:active):not(:hover):not([tabindex="-1"]) {
     box-shadow: 0 0 0 6px #fff, 0 0 0 10px var(--color-accent);
     background: #fff;
     color: #000;
@@ -315,10 +315,10 @@ header ul {
   #symbol { display: none; }
   #logo::before { display: none; }
 
-  header ul { gap: 2em }
+  body>header ul { gap: 2em }
 }
 
-footer {
+body>footer {
   display: flex;
   justify-content: space-between;
   width: calc(100% - 2*var(--width-pagepadding));
@@ -327,14 +327,14 @@ footer {
   border-top: 1px solid var(--color-grey)
 }
 
-footer p {
+body>footer p {
   font-size: var(--font-size-body-small);
   line-height: var(--font-lead-body-small);
   color: var(--color-grey)
 }
 
 @media(max-width: 1080px) {
-  footer {
+  body>footer {
     flex-wrap: wrap;
     margin-top: 64px
   }
@@ -404,7 +404,7 @@ picture, img, video {
   overflow: clip
 }
 
-footer>nav {
+body>footer>nav {
   position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -416,7 +416,7 @@ footer>nav {
   margin: 32px 0 64px
 }
 
-footer>nav a {
+body>footer>nav a {
   font-size: var(--font-size-body-big);
   line-height: var(--font-lead-body-big);
   font-weight: bold;
@@ -426,16 +426,16 @@ footer>nav a {
   padding-left: 8px
 }
 
-footer>nav a:only-child {
+body>footer>nav a:only-child {
   grid-column-start: 2
 }
 
-footer>nav a:first-child:not(:only-child) {
+body>footer>nav a:first-child:not(:only-child) {
   text-align: right;
   padding: 0 8px 0 0
 }
 
-footer>nav::before {
+body>footer>nav::before {
   content: "";
   position: absolute;
   top: 51%;
@@ -449,7 +449,7 @@ footer>nav::before {
 }
 
 @media(max-width: 600px) {
-  footer>nav {
+  body>footer>nav {
     gap: 32px;
     margin: 16px 0 32px
   }
