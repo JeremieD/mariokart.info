@@ -1,7 +1,7 @@
 "use strict";
 // There is ?????? parts combinations (excluding color variants).
 // There is 649440 parts combinations (excluding driver variants).
-// There is  28224 class combinations.
+// There is  27144 class combinations.
 // There is   8064 group combinations (excluding size and invcb stats).
 
 // Represents a combo class (with unique stats).
@@ -10,6 +10,7 @@ class ComboC {
   #classes = {};
   #code = "";
   #lvl = [];
+  #scoreCache = {};
 
   constructor(driver = "mario", body = "std", tire = "std", glider = "super") {
     if (gameStats.parts.drivers[driver] !== undefined) {
@@ -83,11 +84,17 @@ class ComboC {
     }
   }
 
-  getScore(weights) {
+  getScore(weights, formulaHash) {
+    if (this.#scoreCache[formulaHash] !== undefined) {
+      return this.#scoreCache[formulaHash];
+    }
+
     let sum = 0;
     for (let i = 0; i < 16; i++) {
       sum += weights[i] * this.#lvl[i];
     }
+
+    this.#scoreCache[formulaHash] = sum;
     return sum;
   }
 
@@ -100,6 +107,14 @@ class ComboC {
   static PERCENT_AG = .15; // Best estimate for percent of time in anti-gravity.
   static PERCENT_WT = .04; // Best estimate for percent of time underwater.
   static PERCENT_AR = .01; // Best estimate for percent of time airborne.
+
+  static hashFormula(weights = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]) {
+    let h = "";
+    for (const weight of weights) {
+      h += ":" + weight.toString(36);
+    }
+    return h;
+  }
 }
 
 const AllCombos = [];
@@ -213,24 +228,24 @@ async function listCombos(opts = {}) {
     }
 
     if (!(opts.sortBy instanceof Array)) opts.sortBy = [opts.sortBy];
-    let statA, statB;
-    const compare = function(a, b) {
-      for (const stat of opts.sortBy) {
-        if (stat == "diff") {
+    const formulaHash = ComboC.hashFormula(opts.scoreFormula);
+    function compare(a, b) {
+      let statA, statB;
+      for (const method of opts.sortBy) {
+        if (method == "diff") {
           statA = a.diff;
           statB = b.diff;
 
-        } else if (stat == "score") {
-          statA = a.getScore(opts.scoreFormula);
-          statB = b.getScore(opts.scoreFormula);
+        } else if (method == "score") {
+          statA = a.getScore(opts.scoreFormula, formulaHash);
+          statB = b.getScore(opts.scoreFormula, formulaHash);
 
         } else {
           statA = a.lvl[stat];
           statB = b.lvl[stat];
         }
 
-        if (statA == statB) continue;
-        return statB - statA;
+        if (statA != statB) return statB - statA;
       }
       return 0;
     }
