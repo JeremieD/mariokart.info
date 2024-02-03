@@ -8,6 +8,12 @@ const combos = {
   a: Combo.fromCode("MAAA"),
   b: Combo.fromCode("LMSA")
 };
+let customFormula = {
+  scoreFormula: structuredClone(ComboC.OPTISCORE),
+  excludeKarts: false, excludeATVs: false,
+  excludeBikes: false, excludeSportBikes: true,
+  ignoreLocks: true };
+
 readURLParams();
 let selectedCombo = combos.a;
 let otherCombo = combos.b;
@@ -27,6 +33,16 @@ let mintbMeter, accelMeter, weigtMeter, // Stat bars
 let partsGrid;
 let driverSelect, bodySelect, tireSelect, gliderSelect; // Part grids
 let dominantCombosRows, similarCombosRows; // Table bodies
+let customFormulaDialog;
+let mintbWeight, spdWeight, accelWeight,
+    weigtWeight, hndWeight, trctnWeight,
+    invcbWeight, sizeWeight;
+let mintbMode, spdMode, accelMode,
+    weigtMode, hndMode, trctnMode,
+    invcbMode, sizeMode;
+let includeKarts, includeATVs, includeBikes, includeSportBikes;
+let ignoreLocksFormula;
+let resetFormulaButton, cancelFormulaButton, saveFormulaButton;
 
 whenDOMReady(() => {
   comboSelect = document.getElementById("combo-tabs");
@@ -34,8 +50,8 @@ whenDOMReady(() => {
   comboTier = document.getElementById("combo-tier");
   comboDetails = document.getElementById("combo-details");
 
+  compareSwitch = document.getElementById("compare");
   randomButton = document.getElementById("random-button");
-  optimizeButton = document.getElementById("optimize-button");
 
   driverButton = document.getElementById("combo-driver");
   driverImg = document.getElementById("current-driver-img");
@@ -54,7 +70,6 @@ whenDOMReady(() => {
   gliderLock = document.getElementById("glider-lock");
   gliderLabel = document.getElementById("current-glider-label");
 
-  compareSwitch = document.getElementById("compare");
   comboStats = document.getElementById("combo-stats");
 
   mintbMeter = document.getElementById("mintb-meter");
@@ -78,7 +93,42 @@ whenDOMReady(() => {
   gliderSelect = document.getElementById("gliders");
 
   dominantCombosRows = document.getElementById("dominant-combos-rows");
-  similarCombosRows = document.getElementById("similar-combos-rows");
+  similarCombosRows  = document.getElementById("similar-combos-rows");
+  customCombosRows   = document.getElementById("custom-combos-rows");
+
+  customComboFormula = document.getElementById("custom-combo-formula");
+  customizeFormulaButton = document.getElementById("cutomize-formula-button");
+
+  customFormulaDialog = document.getElementById("custom-formula-dialog");
+
+  mintbWeight = document.getElementById("formula-mintb-weight");
+  spdWeight = document.getElementById("formula-spd-weight");
+  accelWeight = document.getElementById("formula-accel-weight");
+  weigtWeight = document.getElementById("formula-weigt-weight");
+  hndWeight = document.getElementById("formula-hnd-weight");
+  trctnWeight = document.getElementById("formula-trctn-weight");
+  invcbWeight = document.getElementById("formula-invcb-weight");
+  sizeWeight = document.getElementById("formula-size-weight");
+
+  mintbMode = document.getElementById("formula-mintb-mode");
+  spdMode = document.getElementById("formula-spd-mode");
+  accelMode = document.getElementById("formula-accel-mode");
+  weigtMode = document.getElementById("formula-weigt-mode");
+  hndMode = document.getElementById("formula-hnd-mode");
+  trctnMode = document.getElementById("formula-trctn-mode");
+  invcbMode = document.getElementById("formula-invcb-mode");
+  sizeMode = document.getElementById("formula-size-mode");
+
+  includeKarts = document.getElementById("formula-include-karts");
+  includeATVs = document.getElementById("formula-include-atvs");
+  includeBikes = document.getElementById("formula-include-bikes");
+  includeSportBikes = document.getElementById("formula-include-sportbikes");
+
+  ignoreLocksFormula = document.getElementById("formula-ignore-locks");
+
+  resetFormulaButton = document.getElementById("formula-reset");
+  cancelFormulaButton = document.getElementById("formula-cancel");
+  saveFormulaButton = document.getElementById("formula-save");
 
   initRadioGroup(comboSelect).addEventListener("change", e => {
     comboID = e.target.dataset.value;
@@ -158,10 +208,10 @@ whenDOMReady(() => {
   });
 
 
-  driverLock.addEventListener("change", drawTables);
-  bodyLock.addEventListener("change", drawTables);
-  tireLock.addEventListener("change", drawTables);
-  gliderLock.addEventListener("change", drawTables);
+  driverLock.addEventListener("change", drawRelatedTables);
+  bodyLock.addEventListener("change", drawRelatedTables);
+  tireLock.addEventListener("change", drawRelatedTables);
+  gliderLock.addEventListener("change", drawRelatedTables);
 
   addEventListener("popstate", () => {
     readURLParams();
@@ -226,11 +276,59 @@ whenDOMReady(() => {
 
   selectCombo();
   drawCurrentCombo();
+
+
+  customizeFormulaButton.addEventListener("click", () => {
+    drawCustomFormulaInterface();
+    customFormulaDialog.showModal();
+    customFormulaDialog.addEventListener("keydown", e => {
+      if (e.key == "Escape") {
+        e.preventDefault();
+        customFormulaDialog.close();
+      }
+    }, { once: true });
+  });
+  resetFormulaButton.addEventListener("click", () => {
+    resetCustomFormula();
+    drawCustomFormulaInterface();
+  });
+  cancelFormulaButton.addEventListener("click", () => {
+    customFormulaDialog.close();
+  });
+  saveFormulaButton.addEventListener("click", () => {
+    commitFormula();
+    customFormulaDialog.close();
+    drawCustomCombos();
+  });
+  customFormulaDialog.addEventListener("click", e => {
+    const rect = customFormulaDialog.getBoundingClientRect();
+    const isInDialog = rect.top <= e.clientY && e.clientY <= rect.top + rect.height &&
+                       rect.left <= e.clientX && e.clientX <= rect.left + rect.width;
+    if (!isInDialog) customFormulaDialog.close();
+  });
+
+  mintbMode.addEventListener("click", e => toggleMode(mintbWeight, e.target));
+  spdMode.addEventListener("click", e => toggleMode(spdWeight, e.target));
+  accelMode.addEventListener("click", e => toggleMode(accelWeight, e.target));
+  weigtMode.addEventListener("click", e => toggleMode(weigtWeight, e.target));
+  hndMode.addEventListener("click", e => toggleMode(hndWeight, e.target));
+  trctnMode.addEventListener("click", e => toggleMode(trctnWeight, e.target));
+  invcbMode.addEventListener("click", e => toggleMode(invcbWeight, e.target));
+  sizeMode.addEventListener("click", e => toggleMode(sizeWeight, e.target));
+
+  mintbWeight.addEventListener("input", e => updateFormulaMode(e.target, mintbMode));
+  spdWeight.addEventListener("input", e => updateFormulaMode(e.target, spdMode));
+  accelWeight.addEventListener("input", e => updateFormulaMode(e.target, accelMode));
+  weigtWeight.addEventListener("input", e => updateFormulaMode(e.target, weigtMode));
+  hndWeight.addEventListener("input", e => updateFormulaMode(e.target, hndMode));
+  trctnWeight.addEventListener("input", e => updateFormulaMode(e.target, trctnMode));
+  invcbWeight.addEventListener("input", e => updateFormulaMode(e.target, invcbMode));
+  sizeWeight.addEventListener("input", e => updateFormulaMode(e.target, sizeMode));
 });
 
 // Updates view output to the currently selected combo (a/b).
-function drawCurrentCombo(updateURL = true) {
-  comboTier.className = getTier();
+async function drawCurrentCombo(updateURL = true) {
+  getTier().then(tier => { comboTier.className = tier});
   comboDetails.innerHTML = strings[locl].size[selectedCombo.size];
   if (gameStats.parts.bodies[selectedCombo.body].type == "sport") {
     comboDetails.innerHTML += ", " + strings[locl].driftStyle.in;
@@ -347,7 +445,7 @@ function drawCurrentCombo(updateURL = true) {
 
   if (updateURL) updateURLParams();
 
-  drawTables();
+  return drawRelatedTables();
 }
 
 function drawPartsGrids() {
@@ -533,7 +631,7 @@ function randomCombo() {
   selectCombo();
 }
 
-function getDominantCombos(ignoreLocks = false) {
+async function getDominantCombos(ignoreLocks = false) {
   let opts = {
     mustDiffer: true,
     mintbMin: selectedCombo.lvl.mintb,
@@ -553,7 +651,7 @@ function getDominantCombos(ignoreLocks = false) {
   return listCombos(opts);
 }
 
-function getSimilarCombos(ignoreLocks = false) {
+async function getSimilarCombos(ignoreLocks = false) {
   let opts = {
     mustDiffer: true, maxAbsDiff: 2.5, minDiff: -.75,
     mintb: selectedCombo.lvl.mintb,
@@ -563,7 +661,7 @@ function getSimilarCombos(ignoreLocks = false) {
     hndGr: selectedCombo.lvl.hndGr, hndWt: selectedCombo.lvl.hndWt,
     hndAg: selectedCombo.lvl.hndAg, hndAr: selectedCombo.lvl.hndAr,
     trctn: selectedCombo.lvl.trctn, invcb: selectedCombo.lvl.invcb
- };
+  };
   if (!ignoreLocks) {
     if (driverLock.state) opts.driverLock = selectedCombo.driver;
     if (bodyLock.state) opts.bodyLock = selectedCombo.body;
@@ -573,35 +671,100 @@ function getSimilarCombos(ignoreLocks = false) {
   return listCombos(opts);
 }
 
+async function getCustomCombos() {
+  const opts = structuredClone(customFormula);
+  opts.sortBy = "score";
+
+  if (!customFormula.ignoreLocks) {
+    if (driverLock.state) opts.driverLock = selectedCombo.driver;
+    if (bodyLock.state) opts.bodyLock = selectedCombo.body;
+    if (tireLock.state) opts.tireLock = selectedCombo.tire;
+    if (gliderLock.state) opts.gliderLock = selectedCombo.glider;
+  }
+
+  return listCombos(opts);
+}
+
 // TODO: Abstract this and avoid repeated calls to listCombos.
-function getTier() {
-  const nbCombos = 28224; // Nb of different *class* combinations
-  const nbDominantCombos = getDominantCombos(true).length;
+async function getTier() {
+  return getDominantCombos(true).then(dominantCombos => {
+    const nbCombos = 28224; // Nb of different *class* combinations
+    const nbDominantCombos = dominantCombos.length;
 
-  if (nbDominantCombos == 0) return "S";
-  if (nbDominantCombos / nbCombos < .0003) return "A";
-  if (nbDominantCombos / nbCombos < .002) return "B";
-  if (nbDominantCombos / nbCombos < .0035) return "C";
-  return "D";
+    if (nbDominantCombos == 0) return "S";
+    if (nbDominantCombos / nbCombos < .0003) return "A";
+    if (nbDominantCombos / nbCombos < .002) return "B";
+    if (nbDominantCombos / nbCombos < .0035) return "C";
+    return "D";
+  })
 }
 
-function drawTables() {
-  drawDominantCombos();
-  drawSimilarCombos();
+async function drawRelatedTables() {
+  return Promise.all([drawDominantCombos(), drawSimilarCombos(),
+                     drawCustomCombos()]);
 }
 
-function drawDominantCombos() {
-  const dominantCombos = getDominantCombos();
-  dominantCombosRows.innerHTML = "";
-
-  fillTable(dominantCombosRows, dominantCombos);
+async function drawDominantCombos() {
+  return getDominantCombos().then(dominantCombos => {
+    dominantCombosRows.innerHTML = "";
+    fillTable(dominantCombosRows, dominantCombos);
+  });
 }
 
-function drawSimilarCombos() {
-  const similarCombos = getSimilarCombos();
-  similarCombosRows.innerHTML = "";
+async function drawSimilarCombos() {
+  return getSimilarCombos().then(similarCombos => {
+    similarCombosRows.innerHTML = "";
+    fillTable(similarCombosRows, similarCombos);
+  });
+}
 
-  fillTable(similarCombosRows, similarCombos);
+async function drawCustomCombos() {
+  return getCustomCombos().then(customCombos => {
+    customCombosRows.innerHTML = "";
+    customComboFormula.innerHTML = formatFormula(customFormula);
+    fillTable(customCombosRows, customCombos.slice(0, 100));
+  });
+}
+
+function formatFormula(formula) {
+  const stats = [];
+  for (const stat of Object.keys(formula.scoreFormula)) {
+    let weight = formula.scoreFormula[stat];
+    if (weight == 0) continue;
+    const sign = weight < 0 ? "negative" : "positive";
+    weight = weight.toString();
+    if (weight[0] == "0") weight = weight.substr(1);
+    const term = '<span class="' + sign + '">' + weight + '<span class="coefficient-separator">×</span>' + stat.toUpperCase() + "</span>";
+    stats.push(term);
+  }
+  let s = '<span class="formula">' + stats.join(" + ") + "</span>";
+
+  const exclusions = [];
+  if (formula.excludeKarts) exclusions.push("karts");
+  if (formula.excludeATVs) exclusions.push("ATVs");
+  if (formula.excludeBikes) exclusions.push("outside drifting bikes");
+  if (formula.excludeSportBikes) exclusions.push("inside drifting bikes");
+
+  if (exclusions.length == 3) {
+    s += "<br>";
+    if (!formula.excludeKarts) s += "Karts only";
+    else if (!formula.excludeATVs) s += "ATVs only";
+    else if (!formula.excludeBikes) s += "Outside drifting bikes only";
+    else if (!formula.excludeSportBikes) s += "Inside drifting bikes only";
+  } else if (!formula.excludeKarts && !formula.excludeATVs &&
+              formula.excludeBikes && formula.excludeSportBikes) {
+    s += "<br>No bikes";
+  } else if (formula.excludeKarts && formula.excludeATVs &&
+            !formula.excludeBikes && !formula.excludeSportBikes) {
+  s += "<br>Bikes only";
+  } else if (exclusions.length > 0) {
+    s += "<br>No ";
+    s += exclusions.slice(0, -1).join(", ");
+    if (exclusions.length > 1) s += " or ";
+    s += exclusions.at(-1);
+  }
+
+  return s;
 }
 
 function fillTable(tableEl, data) {
@@ -618,6 +781,8 @@ function fillTable(tableEl, data) {
     tableEl.append(row);
     return;
   }
+
+  const rows = [];
 
   let sortIndex = 0;
   for (const combo of data) {
@@ -700,8 +865,8 @@ function fillTable(tableEl, data) {
 
     const mobileStats = document.createElement("div");
     mobileStats.classList.add("only-mobile", "mobile-stats");
-    for (const stat of ["mintb", "spdGr", "spdWt", "spdAg", "spdAr",
-    "accel", "weigt", "hndGr", "hndWt", "hndAg", "hndAr", "trctn", "invcb"]) {
+    for (const stat of ["mintb", "spdGr", "spdAg", "spdWt", "spdAr",
+    "accel", "weigt", "hndGr", "hndAg", "hndWt", "hndAr", "trctn", "invcb"]) {
       const cell = document.createElement("td");
       const diff = combo.lvl[stat] - selectedCombo.lvl[stat];
       const formattedDiff = formatStatDiff(diff);
@@ -724,8 +889,9 @@ function fillTable(tableEl, data) {
     }
     comboDisplay.append(mobileStats);
 
-    tableEl.append(row);
+    rows.push(row);
   }
+  tableEl.append(...rows);
 }
 
 function formatStatDiff(diff) {
@@ -734,6 +900,110 @@ function formatStatDiff(diff) {
   if (diff >= 0) { text = "+" + text; }
   else { text = "-" + text; }
   return text;
+}
+
+function drawCustomFormulaInterface() {
+  mintbWeight.value = customFormula.scoreFormula.mintb ?? "";
+  spdWeight.value = customFormula.scoreFormula.spd ?? "";
+  // spdGrWeight.value = customFormula.scoreFormula.spdGr ?? "";
+  // spdAgWeight.value = customFormula.scoreFormula.spdAg ?? "";
+  // spdWtWeight.value = customFormula.scoreFormula.spdWt ?? "";
+  // spdArWeight.value = customFormula.scoreFormula.spdAr ?? "";
+  accelWeight.value = customFormula.scoreFormula.accel ?? "";
+  weigtWeight.value = customFormula.scoreFormula.weigt ?? "";
+  hndWeight.value = customFormula.scoreFormula.hnd ?? "";
+  // hndGrWeight.value = customFormula.scoreFormula.hndGr ?? "";
+  // hndAgWeight.value = customFormula.scoreFormula.hndAg ?? "";
+  // hndWtWeight.value = customFormula.scoreFormula.hndWt ?? "";
+  // hndArWeight.value = customFormula.scoreFormula.hndAr ?? "";
+  trctnWeight.value = customFormula.scoreFormula.trctn ?? "";
+  invcbWeight.value = customFormula.scoreFormula.invcb ?? "";
+  sizeWeight.value = customFormula.scoreFormula.size ?? "";
+
+  updateFormulaMode(mintbWeight, mintbMode)
+  updateFormulaMode(spdWeight, spdMode)
+  // updateFormulaMode(spdGrWeight, spdGrMode)
+  // updateFormulaMode(spdAgWeight, spdAgMode)
+  // updateFormulaMode(spdWtWeight, spdWtMode)
+  // updateFormulaMode(spdArWeight, spdArMode)
+  updateFormulaMode(accelWeight, accelMode)
+  updateFormulaMode(weigtWeight, weigtMode)
+  updateFormulaMode(hndWeight, hndMode)
+  // updateFormulaMode(hndGrWeight, hndGrMode)
+  // updateFormulaMode(hndAgWeight, hndAgMode)
+  // updateFormulaMode(hndWtWeight, hndWtMode)
+  // updateFormulaMode(hndArWeight, hndArMode)
+  updateFormulaMode(trctnWeight, trctnMode)
+  updateFormulaMode(invcbWeight, invcbMode)
+  updateFormulaMode(sizeWeight, sizeMode)
+
+  includeKarts.set(!customFormula.excludeKarts);
+  includeATVs.set(!customFormula.excludeATVs);
+  includeBikes.set(!customFormula.excludeBikes);
+  includeSportBikes.set(!customFormula.excludeSportBikes);
+
+  ignoreLocksFormula.set(customFormula.ignoreLocks);
+}
+
+function resetCustomFormula() {
+  customFormula = {
+    scoreFormula: structuredClone(ComboC.OPTISCORE),
+    excludeKarts: false, excludeATVs: false,
+    excludeBikes: false, excludeSportBikes: true,
+    ignoreLocks: true
+  };
+  drawCustomFormulaInterface();
+}
+
+function commitFormula() {
+  customFormula.scoreFormula.mintb = mintbWeight.value;
+  customFormula.scoreFormula.spd = spdWeight.value;
+  // customFormula.scoreFormula.spdGr = spdGrWeight.value;
+  // customFormula.scoreFormula.spdAg = spdAgWeight.value;
+  // customFormula.scoreFormula.spdWt = spdWtWeight.value;
+  // customFormula.scoreFormula.spdAr = spdArWeight.value;
+  customFormula.scoreFormula.accel = accelWeight.value;
+  customFormula.scoreFormula.weigt = weigtWeight.value;
+  customFormula.scoreFormula.hnd = hndWeight.value;
+  // customFormula.scoreFormula.hndGr = hndGrWeight.value;
+  // customFormula.scoreFormula.hndAg = hndAgWeight.value;
+  // customFormula.scoreFormula.hndWt = hndWtWeight.value;
+  // customFormula.scoreFormula.hndAr = hndArWeight.value;
+  customFormula.scoreFormula.trctn = trctnWeight.value;
+  customFormula.scoreFormula.invcb = invcbWeight.value;
+  customFormula.scoreFormula.size = sizeWeight.value;
+
+  customFormula.excludeKarts = !includeKarts.state;
+  customFormula.excludeATVs = !includeATVs.state;
+  customFormula.excludeBikes = !includeBikes.state;
+  customFormula.excludeSportBikes = !includeSportBikes.state;
+
+  customFormula.ignoreLocks = ignoreLocksFormula.state;
+}
+
+function updateFormulaMode(weightInput, modeOutput) {
+  if (weightInput.value > 0) {
+    weightInput.className = "positive";
+    modeOutput.innerHTML = "Maximize";
+    modeOutput.className = "";
+  } else if (weightInput.value < 0) {
+    weightInput.className = "negative";
+    modeOutput.innerHTML = "Minimize";
+    modeOutput.className = "";
+  } else {
+    weightInput.className = "";
+    modeOutput.innerHTML = "Ignore";
+    modeOutput.className = "subdued";
+  }
+}
+
+function toggleMode(weightInput, modeOutput) {
+  if (weightInput.value != "0" && weightInput.value != "") {
+    weightInput.value *= -1;
+  } else {
+    weightInput.value = 1;
+  }
+  updateFormulaMode(weightInput, modeOutput);
 }
 
 function readURLParams() {

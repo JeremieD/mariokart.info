@@ -179,15 +179,15 @@
             </th>
             <th tooltip-align="top-center" tooltip="Mini-Turbo"><jd-icon icon="triangle-up"></jd-icon>MINTB</th>
             <th tooltip-align="top-center" tooltip="Ground Speed"><jd-icon icon="triangle-up"></jd-icon>SPDGR</th>
+            <th tooltip-align="top-center" tooltip="Anti-Gravity Speed"><jd-icon icon="triangle-up"></jd-icon>SPDAG</th>
             <th tooltip-align="top-center" tooltip="Underwater Speed"><jd-icon icon="triangle-up"></jd-icon>SPDWT</th>
             <th tooltip-align="top-center" tooltip="Air Speed"><jd-icon icon="triangle-up"></jd-icon>SPDAR</th>
-            <th tooltip-align="top-center" tooltip="Anti-Gravity Speed"><jd-icon icon="triangle-up"></jd-icon>SPDAG</th>
             <th tooltip-align="top-center" tooltip="Acceleration"><jd-icon icon="triangle-up"></jd-icon>ACCEL</th>
             <th tooltip-align="top-center" tooltip="Weight"><jd-icon icon="triangle-up"></jd-icon>WEIGT</th>
             <th tooltip-align="top-center" tooltip="Ground Handling"><jd-icon icon="triangle-up"></jd-icon>HNDGR</th>
+            <th tooltip-align="top-center" tooltip="Anti-Gravity Handling"><jd-icon icon="triangle-up"></jd-icon>HNDAG</th>
             <th tooltip-align="top-center" tooltip="Underwater Handling"><jd-icon icon="triangle-up"></jd-icon>HNDWT</th>
             <th tooltip-align="top-center" tooltip="Air Handling"><jd-icon icon="triangle-up"></jd-icon>HNDAR</th>
-            <th tooltip-align="top-center" tooltip="Anti-Gravity Handling"><jd-icon icon="triangle-up"></jd-icon>HNDAG</th>
             <th tooltip-align="top-center" tooltip="Traction"><jd-icon icon="triangle-up"></jd-icon>TRCTN</th>
             <th tooltip-align="top-center" tooltip="Invincibility"><jd-icon icon="triangle-up"></jd-icon>INVCB</th>
           </tr>
@@ -206,20 +206,49 @@
             </th>
             <th tooltip-align="top-center" tooltip="Mini-Turbo"><jd-icon icon="triangle-up"></jd-icon>MINTB</th>
             <th tooltip-align="top-center" tooltip="Ground Speed"><jd-icon icon="triangle-up"></jd-icon>SPDGR</th>
+            <th tooltip-align="top-center" tooltip="Anti-Gravity Speed"><jd-icon icon="triangle-up"></jd-icon>SPDAG</th>
             <th tooltip-align="top-center" tooltip="Underwater Speed"><jd-icon icon="triangle-up"></jd-icon>SPDWT</th>
             <th tooltip-align="top-center" tooltip="Air Speed"><jd-icon icon="triangle-up"></jd-icon>SPDAR</th>
-            <th tooltip-align="top-center" tooltip="Anti-Gravity Speed"><jd-icon icon="triangle-up"></jd-icon>SPDAG</th>
             <th tooltip-align="top-center" tooltip="Acceleration"><jd-icon icon="triangle-up"></jd-icon>ACCEL</th>
             <th tooltip-align="top-center" tooltip="Weight"><jd-icon icon="triangle-up"></jd-icon>WEIGT</th>
             <th tooltip-align="top-center" tooltip="Ground Handling"><jd-icon icon="triangle-up"></jd-icon>HNDGR</th>
+            <th tooltip-align="top-center" tooltip="Anti-Gravity Handling"><jd-icon icon="triangle-up"></jd-icon>HNDAG</th>
             <th tooltip-align="top-center" tooltip="Underwater Handling"><jd-icon icon="triangle-up"></jd-icon>HNDWT</th>
             <th tooltip-align="top-center" tooltip="Air Handling"><jd-icon icon="triangle-up"></jd-icon>HNDAR</th>
-            <th tooltip-align="top-center" tooltip="Anti-Gravity Handling"><jd-icon icon="triangle-up"></jd-icon>HNDAG</th>
             <th tooltip-align="top-center" tooltip="Traction"><jd-icon icon="triangle-up"></jd-icon>TRCTN</th>
             <th tooltip-align="top-center" tooltip="Invincibility"><jd-icon icon="triangle-up"></jd-icon>INVCB</th>
           </tr>
         </thead>
         <tbody id="similar-combos-rows"></tbody>
+      </table>
+    </section>
+
+    <section class="table" id="custom-combos">
+      <table>
+        <thead>
+          <tr>
+            <th>
+              <h2>Custom Formula</h2>
+              <p>Find the best combo according to a custom formula.</p>
+              <p id="custom-combo-formula"></p>
+              <button id="cutomize-formula-button">Customize...</button>
+            </th>
+            <th tooltip-align="top-center" tooltip="Mini-Turbo">MINTB</th>
+            <th tooltip-align="top-center" tooltip="Ground Speed">SPDGR</th>
+            <th tooltip-align="top-center" tooltip="Anti-Gravity Speed">SPDAG</th>
+            <th tooltip-align="top-center" tooltip="Underwater Speed">SPDWT</th>
+            <th tooltip-align="top-center" tooltip="Air Speed">SPDAR</th>
+            <th tooltip-align="top-center" tooltip="Acceleration">ACCEL</th>
+            <th tooltip-align="top-center" tooltip="Weight">WEIGT</th>
+            <th tooltip-align="top-center" tooltip="Ground Handling">HNDGR</th>
+            <th tooltip-align="top-center" tooltip="Anti-Gravity Handling">HNDAG</th>
+            <th tooltip-align="top-center" tooltip="Underwater Handling">HNDWT</th>
+            <th tooltip-align="top-center" tooltip="Air Handling">HNDAR</th>
+            <th tooltip-align="top-center" tooltip="Traction">TRCTN</th>
+            <th tooltip-align="top-center" tooltip="Invincibility">INVCB</th>
+          </tr>
+        </thead>
+        <tbody id="custom-combos-rows"></tbody>
       </table>
     </section>
 
@@ -232,8 +261,77 @@
 
   <footer>
     <p>© Design & Code by <a href="https://jeremiedupuis.com" target="_blank">Jérémie Dupuis</a> 🏳️‍🌈 / Data & Images from <a href="https://www.mariowiki.com/Mario_Kart_8_Deluxe_in-game_statistics" target="_blank">Mario Wiki</a>, licensed under <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank">CC-BY-SA</a></p>
-    <p>Last updated 27 Jan 2024 / <a href="https://github.com/JeremieD/MK8DX-Combo-Builder" target="_blank">v0.7</a> / MK8DX v3.0.1 ★</p>
+    <p>Last updated 2 Feb 2024 / <a href="https://github.com/JeremieD/MK8DX-Combo-Builder" target="_blank">v0.7</a> / MK8DX v3.0.1 ★</p>
   </footer>
+
+  <dialog id="custom-formula-dialog">
+    <header>
+      <h2>Custom Formula</h2>
+      <p>Cook up your own formula to find the exact combo you need. Positive&nbsp;multipliers will maximize the stat, negative multipliers will minimize it.</p>
+    </header>
+    <div>
+      <div class="coefficient-widget">
+        <h3>Mini-Turbo</h3>
+        <output id="formula-mintb-mode">Maximize</output>
+        <input id="formula-mintb-weight" type="number" min="-100" max="100" step="1" placeholder="0" value="8" class="positive" />
+      </div>
+      <div class="coefficient-widget">
+        <h3>Speed</h3>
+        <output id="formula-spd-mode">Maximize</output>
+        <input id="formula-spd-weight" type="number" min="-100" max="100" step="1" placeholder="0" value="7.5" class="positive" />
+      </div>
+      <div class="coefficient-widget">
+        <h3>Acceleration</h3>
+        <output id="formula-accel-mode">Maximize</output>
+        <input id="formula-accel-weight" type="number" min="-100" max="100" step="1" placeholder="0" value="0.5" class="positive" />
+      </div>
+      <div class="coefficient-widget">
+        <h3>Weight</h3>
+        <output id="formula-weigt-mode">Maximize</output>
+        <input id="formula-weigt-weight" type="number" min="-100" max="100" step="1" placeholder="0" value="0.125" class="positive" />
+      </div>
+      <div class="coefficient-widget">
+        <h3>Handling</h3>
+        <output id="formula-hnd-mode">Maximize</output>
+        <input id="formula-hnd-weight" type="number" min="-100" max="100" step="1" placeholder="0" value="0.5" class="positive" />
+      </div>
+      <div class="coefficient-widget">
+        <h3>Traction</h3>
+        <output id="formula-trctn-mode">Maximize</output>
+        <input id="formula-trctn-weight" type="number" min="-100" max="100" step="1" placeholder="0" value="0.125" class="positive" />
+      </div>
+      <div class="coefficient-widget">
+        <h3>Invincibility</h3>
+        <output id="formula-invcb-mode" class="subdued">Ignore</output>
+        <input id="formula-invcb-weight" type="number" min="-100" max="100" step="1" placeholder="0" />
+      </div>
+      <div class="coefficient-widget">
+        <h3>Size</h3>
+        <output id="formula-size-mode" class="subdued">Ignore</output>
+        <input id="formula-size-weight" type="number" min="-100" max="100" step="1" placeholder="0" />
+      </div>
+    </div>
+
+    <div class="toggles">
+      <jd-toggle id="formula-include-karts" selected><jd-icon icon="checkmark" class="checkbox"></jd-icon><label>Karts</label></jd-toggle>
+      <jd-toggle id="formula-include-atvs" selected><jd-icon icon="checkmark" class="checkbox"></jd-icon><label>ATVs</label></jd-toggle>
+      <jd-toggle id="formula-include-bikes" selected><jd-icon icon="checkmark" class="checkbox"></jd-icon><label>Outside Drifting Bikes</label></jd-toggle>
+      <jd-toggle id="formula-include-sportbikes"><jd-icon icon="checkmark" class="checkbox"></jd-icon><label>Inside Drifting Bikes</label></jd-toggle>
+    </div>
+    <div>
+      <jd-toggle id="formula-ignore-locks" selected><jd-icon icon="checkmark" class="checkbox"></jd-icon><label>Ignore Locks</label></jd-toggle>
+    </div>
+
+    <footer>
+      <div>
+        <button id="formula-reset" class="button">Revert to Default Formula</button>
+        <div>
+          <button id="formula-cancel" class="button">Cancel</button>
+          <button id="formula-save" class="button primary">Save</button>
+        </div>
+      </div>
+    </footer>
+  </dialog>
 
 </body>
 

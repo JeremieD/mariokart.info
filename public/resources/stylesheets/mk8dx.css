@@ -246,12 +246,23 @@ jd-icon svg {
   gap: .5rem;
 }
 
-#combo-stats label, th:not(:first-child) {
+.formula, #combo-stats label, th:not(:first-child) {
   font-family: "Akkurat Mono", monospace;
   font-weight: bold;
   font-size: .7rem;
   letter-spacing: .1em;
 }
+
+.formula>span {
+  display: inline-block;
+}
+
+#custom-combo-formula {
+  margin: 1em 0;
+  font-size: .75rem;
+}
+
+.coefficient-separator { padding: 0 .333em; }
 
 .meter {
   display: block;
@@ -429,6 +440,7 @@ td:not(:first-child) {
 
 .positive { color: var(--color-green) !important; }
 .negative { color: var(--color-orange) !important; }
+.subdued { color: var(--color-grey) !important; }
 
 tbody td:first-child:not(.empty) {
   display: flex;
@@ -603,6 +615,97 @@ jd-tooltip:is(.shown, :hover) {
 .sortable[data-sort-by="18"] thead th:nth-of-type(18) jd-icon { opacity: 1; }
 .sortable[data-sort-by="19"] thead th:nth-of-type(19) jd-icon { opacity: 1; }
 .sortable[data-sort-by="20"] thead th:nth-of-type(20) jd-icon { opacity: 1; }
+
+dialog {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: .5rem;
+  background-color: var(--color-background);
+  box-shadow: 0 1px 64px 0 rgba(0, 0, 0, 0.33);
+  z-index: 50;
+}
+
+dialog::backdrop { background-color: rgba(0,0,0,.5); }
+
+dialog>header {
+  padding: 4rem 4rem 2rem;
+  border-bottom: 1px solid var(--color-interactive);
+}
+
+dialog>header>* { max-width: 60ch; }
+
+dialog h2 {
+  font-size: 1.5em;
+  line-height: 1;
+  margin-bottom: .5em;
+}
+
+dialog>* { padding: 0 4rem; }
+
+dialog>footer {
+  padding: 2rem 4rem 4rem;
+  border-top: 1px solid var(--color-interactive);
+}
+
+dialog>footer div {
+  display: flex;
+  gap: .5em;
+}
+
+dialog>footer>div:last-child { justify-content: space-between; }
+
+.coefficient-widget {
+  display: flex;
+  align-items: baseline;
+  justify-content: end;
+  gap: .5em;
+}
+
+.coefficient-widget+.coefficient-widget { margin-top: .25em; }
+
+.coefficient-widget output {
+  font-size: .9em;
+}
+
+.coefficient-widget h3 {
+  font-size: 1.125em;
+  flex-grow: 1;
+}
+
+.coefficient-widget input {
+  width: 12ch;
+  height: 2em;
+  font-family: "Akkurat Mono", monospace;
+  font-size: .9em;
+  text-align: right;
+  background-color: var(--color-interactive);
+  border-radius: .25rem;
+}
+
+.toggles {
+  display: flex;
+  gap: 1em;
+  flex-wrap: wrap;
+}
+
+.button {
+  display: inline-block;
+  height: 2.25rem;
+  padding: 0 1.25em;
+  font-weight: bold;
+  background-color: var(--color-interactive);
+  border-radius: .25rem;
+}
+
+.button.primary {
+  background-color: var(--color-accent);
+  color: var(--color-light1);
+}
 
 
 @media (max-width: 1440px) {

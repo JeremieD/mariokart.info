@@ -111,117 +111,123 @@ for (const driver of Object.keys(gameStats.classes.drivers)) {
   }
 }
 
-function listCombos(opts = {}) {
-  opts.mustDiffer ??= false; opts.maxAbsDiff ??= Infinity;
-  opts.minDiff ??= -Infinity; opts.maxDiff ??= Infinity;
-  opts.sortBy ??= "diff";
-  opts.mintbMin ??= 0; opts.mintbMax ??= 6; opts.mintb ??= opts.mintbMin;
-  opts.spdGrMin ??= 0; opts.spdGrMax ??= 6; opts.spdGr ??= opts.spdGrMin;
-  opts.spdWtMin ??= 0; opts.spdWtMax ??= 6; opts.spdWt ??= opts.spdWtMin;
-  opts.spdAgMin ??= 0; opts.spdAgMax ??= 6; opts.spdAg ??= opts.spdAgMin;
-  opts.spdArMin ??= 0; opts.spdArMax ??= 6; opts.spdAr ??= opts.spdArMin;
-  opts.accelMin ??= 0; opts.accelMax ??= 6; opts.accel ??= opts.accelMin;
-  opts.weigtMin ??= 0; opts.weigtMax ??= 6; opts.weigt ??= opts.weigtMin;
-  opts.hndGrMin ??= 0; opts.hndGrMax ??= 6; opts.hndGr ??= opts.hndGrMin;
-  opts.hndWtMin ??= 0; opts.hndWtMax ??= 6; opts.hndWt ??= opts.hndWtMin;
-  opts.hndAgMin ??= 0; opts.hndAgMax ??= 6; opts.hndAg ??= opts.hndAgMin;
-  opts.hndArMin ??= 0; opts.hndArMax ??= 6; opts.hndAr ??= opts.hndArMin;
-  opts.trctnMin ??= 0; opts.trctnMax ??= 6; opts.trctn ??= opts.trctnMin;
-  opts.invcbMin ??= 0; opts.invcbMax ??= 6; opts.invcb ??= opts.invcbMin;
-  opts.sizeMin ??= 0; opts.sizeMax ??= 2; opts.size ??= opts.sizeMin;
-  opts.driverLock ??= undefined; opts.bodyLock ??= undefined;
-  opts.tireLock ??= undefined; opts.gliderLock ??= undefined;
+async function listCombos(opts = {}) {
+  return new Promise(function(resolve, reject) {
+    opts.mustDiffer ??= false; opts.maxAbsDiff ??= Infinity;
+    opts.minDiff ??= -Infinity; opts.maxDiff ??= Infinity;
+    opts.sortBy ??= "diff";
+    opts.mintbMin ??= 0; opts.mintbMax ??= 6; opts.mintb ??= opts.mintbMin;
+    opts.spdGrMin ??= 0; opts.spdGrMax ??= 6; opts.spdGr ??= opts.spdGrMin;
+    opts.spdWtMin ??= 0; opts.spdWtMax ??= 6; opts.spdWt ??= opts.spdWtMin;
+    opts.spdAgMin ??= 0; opts.spdAgMax ??= 6; opts.spdAg ??= opts.spdAgMin;
+    opts.spdArMin ??= 0; opts.spdArMax ??= 6; opts.spdAr ??= opts.spdArMin;
+    opts.accelMin ??= 0; opts.accelMax ??= 6; opts.accel ??= opts.accelMin;
+    opts.weigtMin ??= 0; opts.weigtMax ??= 6; opts.weigt ??= opts.weigtMin;
+    opts.hndGrMin ??= 0; opts.hndGrMax ??= 6; opts.hndGr ??= opts.hndGrMin;
+    opts.hndWtMin ??= 0; opts.hndWtMax ??= 6; opts.hndWt ??= opts.hndWtMin;
+    opts.hndAgMin ??= 0; opts.hndAgMax ??= 6; opts.hndAg ??= opts.hndAgMin;
+    opts.hndArMin ??= 0; opts.hndArMax ??= 6; opts.hndAr ??= opts.hndArMin;
+    opts.trctnMin ??= 0; opts.trctnMax ??= 6; opts.trctn ??= opts.trctnMin;
+    opts.invcbMin ??= 0; opts.invcbMax ??= 6; opts.invcb ??= opts.invcbMin;
+    opts.sizeMin ??= 0; opts.sizeMax ??= 2; opts.size ??= opts.sizeMin;
+    opts.driverLock ??= undefined; opts.bodyLock ??= undefined;
+    opts.tireLock ??= undefined; opts.gliderLock ??= undefined;
+    opts.excludeKarts ??= false; opts.excludeATVs ??= false;
+    opts.excludeBikes ??= false; opts.excludeSportBikes ??= false;
+    opts.scoreFormula ??= undefined;
 
-  const list = [];
+    const list = [];
 
-  for (const combo of Object.values(AllCombos)) {
-    if (opts.driverLock !== undefined &&
-        gameStats.parts.drivers[opts.driverLock].stats !== combo.driver) continue;
-    if (opts.bodyLock !== undefined &&
-        gameStats.parts.bodies[opts.bodyLock].stats !== combo.body) continue;
-    if (opts.tireLock !== undefined &&
-        gameStats.parts.tires[opts.tireLock].stats !== combo.tire) continue;
-    if (opts.gliderLock !== undefined &&
-        gameStats.parts.gliders[opts.gliderLock].stats !== combo.glider) continue;
+    for (const combo of Object.values(AllCombos)) {
+      if (opts.driverLock !== undefined &&
+          gameStats.parts.drivers[opts.driverLock].stats !== combo.driver) continue;
+      if (opts.bodyLock !== undefined &&
+          gameStats.parts.bodies[opts.bodyLock].stats !== combo.body) continue;
+      if (opts.tireLock !== undefined &&
+          gameStats.parts.tires[opts.tireLock].stats !== combo.tire) continue;
+      if (opts.gliderLock !== undefined &&
+          gameStats.parts.gliders[opts.gliderLock].stats !== combo.glider) continue;
 
-    const mintb = combo.lvl.mintb; const accel = combo.lvl.accel;
-    const spdGr = combo.lvl.spdGr; const spdWt = combo.lvl.spdWt;
-    const spdAg = combo.lvl.spdAg; const spdAr = combo.lvl.spdAr;
-    const weigt = combo.lvl.weigt; const trctn = combo.lvl.trctn;
-    const hndGr = combo.lvl.hndGr; const hndWt = combo.lvl.hndWt;
-    const hndAg = combo.lvl.hndAg; const hndAr = combo.lvl.hndAr;
-    const invcb = combo.lvl.invcb;
-    const size = combo.size;
+      const bodyType = gameStats.parts.bodies[combo.body].type;
+      if (opts.excludeKarts      && bodyType == "kart") continue;
+      if (opts.excludeATVs       && bodyType == "atv")   continue;
+      if (opts.excludeBikes      && bodyType == "bike")  continue;
+      if (opts.excludeSportBikes && bodyType == "sport") continue;
 
-    const absDiff = Math.abs(mintb - opts.mintb) +
-    Math.abs(spdGr - opts.spdGr) + Math.abs(spdWt - opts.spdWt) +
-    Math.abs(spdAg - opts.spdAg) + Math.abs(spdAr - opts.spdAr) +
-    Math.abs(accel - opts.accel) + Math.abs(weigt - opts.weigt) +
-    Math.abs(hndGr - opts.hndGr) + Math.abs(hndWt - opts.hndWt) +
-    Math.abs(hndAg - opts.hndAg) + Math.abs(hndAr - opts.hndAr) +
-    Math.abs(trctn - opts.trctn) + Math.abs(invcb - opts.invcb);
-    if (absDiff > opts.maxAbsDiff) continue;
-    if (opts.mustDiffer && absDiff == 0) continue;
+      const mintb = combo.lvl.mintb; const accel = combo.lvl.accel;
+      const spdGr = combo.lvl.spdGr; const spdWt = combo.lvl.spdWt;
+      const spdAg = combo.lvl.spdAg; const spdAr = combo.lvl.spdAr;
+      const weigt = combo.lvl.weigt; const trctn = combo.lvl.trctn;
+      const hndGr = combo.lvl.hndGr; const hndWt = combo.lvl.hndWt;
+      const hndAg = combo.lvl.hndAg; const hndAr = combo.lvl.hndAr;
+      const invcb = combo.lvl.invcb;
+      const size = combo.size;
 
-    combo.diff = (mintb - opts.mintb) +
-    (spdGr - opts.spdGr) + (spdWt - opts.spdWt) +
-    (spdAg - opts.spdAg) + (spdAr - opts.spdAr) +
-    (accel - opts.accel) + (weigt - opts.weigt) +
-    (hndGr - opts.hndGr) + (hndWt - opts.hndWt) +
-    (hndAg - opts.hndAg) + (hndAr - opts.hndAr) +
-    (trctn - opts.trctn) + (invcb - opts.invcb);
-    if (combo.diff < opts.minDiff) continue;
-    if (combo.diff > opts.maxDiff) continue;
+      const absDiff = Math.abs(mintb - opts.mintb) +
+      Math.abs(spdGr - opts.spdGr) + Math.abs(spdWt - opts.spdWt) +
+      Math.abs(spdAg - opts.spdAg) + Math.abs(spdAr - opts.spdAr) +
+      Math.abs(accel - opts.accel) + Math.abs(weigt - opts.weigt) +
+      Math.abs(hndGr - opts.hndGr) + Math.abs(hndWt - opts.hndWt) +
+      Math.abs(hndAg - opts.hndAg) + Math.abs(hndAr - opts.hndAr) +
+      Math.abs(trctn - opts.trctn) + Math.abs(invcb - opts.invcb);
+      if (absDiff > opts.maxAbsDiff) continue;
+      if (opts.mustDiffer && absDiff == 0) continue;
 
-    if (mintb < opts.mintbMin || mintb > opts.mintbMax) continue;
-    if (spdGr < opts.spdGrMin || spdGr > opts.spdGrMax) continue;
-    if (spdWt < opts.spdWtMin || spdWt > opts.spdWtMax) continue;
-    if (spdAg < opts.spdAgMin || spdAg > opts.spdAgMax) continue;
-    if (spdAr < opts.spdArMin || spdAr > opts.spdArMax) continue;
-    if (accel < opts.accelMin || accel > opts.accelMax) continue;
-    if (weigt < opts.weigtMin || weigt > opts.weigtMax) continue;
-    if (hndGr < opts.hndGrMin || hndGr > opts.hndGrMax) continue;
-    if (hndWt < opts.hndWtMin || hndWt > opts.hndWtMax) continue;
-    if (hndAg < opts.hndAgMin || hndAg > opts.hndAgMax) continue;
-    if (hndAr < opts.hndArMin || hndAr > opts.hndArMax) continue;
-    if (trctn < opts.trctnMin || trctn > opts.trctnMax) continue;
-    if (invcb < opts.invcbMin || invcb > opts.invcbMax) continue;
-    if (size < opts.sizeMin || size > opts.sizeMax) continue;
+      combo.diff = (mintb - opts.mintb) +
+      (spdGr - opts.spdGr) + (spdWt - opts.spdWt) +
+      (spdAg - opts.spdAg) + (spdAr - opts.spdAr) +
+      (accel - opts.accel) + (weigt - opts.weigt) +
+      (hndGr - opts.hndGr) + (hndWt - opts.hndWt) +
+      (hndAg - opts.hndAg) + (hndAr - opts.hndAr) +
+      (trctn - opts.trctn) + (invcb - opts.invcb);
+      if (combo.diff < opts.minDiff) continue;
+      if (combo.diff > opts.maxDiff) continue;
 
-    list.push(combo);
-  }
+      if (mintb < opts.mintbMin || mintb > opts.mintbMax) continue;
+      if (spdGr < opts.spdGrMin || spdGr > opts.spdGrMax) continue;
+      if (spdWt < opts.spdWtMin || spdWt > opts.spdWtMax) continue;
+      if (spdAg < opts.spdAgMin || spdAg > opts.spdAgMax) continue;
+      if (spdAr < opts.spdArMin || spdAr > opts.spdArMax) continue;
+      if (accel < opts.accelMin || accel > opts.accelMax) continue;
+      if (weigt < opts.weigtMin || weigt > opts.weigtMax) continue;
+      if (hndGr < opts.hndGrMin || hndGr > opts.hndGrMax) continue;
+      if (hndWt < opts.hndWtMin || hndWt > opts.hndWtMax) continue;
+      if (hndAg < opts.hndAgMin || hndAg > opts.hndAgMax) continue;
+      if (hndAr < opts.hndArMin || hndAr > opts.hndArMax) continue;
+      if (trctn < opts.trctnMin || trctn > opts.trctnMax) continue;
+      if (invcb < opts.invcbMin || invcb > opts.invcbMax) continue;
+      if (size < opts.sizeMin || size > opts.sizeMax) continue;
 
-  if (!(opts.sortBy instanceof Array)) opts.sortBy = [opts.sortBy];
-  const compare = function(a, b) {
-      for (const stat of opts.sortBy) {
-        let statA, statB;
-        if (stat == "diff") {
-          statA = a.diff;
-          statB = b.diff;
+      list.push(combo);
+    }
 
-        } else if (stat == "score") {
-          const stats = ["mintb", "spd"];
-          statA = a.getScore(stats);
-          statB = b.getScore(stats);
+    if (!(opts.sortBy instanceof Array)) opts.sortBy = [opts.sortBy];
+    const compare = function(a, b) {
+        for (const stat of opts.sortBy) {
+          let statA, statB;
+          if (stat == "diff") {
+            statA = a.diff;
+            statB = b.diff;
 
-        } else if (stat == "optiScore") {
-          statA = a.getOptiScore();
-          statB = b.getOptiScore();
+          } else if (stat == "score") {
+            statA = a.getScore(opts.scoreFormula);
+            statB = b.getScore(opts.scoreFormula);
 
-        } else {
-          statA = a.lvl[stat];
-          statB = b.lvl[stat];
+          } else {
+            statA = a.lvl[stat];
+            statB = b.lvl[stat];
+          }
+
+          if (statA == statB) continue;
+          return statB - statA;
         }
+        return 0;
+    }
 
-        if (statA == statB) continue;
-        return statB - statA;
-      }
-      return 0;
-  }
+    list.sort(compare);
 
-  list.sort(compare);
-
-  return list;
+    resolve(list);
+  });
 }
 
 // Represents a visually unique combo that points to a class in AllCombos.
