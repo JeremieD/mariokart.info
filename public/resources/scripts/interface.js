@@ -765,6 +765,18 @@ async function drawCustomCombos() {
     customCombosCount.innerText = customCombos.length;
     customComboFormula.innerHTML = formatFormula(customFormula);
     fillTable(customCombosRows, customCombos.slice(0, 100));
+    // Truncation info
+    if (customCombos.length > 100) {
+      const row = document.createElement("tr");
+      const cell = document.createElement("td");
+      cell.colSpan = 14;
+      cell.classList.add("empty");
+      const para = document.createElement("p");
+      para.innerHTML = "Showing top 100 matches.<br>Try refining the formula to see more.";
+      row.append(cell);
+      cell.append(para);
+      customCombosRows.append(row);
+    }
   });
 }
 
