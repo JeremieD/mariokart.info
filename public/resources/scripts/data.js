@@ -1653,7 +1653,7 @@ const gameStats = {
 
 // Free codes:
 //   H   O
-// f h n o q   x
+// fgh n o q
 const driverCodes = {
   mario: "M",
   luigi: "L",
@@ -1684,7 +1684,7 @@ const driverCodes = {
   waluigi: "w",
   dk: "D",
   bowser: "B",
-  drybones: "d",
+  drybones: "x",
   bowserJr: "b",
   bowserDry: "X",
   kamek: "E",
@@ -1703,7 +1703,7 @@ const driverCodes = {
   link: "z",
   linkBOTW: "Z",
   peachette: "c",
-  ddk: "g",
+  ddk: "d",
   fk: "F",
   pauline: "U",
   miiS: "7",
@@ -1781,9 +1781,9 @@ const tireCodes = {
   offroadRetro: "o",
   gold: "g",
   gla: "G",
-  triforce: "Z",
+  triforce: "z",
   leaf: "L",
-  ancient: "z"
+  ancient: "Z"
 };
 
 // Free codes:
@@ -1802,7 +1802,7 @@ const gliderCodes = {
   plane: "w",
   parafoilTV: "T",
   gold: "G",
-  hylian: "Z",
+  hylian: "z",
   paper: "P",
-  paraglider: "z"
+  paraglider: "Z"
 };
