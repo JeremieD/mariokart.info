@@ -735,7 +735,7 @@ async function getTier() {
     if (nbDominantCombos / nbCombos < .002) return "B";
     if (nbDominantCombos / nbCombos < .0035) return "C";
     return "D";
-  })
+  });
 }
 
 async function drawRelatedTables() {

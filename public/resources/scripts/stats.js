@@ -213,26 +213,26 @@ async function listCombos(opts = {}) {
     }
 
     if (!(opts.sortBy instanceof Array)) opts.sortBy = [opts.sortBy];
+    let statA, statB;
     const compare = function(a, b) {
-        for (const stat of opts.sortBy) {
-          let statA, statB;
-          if (stat == "diff") {
-            statA = a.diff;
-            statB = b.diff;
+      for (const stat of opts.sortBy) {
+        if (stat == "diff") {
+          statA = a.diff;
+          statB = b.diff;
 
-          } else if (stat == "score") {
-            statA = a.getScore(opts.scoreFormula);
-            statB = b.getScore(opts.scoreFormula);
+        } else if (stat == "score") {
+          statA = a.getScore(opts.scoreFormula);
+          statB = b.getScore(opts.scoreFormula);
 
-          } else {
-            statA = a.lvl[stat];
-            statB = b.lvl[stat];
-          }
-
-          if (statA == statB) continue;
-          return statB - statA;
+        } else {
+          statA = a.lvl[stat];
+          statB = b.lvl[stat];
         }
-        return 0;
+
+        if (statA == statB) continue;
+        return statB - statA;
+      }
+      return 0;
     }
 
     list.sort(compare);
