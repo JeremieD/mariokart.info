@@ -554,7 +554,6 @@ jd-tooltip::before {
   right: auto;
   width: 16px;
   height: 16px;
-  box-shadow: 3px 3px 3px 0 rgba(0, 0, 0, 0.15);
   transform: translate(-50%, -50%) rotate(45deg);
   border-radius: 4px 0;
   background-color: var(--color-interactive);
@@ -562,14 +561,25 @@ jd-tooltip::before {
 
 jd-tooltip.top-right { transform: translateY(-100%) translateX(-8px); }
 
-jd-tooltip.top-center { transform: translateY(-100%) translateX(-50%); }
+jd-tooltip.bottom-right { transform: translateX(-8px); }
+jd-tooltip.bottom-right::before { top: 0; }
+
+jd-tooltip.top-center {
+  text-align: center;
+  transform: translateY(-100%) translateX(-50%);
+}
 jd-tooltip.top-center::before { left: 50%; }
+
+jd-tooltip.bottom-center {
+  text-align: center;
+  transform: translateX(-50%);
+}
+jd-tooltip.bottom-center::before { top: 0; left: 50%; }
 
 jd-tooltip.left-middle { transform: translateY(-50%) translateX(-100%); text-align: right; }
 jd-tooltip.left-middle::before {
   top: 50%;
   left: 100%;
-  box-shadow: 3px -3px 3px 0 rgba(0, 0, 0, 0.15);
   border-radius: 0 4px;
 }
 
