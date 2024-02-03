@@ -3,7 +3,7 @@ console.log("★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★
 
 const locl = "en-US";
 
-const mobile = innerWidth <= 800;
+const mobile = innerWidth <= 1366;
 
 const combos = {
   a: Combo.fromCode("MAAA"),

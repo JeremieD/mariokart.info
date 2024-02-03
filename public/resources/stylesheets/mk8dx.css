@@ -885,6 +885,8 @@ dialog>.formula-numbers>:first-child, .coefficient-widget output {
     top: var(--height-header);
     left: var(--width-pagepadding);
     right: var(--width-pagepadding);
+    max-width: 512px;
+    margin: auto;
     padding: 1rem;
     background-color: var(--color-foreground);
     border-radius: .5rem;
