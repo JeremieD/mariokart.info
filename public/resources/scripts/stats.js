@@ -76,31 +76,22 @@ class ComboC {
     this.lvl.size = this.size*2.5 + .75;
   }
 
-  getScore(weights = {}) {
-    weights ??= {
-      mintb: 1, accel: 1, weigt: 1, trctn: 1,
-      spd: 1, spdGr: 0, spdWt: 0, spdAg: 0, spdAr: 0,
-      hnd: 1, hndGr: 0, hndWt: 0, hndAg: 0, hndAr: 0,
-      invcb: 1, size: 0
-    }
+  getScore(weights) {
+    weights ??= ComboC.OPTISCORE;
 
     let sum = 0;
-    for (const stat of Object.keys(weights)) {
-      sum += this.lvl[stat] * weights[stat];
+    for (const stat of ComboC.SCORE_STATS) {
+      const weight = weights[stat] ?? 0;
+      if (weight == 0) continue;
+      sum += this.lvl[stat] * weight;
     }
     return sum;
   }
 
-  getOptiScore() {
-    let sum = 0;
-    sum += this.lvl.mintb * 8;
-    sum += this.lvl.spd   * 7.5;
-    sum += this.lvl.accel * .5;
-    sum += this.lvl.hnd   * .5;
-    sum += this.lvl.weigt * .125;
-    sum += this.lvl.trctn * .125;
-    return sum;
-  }
+  static SCORE_STATS = [ "mintb", "spd", "spdGr", "spdAg", "spdWt", "spdAr", "accel",
+                         "weigt", "hnd", "hndGr", "hndAg", "hndWt", "hndAr", "trctn", "invcb", "size" ];
+  static OPTISCORE = { mintb: 16, spd: 15, accel: 1,
+                       weigt: .25, hnd: 1, trctn: .25 };
 
   static PERCENT_GR = .80; // Best estimate for percent of time on ground.
   static PERCENT_AG = .15; // Best estimate for percent of time in anti-gravity.
