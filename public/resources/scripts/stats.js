@@ -1,3 +1,4 @@
+"use strict";
 // There is ?????? parts combinations (excluding color variants).
 // There is 649440 parts combinations (excluding driver variants).
 // There is  28224 class combinations.
@@ -8,6 +9,7 @@ class ComboC {
   #parts = {};
   #classes = {};
   #code = "";
+  #lvl = [];
 
   constructor(driver = "mario", body = "std", tire = "std", glider = "super") {
     if (gameStats.parts.drivers[driver] !== undefined) {
@@ -74,24 +76,25 @@ class ComboC {
     // The driver's size [0-2] is converted to the lvl range [.75-5.75]
     this.size = gameStats.classes.drivers[this.#classes.driver].size;
     this.lvl.size = this.size*2.5 + .75;
+
+    // Reflect to array.
+    for (let i = 0; i < ComboC.SCORE_STATS.length; i++) {
+      this.#lvl.push(this.lvl[ComboC.SCORE_STATS[i]]);
+    }
   }
 
   getScore(weights) {
-    weights ??= ComboC.OPTISCORE;
-
     let sum = 0;
-    for (const stat of ComboC.SCORE_STATS) {
-      const weight = weights[stat] ?? 0;
-      if (weight == 0) continue;
-      sum += this.lvl[stat] * weight;
+    for (let i = 0; i < 16; i++) {
+      sum += weights[i] * this.#lvl[i];
     }
     return sum;
   }
 
   static SCORE_STATS = [ "mintb", "spd", "spdGr", "spdAg", "spdWt", "spdAr", "accel",
                          "weigt", "hnd", "hndGr", "hndAg", "hndWt", "hndAr", "trctn", "invcb", "size" ];
-  static OPTISCORE = { mintb: 16, spd: 15, accel: 1,
-                       weigt: .25, hnd: 1, trctn: .25 };
+  static OPTISCORE = [16, 15, 0, 0, 0, 0, 1,
+                      .25, 1, 0, 0, 0, 0, .25, 0, 0];
 
   static PERCENT_GR = .80; // Best estimate for percent of time on ground.
   static PERCENT_AG = .15; // Best estimate for percent of time in anti-gravity.
@@ -99,13 +102,15 @@ class ComboC {
   static PERCENT_AR = .01; // Best estimate for percent of time airborne.
 }
 
-const AllCombos = {};
+const AllCombos = [];
+const AllComboCodes = [];
 for (const driver of Object.keys(gameStats.classes.drivers)) {
   for (const body of Object.keys(gameStats.classes.bodies)) {
     for (const tire of Object.keys(gameStats.classes.tires)) {
       for (const glider of Object.keys(gameStats.classes.gliders)) {
         const combo = new ComboC(driver, body, tire, glider);
-        AllCombos[combo.code] = combo;
+        AllCombos.push(combo);
+        AllComboCodes.push(combo.code);
       }
     }
   }
@@ -140,7 +145,7 @@ async function listCombos(opts = {}) {
 
     const list = [];
 
-    for (const combo of Object.values(AllCombos)) {
+    for (const combo of AllCombos) {
       if (opts.driverLock !== undefined &&
           gameStats.parts.drivers[opts.driverLock].stats !== combo.driver) continue;
       if (opts.bodyLock !== undefined &&
@@ -308,7 +313,7 @@ class Combo {
     const gliderClass = gameStats.parts.gliders[this.glider].stats;
     const classCode = driverCodes[driverClass] + bodyCodes[bodyClass] +
                       tireCodes[tireClass] + gliderCodes[gliderClass]
-    this.#class = AllCombos[classCode];
+    this.#class = AllCombos[AllComboCodes.indexOf(classCode)];
   }
 
   static fromCode(comboCode) {

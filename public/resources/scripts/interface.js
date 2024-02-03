@@ -1,3 +1,4 @@
+"use strict";
 console.log("★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★\n\nHello. This is a WIP. Do NOT look at my ugly code. I rushed to release this for Wave 6. I'm working on cleaning it up and adding new features.\n\n★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★");
 
 const locl = "en-US";
@@ -9,7 +10,7 @@ const combos = {
   b: Combo.fromCode("LMSA")
 };
 let customFormula = {
-  scoreFormula: structuredClone(ComboC.OPTISCORE),
+  scoreFormula: [...ComboC.OPTISCORE],
   mintbMin: 0, mintbMax: 6, spdMin: 0, spdMax: 6,
   spdGrMin: 0, spdGrMax: 6, spdAgMin: 0, spdAgMax: 6,
   spdWtMin: 0, spdWtMax: 6, spdArMin: 0, spdArMax: 6,
@@ -19,28 +20,32 @@ let customFormula = {
   trctnMin: 0, trctnMax: 6, invcbMin: 0, invcbMax: 6, sizeMin: 0, sizeMax: 2,
   excludeKarts: false, excludeATVs: false,
   excludeBikes: false, excludeSportBikes: true,
-  ignoreLocks: true };
+  ignoreLocks: true
+};
 
-readURLParams();
 let selectedCombo = combos.a;
 let otherCombo = combos.b;
-let lastStateUrl = "";
+let lastStateURL = "";
+readURLParams();
 
 let comboSelect;
 let comboTier, comboDetails;
-let randomButton, optimizeButton;
+let compareSwitch, randomButton;
 let driverButton, bodyButton, tireButton, gliderButton,
     driverImg,    bodyImg,    tireImg,    gliderImg,
     driverLock,   bodyLock,   tireLock,   gliderLock,
     driverLabel,  bodyLabel,  tireLabel,  gliderLabel; // Current combo display
+let comboStats;
 let mintbMeter, accelMeter, weigtMeter, // Stat bars
     spdGrMeter, spdAgMeter, spdWtMeter, spdArMeter,
     hndGrMeter, hndAgMeter, hndWtMeter, hndArMeter,
     trctnMeter, invcbMeter;
 let partsGrid;
+let driverName, bodyName, tireName, gliderName;
 let driverSelect, bodySelect, tireSelect, gliderSelect; // Part grids
-let dominantCombosRows, similarCombosRows; // Table bodies
+let dominantCombosRows, similarCombosRows, customCombosRows; // Table bodies
 let dominantCombosCount, similarCombosCount, customCombosCount;
+let customComboFormula, customizeFormulaButton;
 let customFormulaDialog;
 let mintbWeight, spdWeight, accelWeight,
     weigtWeight, hndWeight, trctnWeight,
@@ -115,7 +120,7 @@ whenDOMReady(() => {
   customCombosRows   = document.getElementById("custom-combos-rows");
 
   customComboFormula = document.getElementById("custom-combo-formula");
-  customizeFormulaButton = document.getElementById("cutomize-formula-button");
+  customizeFormulaButton = document.getElementById("customize-formula-button");
 
   customFormulaDialog = document.getElementById("custom-formula-dialog");
 
@@ -165,7 +170,7 @@ whenDOMReady(() => {
   saveFormulaButton = document.getElementById("formula-save");
 
   initRadioGroup(comboSelect).addEventListener("change", e => {
-    comboID = e.target.dataset.value;
+    const comboID = e.target.dataset.value;
     selectedCombo = combos[comboID];
     switch (comboID) {
       case "a":
@@ -735,7 +740,7 @@ async function getTier() {
 
 async function drawRelatedTables() {
   return Promise.all([drawDominantCombos(), drawSimilarCombos(),
-                     drawCustomCombos()]);
+                      drawCustomCombos()]);
 }
 
 async function drawDominantCombos() {
@@ -765,13 +770,15 @@ async function drawCustomCombos() {
 
 function formatFormula(formula) {
   const stats = [];
-  for (const stat of Object.keys(formula.scoreFormula)) {
-    let weight = formula.scoreFormula[stat];
+  for (let i = 0; i < ComboC.SCORE_STATS.length; i++) {
+    const statCode = ComboC.SCORE_STATS[i].toUpperCase();
+    let weight = formula.scoreFormula[i];
     if (weight == 0) continue;
-    const sign = weight < 0 ? "negative" : "positive";
-    weight = weight.toString();
+    const sign = weight < 0 ? "-" : "";
+    const className = weight < 0 ? "negative" : "positive";
+    weight = Math.abs(weight).toString();
     if (weight[0] == "0") weight = weight.substr(1);
-    const term = '<span class="' + sign + '">' + weight + '<span class="coefficient-separator">×</span>' + stat.toUpperCase() + "</span>";
+    const term = '<span class="' + className + '">' + sign + weight + '<span class="coefficient-separator">×</span>' + statCode + "</span>";
     stats.push(term);
   }
   let s = '<span class="formula">' + stats.join(" + ") + "</span>";
@@ -955,22 +962,55 @@ function formatStatDiff(diff) {
 }
 
 function drawCustomFormulaInterface() {
-  mintbWeight.value = customFormula.scoreFormula.mintb ?? "";
-  spdWeight.value = customFormula.scoreFormula.spd ?? "";
-  // spdGrWeight.value = customFormula.scoreFormula.spdGr ?? "";
-  // spdAgWeight.value = customFormula.scoreFormula.spdAg ?? "";
-  // spdWtWeight.value = customFormula.scoreFormula.spdWt ?? "";
-  // spdArWeight.value = customFormula.scoreFormula.spdAr ?? "";
-  accelWeight.value = customFormula.scoreFormula.accel ?? "";
-  weigtWeight.value = customFormula.scoreFormula.weigt ?? "";
-  hndWeight.value = customFormula.scoreFormula.hnd ?? "";
-  // hndGrWeight.value = customFormula.scoreFormula.hndGr ?? "";
-  // hndAgWeight.value = customFormula.scoreFormula.hndAg ?? "";
-  // hndWtWeight.value = customFormula.scoreFormula.hndWt ?? "";
-  // hndArWeight.value = customFormula.scoreFormula.hndAr ?? "";
-  trctnWeight.value = customFormula.scoreFormula.trctn ?? "";
-  invcbWeight.value = customFormula.scoreFormula.invcb ?? "";
-  sizeWeight.value = customFormula.scoreFormula.size ?? "";
+  mintbWeight.value = customFormula.scoreFormula[0] ?? "";
+  spdWeight.value = customFormula.scoreFormula[1] ?? "";
+  // spdGrWeight.value = customFormula.scoreFormula[2] ?? "";
+  // spdAgWeight.value = customFormula.scoreFormula[3] ?? "";
+  // spdWtWeight.value = customFormula.scoreFormula[4] ?? "";
+  // spdArWeight.value = customFormula.scoreFormula[5] ?? "";
+  accelWeight.value = customFormula.scoreFormula[6] ?? "";
+  weigtWeight.value = customFormula.scoreFormula[7] ?? "";
+  hndWeight.value = customFormula.scoreFormula[8] ?? "";
+  // hndGrWeight.value = customFormula.scoreFormula[9] ?? "";
+  // hndAgWeight.value = customFormula.scoreFormula[10] ?? "";
+  // hndWtWeight.value = customFormula.scoreFormula[11] ?? "";
+  // hndArWeight.value = customFormula.scoreFormula[12] ?? "";
+  trctnWeight.value = customFormula.scoreFormula[13] ?? "";
+  invcbWeight.value = customFormula.scoreFormula[14] ?? "";
+  sizeWeight.value = customFormula.scoreFormula[15] ?? "";
+
+  mintbMin.value = customFormula.mintbMin != 0 ? customFormula.mintbMin : "";
+  mintbMax.value = customFormula.mintbMax != 6 ? customFormula.mintbMax : "";
+  spdMin.value = customFormula.spdMin != 0 ? customFormula.spdMin : "";
+  spdMax.value = customFormula.spdMax != 6 ? customFormula.spdMax : "";
+  // spdGrMin.value = customFormula.spdGrMin != 0 ? customFormula.spdGrMin : "";
+  // spdGrMax.value = customFormula.spdGrMax != 6 ? customFormula.spdGrMax : "";
+  // spdAgMin.value = customFormula.spdAgMin != 0 ? customFormula.spdAgMin : "";
+  // spdAgMax.value = customFormula.spdAgMax != 6 ? customFormula.spdAgMax : "";
+  // spdWtMin.value = customFormula.spdWtMin != 0 ? customFormula.spdWtMin : "";
+  // spdWtMax.value = customFormula.spdWtMax != 6 ? customFormula.spdWtMax : "";
+  // spdArMin.value = customFormula.spdArMin != 0 ? customFormula.spdArMin : "";
+  // spdArMax.value = customFormula.spdArMax != 6 ? customFormula.spdArMax : "";
+  accelMin.value = customFormula.accelMin != 0 ? customFormula.accelMin : "";
+  accelMax.value = customFormula.accelMax != 6 ? customFormula.accelMax : "";
+  weigtMin.value = customFormula.weigtMin != 0 ? customFormula.weigtMin : "";
+  weigtMax.value = customFormula.weigtMax != 6 ? customFormula.weigtMax : "";
+  hndMin.value = customFormula.hndMin != 0 ? customFormula.hndMin : "";
+  hndMax.value = customFormula.hndMax != 6 ? customFormula.hndMax : "";
+  // hndGrMin.value = customFormula.hndGrMin != 0 ? customFormula.hndGrMin : "";
+  // hndGrMax.value = customFormula.hndGrMax != 6 ? customFormula.hndGrMax : "";
+  // hndAgMin.value = customFormula.hndAgMin != 0 ? customFormula.hndAgMin : "";
+  // hndAgMax.value = customFormula.hndAgMax != 6 ? customFormula.hndAgMax : "";
+  // hndWtMin.value = customFormula.hndWtMin != 0 ? customFormula.hndWtMin : "";
+  // hndWtMax.value = customFormula.hndWtMax != 6 ? customFormula.hndWtMax : "";
+  // hndArMin.value = customFormula.hndArMin != 0 ? customFormula.hndArMin : "";
+  // hndArMax.value = customFormula.hndArMax != 6 ? customFormula.hndArMax : "";
+  trctnMin.value = customFormula.trctnMin != 0 ? customFormula.trctnMin : "";
+  trctnMax.value = customFormula.trctnMax != 6 ? customFormula.trctnMax : "";
+  invcbMin.value = customFormula.invcbMin != 0 ? customFormula.invcbMin : "";
+  invcbMax.value = customFormula.invcbMax != 6 ? customFormula.invcbMax : "";
+  sizeMin.value = customFormula.sizeMin != 0 ? customFormula.sizeMin : "";
+  sizeMax.value = customFormula.sizeMax != 2 ? customFormula.sizeMax : "";
 
   updateFormulaMode(mintbWeight, mintbMode)
   updateFormulaMode(spdWeight, spdMode)
@@ -999,7 +1039,7 @@ function drawCustomFormulaInterface() {
 
 function resetCustomFormula() {
   customFormula = {
-    scoreFormula: structuredClone(ComboC.OPTISCORE),
+    scoreFormula: [...ComboC.OPTISCORE],
     mintbMin: 0, mintbMax: 6, spdMin: 0, spdMax: 6,
     spdGrMin: 0, spdGrMax: 6, spdAgMin: 0, spdAgMax: 6,
     spdWtMin: 0, spdWtMax: 6, spdArMin: 0, spdArMax: 6,
@@ -1015,22 +1055,23 @@ function resetCustomFormula() {
 }
 
 function commitFormula() {
-  customFormula.scoreFormula.mintb = mintbWeight.value;
-  customFormula.scoreFormula.spd = spdWeight.value;
-  // customFormula.scoreFormula.spdGr = spdGrWeight.value;
-  // customFormula.scoreFormula.spdAg = spdAgWeight.value;
-  // customFormula.scoreFormula.spdWt = spdWtWeight.value;
-  // customFormula.scoreFormula.spdAr = spdArWeight.value;
-  customFormula.scoreFormula.accel = accelWeight.value;
-  customFormula.scoreFormula.weigt = weigtWeight.value;
-  customFormula.scoreFormula.hnd = hndWeight.value;
-  // customFormula.scoreFormula.hndGr = hndGrWeight.value;
-  // customFormula.scoreFormula.hndAg = hndAgWeight.value;
-  // customFormula.scoreFormula.hndWt = hndWtWeight.value;
-  // customFormula.scoreFormula.hndAr = hndArWeight.value;
-  customFormula.scoreFormula.trctn = trctnWeight.value;
-  customFormula.scoreFormula.invcb = invcbWeight.value;
-  customFormula.scoreFormula.size = sizeWeight.value;
+  customFormula.scoreFormula[0] = parseFactor(mintbWeight.value) ?? 0;
+  customFormula.scoreFormula[1] = parseFactor(spdWeight.value) ?? 0;
+  // customFormula.scoreFormula[2] = parseFactor(spdGrWeight.value) ?? 0;
+  // customFormula.scoreFormula[3] = parseFactor(spdAgWeight.value) ?? 0;
+  // customFormula.scoreFormula[4] = parseFactor(spdWtWeight.value) ?? 0;
+  // customFormula.scoreFormula[5] = parseFactor(spdArWeight.value) ?? 0;
+  customFormula.scoreFormula[6] = parseFactor(accelWeight.value) ?? 0;
+  customFormula.scoreFormula[7] = parseFactor(weigtWeight.value) ?? 0;
+  customFormula.scoreFormula[8] = parseFactor(hndWeight.value) ?? 0;
+  // customFormula.scoreFormula[9] = parseFactor(hndGrWeight.value) ?? 0;
+  // customFormula.scoreFormula[10] = parseFactor(hndAgWeight.value) ?? 0;
+  // customFormula.scoreFormula[11] = parseFactor(hndWtWeight.value) ?? 0;
+  // customFormula.scoreFormula[12] = parseFactor(hndArWeight.value) ?? 0;
+  customFormula.scoreFormula[13] = parseFactor(trctnWeight.value) ?? 0;
+  customFormula.scoreFormula[14] = parseFactor(invcbWeight.value) ?? 0;
+  customFormula.scoreFormula[15] = parseFactor(sizeWeight.value) ?? 0;
+
   customFormula.mintbMin = mintbMin.value != "" ? mintbMin.value : mintbMin.placeholder;
   customFormula.mintbMax = mintbMax.value != "" ? mintbMax.value : mintbMax.placeholder;
   customFormula.spdMin = spdMin.value != "" ? spdMin.value : spdMin.placeholder;
@@ -1072,6 +1113,12 @@ function commitFormula() {
   customFormula.ignoreLocks = ignoreLocksFormula.state;
 }
 
+function parseFactor(n) {
+  const parsedN = parseFloat(n);
+  if (isNaN(parsedN)) return undefined;
+  return parsedN;
+}
+
 function updateFormulaMode(weightInput, modeOutput) {
   if (weightInput.value > 0) {
     weightInput.className = "positive";
@@ -1103,7 +1150,7 @@ function readURLParams() {
   if (aCode != undefined) combos.a = Combo.fromCode(aCode);
   const bCode = url.searchParams.get("b");
   if (bCode != undefined) combos.b = Combo.fromCode(bCode);
-  lastState = location.href;
+  lastStateURL = location.href;
 }
 
 function updateURLParams() {
@@ -1114,7 +1161,7 @@ function updateURLParams() {
   url.searchParams.set("a", aCode);
   url.searchParams.set("b", bCode);
   const urlStr = url.toString();
-  if (urlStr != lastState) {
+  if (urlStr != lastStateURL) {
     history.pushState({}, "", urlStr);
   }
 }

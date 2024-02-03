@@ -130,7 +130,7 @@ section+* { margin-top: 1.5rem; }
   display: inline-block;
   width: 1em;
   height: 1em;
-  vertical-align: baseline;
+  vertical-align: -10%;
   border-radius: .25em;
   background-color: var(--color-accent);
 }
@@ -257,6 +257,7 @@ jd-icon svg {
 #combo-stats>div {
   display: flex;
   gap: .5rem;
+  align-items: baseline;
 }
 
 .formula, #combo-stats label, th:not(:first-child) {

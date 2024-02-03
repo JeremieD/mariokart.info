@@ -1,3 +1,4 @@
+"use strict";
 // Raw data from Mario Wiki (mariowiki.com/Mario_Kart_8_Deluxe_in-game_statistics), licensed under CC-BY-SA
 
 // "stats" are unique per class (there are no exceptions for invcb or size)
