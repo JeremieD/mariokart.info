@@ -365,7 +365,6 @@ whenDOMReady(() => {
   });
   resetFormulaButton.addEventListener("click", () => {
     resetCustomFormula();
-    drawCustomFormulaInterface();
   });
   cancelFormulaButton.addEventListener("click", () => {
     customFormulaDialog.close();
@@ -1050,56 +1049,58 @@ function formatStatDiff(diff) {
   return text;
 }
 
-function drawCustomFormulaInterface() {
-  mintbWeight.value = customFormula.factors[0] != 0 ? customFormula.factors[0] : "";
-  spdWeight.value = customFormula.factors[1] != 0 ? customFormula.factors[1] : "";
-  spdGrWeight.value = customFormula.factors[2] != 0 ? customFormula.factors[2] : "";
-  spdAgWeight.value = customFormula.factors[3] != 0 ? customFormula.factors[3] : "";
-  spdWtWeight.value = customFormula.factors[4] != 0 ? customFormula.factors[4] : "";
-  spdArWeight.value = customFormula.factors[5] != 0 ? customFormula.factors[5] : "";
-  accelWeight.value = customFormula.factors[6] != 0 ? customFormula.factors[6] : "";
-  weigtWeight.value = customFormula.factors[7] != 0 ? customFormula.factors[7] : "";
-  hndWeight.value = customFormula.factors[8] != 0 ? customFormula.factors[8] : "";
-  hndGrWeight.value = customFormula.factors[9] != 0 ? customFormula.factors[9] : "";
-  hndAgWeight.value = customFormula.factors[10] != 0 ? customFormula.factors[10] : "";
-  hndWtWeight.value = customFormula.factors[11] != 0 ? customFormula.factors[11] : "";
-  hndArWeight.value = customFormula.factors[12] != 0 ? customFormula.factors[12] : "";
-  trctnWeight.value = customFormula.factors[13] != 0 ? customFormula.factors[13] : "";
-  invcbWeight.value = customFormula.factors[14] != 0 ? customFormula.factors[14] : "";
-  sizeWeight.value = customFormula.factors[15] != 0 ? customFormula.factors[15] : "";
+function drawCustomFormulaInterface(formula) {
+  formula ??= customFormula;
 
-  mintbMin.value = customFormula.mintbMin != 0 ? customFormula.mintbMin : "";
-  mintbMax.value = customFormula.mintbMax != 6 ? customFormula.mintbMax : "";
-  spdMin.value = customFormula.spdMin != 0 ? customFormula.spdMin : "";
-  spdMax.value = customFormula.spdMax != 6 ? customFormula.spdMax : "";
-  spdGrMin.value = customFormula.spdGrMin != 0 ? customFormula.spdGrMin : "";
-  spdGrMax.value = customFormula.spdGrMax != 6 ? customFormula.spdGrMax : "";
-  spdAgMin.value = customFormula.spdAgMin != 0 ? customFormula.spdAgMin : "";
-  spdAgMax.value = customFormula.spdAgMax != 6 ? customFormula.spdAgMax : "";
-  spdWtMin.value = customFormula.spdWtMin != 0 ? customFormula.spdWtMin : "";
-  spdWtMax.value = customFormula.spdWtMax != 6 ? customFormula.spdWtMax : "";
-  spdArMin.value = customFormula.spdArMin != 0 ? customFormula.spdArMin : "";
-  spdArMax.value = customFormula.spdArMax != 6 ? customFormula.spdArMax : "";
-  accelMin.value = customFormula.accelMin != 0 ? customFormula.accelMin : "";
-  accelMax.value = customFormula.accelMax != 6 ? customFormula.accelMax : "";
-  weigtMin.value = customFormula.weigtMin != 0 ? customFormula.weigtMin : "";
-  weigtMax.value = customFormula.weigtMax != 6 ? customFormula.weigtMax : "";
-  hndMin.value = customFormula.hndMin != 0 ? customFormula.hndMin : "";
-  hndMax.value = customFormula.hndMax != 6 ? customFormula.hndMax : "";
-  hndGrMin.value = customFormula.hndGrMin != 0 ? customFormula.hndGrMin : "";
-  hndGrMax.value = customFormula.hndGrMax != 6 ? customFormula.hndGrMax : "";
-  hndAgMin.value = customFormula.hndAgMin != 0 ? customFormula.hndAgMin : "";
-  hndAgMax.value = customFormula.hndAgMax != 6 ? customFormula.hndAgMax : "";
-  hndWtMin.value = customFormula.hndWtMin != 0 ? customFormula.hndWtMin : "";
-  hndWtMax.value = customFormula.hndWtMax != 6 ? customFormula.hndWtMax : "";
-  hndArMin.value = customFormula.hndArMin != 0 ? customFormula.hndArMin : "";
-  hndArMax.value = customFormula.hndArMax != 6 ? customFormula.hndArMax : "";
-  trctnMin.value = customFormula.trctnMin != 0 ? customFormula.trctnMin : "";
-  trctnMax.value = customFormula.trctnMax != 6 ? customFormula.trctnMax : "";
-  invcbMin.value = customFormula.invcbMin != 0 ? customFormula.invcbMin : "";
-  invcbMax.value = customFormula.invcbMax != 6 ? customFormula.invcbMax : "";
-  sizeMin.value = customFormula.sizeMin != 0 ? customFormula.sizeMin : "";
-  sizeMax.value = customFormula.sizeMax != 2 ? customFormula.sizeMax : "";
+  mintbWeight.value = formula.factors[0] != 0 ? formula.factors[0] : "";
+  spdWeight.value = formula.factors[1] != 0 ? formula.factors[1] : "";
+  spdGrWeight.value = formula.factors[2] != 0 ? formula.factors[2] : "";
+  spdAgWeight.value = formula.factors[3] != 0 ? formula.factors[3] : "";
+  spdWtWeight.value = formula.factors[4] != 0 ? formula.factors[4] : "";
+  spdArWeight.value = formula.factors[5] != 0 ? formula.factors[5] : "";
+  accelWeight.value = formula.factors[6] != 0 ? formula.factors[6] : "";
+  weigtWeight.value = formula.factors[7] != 0 ? formula.factors[7] : "";
+  hndWeight.value = formula.factors[8] != 0 ? formula.factors[8] : "";
+  hndGrWeight.value = formula.factors[9] != 0 ? formula.factors[9] : "";
+  hndAgWeight.value = formula.factors[10] != 0 ? formula.factors[10] : "";
+  hndWtWeight.value = formula.factors[11] != 0 ? formula.factors[11] : "";
+  hndArWeight.value = formula.factors[12] != 0 ? formula.factors[12] : "";
+  trctnWeight.value = formula.factors[13] != 0 ? formula.factors[13] : "";
+  invcbWeight.value = formula.factors[14] != 0 ? formula.factors[14] : "";
+  sizeWeight.value = formula.factors[15] != 0 ? formula.factors[15] : "";
+
+  mintbMin.value = formula.mintbMin != 0 ? formula.mintbMin : "";
+  mintbMax.value = formula.mintbMax != 6 ? formula.mintbMax : "";
+  spdMin.value = formula.spdMin != 0 ? formula.spdMin : "";
+  spdMax.value = formula.spdMax != 6 ? formula.spdMax : "";
+  spdGrMin.value = formula.spdGrMin != 0 ? formula.spdGrMin : "";
+  spdGrMax.value = formula.spdGrMax != 6 ? formula.spdGrMax : "";
+  spdAgMin.value = formula.spdAgMin != 0 ? formula.spdAgMin : "";
+  spdAgMax.value = formula.spdAgMax != 6 ? formula.spdAgMax : "";
+  spdWtMin.value = formula.spdWtMin != 0 ? formula.spdWtMin : "";
+  spdWtMax.value = formula.spdWtMax != 6 ? formula.spdWtMax : "";
+  spdArMin.value = formula.spdArMin != 0 ? formula.spdArMin : "";
+  spdArMax.value = formula.spdArMax != 6 ? formula.spdArMax : "";
+  accelMin.value = formula.accelMin != 0 ? formula.accelMin : "";
+  accelMax.value = formula.accelMax != 6 ? formula.accelMax : "";
+  weigtMin.value = formula.weigtMin != 0 ? formula.weigtMin : "";
+  weigtMax.value = formula.weigtMax != 6 ? formula.weigtMax : "";
+  hndMin.value = formula.hndMin != 0 ? formula.hndMin : "";
+  hndMax.value = formula.hndMax != 6 ? formula.hndMax : "";
+  hndGrMin.value = formula.hndGrMin != 0 ? formula.hndGrMin : "";
+  hndGrMax.value = formula.hndGrMax != 6 ? formula.hndGrMax : "";
+  hndAgMin.value = formula.hndAgMin != 0 ? formula.hndAgMin : "";
+  hndAgMax.value = formula.hndAgMax != 6 ? formula.hndAgMax : "";
+  hndWtMin.value = formula.hndWtMin != 0 ? formula.hndWtMin : "";
+  hndWtMax.value = formula.hndWtMax != 6 ? formula.hndWtMax : "";
+  hndArMin.value = formula.hndArMin != 0 ? formula.hndArMin : "";
+  hndArMax.value = formula.hndArMax != 6 ? formula.hndArMax : "";
+  trctnMin.value = formula.trctnMin != 0 ? formula.trctnMin : "";
+  trctnMax.value = formula.trctnMax != 6 ? formula.trctnMax : "";
+  invcbMin.value = formula.invcbMin != 0 ? formula.invcbMin : "";
+  invcbMax.value = formula.invcbMax != 6 ? formula.invcbMax : "";
+  sizeMin.value = formula.sizeMin != 0 ? formula.sizeMin : "";
+  sizeMax.value = formula.sizeMax != 2 ? formula.sizeMax : "";
 
   updateFormulaMode(mintbWeight, mintbMode);
   updateFormulaMode(spdWeight, spdMode);
@@ -1118,19 +1119,19 @@ function drawCustomFormulaInterface() {
   updateFormulaMode(invcbWeight, invcbMode);
   updateFormulaMode(sizeWeight, sizeMode);
 
-  toggleCollapse(hndToggle, customFormula.useHnd);
-  toggleCollapse(spdToggle, customFormula.useSpd);
+  toggleCollapse(hndToggle, formula.useHnd);
+  toggleCollapse(spdToggle, formula.useSpd);
 
-  includeKarts.set(!customFormula.excludeKarts);
-  includeATVs.set(!customFormula.excludeATVs);
-  includeBikes.set(!customFormula.excludeBikes);
-  includeSportBikes.set(!customFormula.excludeSportBikes);
+  includeKarts.set(!formula.excludeKarts);
+  includeATVs.set(!formula.excludeATVs);
+  includeBikes.set(!formula.excludeBikes);
+  includeSportBikes.set(!formula.excludeSportBikes);
 
-  ignoreLocksFormula.set(customFormula.ignoreLocks);
+  ignoreLocksFormula.set(formula.ignoreLocks);
 }
 
 function resetCustomFormula() {
-  customFormula = {
+  const formula = {
     factors: [...ComboC.OPTISCORE],
     mintbMin: 0, mintbMax: 6, spdMin: 0, spdMax: 6,
     spdGrMin: 0, spdGrMax: 6, spdAgMin: 0, spdAgMax: 6,
@@ -1143,7 +1144,7 @@ function resetCustomFormula() {
     excludeBikes: false, excludeSportBikes: true,
     ignoreLocks: true, useSpd: true, useHnd: true
   };
-  drawCustomFormulaInterface();
+  drawCustomFormulaInterface(formula);
 }
 
 function commitFormula() {
