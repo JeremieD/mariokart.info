@@ -275,7 +275,7 @@
   <dialog id="custom-formula-dialog">
     <header>
       <h2>Custom Formula</h2>
-      <p>Cook up your own formula to find the exact combo you need. Positive&nbsp;multipliers will maximize the stat, negative multipliers will minimize it.</p>
+      <p>Cook up your own formula to find the exact combo you need. Positive&nbsp;multipliers will maximize the stat, negative multipliers will minimize&nbsp;it.</p>
     </header>
 
     <div class="formula-numbers">
@@ -289,7 +289,7 @@
       <div class="coefficient-widget">
         <h3>Mini-Turbo</h3>
         <output id="formula-mintb-mode">Maximize</output>
-        <input id="formula-mintb-weight" type="number" min="-100" max="100" step="1" placeholder="0" value="8" class="positive" tabindex="1"/>
+        <input id="formula-mintb-weight" type="number" min="-100" max="100" step="1" placeholder="0" value="16" class="positive" tabindex="1"/>
         <input id="formula-mintb-min" type="number" min="0" max="6" step=".25" placeholder="0" tabindex="17" />
         <input id="formula-mintb-max" type="number" min="0" max="6" step=".25" placeholder="6" tabindex="18" />
       </div>
@@ -303,14 +303,14 @@
       <div class="coefficient-widget">
         <h3>Acceleration</h3>
         <output id="formula-accel-mode">Maximize</output>
-        <input id="formula-accel-weight" type="number" min="-100" max="100" step="1" placeholder="0" value="0.5" class="positive" tabindex="7" />
+        <input id="formula-accel-weight" type="number" min="-100" max="100" step="1" placeholder="0" value="1" class="positive" tabindex="7" />
         <input id="formula-accel-min" type="number" min="0" max="6" step=".25" placeholder="0" tabindex="29" />
         <input id="formula-accel-max" type="number" min="0" max="6" step=".25" placeholder="6" tabindex="30" />
       </div>
       <div class="coefficient-widget">
         <h3>Weight</h3>
         <output id="formula-weigt-mode">Maximize</output>
-        <input id="formula-weigt-weight" type="number" min="-100" max="100" step="1" placeholder="0" value="0.125" class="positive" tabindex="8" />
+        <input id="formula-weigt-weight" type="number" min="-100" max="100" step="1" placeholder="0" value="0.25" class="positive" tabindex="8" />
         <input id="formula-weigt-min" type="number" min="0" max="6" step=".25" placeholder="0" tabindex="31" />
         <input id="formula-weigt-max" type="number" min="0" max="6" step=".25" placeholder="6" tabindex="32" />
       </div>
@@ -324,7 +324,7 @@
       <div class="coefficient-widget">
         <h3>Traction</h3>
         <output id="formula-trctn-mode">Maximize</output>
-        <input id="formula-trctn-weight" type="number" min="-100" max="100" step="1" placeholder="0" value="0.125" class="positive" tabindex="14" />
+        <input id="formula-trctn-weight" type="number" min="-100" max="100" step="1" placeholder="0" value="0.25" class="positive" tabindex="14" />
         <input id="formula-trctn-min" type="number" min="0" max="6" step=".25" placeholder="0" tabindex="43" />
         <input id="formula-trctn-max" type="number" min="0" max="6" step=".25" placeholder="6" tabindex="44" />
       </div>
@@ -336,11 +336,11 @@
         <input id="formula-invcb-max" type="number" min="0" max="6" step=".25" placeholder="6" tabindex="46" />
       </div>
       <div class="coefficient-widget">
-        <h3>Size</h3>
+        <h3>Frame Size</h3>
         <output id="formula-size-mode" class="subdued">Ignore</output>
         <input id="formula-size-weight" type="number" min="-100" max="100" step="1" placeholder="0" tabindex="16" />
-        <input id="formula-size-min" type="number" min="0" max="2" step=".25" placeholder="0" tabindex="47" />
-        <input id="formula-size-max" type="number" min="0" max="2" step=".25" placeholder="2" tabindex="48" />
+        <input id="formula-size-min" type="number" min="0" max="2" step="1" placeholder="0" tabindex="47" />
+        <input id="formula-size-max" type="number" min="0" max="2" step="1" placeholder="2" tabindex="48" />
       </div>
     </div>
 
