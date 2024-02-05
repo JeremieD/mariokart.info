@@ -12,7 +12,6 @@ function toggleCollapse(toggleEl, force) {
   const container = toggleEl.parentElement;
   const collapsibles = container.getElementsByClassName("collapsible");
 
-  container.style.height = collapsibles[+contract].clientHeight + "px";
   toggleEl.classList.toggle("open", expand);
 
   collapsibles[0].classList.toggle("collapsed", expand);
