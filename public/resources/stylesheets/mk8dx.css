@@ -1,3 +1,7 @@
+:root {
+  --card-padding: 4rem;
+}
+
 h1>sup { /* BETA Symbol */
   display: inline-block;
   margin-left: .14em;
@@ -69,7 +73,7 @@ section {
   background-color: var(--color-foreground);
   border-radius: .5rem;
 }
-section:not(.tab-panels) { padding: 4rem; }
+section:not(.tab-panels) { padding: var(--card-padding); }
 section+* { margin-top: 1.5rem; }
 
 #builder {
@@ -237,13 +241,12 @@ jd-icon svg {
 
 #custom-combos thead>:first-child td { padding-top: 2rem; }
 #custom-combos thead>:first-child td:first-child {
-  padding-left: 4rem;
+  padding-left: var(--card-padding);
   padding-bottom: 0;
-  margin-bottom: -.25rem;
   font-size: .875rem;
 }
 #custom-combos thead>:first-child td:last-child {
-  padding-right: 4rem;
+  padding-right: var(--card-padding);
   text-align: right;
 }
 #custom-combos th { padding-top: 0; }
@@ -274,6 +277,12 @@ jd-icon svg {
 #custom-combo-formula {
   vertical-align: baseline;
   font-size: .75rem;
+}
+
+#custom-combo-formula-mobile {
+  vertical-align: baseline;
+  font-size: .75rem;
+  margin: 1em 0;
 }
 
 #customize-formula-button {
@@ -425,20 +434,28 @@ jd-icon svg {
 
 .tab-handles {
   display: flex;
+  overflow: scroll clip;
   gap: .25rem;
   padding-bottom: .25rem;
 }
 
 .tab-handles a {
   display: inline-block;
-  height: 3.5rem;
   padding: 1.2rem 1.5rem;
   background-color: color-mix(in srgb, var(--color-foreground) 66%, transparent);
-  font-size: 1.125rem;
-  line-height: 1;
+  font-size: 1.125em;
+  text-align: center;
+  line-height: 1.2;
   font-weight: bold;
   text-decoration: none;
   border-radius: 2px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+  .tab-handles a {
+    padding: 1rem;
+  }
 }
 
 .tab-handles a>sup {
@@ -456,7 +473,7 @@ jd-icon svg {
   top: 100%;
   transform: translateY(-50%);
   width: 100%;
-  height: 2em;
+  height: 1.25em;
   background-color: inherit;
 }
 
@@ -501,16 +518,16 @@ thead th {
 }
 
 tr { position: relative; }
-th p { font-size: .875rem; }
-th, td { padding: .325rem; }
+th p { font-size: .875em; }
+th, td { padding: .325em; }
 th {
-  padding-top: 2rem;
-  padding-bottom: .75rem;
+  padding-top: 2em;
+  padding-bottom: .75em;
   vertical-align: bottom;
 }
-:is(th, td):first-child { padding-left: 4rem; }
-:is(th, td):last-child { padding-right: 4rem; }
-tbody tr:first-child td { padding-top: 1rem; }
+:is(th, td):first-child { padding-left: var(--card-padding); }
+:is(th, td):last-child { padding-right: var(--card-padding); }
+tbody tr:first-child td { padding-top: calc(var(--card-padding)/4); }
 
 td:not(:first-child) {
   vertical-align: middle;
@@ -568,21 +585,22 @@ tbody td:first-child:not(.empty) {
 
 .mobile-stats {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: .5rem;
   width: 100%;
+  letter-spacing: .1em;
 }
 
 .mobile-stats label {
   font-family: "Akkurat Mono", monospace;
-  letter-spacing: .1em;
+  user-select: initial;
 }
 
 .mobile-stats>div {
   display: flex;
-  gap: .5rem;
+  gap: .5em;
   font-feature-settings: "zero" on;
-  font-size: .875rem;
+  font-size: .75rem;
 }
 
 #wip {
@@ -709,6 +727,8 @@ jd-tooltip:is(.shown, :hover) {
 
 dialog {
   position: fixed;
+  max-height: calc(100vh - 4rem);
+  overflow-y: scroll;
   display: flex;
   flex-direction: column;
   gap: 2em;
@@ -723,9 +743,10 @@ dialog {
 
 dialog::backdrop { background-color: rgba(0,0,0,.5); }
 
-dialog>header { padding: 4rem 4rem 0; }
+dialog>header { padding: var(--card-padding) var(--card-padding) 0; }
 
 dialog>header p {
+  font-size: .875em;
   max-width: 60ch;
   color: var(--color-grey);
 }
@@ -737,7 +758,10 @@ dialog h2 {
 }
 
 dialog>footer {
-  padding: 2rem 4rem 4rem;
+  position: sticky;
+  bottom: 0;
+  background-color: inherit;
+  padding: calc(var(--card-padding)/2) var(--card-padding) var(--card-padding);
   border-top: 1px solid var(--color-interactive);
 }
 
@@ -756,15 +780,6 @@ dialog>.formula-numbers {
   gap: .5em 1em;
 }
 
-dialog>.formula-numbers>* {
-  display: grid;
-  grid-template-columns: subgrid;
-  grid-column: 1 / 6;
-  align-items: start;
-  padding: 0 4rem;
-  gap: inherit;
-}
-
 dialog>.formula-numbers>:first-child {
   border-bottom: 1px solid var(--color-interactive);
   padding-bottom: .375em;
@@ -776,14 +791,18 @@ dialog>.formula-numbers>:first-child, .coefficient-widget output {
   font-size: .875rem;
 }
 
-.coefficient-widget {
+dialog>.formula-numbers>* { padding: 0 var(--card-padding); }
+
+.coefficient-widget, dialog>.formula-numbers>* {
   display: grid;
   grid-template-columns: subgrid;
-  grid-column: 1/6;
+  grid-column: 1 / 6;
+  align-items: start;
   gap: inherit;
 }
 
 .coefficient-widget h3 {
+  min-width: 18ch;
   font-size: 1.125em;
   flex-grow: 1;
 }
@@ -791,11 +810,12 @@ dialog>.formula-numbers>:first-child, .coefficient-widget output {
 .coefficient-widget output { user-select: none; }
 
 .coefficient-widget input {
-  width: 8ch;
+  width: 10ch;
   height: 2em;
   font-family: "Akkurat Mono", monospace;
   font-size: .9em;
-  text-align: right;
+  /* text-align: right; */
+  padding: 0 .5em;
   background-color: var(--color-interactive);
   border-radius: .25rem;
 }
@@ -829,7 +849,7 @@ button.collapse-toggle {
 }
 
 button.collapse-toggle>jd-icon {
-  width: .3em;
+  width: 33%;
   height: auto;
   transition: .2s ease transform;
 }
@@ -842,7 +862,7 @@ button.collapse-toggle.open>jd-icon {
   display: flex;
   gap: 1em;
   flex-wrap: wrap;
-  padding: 0 4rem;
+  padding: 0 var(--card-padding);
 }
 
 .button {
@@ -893,11 +913,10 @@ button.collapse-toggle.open>jd-icon {
 }
 
 @media (max-width: 1366px) {
+  :root { --card-padding: 2rem; }
+
   .not-mobile { display: none !important; }
 
-  section:not(.table) {
-    padding: 1rem;
-  }
   #combo-info {
     flex-direction: column;
     gap: 1.5rem;
@@ -963,28 +982,84 @@ button.collapse-toggle.open>jd-icon {
   }
 
   .folder>div {
+    width: 100%;
     flex-direction: column;
   }
 
   tr:first-child th {
-    padding-top: 1rem;
+    padding-top: calc(.75*var(--card-padding));
   }
-  :is(th, td):first-child {
-    padding: 1.5rem 1rem;
+  tbody tr:first-child td, :is(th, td):first-child {
+    padding: var(--card-padding);
   }
-  tr:not(:first-child)::before {
+  tr:not(:first-child) td::before {
     position: absolute;
     content: "";
-    width: calc(100% - 2rem);
+    width: calc(100% - 2*var(--card-padding));
     height: 1px;
-    left: 1rem;
+    top: 0;
+    left: var(--card-padding);
     background-color: var(--color-interactive);
   }
+  #custom-combos tr:nth-child(2) th { padding: calc(.75*var(--card-padding)) var(--card-padding); }
+  #custom-combos tr:nth-child(2)::before { content: initial; }
   :is(th, td):not(:first-child) { display: none; }
   .pick-slot {
     opacity: 1;
     margin-left: auto;
   }
+  button.collapse-toggle { left: 1rem; }
+}
+
+@media (max-width: 800px) {
+  .mobile-stats { grid-template-columns: repeat(4, 1fr); }
+
+  dialog {
+    width: 100vw;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+  dialog>header { padding: var(--width-pagepadding) var(--width-pagepadding) 0; }
+  dialog>footer { padding: var(--width-pagepadding); }
+  dialog>.formula-numbers>* { padding: 0 var(--width-pagepadding); }
+  dialog>.formula-numbers {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+  }
+  .coefficient-widget, dialog>.formula-numbers>* {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: .5em 1em;
+  }
+  .coefficient-widget>input {
+    grid-column-end: span 2;
+    width: 100%;
+  }
+  .coefficient-widget>div {
+    display: flex;
+    align-items: baseline;
+    gap: .5em;
+    flex-grow: 1;
+  }
+  .coefficient-widget>div>input {
+    width: 8ch;
+    flex-grow: 1;
+  }
+  dialog .bound-label { font-size: .875rem; }
+  button.collapse-toggle {
+    left: .5rem;
+  }
+}
+
+@media (min-width: 800px) {
+  dialog .bound-label { display: none; }
+}
+
+@media (max-width: 500px) {
+  :root { --card-padding: 1rem; }
+  .mobile-stats { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (min-width: 1367px) {

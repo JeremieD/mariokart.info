@@ -45,7 +45,8 @@ let driverName, bodyName, tireName, gliderName;
 let driverSelect, bodySelect, tireSelect, gliderSelect; // Part grids
 let dominantCombosRows, similarCombosRows, customCombosRows; // Table bodies
 let dominantCombosCount, similarCombosCount, customCombosCount;
-let customComboFormula, customizeFormulaButton;
+let customComboFormula, customComboFormulaMobile,
+    customizeFormulaButton, customizeFormulaButtonMobile;
 let customFormulaDialog;
 let spdToggle, hndToggle;
 let mintbWeight, spdWeight, spdGrWeight, spdAgWeight, spdWtWeight, spdArWeight, accelWeight,
@@ -121,7 +122,9 @@ whenDOMReady(() => {
   customCombosRows   = document.getElementById("custom-combos-rows");
 
   customComboFormula = document.getElementById("custom-combo-formula");
+  customComboFormulaMobile = document.getElementById("custom-combo-formula-mobile");
   customizeFormulaButton = document.getElementById("customize-formula-button");
+  customizeFormulaButtonMobile = document.getElementById("customize-formula-button-mobile");
 
   customFormulaDialog = document.getElementById("custom-formula-dialog");
 
@@ -352,8 +355,7 @@ whenDOMReady(() => {
   selectCombo();
   drawCurrentCombo();
 
-
-  customizeFormulaButton.addEventListener("click", () => {
+  function showCustomFormulaDialog() {
     customFormulaDialog.showModal();
     drawCustomFormulaInterface();
     customFormulaDialog.addEventListener("keydown", e => {
@@ -362,7 +364,9 @@ whenDOMReady(() => {
         customFormulaDialog.close();
       }
     }, { once: true });
-  });
+  }
+  customizeFormulaButton.addEventListener("click", showCustomFormulaDialog);
+  customizeFormulaButtonMobile.addEventListener("click", showCustomFormulaDialog);
   resetFormulaButton.addEventListener("click", () => {
     resetCustomFormula();
   });
@@ -834,6 +838,7 @@ async function drawCustomCombos() {
     customCombosRows.innerHTML = "";
     customCombosCount.innerText = customCombos.length;
     customComboFormula.innerHTML = formatFormula(customFormula);
+    customComboFormulaMobile.innerHTML = formatFormula(customFormula);
     fillTable(customCombosRows, customCombos.slice(0, customComboLimit));
     // Truncation info
     if (customCombos.length > customComboLimit) {
