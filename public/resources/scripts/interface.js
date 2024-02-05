@@ -829,19 +829,20 @@ async function drawSimilarCombos() {
 }
 
 async function drawCustomCombos() {
+  const customComboLimit = 50;
   return getCustomCombos().then(customCombos => {
     customCombosRows.innerHTML = "";
     customCombosCount.innerText = customCombos.length;
     customComboFormula.innerHTML = formatFormula(customFormula);
-    fillTable(customCombosRows, customCombos.slice(0, 100));
+    fillTable(customCombosRows, customCombos.slice(0, customComboLimit));
     // Truncation info
-    if (customCombos.length > 100) {
+    if (customCombos.length > customComboLimit) {
       const row = document.createElement("tr");
       const cell = document.createElement("td");
       cell.colSpan = 14;
       cell.classList.add("empty");
       const para = document.createElement("p");
-      para.innerHTML = "Showing top 100 matches.<br>Try refining the formula to see more.";
+      para.innerHTML = "Showing top " + customComboLimit + " matches.<br>Try refining the formula to see more.";
       row.append(cell);
       cell.append(para);
       customCombosRows.append(row);
