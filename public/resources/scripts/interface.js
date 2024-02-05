@@ -853,6 +853,13 @@ async function drawCustomCombos() {
 function formatFormula(formula) {
   const stats = [];
   for (let i = 0; i < ComboC.SCORE_STATS.length; i++) {
+    if (i == 1 && !formula.useSpd ||
+        i == 2 && formula.useSpd || i == 3 && formula.useSpd ||
+        i == 4 && formula.useSpd || i == 5 && formula.useSpd ||
+        i == 8 && !formula.useHnd ||
+        i == 9 && formula.useHnd || i == 10 && formula.useHnd ||
+        i == 11 && formula.useHnd || i == 12 && formula.useHnd
+    ) continue;
     const statCode = ComboC.SCORE_STATS[i].toUpperCase();
     let weight = formula.factors[i];
     if (weight == 0) continue;
