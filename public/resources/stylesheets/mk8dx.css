@@ -517,7 +517,7 @@ thead th {
   border-bottom: 1px solid var(--color-interactive);
 }
 
-tr { position: relative; }
+td { position: relative; }
 th p { font-size: .875em; }
 th, td { padding: .325em; }
 th {
@@ -1047,6 +1047,7 @@ button.collapse-toggle.open>jd-icon {
     width: 8ch;
     flex-grow: 1;
   }
+  .collapsible { grid-template-columns: 1fr; gap: 1.5em; }
   dialog .bound-label { font-size: .875rem; }
   button.collapse-toggle {
     left: .5rem;
