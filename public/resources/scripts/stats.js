@@ -156,7 +156,7 @@ async function listCombos(opts = {}) {
     opts.tireLock ??= undefined; opts.gliderLock ??= undefined;
     opts.excludeKarts ??= false; opts.excludeATVs ??= false;
     opts.excludeBikes ??= false; opts.excludeSportBikes ??= false;
-    opts.scoreFormula ??= undefined;
+    opts.factors ??= undefined;
 
     const list = [];
 
@@ -228,17 +228,17 @@ async function listCombos(opts = {}) {
     }
 
     if (!(opts.sortBy instanceof Array)) opts.sortBy = [opts.sortBy];
-    const formulaHash = ComboC.hashFormula(opts.scoreFormula);
+    const formulaHash = ComboC.hashFormula(opts.factors);
+    let statA, statB;
     function compare(a, b) {
-      let statA, statB;
       for (const method of opts.sortBy) {
         if (method == "diff") {
           statA = a.diff;
           statB = b.diff;
 
         } else if (method == "score") {
-          statA = a.getScore(opts.scoreFormula, formulaHash);
-          statB = b.getScore(opts.scoreFormula, formulaHash);
+          statA = a.getScore(opts.factors, formulaHash);
+          statB = b.getScore(opts.factors, formulaHash);
 
         } else {
           statA = a.lvl[stat];

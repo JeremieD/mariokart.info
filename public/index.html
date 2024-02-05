@@ -39,8 +39,9 @@
   <script src="/resources/scripts/strings.js"></script>
   <script src="/resources/scripts/stats.js"></script>
   <script src="/resources/scripts/radio.js"></script>
-  <script src="/resources/scripts/tooltip.js"></script>
-  <script src="/resources/scripts/tabs.js"></script>
+  <script src="/resources/scripts/tooltip.js" async></script>
+  <script src="/resources/scripts/tabs.js" async></script>
+  <script src="/resources/scripts/collapse.js" async></script>
   <script src="/resources/scripts/interface.js" async></script>
   <script src="/resources/scripts/sortable.js" async></script>
 
@@ -293,12 +294,48 @@
         <input id="formula-mintb-min" type="number" min="0" max="6" step=".25" placeholder="0" tabindex="17" />
         <input id="formula-mintb-max" type="number" min="0" max="6" step=".25" placeholder="6" tabindex="18" />
       </div>
-      <div class="coefficient-widget">
-        <h3>Speed</h3>
-        <output id="formula-spd-mode">Maximize</output>
-        <input id="formula-spd-weight" type="number" min="-100" max="100" step="1" placeholder="0" value="7.5" class="positive" tabindex="2" />
-        <input id="formula-spd-min" type="number" min="0" max="6" step=".25" placeholder="0" tabindex="19" />
-        <input id="formula-spd-max" type="number" min="0" max="6" step=".25" placeholder="6" tabindex="20" />
+
+      <div class="collapse-container">
+        <button class="collapse-toggle" id="spd-expand"><jd-icon icon="chevron-right"></jd-icon></button>
+        <div class="collapsible">
+          <div class="coefficient-widget">
+            <h3>Speed</h3>
+            <output id="formula-spd-mode">Maximize</output>
+            <input id="formula-spd-weight" type="number" min="-100" max="100" step="1" placeholder="0" value="15" class="positive" tabindex="2" />
+            <input id="formula-spd-min" type="number" min="0" max="6" step=".25" placeholder="0" tabindex="19" />
+            <input id="formula-spd-max" type="number" min="0" max="6" step=".25" placeholder="6" tabindex="20" />
+          </div>
+        </div>
+        <div class="collapsible collapsed">
+          <div class="coefficient-widget">
+            <h3>Ground Speed</h3>
+            <output id="formula-spdGr-mode" class="subdued">Ignore</output>
+            <input id="formula-spdGr-weight" type="number" min="-100" max="100" step="1" placeholder="0" tabindex="3" />
+            <input id="formula-spdGr-min" type="number" min="0" max="6" step=".25" placeholder="0" tabindex="19" />
+            <input id="formula-spdGr-max" type="number" min="0" max="6" step=".25" placeholder="6" tabindex="20" />
+          </div>
+          <div class="coefficient-widget">
+            <h3>Anti-Gravity Speed</h3>
+            <output id="formula-spdAg-mode" class="subdued">Ignore</output>
+            <input id="formula-spdAg-weight" type="number" min="-100" max="100" step="1" placeholder="0" tabindex="4" />
+            <input id="formula-spdAg-min" type="number" min="0" max="6" step=".25" placeholder="0" tabindex="19" />
+            <input id="formula-spdAg-max" type="number" min="0" max="6" step=".25" placeholder="6" tabindex="20" />
+          </div>
+          <div class="coefficient-widget">
+            <h3>Underwater Speed</h3>
+            <output id="formula-spdWt-mode" class="subdued">Ignore</output>
+            <input id="formula-spdWt-weight" type="number" min="-100" max="100" step="1" placeholder="0" tabindex="5" />
+            <input id="formula-spdWt-min" type="number" min="0" max="6" step=".25" placeholder="0" tabindex="19" />
+            <input id="formula-spdWt-max" type="number" min="0" max="6" step=".25" placeholder="6" tabindex="20" />
+          </div>
+          <div class="coefficient-widget">
+            <h3>Air Speed</h3>
+            <output id="formula-spdAr-mode" class="subdued">Ignore</output>
+            <input id="formula-spdAr-weight" type="number" min="-100" max="100" step="1" placeholder="0" tabindex="6" />
+            <input id="formula-spdAr-min" type="number" min="0" max="6" step=".25" placeholder="0" tabindex="19" />
+            <input id="formula-spdAr-max" type="number" min="0" max="6" step=".25" placeholder="6" tabindex="20" />
+          </div>
+        </div>
       </div>
       <div class="coefficient-widget">
         <h3>Acceleration</h3>
@@ -314,12 +351,47 @@
         <input id="formula-weigt-min" type="number" min="0" max="6" step=".25" placeholder="0" tabindex="31" />
         <input id="formula-weigt-max" type="number" min="0" max="6" step=".25" placeholder="6" tabindex="32" />
       </div>
-      <div class="coefficient-widget">
-        <h3>Handling</h3>
-        <output id="formula-hnd-mode">Maximize</output>
-        <input id="formula-hnd-weight" type="number" min="-100" max="100" step="1" placeholder="0" value="0.5" class="positive" tabindex="9" />
-        <input id="formula-hnd-min" type="number" min="0" max="6" step=".25" placeholder="0" tabindex="33" />
-        <input id="formula-hnd-max" type="number" min="0" max="6" step=".25" placeholder="6" tabindex="34" />
+      <div class="collapse-container">
+        <button class="collapse-toggle" id="hnd-expand"><jd-icon icon="chevron-right"></jd-icon></button>
+        <div class="collapsible">
+          <div class="coefficient-widget">
+            <h3>Handling</h3>
+            <output id="formula-hnd-mode">Maximize</output>
+            <input id="formula-hnd-weight" type="number" min="-100" max="100" step="1" placeholder="0" value="1" class="positive" tabindex="9" />
+            <input id="formula-hnd-min" type="number" min="0" max="6" step=".25" placeholder="0" tabindex="33" />
+            <input id="formula-hnd-max" type="number" min="0" max="6" step=".25" placeholder="6" tabindex="34" />
+          </div>
+        </div>
+        <div class="collapsible collapsed">
+          <div class="coefficient-widget">
+            <h3>Ground Handling</h3>
+            <output id="formula-hndGr-mode" class="subdued">Ignore</output>
+            <input id="formula-hndGr-weight" type="number" min="-100" max="100" step="1" placeholder="0" tabindex="3" />
+            <input id="formula-hndGr-min" type="number" min="0" max="6" step=".25" placeholder="0" tabindex="19" />
+            <input id="formula-hndGr-max" type="number" min="0" max="6" step=".25" placeholder="6" tabindex="20" />
+          </div>
+          <div class="coefficient-widget">
+            <h3>Anti-Gravity Handling</h3>
+            <output id="formula-hndAg-mode" class="subdued">Ignore</output>
+            <input id="formula-hndAg-weight" type="number" min="-100" max="100" step="1" placeholder="0" tabindex="4" />
+            <input id="formula-hndAg-min" type="number" min="0" max="6" step=".25" placeholder="0" tabindex="19" />
+            <input id="formula-hndAg-max" type="number" min="0" max="6" step=".25" placeholder="6" tabindex="20" />
+          </div>
+          <div class="coefficient-widget">
+            <h3>Underwater Handling</h3>
+            <output id="formula-hndWt-mode" class="subdued">Ignore</output>
+            <input id="formula-hndWt-weight" type="number" min="-100" max="100" step="1" placeholder="0" tabindex="5" />
+            <input id="formula-hndWt-min" type="number" min="0" max="6" step=".25" placeholder="0" tabindex="19" />
+            <input id="formula-hndWt-max" type="number" min="0" max="6" step=".25" placeholder="6" tabindex="20" />
+          </div>
+          <div class="coefficient-widget">
+            <h3>Air Handling</h3>
+            <output id="formula-hndAr-mode" class="subdued">Ignore</output>
+            <input id="formula-hndAr-weight" type="number" min="-100" max="100" step="1" placeholder="0" tabindex="6" />
+            <input id="formula-hndAr-min" type="number" min="0" max="6" step=".25" placeholder="0" tabindex="19" />
+            <input id="formula-hndAr-max" type="number" min="0" max="6" step=".25" placeholder="6" tabindex="20" />
+          </div>
+        </div>
       </div>
       <div class="coefficient-widget">
         <h3>Traction</h3>

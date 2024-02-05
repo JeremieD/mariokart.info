@@ -454,8 +454,9 @@ jd-icon svg {
   position: absolute;
   left: 0;
   top: 100%;
+  transform: translateY(-50%);
   width: 100%;
-  height: 1em;
+  height: 2em;
   background-color: inherit;
 }
 
@@ -752,14 +753,16 @@ dialog>.formula-numbers {
   display: grid;
   grid-template-columns: 1fr auto auto auto auto;
   justify-content: space-between;
-  gap: .25em 1em;
+  gap: .5em 1em;
 }
 
 dialog>.formula-numbers>* {
   display: grid;
   grid-template-columns: subgrid;
   grid-column: 1 / 6;
+  align-items: start;
   padding: 0 4rem;
+  gap: inherit;
 }
 
 dialog>.formula-numbers>:first-child {
@@ -773,12 +776,19 @@ dialog>.formula-numbers>:first-child, .coefficient-widget output {
   font-size: .875rem;
 }
 
-.coefficient-widget+.coefficient-widget { margin-top: .25em; }
+.coefficient-widget {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1/6;
+  gap: inherit;
+}
 
 .coefficient-widget h3 {
   font-size: 1.125em;
   flex-grow: 1;
 }
+
+.coefficient-widget output { user-select: none; }
 
 .coefficient-widget input {
   width: 8ch;
@@ -788,6 +798,44 @@ dialog>.formula-numbers>:first-child, .coefficient-widget output {
   text-align: right;
   background-color: var(--color-interactive);
   border-radius: .25rem;
+}
+
+.collapse-container {
+  position: relative;
+  transition: .2s ease height;
+}
+
+.transitioning {
+  overflow: clip;
+}
+
+.collapsible {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / 6;
+  gap: inherit;
+}
+
+.collapsible.collapsed {
+  display: none;
+}
+
+button.collapse-toggle {
+  position: absolute;
+  width: 1em;
+  height: 1.5em;
+  left: 3rem;
+  transform: translateY(15%);
+}
+
+button.collapse-toggle>jd-icon {
+  width: .3em;
+  height: auto;
+  transition: .2s ease transform;
+}
+
+button.collapse-toggle.open>jd-icon {
+  transform: rotateZ(90deg);
 }
 
 .toggles {
