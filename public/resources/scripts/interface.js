@@ -1160,8 +1160,10 @@ function readURLParams() {
   const url = new URL(window.location.href);
   const aCode = url.searchParams.get("a");
   if (aCode != undefined) combos.a = Combo.fromCode(aCode);
+  selectedCombo = combos.a;
   const bCode = url.searchParams.get("b");
   if (bCode != undefined) combos.b = Combo.fromCode(bCode);
+  otherCombo = combos.b;
   lastStateURL = location.href;
 }
 
