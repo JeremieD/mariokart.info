@@ -34,6 +34,7 @@ let compareSwitch, randomButton;
 let driverButton, bodyButton, tireButton, gliderButton,
     driverImg,    bodyImg,    tireImg,    gliderImg,
     driverLock,   bodyLock,   tireLock,   gliderLock,
+    driverLockMobile,   bodyLockMobile,   tireLockMobile,   gliderLockMobile,
     driverLabel,  bodyLabel,  tireLabel,  gliderLabel; // Current combo display
 let comboStats;
 let mintbMeter, accelMeter, weigtMeter, // Stat bars
@@ -76,18 +77,22 @@ whenDOMReady(() => {
   driverButton = document.getElementById("combo-driver");
   driverImg = document.getElementById("current-driver-img");
   driverLock = document.getElementById("driver-lock");
+  driverLockMobile = document.getElementById("driver-lock-mobile");
   driverLabel = document.getElementById("current-driver-label");
   bodyButton = document.getElementById("combo-body");
   bodyImg = document.getElementById("current-body-img");
   bodyLock = document.getElementById("body-lock");
+  bodyLockMobile = document.getElementById("body-lock-mobile");
   bodyLabel = document.getElementById("current-body-label");
   tireButton = document.getElementById("combo-tire");
   tireImg = document.getElementById("current-tire-img");
   tireLock = document.getElementById("tire-lock");
+  tireLockMobile = document.getElementById("tire-lock-mobile");
   tireLabel = document.getElementById("current-tire-label");
   gliderButton = document.getElementById("combo-glider");
   gliderImg = document.getElementById("current-glider-img");
   gliderLock = document.getElementById("glider-lock");
+  gliderLockMobile = document.getElementById("glider-lock-mobile");
   gliderLabel = document.getElementById("current-glider-label");
 
   comboStats = document.getElementById("combo-stats");
@@ -254,7 +259,8 @@ whenDOMReady(() => {
     }
   };
 
-  partsGrid.addEventListener("click", () => {
+  partsGrid.addEventListener("click", e => {
+    if (e.target.matches("jd-toggle, jd-toggle *")) return;
     closePartsPopup();
   });
 
@@ -283,10 +289,40 @@ whenDOMReady(() => {
   });
 
 
-  driverLock.addEventListener("change", drawRelatedTables);
-  bodyLock.addEventListener("change", drawRelatedTables);
-  tireLock.addEventListener("change", drawRelatedTables);
-  gliderLock.addEventListener("change", drawRelatedTables);
+  driverLock.addEventListener("change", () => {
+    driverLockMobile.set(driverLock.state);
+    drawRelatedTables();
+  });
+  driverLockMobile.addEventListener("change", () => {
+    driverLock.set(driverLockMobile.state);
+    drawRelatedTables();
+  });
+  bodyLock.addEventListener("change", () => {
+
+    bodyLockMobile.set(bodyLock.state);
+    drawRelatedTables();
+  });
+  bodyLockMobile.addEventListener("change", () => {
+    bodyLock.set(bodyLockMobile.state);
+    drawRelatedTables();
+  });
+  tireLock.addEventListener("change", () => {
+
+    tireLockMobile.set(tireLock.state);
+    drawRelatedTables();
+  });
+  tireLockMobile.addEventListener("change", () => {
+    tireLock.set(tireLockMobile.state);
+    drawRelatedTables();
+  });
+  gliderLock.addEventListener("change", () => {
+    gliderLockMobile.set(gliderLock.state);
+    drawRelatedTables();
+  });
+  gliderLockMobile.addEventListener("change", () => {
+    gliderLock.set(gliderLockMobile.state);
+    drawRelatedTables();
+  });
 
   addEventListener("popstate", () => {
     readURLParams();
@@ -714,10 +750,10 @@ function selectGlider(glider) {
 }
 
 function randomCombo() {
-  if (!driverLock.state) selectedCombo.driver = Combo.randomDriver();
-  if (!bodyLock.state) selectedCombo.body = Combo.randomBody();
-  if (!tireLock.state) selectedCombo.tire = Combo.randomTire();
-  if (!gliderLock.state) selectedCombo.glider = Combo.randomGlider();
+  if (!getLockState("driver")) selectedCombo.driver = Combo.randomDriver();
+  if (!getLockState("body")) selectedCombo.body = Combo.randomBody();
+  if (!getLockState("tire")) selectedCombo.tire = Combo.randomTire();
+  if (!getLockState("glider")) selectedCombo.glider = Combo.randomGlider();
   drawCurrentCombo();
   selectCombo();
 }
@@ -734,10 +770,10 @@ async function getDominantCombos(ignoreLocks = false) {
     trctnMin: selectedCombo.lvl.trctn, invcbMin: selectedCombo.lvl.invcb
   };
   if (!ignoreLocks) {
-    if (driverLock.state) opts.driverLock = selectedCombo.driver;
-    if (bodyLock.state) opts.bodyLock = selectedCombo.body;
-    if (tireLock.state) opts.tireLock = selectedCombo.tire;
-    if (gliderLock.state) opts.gliderLock = selectedCombo.glider;
+    if (getLockState("driver")) opts.driverLock = selectedCombo.driver;
+    if (getLockState("body")) opts.bodyLock = selectedCombo.body;
+    if (getLockState("tire")) opts.tireLock = selectedCombo.tire;
+    if (getLockState("glider")) opts.gliderLock = selectedCombo.glider;
   }
   return listCombos(opts);
 }
@@ -754,10 +790,10 @@ async function getSimilarCombos(ignoreLocks = false) {
     trctn: selectedCombo.lvl.trctn, invcb: selectedCombo.lvl.invcb
   };
   if (!ignoreLocks) {
-    if (driverLock.state) opts.driverLock = selectedCombo.driver;
-    if (bodyLock.state) opts.bodyLock = selectedCombo.body;
-    if (tireLock.state) opts.tireLock = selectedCombo.tire;
-    if (gliderLock.state) opts.gliderLock = selectedCombo.glider;
+    if (getLockState("driver")) opts.driverLock = selectedCombo.driver;
+    if (getLockState("body")) opts.bodyLock = selectedCombo.body;
+    if (getLockState("tire")) opts.tireLock = selectedCombo.tire;
+    if (getLockState("glider")) opts.gliderLock = selectedCombo.glider;
   }
   return listCombos(opts);
 }
@@ -784,10 +820,10 @@ async function getCustomCombos() {
     opts.factors[8] = 0;
   }
 
-  if (driverLock.state) opts.driverLock = selectedCombo.driver;
-  if (bodyLock.state) opts.bodyLock = selectedCombo.body;
-  if (tireLock.state) opts.tireLock = selectedCombo.tire;
-  if (gliderLock.state) opts.gliderLock = selectedCombo.glider;
+  if (getLockState("driver")) opts.driverLock = selectedCombo.driver;
+  if (getLockState("body")) opts.bodyLock = selectedCombo.body;
+  if (getLockState("tire")) opts.tireLock = selectedCombo.tire;
+  if (getLockState("glider")) opts.gliderLock = selectedCombo.glider;
 
   return listCombos(opts);
 }
@@ -795,7 +831,7 @@ async function getCustomCombos() {
 // TODO: Abstract this and avoid repeated calls to listCombos.
 async function getTier() {
   return getDominantCombos(true).then(dominantCombos => {
-    const nbCombos = 28224; // Nb of different *class* combinations
+    const nbCombos = 27144; // Nb of different *class* combinations
     const nbDominantCombos = dominantCombos.length;
 
     if (nbDominantCombos == 0) return "S";
@@ -873,13 +909,17 @@ function formatFormula(formula) {
   let s = '<span class="formula">' + stats.join(" + ") + "</span>";
 
   const locks = [];
-  if (driverLock.state) locks.push(strings[locl].drivers[selectedCombo.driver]);
-  if (bodyLock.state) locks.push(strings[locl].bodies[selectedCombo.body]);
-  if (tireLock.state) locks.push(strings[locl].tires[selectedCombo.tire]);
-  if (gliderLock.state) locks.push(strings[locl].gliders[selectedCombo.glider]);
+  if (getLockState("driver")) locks.push(strings[locl].drivers[selectedCombo.driver]);
+  if (getLockState("body")) locks.push(strings[locl].bodies[selectedCombo.body]);
+  if (getLockState("tire")) locks.push(strings[locl].tires[selectedCombo.tire]);
+  if (getLockState("glider")) locks.push(strings[locl].gliders[selectedCombo.glider]);
 
   let exclusionsString = "";
-  if (!bodyLock.state) {
+  if (!getLockState("body") || (getLockState("body") &&
+      (gameStats.parts.bodies[selectedCombo.body].type == "kart" && formula.excludeKarts) ||
+      (gameStats.parts.bodies[selectedCombo.body].type == "atv" && formula.excludeATVs) ||
+      (gameStats.parts.bodies[selectedCombo.body].type == "bike" && formula.excludeBikes) ||
+      (gameStats.parts.bodies[selectedCombo.body].type == "sport" && formula.excludeSportBikes))) {
     const exclusions = [];
     if (formula.excludeKarts) exclusions.push("karts");
     if (formula.excludeATVs) exclusions.push("ATVs");
@@ -1256,5 +1296,18 @@ function updateURLParams() {
   const urlStr = url.toString();
   if (urlStr != lastStateURL) {
     history.pushState({}, "", urlStr);
+  }
+}
+
+function getLockState(part) {
+  switch (part) {
+    case "driver":
+      return mobile ? driverLockMobile.state : driverLock.state;
+    case "body":
+      return mobile ? bodyLockMobile.state : bodyLock.state;
+    case "tire":
+      return mobile ? tireLockMobile.state : tireLock.state;
+    case "glider":
+      return mobile ? gliderLockMobile.state : gliderLock.state;
   }
 }

@@ -89,19 +89,19 @@
           <div id="current-combo">
             <div id="combo-driver">
               <img id="current-driver-img" src="" width="128" height="128" loading="lazy"/>
-              <jd-toggle class="not-mobile" id="driver-lock"><jd-icon icon="lock"></jd-icon><label id="current-driver-label"></label></jd-toggle>
+              <jd-toggle id="driver-lock"><jd-icon icon="lock"></jd-icon><label class="not-mobile" id="current-driver-label"></label></jd-toggle>
             </div>
             <div id="combo-body">
               <img id="current-body-img" src="" width="200" height="128" loading="lazy"/>
-              <jd-toggle class="not-mobile" id="body-lock"><jd-icon icon="lock"></jd-icon><label id="current-body-label"></label></jd-toggle>
+              <jd-toggle id="body-lock"><jd-icon icon="lock"></jd-icon><label class="not-mobile" id="current-body-label"></label></jd-toggle>
             </div>
             <div id="combo-tire">
               <img id="current-tire-img" src="" width="200" height="128" loading="lazy"/>
-              <jd-toggle class="not-mobile" id="tire-lock"><jd-icon icon="lock"></jd-icon><label id="current-tire-label"></label></jd-toggle>
+              <jd-toggle id="tire-lock"><jd-icon icon="lock"></jd-icon><label class="not-mobile" id="current-tire-label"></label></jd-toggle>
             </div>
             <div id="combo-glider">
               <img id="current-glider-img" src="" width="200" height="128" loading="lazy"/>
-              <jd-toggle class="not-mobile" id="glider-lock"><jd-icon icon="lock"></jd-icon><label id="current-glider-label"></label></jd-toggle>
+              <jd-toggle id="glider-lock"><jd-icon icon="lock"></jd-icon><label class="not-mobile" id="current-glider-label"></label></jd-toggle>
             </div>
           </div>
         </div>
@@ -151,21 +151,25 @@
       <div id="combo-parts">
         <div>
           <h3>Drivers</h3>
+          <jd-toggle class="only-mobile" id="driver-lock-mobile"><jd-icon icon="lock"></jd-icon><label>Driver Lock</label></jd-toggle>
           <div id="drivers" class="parts-grid"></div>
         </div>
 
         <div>
           <h3>Vehicles</h3>
+          <jd-toggle class="only-mobile" id="body-lock-mobile"><jd-icon icon="lock"></jd-icon><label>Body Lock</label></jd-toggle>
           <div id="bodies"></div>
         </div>
 
         <div>
           <h3>Tires</h3>
+          <jd-toggle class="only-mobile" id="tire-lock-mobile"><jd-icon icon="lock"></jd-icon><label>Tire Lock</label></jd-toggle>
           <div id="tires" class="parts-grid"></div>
         </div>
 
         <div>
           <h3>Gliders</h3>
+          <jd-toggle class="only-mobile" id="glider-lock-mobile"><jd-icon icon="lock"></jd-icon><label>Glider Lock</label></jd-toggle>
           <div id="gliders" class="parts-grid"></div>
         </div>
       </div>
@@ -276,7 +280,7 @@
 
   <footer>
     <p>© Design & Code by <a href="https://jeremiedupuis.com" target="_blank">Jérémie Dupuis</a> 🏳️‍🌈 / Data & Images from <a href="https://www.mariowiki.com/Mario_Kart_8_Deluxe_in-game_statistics" target="_blank">Mario Wiki</a>, licensed&nbsp;under&nbsp;<a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank">CC&#8209;BY&#8209;SA</a></p>
-    <p>Last updated 5 Feb 2024 / <a href="https://github.com/JeremieD/MK8DX-Combo-Builder" target="_blank">Contribute on GitHub</a> / v0.7&nbsp;/&nbsp;MK8DX&nbsp;v3.0.1&nbsp;★</p>
+    <p>Last updated 6 Feb 2024 / <a href="https://github.com/JeremieD/MK8DX-Combo-Builder" target="_blank">Contribute on GitHub</a> / v0.7.1&nbsp;/&nbsp;MK8DX&nbsp;v3.0.1&nbsp;★</p>
   </footer>
 
   <dialog id="custom-formula-dialog">

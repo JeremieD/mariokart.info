@@ -134,7 +134,7 @@ section+* { margin-top: 1.5rem; }
   display: inline-block;
   width: 1em;
   height: 1em;
-  vertical-align: -10%;
+  text-align: center;
   border-radius: .25em;
   background-color: var(--color-accent);
 }
@@ -184,7 +184,8 @@ jd-icon svg {
   margin-right: 2px;
 }
 
-#current-combo jd-toggle:not(:hover, [selected]) svg {
+#current-combo jd-toggle:not(:hover, [selected]) svg,
+jd-toggle.only-mobile:not(:hover, [selected]) svg {
   color: var(--color-grey);
 }
 
@@ -931,6 +932,16 @@ button.collapse-toggle.open>jd-icon {
     min-width: 0;
   }
 
+  #current-combo>div { position: relative; }
+  #current-combo jd-toggle { display: contents; }
+  #current-combo jd-toggle:not([selected])>jd-icon { display: none; }
+  #current-combo jd-toggle>jd-icon {
+    position: absolute;
+    right: 4px;
+    bottom: 4px;
+    pointer-events: none;
+  }
+
   #combo-stats {
     width: 100%;
     max-width: 640px;
@@ -945,6 +956,9 @@ button.collapse-toggle.open>jd-icon {
   }
 
   #combo-parts {
+    grid-template-areas: "drivers bodies tires"
+                         "drivers bodies gliders";
+    gap: 1.5rem;
     position: fixed;
     top: 0;
     left: 0;
@@ -959,6 +973,9 @@ button.collapse-toggle.open>jd-icon {
   }
 
   #combo-parts>div {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
     position: absolute;
     top: var(--height-header);
     left: var(--width-pagepadding);
@@ -972,6 +989,15 @@ button.collapse-toggle.open>jd-icon {
     pointer-events: none;
     opacity: 0;
     transition: .2s ease opacity;
+  }
+
+  #combo-parts>div>div { grid-column: span 2; }
+  #combo-parts jd-toggle {
+    display: flex;
+    gap: .25em;
+    align-items: center;
+    font-size: .875rem;
+    font-weight: bold;
   }
 
   :is(#combo-parts, #combo-parts>div).open {
