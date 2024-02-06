@@ -432,7 +432,7 @@ async function drawCurrentCombo(updateURL = true) {
   driverName = strings[locl].drivers[selectedCombo.driver];
   driverImg.alt = driverName;
   driverLabel.innerText = driverName;
-  bodyImg.src = "/resources/graphics/bodies/" + selectedCombo.body + ".webp";
+  bodyImg.src = "/resources/graphics/bodies/" + selectedCombo.body + getBodyVariant(selectedCombo.body, selectedCombo.driver) + ".webp";
   bodyName = strings[locl].bodies[selectedCombo.body];
   bodyImg.alt = bodyName;
   bodyLabel.innerText = bodyName;
@@ -440,7 +440,7 @@ async function drawCurrentCombo(updateURL = true) {
   tireName = strings[locl].tires[selectedCombo.tire];
   tireImg.alt = tireName;
   tireLabel.innerText = tireName;
-  gliderImg.src = "/resources/graphics/gliders/" + selectedCombo.glider + ".webp";
+  gliderImg.src = "/resources/graphics/gliders/" + selectedCombo.glider + getGliderVariant(selectedCombo.glider, selectedCombo.driver) + ".webp";
   gliderName = strings[locl].gliders[selectedCombo.glider];
   gliderImg.alt = gliderName;
   gliderLabel.innerText = gliderName;
@@ -971,7 +971,7 @@ function fillTable(tableEl, data) {
     bodyDisplay.loading = "lazy";
     bodyDisplay.width = 200;
     bodyDisplay.height = 128;
-    bodyDisplay.src = "/resources/graphics/bodies/" + body + ".webp";
+    bodyDisplay.src = "/resources/graphics/bodies/" + body + getBodyVariant(body, driver) + ".webp";
     bodyDisplay.title = strings[locl].bodies[body];
     const tireDisplay = document.createElement("img");
     tireDisplay.loading = "lazy";
@@ -983,7 +983,7 @@ function fillTable(tableEl, data) {
     gliderDisplay.loading = "lazy";
     gliderDisplay.width = 200;
     gliderDisplay.height = 128;
-    gliderDisplay.src = "/resources/graphics/gliders/" + glider + ".webp";
+    gliderDisplay.src = "/resources/graphics/gliders/" + glider + getGliderVariant(glider, driver) + ".webp";
     gliderDisplay.title = strings[locl].gliders[glider];
 
     // Slot Buttons
