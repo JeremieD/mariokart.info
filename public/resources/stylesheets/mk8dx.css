@@ -426,8 +426,6 @@ jd-icon svg {
   overflow: clip;
 }
 
-.tab-panels>* { contain: strict; }
-
 .tab-panels>*:not(.selected) {
   display: none;
 }

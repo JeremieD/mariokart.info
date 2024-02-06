@@ -227,27 +227,15 @@ async function listCombos(opts = {}) {
       list.push(combo);
     }
 
-    if (!(opts.sortBy instanceof Array)) opts.sortBy = [opts.sortBy];
     const formulaHash = ComboC.hashFormula(opts.factors);
     let statA, statB;
-    function compare(a, b) {
-      for (const method of opts.sortBy) {
-        if (method == "diff") {
-          statA = a.diff;
-          statB = b.diff;
-
-        } else if (method == "score") {
-          statA = a.getScore(opts.factors, formulaHash);
-          statB = b.getScore(opts.factors, formulaHash);
-
-        } else {
-          statA = a.lvl[stat];
-          statB = b.lvl[stat];
-        }
-
-        if (statA != statB) return statB - statA;
-      }
-      return 0;
+    let compare = (a, b) => b.lvl[opts.sortBy] - a.lvl[opts.sortBy];
+    switch (opts.sortBy) {
+      case "diff":
+        compare = (a, b) => b.diff - a.diff;
+        break;
+      case "score":
+        compare = (a, b) => b.getScore(opts.factors, formulaHash) - a.getScore(opts.factors, formulaHash);
     }
 
     list.sort(compare);
