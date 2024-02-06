@@ -20,7 +20,7 @@ let customFormula = {
   trctnMin: 0, trctnMax: 6, invcbMin: 0, invcbMax: 6, sizeMin: 0, sizeMax: 2,
   excludeKarts: false, excludeATVs: false,
   excludeBikes: false, excludeSportBikes: true,
-  ignoreLocks: true, useSpd: true, useHnd: true
+  useSpd: true, useHnd: true
 };
 
 let selectedCombo = combos.a;
@@ -62,7 +62,6 @@ let mintbMode, spdMode, spdGrMode, spdAgMode, spdWtMode, spdArMode, accelMode,
     weigtMode, hndMode, hndGrMode, hndAgMode, hndWtMode, hndArMode, trctnMode,
     invcbMode, sizeMode;
 let includeKarts, includeATVs, includeBikes, includeSportBikes;
-let ignoreLocksFormula;
 let resetFormulaButton, cancelFormulaButton, saveFormulaButton;
 
 whenDOMReady(() => {
@@ -201,8 +200,6 @@ whenDOMReady(() => {
   includeATVs = document.getElementById("formula-include-atvs");
   includeBikes = document.getElementById("formula-include-bikes");
   includeSportBikes = document.getElementById("formula-include-sportbikes");
-
-  ignoreLocksFormula = document.getElementById("formula-ignore-locks");
 
   resetFormulaButton = document.getElementById("formula-reset");
   cancelFormulaButton = document.getElementById("formula-cancel");
@@ -787,12 +784,10 @@ async function getCustomCombos() {
     opts.factors[8] = 0;
   }
 
-  if (!customFormula.ignoreLocks) {
-    if (driverLock.state) opts.driverLock = selectedCombo.driver;
-    if (bodyLock.state) opts.bodyLock = selectedCombo.body;
-    if (tireLock.state) opts.tireLock = selectedCombo.tire;
-    if (gliderLock.state) opts.gliderLock = selectedCombo.glider;
-  }
+  if (driverLock.state) opts.driverLock = selectedCombo.driver;
+  if (bodyLock.state) opts.bodyLock = selectedCombo.body;
+  if (tireLock.state) opts.tireLock = selectedCombo.tire;
+  if (gliderLock.state) opts.gliderLock = selectedCombo.glider;
 
   return listCombos(opts);
 }
@@ -878,15 +873,13 @@ function formatFormula(formula) {
   let s = '<span class="formula">' + stats.join(" + ") + "</span>";
 
   const locks = [];
-  if (!formula.ignoreLocks) {
-    if (driverLock.state) locks.push(strings[locl].drivers[selectedCombo.driver]);
-    if (bodyLock.state) locks.push(strings[locl].bodies[selectedCombo.body]);
-    if (tireLock.state) locks.push(strings[locl].tires[selectedCombo.tire]);
-    if (gliderLock.state) locks.push(strings[locl].gliders[selectedCombo.glider]);
-  }
+  if (driverLock.state) locks.push(strings[locl].drivers[selectedCombo.driver]);
+  if (bodyLock.state) locks.push(strings[locl].bodies[selectedCombo.body]);
+  if (tireLock.state) locks.push(strings[locl].tires[selectedCombo.tire]);
+  if (gliderLock.state) locks.push(strings[locl].gliders[selectedCombo.glider]);
 
   let exclusionsString = "";
-  if (formula.ignoreLocks || !bodyLock.state) {
+  if (!bodyLock.state) {
     const exclusions = [];
     if (formula.excludeKarts) exclusions.push("karts");
     if (formula.excludeATVs) exclusions.push("ATVs");
@@ -1132,8 +1125,6 @@ function drawCustomFormulaInterface(formula) {
   includeATVs.set(!formula.excludeATVs);
   includeBikes.set(!formula.excludeBikes);
   includeSportBikes.set(!formula.excludeSportBikes);
-
-  ignoreLocksFormula.set(formula.ignoreLocks);
 }
 
 function resetCustomFormula() {
@@ -1148,7 +1139,7 @@ function resetCustomFormula() {
     trctnMin: 0, trctnMax: 6, invcbMin: 0, invcbMax: 6, sizeMin: 0, sizeMax: 2,
     excludeKarts: false, excludeATVs: false,
     excludeBikes: false, excludeSportBikes: true,
-    ignoreLocks: true, useSpd: true, useHnd: true
+    useSpd: true, useHnd: true
   };
   drawCustomFormulaInterface(formula);
 }
@@ -1211,8 +1202,6 @@ function commitFormula() {
 
   customFormula.useSpd = !spdToggle.classList.contains("open");
   customFormula.useHnd = !hndToggle.classList.contains("open");
-
-  customFormula.ignoreLocks = ignoreLocksFormula.state;
 }
 
 function parseFactor(n) {
