@@ -1028,6 +1028,7 @@ button.collapse-toggle.open>jd-icon {
   .coefficient-widget, dialog>.formula-numbers>* {
     display: flex;
     justify-content: space-between;
+    align-items: baseline;
     flex-wrap: wrap;
     gap: .5em 1em;
   }
