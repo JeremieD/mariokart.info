@@ -1294,7 +1294,7 @@ function updateURLParams() {
   url.searchParams.set("a", aCode);
   url.searchParams.set("b", bCode);
   const urlStr = url.toString();
-  if (urlStr != lastStateURL) {
+  if (urlStr !== lastStateURL) {
     history.pushState({}, "", urlStr);
   }
 }

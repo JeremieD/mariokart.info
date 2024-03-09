@@ -171,7 +171,7 @@ async function listCombos(opts = {}) {
           gameStats.parts.gliders[opts.gliderLock].stats !== combo.glider) continue;
 
       const bodyType = gameStats.parts.bodies[combo.body].type;
-      if (opts.excludeKarts      && bodyType == "kart") continue;
+      if (opts.excludeKarts      && bodyType == "kart")  continue;
       if (opts.excludeATVs       && bodyType == "atv")   continue;
       if (opts.excludeBikes      && bodyType == "bike")  continue;
       if (opts.excludeSportBikes && bodyType == "sport") continue;

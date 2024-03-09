@@ -462,6 +462,22 @@ const gameStats = {
         hndAr: 4,
         invcb: 3
       },
+      comet: {
+        weigt: 2,
+        accel: 5,
+        trctnOn: 4,
+        trctn: 3,
+        mintb: 6,
+        spdGr: 2,
+        spdWt: 2,
+        spdAg: 3,
+        spdAr: 4,
+        hndGr: 4,
+        hndWt: 2,
+        hndAg: 3,
+        hndAr: 4,
+        invcb: 3
+      },
       yoshi: {
         weigt: 2,
         accel: 5,
@@ -1373,7 +1389,7 @@ const gameStats = {
       },
       comet: {
         type: "sport",
-        stats: "cat",
+        stats: "comet",
         group: "cat"
       },
       duke: {
