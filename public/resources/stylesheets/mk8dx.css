@@ -296,10 +296,9 @@ jd-toggle.only-mobile:not(:hover, [selected]) svg {
 .meter {
   display: block;
   position: relative;
-  width: 303px;
+  width: 100%;
   aspect-ratio: 303 / 8;
-  height: auto;
-  max-height: 8px;
+  height: 8px;
   background-color: var(--color-interactive);
   align-self: center;
   overflow: hidden;
