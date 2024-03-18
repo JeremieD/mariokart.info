@@ -354,6 +354,7 @@ jd-toggle.only-mobile:not(:hover, [selected]) svg {
   gap: .5rem;
   margin: 5px 0;
   width: 100%;
+  min-width: 0;
 }
 
 #combo-parts {
@@ -947,10 +948,6 @@ button.collapse-toggle.open>jd-icon {
   }
 
   #combo-stats>div {
-    width: 100%;
-  }
-
-  .meter {
     width: 100%;
   }
 
