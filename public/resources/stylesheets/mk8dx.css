@@ -296,9 +296,10 @@ jd-toggle.only-mobile:not(:hover, [selected]) svg {
 .meter {
   display: block;
   position: relative;
-  width: 100%;
+  width: 303px;
   aspect-ratio: 303 / 8;
-  height: 8px;
+  height: auto;
+  max-height: 8px;
   background-color: var(--color-interactive);
   align-self: center;
   overflow: hidden;
@@ -354,7 +355,6 @@ jd-toggle.only-mobile:not(:hover, [selected]) svg {
   gap: .5rem;
   margin: 5px 0;
   width: 100%;
-  min-width: 0;
 }
 
 #combo-parts {
@@ -433,7 +433,7 @@ jd-toggle.only-mobile:not(:hover, [selected]) svg {
 
 .tab-handles {
   display: flex;
-  overflow: scroll clip;
+  overflow: auto clip;
   gap: .25rem;
   padding-bottom: .25rem;
 }
@@ -481,7 +481,7 @@ jd-toggle.only-mobile:not(:hover, [selected]) svg {
 
 div.table {
   height: 40rem;
-  overflow: scroll;
+  overflow: hidden auto;
 }
 
 div.table::after {
@@ -948,6 +948,10 @@ button.collapse-toggle.open>jd-icon {
   }
 
   #combo-stats>div {
+    width: 100%;
+  }
+
+  .meter {
     width: 100%;
   }
 
