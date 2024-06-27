@@ -1,0 +1,66 @@
+@mixin darkmode {
+	@media (prefers-color-scheme: dark) { @content; }
+}
+
+@mixin lightmode {
+	@media (prefers-color-scheme: light) { @content; }
+}
+
+:root {
+	// Colours
+	--color-dark1: #111;
+	--color-dark2: #161616;
+	--color-dark3: #1C1C1C;
+	--color-dark4: #222;
+	--color-dark5: #282828;
+	--color-dark6: #383838;
+	--color-grey: #777;
+	--color-light6: #C8C8C8;
+	--color-light5: #D4D4D4;
+	--color-light4: #DBDBDB;
+	--color-light3: #E3E3E3;
+	--color-light2: #E8E8E8;
+	--color-light1: #EEE;
+	--color-purple: #83F;
+	--color-blue: #25F;
+	--color-cyan: #1BC;
+	--color-green: #1A1;
+	--color-yellow: #DB3;
+	--color-orange: #E82;
+	--color-red: #C22;
+	--color-pink: #E4A;
+	--color-brown: #663D0A;
+
+	// Semantic Colours
+	--color-background: var(--color-light1);
+	--color-foreground: var(--color-light3);
+	--color-foreground-sudbued: var(--color-light2);
+	--color-interactive: var(--color-light5); // Color for inputs
+	--color-interactive-subdued: var(--color-light4);
+	--color-interactive-fg: var(--color-light6);
+	--color-overlay: var(--color-light3); // Color for things "on top".
+	--color-inverse: var(--color-dark5);
+	--color-text: var(--color-dark1);
+	--color-subdued: var(--color-grey);
+	--color-accent: var(--color-purple);
+	--color-positive: var(--color-green);
+	--color-negative: var(--color-orange);
+
+	// Default Theme
+	color: var(--color-text);
+	background: var(--color-background);
+}
+
+@include darkmode {
+	:root {
+		--color-background: var(--color-dark1);
+		--color-foreground: var(--color-dark3);
+		--color-foreground-sudbued: var(--color-dark2);
+		--color-interactive: var(--color-dark5);
+		--color-interactive-subdued: var(--color-dark4);
+		--color-interactive-fg: var(--color-dark6);
+		--color-overlay: var(--color-dark5);
+		--color-inverse: var(--color-light5);
+		--color-text: var(--color-light1);
+	}
+}

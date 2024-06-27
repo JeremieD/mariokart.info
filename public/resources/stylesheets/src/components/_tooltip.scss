@@ -1,0 +1,45 @@
+jd-tooltip {
+  --tt-padding: 8px;
+
+  position: absolute;
+  padding: var(--tt-padding);
+  background-color: var(--color-overlay);
+  border-radius: var(--border-radius-1);
+  box-shadow: 0 4px 32px 0 rgba(0,0,0, .5);
+  z-index: 100;
+  transition: .2s ease opacity;
+
+  &:not(.shown) {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &::before {
+    display: block;
+    position: absolute;
+    content: "";
+    width: .75rem;
+    height: .75rem;
+    border-radius: var(--border-radius-0);
+    background-color: inherit;
+    translate: -50% -50%;
+    rotate: 45deg;
+  }
+
+  &.anchor-top {
+    translate: -50% calc(-100% - var(--tt-padding));
+    &::before {
+      left: 50%;
+      top: 100%;
+      border-radius: 0 0 var(--border-radius-0) 0;
+    }
+  }
+  &.anchor-bottom {
+    translate: -50% var(--tt-padding);
+    &::before {
+      left: 50%;
+      top: 0;
+      border-radius: var(--border-radius-0) 0 0 0;
+    }
+  }
+}

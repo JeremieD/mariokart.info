@@ -1,0 +1,67 @@
+.parts-grid {
+  --columns: 6;
+  display: grid;
+  grid-template-columns: repeat(var(--columns), 1fr);
+  gap: 1rem .5rem;
+
+  &.two   { --columns: 2; }
+  &.three { --columns: 3; }
+  &.eight { --columns: 8; }
+  &.square {
+    gap: .5rem;
+    button { aspect-ratio: 1 / 1; }
+  }
+
+  // Subgrid popover
+  .parts-grid.square {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    padding: 8px;
+    width: calc(var(--columns) * 100% + (var(--columns) - 1) * .5rem + 16px);
+    background-color: var(--color-foreground);
+    border-radius: var(--border-radius-2);
+    box-shadow: 0 4px 32px 0 rgba(0,0,0, .5);
+    z-index: 60;
+    transition: .2s ease opacity,
+                .2s ease scale;
+
+    &:not([open]) {
+      opacity: 0;
+      scale: .875;
+      pointer-events: none;
+    }
+  }
+
+  &:not(.square) button.highlight:not(.selected) {
+    outline-offset: 1px;
+  }
+
+  button {
+    position: relative;
+    padding: 0;
+    background-color: transparent;
+    border-radius: var(--border-radius-0);
+    aspect-ratio: 25 / 16;
+    width: auto;
+    height: auto;
+    min-width: 0;
+
+    img { width: 100%; }
+
+    &.highlight {
+      outline: 2px dashed var(--color-interactive-fg);
+    }
+    &.selected {
+      background-color: white;
+      outline: 2px solid white;
+    }
+  }
+
+  hr {
+    grid-column: 1 / span var(--columns);
+    height: .25rem;
+    background-color: transparent;
+  }
+}

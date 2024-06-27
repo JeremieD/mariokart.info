@@ -1,0 +1,34 @@
+.collapse-container {
+  position: relative;
+  transition: .3s ease height;
+  isolation: isolate;
+
+  // Hack so that I can display the chevron in the margin but hide overflow for the transition.
+  margin: 0 -16px;
+  &.transitioning { overflow: hidden; }
+
+  &>* {
+    position: absolute;
+    top: 0;
+    transition: .25s ease opacity;
+    padding: 0 16px;
+    mix-blend-mode: plus-lighter; // no flicker when cross-fading!!!
+  }
+
+  &>button {
+    top: .875em;
+    left: 0;
+    translate: 2ch 0;
+    font-size: .5rem;
+
+    jd-icon { transition: .2s ease rotate; }
+    &.rotated jd-icon {
+      rotate: 90deg;
+    }
+  }
+
+  &>div:not(.selected) {
+    opacity: 0;
+    pointer-events: none;
+  }
+}

@@ -1,0 +1,39 @@
+jd-slider {
+  --size: 1.625rem;
+
+  display: block;
+  position: relative;
+  align-self: center;
+  width: 100%;
+  padding: 0 calc(var(--size)/2);
+  color: var(--color-subdued);
+  transition: .1s ease color;
+
+  .scale {
+    display: flex;
+    gap: .25rem;
+    height: .625rem;
+
+    &>div {
+      width: 100%;
+      height: 100%;
+      border-radius: var(--border-radius-0);
+      background-color: var(--color-interactive);
+    }
+  }
+
+  .knob {
+    position: absolute;
+    top: 50%;
+    left: calc(var(--size)/2);
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    background-color: currentColor;
+    outline: .25rem solid var(--color-foreground);
+    translate: 0 -50%;
+  }
+}
+jd-slider+input {
+  flex-basis: 33%;
+}

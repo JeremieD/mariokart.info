@@ -1,0 +1,13 @@
+.slash-list {
+	display: flex;
+	align-items: center;
+	gap: 1em;
+
+
+	&>*:not(:first-child)::before {
+		position: absolute;
+		content: "/";
+		color: var(--color-subdued);
+		translate: calc(-50% - .5em);
+	}
+}

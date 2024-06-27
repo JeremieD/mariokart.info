@@ -1,0 +1,22 @@
+$bkp-8: 1800px;
+$bkp-7: 1600px;
+$bkp-6: 1400px;
+$bkp-5: 1200px;
+$bkp-4: 1000px;
+$bkp-3: 800px;
+$bkp-2: 600px;
+$bkp-1: 400px;
+$bkp-0: 300px;
+
+@mixin min-8 { @media (min-width: $bkp-8 + 1) { @content; } }
+@mixin min-7 { @media (min-width: $bkp-7 + 1) { @content; } }
+@mixin min-6 { @media (min-width: $bkp-6 + 1) { @content; } }
+@mixin min-5 { @media (min-width: $bkp-5 + 1) { @content; } }
+@mixin min-4 { @media (min-width: $bkp-4 + 1) { @content; } }
+@mixin min-3 { @media (min-width: $bkp-3 + 1) { @content; } }
+@mixin min-2 { @media (min-width: $bkp-2 + 1) { @content; } }
+@mixin min-1 { @media (min-width: $bkp-1 + 1) { @content; } }
+@mixin min-0 { @media (min-width: $bkp-0 + 1) { @content; } }
+
+@mixin hover-capable { @media (hover: hover) { @content; } }
+@mixin not-hover-capable { @media (hover: none) { @content; } }

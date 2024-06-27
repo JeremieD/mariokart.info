@@ -1,10 +1,10 @@
 whenDOMReady(() => {
   for (const tabContainer of document.getElementsByClassName("tab-container")) {
-    for (const handle of tabContainer.querySelectorAll(".tab-handles>a")) {
+    for (const handle of tabContainer.querySelectorAll(".tab-handles>button")) {
       const handler = e => {
         e.preventDefault();
         const tabID = handle.dataset.tabId;
-        for (const handle of tabContainer.querySelectorAll(".tab-handles>a")) {
+        for (const handle of tabContainer.querySelectorAll(".tab-handles>button")) {
           handle.classList.toggle("selected", handle.dataset.tabId == tabID);
         }
         for (const panel of tabContainer.querySelectorAll(".tab-panels>*")) {

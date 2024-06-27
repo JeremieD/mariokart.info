@@ -1,0 +1,1 @@
+sass --watch --no-source-map --style=compressed public/resources/stylesheets/src/:public/resources/stylesheets/

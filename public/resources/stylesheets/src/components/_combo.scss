@@ -1,0 +1,50 @@
+@use "button" as *;
+
+.combo {
+  display: flex;
+  gap: .5rem;
+  width: 100%;
+  justify-content: stretch;
+
+  &>* {
+    position: relative;
+    height: auto;
+    flex-grow: 1;
+
+    &:is(button) { padding: .25rem; }
+    &:not(button) {
+      height: 100%;
+      padding: .125rem;
+      img {
+        width: auto;
+        height: 100%;
+      }
+    }
+
+    img {
+      width: 100%;
+      aspect-ratio: 200 / 128;
+    }
+    &:nth-child(1) {
+      flex-grow: .64; // 128÷200
+      img { aspect-ratio: 1 / 1; }
+    }
+
+    jd-icon {
+      position: absolute;
+      right: .25rem;
+      bottom: .25rem;
+      height: .875rem;
+      color: var(--color-subdued);
+      transition: .2s ease opacity .25s;
+      &.selected svg {
+        animation-delay: .5s !important;
+        path { transition-delay: .5s !important; }
+      }
+      &:not(.selected) {
+        opacity: 0;
+        transition-delay: .5s;
+      }
+    }
+  }
+}

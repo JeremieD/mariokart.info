@@ -1,0 +1,45 @@
+@use "prefix" as *;
+@use "type" as *;
+
+.meter {
+  display: block;
+  position: relative;
+  // min-width: 240px;
+  width: 100%;
+  // max-width: 320px;
+  height: .625rem;
+  background-color: var(--color-interactive);
+  overflow: hidden;
+  @include mask(url(/resources/graphics/metermask.svg));
+  @include mask-size(100% 100%);
+
+  // --value: 5;
+
+  &::after {
+    content: "";
+    position: absolute;
+    height: 100%;
+    border-radius: 2px;
+    transition: .2s ease opacity;
+    width: calc(var(--value) / 6 * 100%);
+    transition: .2s ease width;
+    background-color: var(--color-yellow);
+  }
+  &.ground::after { background-color: var(--color-orange); }
+  &.anti-gravity::after { background-color: var(--color-purple); }
+  &.water::after{ background-color: var(--color-blue); }
+  &.air::after { background-color: var(--color-cyan); }
+}
+
+.multimeter {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  width: 100%;
+}
+
+.stat-code {
+  height: .666rem;
+  @include type("code-1");
+  line-height: 1;
+}
