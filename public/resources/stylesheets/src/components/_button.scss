@@ -1,0 +1,62 @@
+@use "type" as *;
+@use "prefix" as *;
+
+$button-size: 32px;
+
+button {
+  height: $button-size;
+  min-width: $button-size;
+  @include type("body-1");
+  font-weight: bold;
+  padding: .25rem 1rem;
+  background-color: var(--color-interactive);
+  border-radius: var(--border-radius-1);
+  @include user-select(none);
+  cursor: default;
+  text-align: center;
+
+  &:is(.selected, .primary):not(.inline) {
+    background-color: var(--color-accent);
+    color: var(--color-light1);
+  }
+
+  &.big-type {
+    @include type("body-3");
+  }
+
+  &.square {
+    width: $button-size;
+    padding: 0;
+  }
+
+  &.inline {
+    display: flex;
+    gap: .25em;
+    align-items: center;
+    height: auto;
+    min-width: 0;
+    padding: 0;
+    background-color: transparent;
+  }
+}
+
+button .checkbox {
+  @extend button;
+  width: 1.75rem;
+  height: 1.75rem;
+  min-width: 0;
+  padding: .3rem;
+}
+
+.button-group {
+  display: flex;
+  gap: .5rem;
+
+  &.radio {
+    gap: .25rem;
+
+    &>* { border-radius: var(--border-radius-0); }
+    &>*:first-child { border-radius: var(--border-radius-1) var(--border-radius-0) var(--border-radius-0) var(--border-radius-1); }
+    &>*:last-child { border-radius: var(--border-radius-0) var(--border-radius-1) var(--border-radius-1) var(--border-radius-0); }
+  }
+}

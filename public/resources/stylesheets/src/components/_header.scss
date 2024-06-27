@@ -1,0 +1,23 @@
+@use "colors" as *;
+@use "type" as *;
+@use "prefix" as *;
+
+body>header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: var(--width-page);
+	margin: 0 auto 1rem;
+	padding: 1rem 0;
+
+	font-weight: bold;
+	@include user-select(none);
+
+	a {
+		@include text-decoration-color(transparent);
+	}
+
+	h1 {
+		@include type("head-1");
+	}
+}

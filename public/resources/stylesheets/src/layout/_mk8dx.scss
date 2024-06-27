@@ -1,0 +1,137 @@
+@use "../components/type" as *;
+@use "../components/meter" as *;
+
+.positive { color: var(--color-positive) !important; }
+.negative { color: var(--color-negative) !important; }
+
+#combo-card {
+  border-radius: var(--border-radius-1) var(--border-radius-1) var(--border-radius-2) var(--border-radius-2);
+}
+
+#combo-details {
+  margin-top: .625rem;
+  @include type("body-1");
+  line-height: 1;
+  color: var(--color-subdued);
+}
+
+#combo-stats {
+  display: flex;
+  flex-direction: column;
+  gap: .875rem;
+  margin-top: 1rem;
+
+  &>div {
+    display: flex;
+    gap: .625rem;
+    align-items: baseline;
+  }
+}
+
+#combo-topbar {
+  display: flex;
+  justify-content: space-between;
+  gap: .5rem;
+  margin-bottom: .5rem;
+}
+
+.tab-panels ol {
+  display: grid;
+  position: relative;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  padding: 16px 16px 12rem 16px;
+
+  p {
+    text-align: center;
+    color: var(--color-subdued);
+    margin-top: 1rem;
+  }
+
+  li {
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+
+    &>div:first-child {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      justify-content: space-between;
+      &>div {
+        justify-content: start;
+        height: 32px;
+        width: auto;
+      }
+    }
+
+    .stat-diffs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .125em 1em;
+      font-size: var(--font-size-1);
+
+      &>div {
+        display: flex;
+        gap: .375em;
+        align-items: baseline;
+        font-feature-settings: "tnum" on;
+      }
+      label {
+        @extend .stat-code;
+        text-transform: uppercase;
+      }
+    }
+  }
+}
+
+.formula {
+  display: inline-block;
+  @include type("code-1");
+  line-height: 1.5;
+  text-transform: uppercase;
+  text-wrap: balance;
+  font-feature-settings: "case" on;
+
+  .multiply { margin: 0 .25em; }
+}
+
+#custom-formula-dialog {
+  .formula-factors, .formula-factors>.collapse-container>div {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .factor-widget {
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+
+    hgroup { margin-bottom: -.375em; }
+
+    &>div {
+      display: flex;
+      gap: 1rem;
+      align-items: baseline;
+    }
+
+    button {
+      font-weight: normal;
+      color: var(--color-subdued);
+    }
+  }
+
+  .toggles {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
+    grid-auto-flow: column;
+    justify-content: start;
+    gap: .75rem 2rem;
+    button {
+      font-weight: normal;
+      gap: .5em;
+    }
+  }
+}

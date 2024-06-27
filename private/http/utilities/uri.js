@@ -1,6 +1,6 @@
 class URIPath {
 	constructor(raw) {
-		const matches = raw.match(/^(\/(?:\w*\/?)*?([\w-]+(?:\.(\w+))?)?)(\?.*)?$/) ?? "";
+		const matches = raw.match(/^(\/(?:\w*\/?)*?([\w-_.]+?(?:\.(\w+))?)?)(\?.*)?$/) ?? "";
 
 		this.pathname = matches[1]; // The path without the query.
 		this.filename = matches[2]; // The filename, including the extension.

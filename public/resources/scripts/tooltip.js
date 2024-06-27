@@ -1,14 +1,15 @@
-const tooltip = document.createElement("jd-tooltip");
+"use strict";
+
+const Tooltip = {
+  tt: document.createElement("jd-tooltip")
+};
 
 whenDOMReady(() => {
-  document.body.append(tooltip);
-  const elementsWithTooltips = document.querySelectorAll("[tooltip]");
-  for (const el of elementsWithTooltips) {
-    attachTooltip(el);
-  }
+  document.body.append(Tooltip.tt);
+  // TODO: Auto attach?
 });
 
-function attachTooltip(el) {
+Tooltip.attach = el => {
   el.addEventListener("mouseenter", () => {
     showTooltip(el);
   }, { passive: true });
@@ -28,60 +29,49 @@ function attachTooltip(el) {
   }, { passive: true });
 }
 
-function showTooltip(el) {
-  tooltip.className = "";
+Tooltip.draw = (content, opts = {}) => {
+  opts.el;
+  opts.pos ??= "top"; // Point of the anchor element to anchor to.
+  opts.align ??= "center"; // Tooltip alignment relative to anchor point.
+  opts.time ??= 3000; // in ms
 
-  // Set tooltip content
-  tooltip.innerHTML = el.getAttribute("tooltip");
+  const tt = Tooltip.tt;
+  tt.innerHTML = content;
+  tt.style = "";
 
-  // Set tooltip style
-  const elRect = el.getBoundingClientRect();
-  const tooltipAlign = el.getAttribute("tooltip-align")?.trim() ?? "";
-
-  const topRight = () => {
-    tooltip.className = "top-right";
-    tooltip.style.top = elRect.top - 20 + "px";
-    tooltip.style.left = elRect.left + "px";
-  };
-  const bottomRight = () => {
-    tooltip.className = "bottom-right";
-    tooltip.style.top = elRect.bottom + 20 + "px";
-    tooltip.style.left = elRect.left + "px";
-  };
-  const leftMiddle = () => {
-    tooltip.className = "left-middle";
-    tooltip.style.top = elRect.top + elRect.height/2 + "px";
-    tooltip.style.left = elRect.left - 20 + "px";
-  };
-  const topCenter = () => {
-    tooltip.className = "top-center";
-    tooltip.style.top = elRect.top - 20 + "px";
-    tooltip.style.left = elRect.left + elRect.width/2 + "px";
-  };
-  const bottomCenter = () => {
-    tooltip.className = "bottom-center";
-    tooltip.style.top = elRect.bottom + 20 + "px";
-    tooltip.style.left = elRect.left + elRect.width/2 + "px";
-  };
-
-  if (tooltipAlign == "top-right") {
-    topRight();
-    const tooltipRect = tooltip.getBoundingClientRect();
-    if (tooltipRect.y < 8) bottomRight();
-
-  } else if (tooltipAlign == "left-middle") {
-    leftMiddle();
-
-  } else {
-    topCenter();
-    const tooltipRect = tooltip.getBoundingClientRect();
-    if (tooltipRect.y < 8) bottomCenter();
+  const elRect = opts.el.getBoundingClientRect();
+  switch (opts.pos) {
+    case "top":
+      tt.style.left = elRect.x + elRect.width/2 + "px";
+      tt.style.top = elRect.y + "px";
+      break;
+    case "bot":
+    case "bottom":
+      tt.style.left = elRect.x + elRect.width/2 + "px";
+      tt.style.top = elRect.y + elRect.height + "px";
+      break;
+    case "left":
+      tt.style.left = elRect.x + "px";
+      tt.style.top = elRect.y + elRect.height/2 + "px";
+      break;
+    case "right":
+      tt.style.left = elRect.x + elRect.width + "px";
+      tt.style.top = elRect.y + elRect.height/2 + "px";
+      break;
+    default:
+      throw "Error: Unknown anchoring method: “" + opts.pos + "”";
   }
 
+  tt.classList.add("anchor-" + opts.pos);
+  tt.classList.add("align-" + opts.align);
+
   // Show tooltip
-  tooltip.classList.add("shown");
+  tt.style.setProperty("--tt-time", opts.time + "ms");
+  tt.classList.add("shown");
+
+  setTimeout(Tooltip.hide, opts.time);
 }
 
-function hideTooltip() {
-  tooltip.classList.remove("shown");
+Tooltip.hide = () => {
+  Tooltip.tt.classList.remove("shown");
 }

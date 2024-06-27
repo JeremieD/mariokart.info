@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="303" height="8" viewBox="0 0 303 8" preserveAspectRatio="none">
-  <rect width="48" height="8" rx="2" transform="translate(255)"/>
-  <rect width="48" height="8" rx="2" transform="translate(204)"/>
-  <rect width="48" height="8" rx="2" transform="translate(153)"/>
-  <rect width="48" height="8" rx="2" transform="translate(102)"/>
-  <rect width="48" height="8" rx="2" transform="translate(51)"/>
-  <rect width="48" height="8" rx="2"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="255" height="7" viewBox="0 0 255 7" preserveAspectRatio="none">
+  <rect width="40" height="7" rx="2" transform="translate(215)"/>
+  <rect width="40" height="7" rx="2" transform="translate(172)"/>
+  <rect width="40" height="7" rx="2" transform="translate(129)"/>
+  <rect width="40" height="7" rx="2" transform="translate(86)"/>
+  <rect width="40" height="7" rx="2" transform="translate(43)"/>
+  <rect width="40" height="7" rx="2"/>
 </svg>

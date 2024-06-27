@@ -50,7 +50,7 @@ function serveFile(req, res, urlOverride) {
 
 	// If the file extension is unknown, return 404.
 	if (mimeTypes[extension] === undefined) {
-		serveError(res, "Can’t serve file of type “" + extension + "”");
+		serveError(res, "Can’t serve file “" + pathname + "”of type “" + extension + "”");
 		return;
 	}
 

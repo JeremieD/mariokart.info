@@ -39,17 +39,6 @@ async function httpGet(url) {
   });
 }
 
-function randomInt(a, b) {
-  if (b == undefined) {
-    b = a;
-    a = 0;
-  }
-  return Math.round(Math.random() * (b - a) + a);
-}
-
-// Round n to p decimal digits.
-function round(n, p) { return Math.round(n * 10**p) / 10**p; }
-
 String.prototype.replaceAt = function(i, replacement) {
   return this.substring(0, i) + replacement + this.substring(i + replacement.length);
 }

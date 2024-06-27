@@ -1,0 +1,18 @@
+@use "prefix" as *;
+
+a {
+	position: relative;
+	@include text-decoration-line(underline);
+	@include text-decoration-thickness(1px);
+	@include text-decoration-color(var(--color-subdued));
+	text-underline-position: from-font;
+	transition-timing-function: ease;
+	transition-duration: .2s;
+	transition-property: color, text-decoration, -webkit-text-decoration, -moz-text-decoration;
+	cursor: pointer;
+}
+
+a:hover {
+	color: var(--color-text);
+	@include text-decoration-color(var(--color-text));
+}

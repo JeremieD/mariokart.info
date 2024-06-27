@@ -1,0 +1,13 @@
+jd-icon {
+	display: inline-block;
+	line-height: 0;
+	vertical-align: -2px;
+	height: 1.125em;
+
+	svg {
+		width: 100%;
+		height: 100%;
+		overflow: visible;
+		transition: .2s ease color;
+	}
+}

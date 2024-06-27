@@ -1,0 +1,74 @@
+@use "type" as *;
+
+dialog {
+  --dialog-pos: 5.5rem;
+  position: fixed;
+  top: var(--dialog-pos);
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: var(--width-page);
+  max-height: calc(100svh - 2*var(--dialog-pos));
+  background-color: var(--color-foreground);
+  border-radius: var(--border-radius-2);
+  box-shadow: 0 8px 32px 0 rgba(0,0,0, .5),
+              0 1px 128px 0 rgba(0,0,0, .5);
+  z-index: 50;
+  transition: .2s ease opacity,
+              .2s ease translate;
+
+  &:not([open]) {
+    display: initial;
+    opacity: 0;
+    pointer-events: none;
+    translate: 0 1svh;
+  }
+  &::backdrop { background: rgba(0,0,0, 0.5); }
+
+  &.overflow { overflow-y: scroll; }
+
+  &>* { padding: 16px; }
+
+  header {
+    position: sticky;
+    top: 0;
+    background-color: inherit;
+    padding: 16px 16px 12px 16px;
+    border-bottom: 1px solid var(--color-interactive);
+    border-radius: var(--border-radius-2) var(--border-radius-2) 0 0;
+    z-index: 55;
+
+    h2 {
+      @include type("head-1");
+      jd-icon, img {
+        height: 1em;
+      }
+      img {
+        height: 1.25em;
+        display: inline-block;
+        vertical-align: -4px;
+        margin-right: .25em;
+      }
+      jd-icon { margin-right: .25em; }
+    }
+
+    p { color: var(--color-subdued); }
+
+    button:not(.selected):not(:hover) jd-icon {
+      color: var(--color-subdued);
+    }
+  }
+
+  footer {
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    gap: .5rem;
+    background-color: inherit;
+    padding: 16px;
+    border-top: 1px solid var(--color-interactive);
+    border-radius: 0 0 var(--border-radius-2) var(--border-radius-2);
+    z-index: 55;
+  }
+}
