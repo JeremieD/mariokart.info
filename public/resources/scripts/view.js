@@ -703,6 +703,8 @@ function drawCollapses() {
     const isOn = formula[stat].use;
     chevron.classList.toggle("rotated", !isOn);
     tabOn.classList.toggle("selected", isOn);
+    tabOn.toggleAttribute("inert", !isOn);
+    tabOff.toggleAttribute("inert", isOn);
     tabOff.classList.toggle("selected", !isOn);
     const height = (isOn ? tabOn : tabOff).getBoundingClientRect().height;
     container.style.height = height + "px";

@@ -38,7 +38,3 @@ async function httpGet(url) {
     httpRequest.send();
   });
 }
-
-String.prototype.replaceAt = function(i, replacement) {
-  return this.substring(0, i) + replacement + this.substring(i + replacement.length);
-}
