@@ -162,18 +162,21 @@ whenDOMReady(() => {
     const min = V.formula[stat].min;
     const max = V.formula[stat].max;
     const mode = V.formula[stat].mode;
-    const statState = state.workingFormula[stat];
     factor.addEventListener("input", () => {
-      statState.factor = factor.value;
+      state.workingFormula[stat].factor = factor.value;
       drawFactorWidget(stat);
     });
     slider.addEventListener("change", () => {
-      statState.factor = slider.value;
+      state.workingFormula[stat].factor = slider.value;
       drawFactorWidget(stat);
     });
     slider.linkedInput = factor;
-    min.addEventListener("input", () => { statState.min = min.value; });
-    max.addEventListener("input", () => { statState.max = max.value; });
+    min.addEventListener("input", () => {
+      state.workingFormula[stat].min = parseFloat(min.value);
+    });
+    max.addEventListener("input", () => {
+      state.workingFormula[stat].max = parseFloat(max.value);
+    });
     mode.addEventListener("click", () => { toggleFactorSign(stat); });
     mode.addEventListener("dblclick", () => { resetFactor(stat); });
   }
