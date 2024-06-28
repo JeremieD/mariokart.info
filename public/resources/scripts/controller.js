@@ -249,14 +249,24 @@ function getCustomCombos(combo) {
   if (state.formula.spd.use) {
     opts.spdGr.factor = 0; opts.spdAg.factor = 0;
     opts.spdWt.factor = 0; opts.spdAr.factor = 0;
+    opts.spdGr.min = 0; opts.spdAg.min = 0;
+    opts.spdWt.min = 0; opts.spdAr.min = 0;
+    opts.spdGr.max = 6; opts.spdAg.max = 6;
+    opts.spdWt.max = 6; opts.spdAr.max = 6;
   } else {
     opts.spd.factor = 0;
+    opts.spd.min = 0; opts.spd.max = 6;
   }
   if (state.formula.hnd.use) {
     opts.hndGr.factor= 0; opts.hndAg.factor = 0;
     opts.hndWt.factor = 0; opts.hndAr.factor = 0;
+    opts.hndGr.min = 0; opts.hndAg.min = 0;
+    opts.hndWt.min = 0; opts.hndAr.min = 0;
+    opts.hndGr.max = 6; opts.hndAg.max = 6;
+    opts.hndWt.max = 6; opts.hndAr.max = 6;
   } else {
     opts.hnd.factor = 0;
+    opts.hnd.min = 0; opts.hnd.max = 6;
   }
 
   return Stats.post("listCombos", opts);
@@ -378,11 +388,9 @@ function openFormulaDialog() {
 }
 function commitFormula() {
   state.formula = structuredClone(state.workingFormula);
-
-  state.offSlot.custom = getCustomCombos(state.offSlot.combo);
   state.selectedSlot.custom = getCustomCombos(state.selectedSlot.combo);
   drawCustomCombos();
-
+  state.offSlot.custom = getCustomCombos(state.offSlot.combo);
   state.openedDialog = "";
   drawFormulaDialog();
 }
