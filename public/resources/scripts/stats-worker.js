@@ -145,6 +145,8 @@ class Combo {
                          this.lvl.hndAr * Combo.PERCENT_AR, 3);
     this.size = this.classes.driver.size;
     this.lvl.size = this.size*2.5 + .75;
+
+    this.name = getComboName(driver, body, tire, glider);
   }
 
   static fromCode(code) {
@@ -3174,6 +3176,182 @@ function getGliderVariant(glider, driver) {
   if (variant != undefined) return "-" + variant;
   return "";
 }
+
+const partMorphemes = {
+  drivers: {
+    mario: { or: "Mario" },
+    luigi: { or: "Luigi" },
+    peach: { or: "Peach" },
+    daisy: { or: "Daisy" },
+    rosalina: { or: "Rosalina" },
+    marioTan: { pre: "Tanooki" },
+    peachCat: { pre: "Cat", full: "Cat Peach" },
+    birdo: { or: "Birdo" },
+    yoshi: { or: "Yoshi" },
+    toad: { or: "Toad" },
+    koopa: { or: "Koopa" },
+    shyguy: { pre: "Shy", post: "Guy", full: "Shy Guy" },
+    lakitu: { or: "Lakitu" },
+    toadette: { or: "Toadette" },
+    kingboo: { or: "Boo" },
+    petey: { pre: "Petey", post: "Piranha" },
+    marioBb: { pre: "Baby" },
+    luigiBb: { pre: "Baby" },
+    peachBb: { pre: "Baby" },
+    daisyBb: { pre: "Baby" },
+    rosalinaBb: { pre: "Baby" },
+    marioGold: { or: "Gold", full: "Gold Mario" },
+      marioGold1: { or: "Metal", full: "Metal Mario" },
+    peachGold: { pre: "Pink Gold", full: "Pink Gold Peach" },
+    wiggler: { or: "Wiggler" },
+    wario: { pre: "Wario" },
+    waluigi: { pre: "Waluigi" },
+    dk: { pre: "DK" },
+    bowser: { or: "Bowser" },
+    drybones: { post: "Bones", or: "Bones", full: "Dry Bones" },
+    bowserJr: { post: "Jr.", full: "Bowser Jr." },
+    bowserDry: { pre: "Dry", full: "Dry Bowser" },
+    kamek: { or: "Kamek" },
+    lemmy: { or: "Lemmy" },
+    larry: { or: "Larry" },
+    wendy: { or: "Wendy" },
+    ludwig: { or: "Ludwig" },
+    iggy: { or: "Iggy" },
+    roy: { or: "Roy" },
+    morton: { or: "Morton" },
+    inklingM: { or: "Inkling" },
+    inklingF: { or: "Inkling" },
+    villagerM: { or: "Villager" },
+    villagerF: { or: "Villager" },
+    isabelle: { or: "Isabelle" },
+    link: { or: "Link" },
+    peachette: { or: "Peachette" },
+    ddk: { or: "Diddy" },
+    fk: { pre: "Funky" },
+    pauline: { pre: "Pauline" },
+    miiS: { or: "Mii" },
+    miiM: { or: "Mii" },
+    miiL: { or: "Mii" }
+  },
+  bodies: {
+    std: { full: "Kart" },
+    pipe: { or: "Pipe" },
+    mach: { pre: "Mach", post: "Mach" },
+    steel: { pre: "Steel", post: "Driver" },
+    cat: { post: "Cruiser", pre: "Cat" },
+    circuit: { post: "Special", pre: "Circuit" },
+    trispeed: { post: "Speeder", pre: "Tri" },
+    wagon: { post: "Wagon", pre: "Bad" },
+    prancer: { or: "Prancer" },
+    biddy: { or: "Biddy" },
+    landship: { or: "Landship" },
+    sneeker: { or: "Sneeker" },
+    coupe: { or: "Coupe" },
+    gold: { or: "Gold" },
+    bikeStd: { or: "Bike" },
+    bikeSport: { or: "Sport Bike" },
+    comet: { or: "Comet" },
+    duke: { pre: "Duke", post: "Duke" },
+    flame: { pre: "Flame", post: "Rider" },
+    varmint: { or: "Varmint" },
+    scooty: { pre: "Mr.", post: "Scooty" },
+    jet: { pre: "Jet", post: "Jet" },
+    yoshi: { or: "Yoshi" },
+    atvStd: { or: "ATV" },
+    wiggler: { or: "Wiggler" },
+    teddy: { or: "Teddy" },
+    gla: { or: "GLA" },
+    gla25: { post: "Arrow", pre: "Silver" },
+    gla300: { or: "Roadster" },
+    falcon: { or: "Falcon" },
+    tanooki: { or: "Tanooki" },
+    dasher: { post: "-Dasher", pre: "Dasher" },
+    master: { or: "Master" },
+    streetle: { or: "Streetle" },
+    pwing: { post: "-Wing", pre: "Wing" },
+    city: { post: "Tripper", pre: "City" },
+    rattler: { post: "Rattler", pre: "Bone" },
+    koopa: { post: "Clown", pre: "Koopa"  },
+    splat: { or: "Splat" },
+    ink: { post: "Striker", pre: "Ink"  },
+    masterZero: { or: "Zero" }
+  }
+};
+function getComboName(driver, body, tire, glider) {
+  let driverMorphs = partMorphemes.drivers[driver];
+  if (!driverMorphs) driverMorphs = partMorphemes.drivers[driver.replaceAll(/\d$/g, "")];
+  const bodyMorphs = partMorphemes.bodies[body];
+
+  // Special Cases
+  if (driver == "mario" && body == "std" &&
+      tire == "std" && glider == "super") return "The Standard";
+  if (driver == "marioGold" && body == "gold" &&
+      tire == "gold" && glider == "gold") return "24 Carat Gold";
+  if (driver == "link" && body == "master" &&
+      tire == "triforce" && glider == "hylian") return "Hero of the Sky";
+  if (driver == "link1" && body == "masterZero" &&
+      tire == "ancient" && glider == "paraglider") return "Hero of the Wild";
+  if (driver.startsWith("inkling") && body == "splat") return "Splat Toon";
+  if (driver.isAny("miiS", "miiM", "miiL")) {
+    if (body == "scooty") return fuse("Mx.", driverMorphs.post ?? driverMorphs.or ?? driverMorphs.full ?? driverMorphs.pre);
+  }
+  if (driver.isAny("peach", "daisy", "rosalina", "peachCat", "birdo", "birdo1",
+       "birdo2", "birdo3", "birdo4", "birdo5", "birdo6", "birdo7", "birdo8",
+       "toadette", // "peachBb", "daisyBb", "rosalinaBb", "peachGold",
+       "wendy", "peachette", "inklingF", "villagerF", "isabelle", "pauline")) {
+    if (body == "scooty") return fuse("Mrs.", driverMorphs.post ?? driverMorphs.or ?? driverMorphs.full ?? driverMorphs.pre);
+    if (body == "duke") return fuse("Duchess", driverMorphs.post ?? driverMorphs.or ?? driverMorphs.full ?? driverMorphs.pre);
+  }
+
+  // Generative
+  if (Object.keys(bodyMorphs)[0] == "full") {
+    if (driverMorphs.full) return fuse(driverMorphs.full, bodyMorphs.full);
+    if (driverMorphs.pre) return fuse(driverMorphs.pre, bodyMorphs.full);
+    if (driverMorphs.or) return fuse(driverMorphs.or, bodyMorphs.full);
+  }
+  if ((!driverMorphs.pre || !driverMorphs.post)) {
+    for (const form of Object.keys(driverMorphs)) {
+      switch (form) {
+        case "pre":
+          if (bodyMorphs.post) return fuse(driverMorphs.pre, bodyMorphs.post);
+          if (bodyMorphs.or) return fuse(driverMorphs.pre, bodyMorphs.or);
+          break;
+        case "post":
+          if (bodyMorphs.pre) return fuse(bodyMorphs.pre, driverMorphs.post);
+          if (bodyMorphs.or) return fuse(bodyMorphs.or, driverMorphs.post);
+          break;
+      }
+    }
+  }
+  for (const bodyForm of Object.keys(bodyMorphs)) {
+    switch (bodyForm) {
+      case "pre":
+        if (driverMorphs.post) return fuse(bodyMorphs.pre, driverMorphs.post);
+        if (driverMorphs.or) return fuse(bodyMorphs.pre, driverMorphs.or);
+      case "post":
+        if (driverMorphs.pre) return fuse(driverMorphs.pre, bodyMorphs.post);
+        if (driverMorphs.or) return fuse(driverMorphs.or, bodyMorphs.post);
+      case "or":
+        if (driverMorphs.pre) return fuse(driverMorphs.pre, bodyMorphs.or);
+        if (driverMorphs.post) return fuse(bodyMorphs.or, driverMorphs.post);
+        if (driverMorphs.or) return fuse(driverMorphs.or, bodyMorphs.or);
+    }
+  }
+  throw [driver, body];
+}
+function fuse(fst, snd) {
+  const fstDashed = fst.endsWith("-");
+  const sndDashed = snd.startsWith("-");
+  if (fstDashed != sndDashed) return fst + snd; // XOR
+  if (fstDashed && sndDashed) return fst + snd.substring(1);
+  return fst + " " + snd;
+}
+String.prototype.isAny = function(...patterns) {
+  for (const pattern of patterns) {
+    if (this == pattern) return true;
+  }
+  return false;
+};
 
 function randomInt(a, b) {
   if (b == undefined) {
