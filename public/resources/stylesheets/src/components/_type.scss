@@ -60,3 +60,7 @@
 }
 
 h1, h2, h3, em { font-weight: bold; }
+
+@media (min-width: 820px) {
+	:root { font-size: 14px; }
+}
