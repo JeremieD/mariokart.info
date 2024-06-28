@@ -1,9 +1,10 @@
 :root {
-	--border-radius-2: 8px;
-	--border-radius-1: 4px;
-	--border-radius-0: 2px;
+	--border-radius-2: .666rem;
+	--border-radius-1: .333rem;
+	--border-radius-0: .1666rem;
 
-	--width-page: 336px;
+	--width-page: 28rem;
+	--width-column: 28rem;
 }
 
 body {
@@ -13,13 +14,11 @@ body {
 }
 
 main {
+	display: grid;
+	gap: 2rem;
 	width: var(--width-page);
 	margin: 0 auto;
 	flex-grow: 1;
-
-	& > *+* {
-		margin-top: 2rem;
-	}
 }
 
 hgroup {
@@ -39,10 +38,19 @@ hgroup {
 }
 
 :focus-visible:not([tabindex="-1"]) {
-	box-shadow: 0 0 0 3px var(--color-background),
-				      0 0 0 6px var(--color-accent),
-				      0 0 0 9px var(--color-background);
-	// border-radius: 1px;
+	box-shadow: 0 0 0 .25rem var(--color-background),
+				      0 0 0 .5rem var(--color-accent),
+				      0 0 0 .75rem var(--color-background);
 	transition: .2s ease box-shadow;
 	z-index: 100;
+}
+
+@media (min-width: 820px) {
+	:root { --width-page: 57rem; }
+	main {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 1rem;
+		align-items: top;
+	}
 }

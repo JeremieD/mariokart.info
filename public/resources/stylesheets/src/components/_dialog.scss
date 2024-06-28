@@ -1,18 +1,21 @@
 @use "type" as *;
+@use "responsive" as *;
 
 dialog {
+  --dialog-width: var(--width-column);
   --dialog-pos: 5.5rem;
+
   position: fixed;
   top: var(--dialog-pos);
   left: 0;
   right: 0;
   margin: auto;
-  width: var(--width-page);
+  width: var(--dialog-width);
   max-height: calc(100svh - 2*var(--dialog-pos));
   background-color: var(--color-foreground);
   border-radius: var(--border-radius-2);
-  box-shadow: 0 8px 32px 0 rgba(0,0,0, .5),
-              0 1px 128px 0 rgba(0,0,0, .5);
+  box-shadow: 0 .5rem 2.5rem 0 rgba(0,0,0, .5),
+              0 1px 10rem 0 rgba(0,0,0, .5);
   z-index: 50;
   transition: .2s ease opacity,
               .2s ease translate;
@@ -30,13 +33,13 @@ dialog {
 
   &.overflow { overflow-y: scroll; }
 
-  &>* { padding: 16px; }
+  &>* { padding: 1.333rem; }
 
   header {
     position: sticky;
     top: 0;
     background-color: inherit;
-    padding: 16px 16px 12px 16px;
+    padding: 1.333rem 1.333rem 1rem 1.333rem;
     border-bottom: 1px solid var(--color-interactive);
     border-radius: var(--border-radius-2) var(--border-radius-2) 0 0;
     z-index: 55;
@@ -49,7 +52,7 @@ dialog {
       img {
         height: 1.25em;
         display: inline-block;
-        vertical-align: -4px;
+        vertical-align: -.333rem;
         margin-right: .25em;
       }
       jd-icon { margin-right: .25em; }
@@ -69,9 +72,11 @@ dialog {
     justify-content: space-between;
     gap: .5rem;
     background-color: inherit;
-    padding: 16px;
+    padding: 1.333rem;
     border-top: 1px solid var(--color-interactive);
     border-radius: 0 0 var(--border-radius-2) var(--border-radius-2);
     z-index: 55;
   }
 }
+
+@include min-2 { dialog { --dialog-width: 32rem; } }

@@ -1,11 +1,11 @@
 jd-tooltip {
-  --tt-padding: 8px;
+  --tt-padding: .666rem;
 
   position: absolute;
   padding: var(--tt-padding);
   background-color: var(--color-overlay);
   border-radius: var(--border-radius-1);
-  box-shadow: 0 4px 32px 0 rgba(0,0,0, .5);
+  box-shadow: 0 .333rem 2.666rem 0 rgba(0,0,0, .5);
   z-index: 100;
   transition: .2s ease opacity;
 

@@ -1,7 +1,8 @@
 @use "type" as *;
 @use "prefix" as *;
+@use "responsive" as *;
 
-$button-size: 32px;
+$button-size: 2.666rem;
 
 button {
   height: $button-size;
@@ -60,3 +61,5 @@ button .checkbox {
     &>*:last-child { border-radius: var(--border-radius-0) var(--border-radius-1) var(--border-radius-1) var(--border-radius-0); }
   }
 }
+
+@include min-2 { .button-group.radio { gap: .5rem; } }

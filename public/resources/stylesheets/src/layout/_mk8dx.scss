@@ -1,5 +1,6 @@
 @use "../components/type" as *;
 @use "../components/meter" as *;
+@use "../components/button" as *;
 
 .positive { color: var(--color-positive) !important; }
 .negative { color: var(--color-negative) !important; }
@@ -39,8 +40,8 @@
   display: grid;
   position: relative;
   grid-template-columns: 1fr;
-  gap: 1.5rem;
-  padding: 16px 16px 12rem 16px;
+  gap: 1.25rem;
+  padding: 1.333rem 1.333rem 12rem 1.333rem;
 
   p {
     text-align: center;
@@ -60,7 +61,7 @@
       justify-content: space-between;
       &>div {
         justify-content: start;
-        height: 32px;
+        height: $button-size;
         width: auto;
       }
     }

@@ -1,4 +1,5 @@
 @use "type" as *;
+@use "responsive" as *;
 
 .tab-container {
   &>.tab-handles {
@@ -41,7 +42,7 @@
 
   &>.tab-panels {
     overflow-y: scroll;
-    min-height: 360px;
+    min-height: 30rem;
     height: 66svh;
     border-radius: var(--border-radius-0) var(--border-radius-2) var(--border-radius-2) var(--border-radius-2);
     background-color: var(--color-foreground);
@@ -66,10 +67,17 @@
       gap: .75rem;
       position: sticky;
       top: 0;
-      padding: 16px;
+      padding: 1.333rem;
       background-color: var(--color-foreground);
       border-bottom: 1px solid var(--color-interactive);
       z-index: 5;
     }
+  }
+}
+
+@include min-2 {
+  .tab-container>.tab-handles {
+    gap: .5rem;
+    margin-bottom: .5rem;
   }
 }

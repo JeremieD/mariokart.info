@@ -18,11 +18,11 @@
     left: 50%;
     top: 50%;
     translate: -50% -50%;
-    padding: 8px;
-    width: calc(var(--columns) * 100% + (var(--columns) - 1) * .5rem + 16px);
+    padding: .666rem;
+    width: calc(var(--columns) * 100% + (var(--columns) - 1) * .5rem + 1.333rem);
     background-color: var(--color-foreground);
     border-radius: var(--border-radius-2);
-    box-shadow: 0 4px 32px 0 rgba(0,0,0, .5);
+    box-shadow: 0 .333rem 2rem 0 rgba(0,0,0, .5);
     z-index: 60;
     transition: .2s ease opacity,
                 .2s ease scale;
@@ -35,7 +35,7 @@
   }
 
   &:not(.square) button.highlight:not(.selected) {
-    outline-offset: 1px;
+    outline-offset: .018333rem;
   }
 
   button {
@@ -51,11 +51,11 @@
     img { width: 100%; }
 
     &.highlight {
-      outline: 2px dashed var(--color-interactive-fg);
+      outline: .1666rem dashed var(--color-interactive-fg);
     }
     &.selected {
       background-color: white;
-      outline: 2px solid white;
+      outline: .1666rem solid white;
     }
   }
 

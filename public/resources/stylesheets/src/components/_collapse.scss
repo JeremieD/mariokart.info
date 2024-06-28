@@ -4,14 +4,14 @@
   isolation: isolate;
 
   // Hack so that I can display the chevron in the margin but hide overflow for the transition.
-  margin: 0 -16px;
+  margin: 0 -1.333rem;
   &.transitioning { overflow: hidden; }
 
   &>* {
     position: absolute;
     top: 0;
     transition: .25s ease opacity;
-    padding: 0 16px;
+    padding: 0 1.333rem;
     mix-blend-mode: plus-lighter; // no flicker when cross-fading!!!
   }
 
