@@ -273,6 +273,9 @@ function drawCurrentCombo() {
   for (const stat of stats) {
     V.combo[stat].style.setProperty("--value", combo.lvl[stat]);
   }
+
+  // Page Title
+  document.title = combo.name + " | MK8DX Combo Builder";
 }
 
 function drawDominantCombos() {
