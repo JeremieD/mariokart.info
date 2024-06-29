@@ -38,9 +38,9 @@ hgroup {
 }
 
 :focus-visible:not([tabindex="-1"]) {
-	box-shadow: 0 0 0 .25rem var(--color-background),
-				      0 0 0 .5rem var(--color-accent),
-				      0 0 0 .75rem var(--color-background);
+	box-shadow: 0 0 0 .2rem var(--color-background),
+				      0 0 0 .4rem var(--color-accent),
+				      0 0 0 .6rem var(--color-background);
 	transition: .2s ease box-shadow;
 	z-index: 100;
 }

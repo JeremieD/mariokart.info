@@ -11,6 +11,13 @@ input {
   height: 2rem;
   padding: 0 .625em;
   text-align: left;
+
+  &.invalid {
+    box-shadow: 0 0 0 .2rem var(--color-background),
+                0 0 0 .4rem var(--color-red),
+                0 0 0 .6rem var(--color-background) !important;
+    transition: .2s ease box-shadow;
+  }
 }
 
 .field-group {

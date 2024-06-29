@@ -173,9 +173,11 @@ whenDOMReady(() => {
     slider.linkedInput = factor;
     min.addEventListener("input", () => {
       state.workingFormula[stat].min = parseFloat(min.value);
+      validateBounds(stat);
     });
     max.addEventListener("input", () => {
       state.workingFormula[stat].max = parseFloat(max.value);
+      validateBounds(stat);
     });
     mode.addEventListener("click", () => { toggleFactorSign(stat); });
     mode.addEventListener("dblclick", () => { resetFactor(stat); });
@@ -664,6 +666,7 @@ function drawFormulaDialog() {
     let max = formula[stat].max;
     if (max == V.formula[stat].max.max) max = "";
     V.formula[stat].max.value = max;
+    validateBounds(stat);
   }
 
   V.formula.includeKarts.classList.toggle("selected", !state.workingFormula.excludeKarts);
@@ -691,6 +694,14 @@ function drawFactorWidget(stat) {
   } else {
     mode.innerText = "Ignore";
   }
+}
+
+function validateBounds(stat) {
+  const min = state.workingFormula[stat].min;
+  const max = state.workingFormula[stat].max;
+  const invalidBounds = max < min;
+  V.formula[stat].min.classList.toggle("invalid", invalidBounds);
+  V.formula[stat].max.classList.toggle("invalid", invalidBounds);
 }
 
 function drawCollapses() {
