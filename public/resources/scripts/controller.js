@@ -493,3 +493,8 @@ function updateURLParams() {
     history.pushState({}, "", url.toString());
   }
 }
+
+function changeLocale(locl) {
+  locale = locl;
+  drawCurrentCombo();
+}

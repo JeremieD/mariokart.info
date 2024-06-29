@@ -88,7 +88,7 @@ whenDOMReady(() => {
   V.gliders.lockLabel = document.getElementById("glider-lock-label");
   V.gliders.grid = document.getElementById("glider-grid");
 
-  V.settings.dialog = document.getElementById("settings");
+  V.settings.localeSelect = document.getElementById("locale-select");
 
   V.formula.dialog = document.getElementById("custom-formula-dialog");
   for (const stat of scoreStats) {
@@ -209,6 +209,11 @@ whenDOMReady(() => {
   V.formula.includeATVs.addEventListener("click", toggleIncludeATVs);
   V.formula.includeBikes.addEventListener("click", toggleIncludeBikes);
   V.formula.includeSportBikes.addEventListener("click", toggleIncludeSportBikes);
+
+  locale = V.settings.localeSelect.value; // on init
+  V.settings.localeSelect.addEventListener("change", () => {
+    changeLocale(V.settings.localeSelect.value);
+  });
 
   // Keyboard Shortcuts
   addEventListener("keydown", e => {
@@ -696,8 +701,8 @@ function drawPopover(el) {
   el.removeAttribute("inert");
   el.classList.remove("left", "right");
   const rect = el.getBoundingClientRect();
-  el.classList.toggle("left", rect.left < 0);
-  el.classList.toggle("right", rect.right > innerWidth);
+  el.classList.toggle("left", rect.left - 12 < 0);
+  el.classList.toggle("right", rect.right + 12 > innerWidth);
 }
 
 function drawFormulaDialog() {
