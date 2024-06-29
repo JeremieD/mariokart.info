@@ -3285,7 +3285,7 @@ function getComboName(driver, body, tire, glider) {
   // Special Cases
   if (driver == "mario" && body == "std" &&
       tire == "std" && glider == "super") return "The Standard";
-  if (driver == "marioGold" && body == "gold" &&
+  if (driver.isAny("marioGold", "peachGold") && body == "gold" &&
       tire == "gold" && glider == "gold") return "24 Carat Gold";
   if (driver == "link" && body == "master" &&
       tire == "triforce" && glider == "hylian") return "Hero of the Sky";

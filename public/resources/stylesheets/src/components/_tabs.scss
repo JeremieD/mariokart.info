@@ -14,11 +14,13 @@
         position: absolute;
         content: "";
         width: 100%;
-        height: calc(100% - var(--border-radius-1)*2);
-        top: var(--border-radius-1);
+        height: 1rem;
+        top: 100%;
         left: 0;
+        translate: 0 100%;
         z-index: -1;
         background-color: inherit;
+        opacity: 0;
         transition: .1s ease translate;
       }
 
@@ -29,8 +31,12 @@
       color: inherit;
       background-color: var(--color-foreground-sudbued);
       &.selected {
+
         background-color: var(--color-foreground);
-        &::after { translate: 0 100%; }
+        &::after {
+          translate: 0 -25%;
+          opacity: 1;
+        }
       }
     }
     sup {

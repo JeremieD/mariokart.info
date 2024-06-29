@@ -96,6 +96,7 @@
 
   .multiply { margin: 0 .25em; }
 }
+.invalid { color: var(--color-red); }
 
 #custom-formula-dialog {
   .formula-factors, .formula-factors>.collapse-container>div {
