@@ -10,10 +10,10 @@ body>header {
 	margin: 0 auto 1rem;
 	padding: 1rem 0;
 
-	font-weight: bold;
 	@include user-select(none);
 
 	a {
+		font-weight: bold;
 		@include text-decoration-color(transparent);
 	}
 

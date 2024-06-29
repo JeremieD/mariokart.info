@@ -40,7 +40,24 @@
     <a href="/" id="logo">
       <h1>MK8DX Combo Builder</h1>
     </a>
-    <button class="slash-list"><span id="game-version">v3.0.1&nbsp;★</span> <span id="locale">NOA-EN</span></button>
+    <select class="inline" id="locale-select">
+      <option value="en-A" selected>English (NOA)</option>
+      <option value="en-E">English (NOE)</option>
+      <option value="fr-A">Français (NOA)</option>
+      <option value="fr-E">Français (NOE)</option>
+      <option value="de">Deutsch</option>
+      <option value="es-A">Español (NOA)</option>
+      <option value="es-E">Español (NOE)</option>
+      <option value="it">Italiano</option>
+      <option value="nl">Nederlands</option>
+      <option value="pt-A">Português (NOA)</option>
+      <option value="pt-E">Português (NOE)</option>
+      <option value="ru">Русский</option>
+      <option value="ja">日本語</option>
+      <option value="zh-T">繁體中文</option>
+      <option value="zh-S">简体中文</option>
+      <option value="ko">한국어</option>
+    </select>
   </header>
 
   <main>
@@ -191,40 +208,6 @@
       <button id="glider-lock" class="inline"><label id="glider-lock-label">Lock Glider</label><jd-icon icon="lock"></jd-icon></button>
     </hgroup></header>
     <div id="glider-grid" class="parts-grid"></div>
-  </dialog>
-
-  <dialog id="settings" autofocus>
-    <header>
-      <h2>Settings</h2>
-    </header>
-    <label for="locale-select">Language</label>
-    <select id="locale-select">
-      <option value="de">Deutsch</option>
-      <option value="en-A" selected>English (Americas)</option>
-      <option value="en-E">English (Europe)</option>
-      <option value="es-A">Español (Latinoamérica)</option>
-      <option value="es-E">Español (Europa)</option>
-      <option value="fr-A">Français (Amériques)</option>
-      <option value="fr-E">Français (Europe)</option>
-      <option value="it">Italiano</option>
-      <option value="nl">Nederlands</option>
-      <option value="pt">Português</option>
-      <option value="ru">Русский</option>
-      <option value="ja">日本語</option>
-      <option value="ko">한국어</option>
-      <option value="zh-S">简体中文</option>
-      <option value="zh-T">繁體中文</option>
-    </select>
-    <label for="version-select">Game Version</label>
-    <select id="version-select">
-      <option value="v3.0.1">v3.0.1</option>
-    </select>
-    <label for="unlocks-select">Characters & Parts</label>
-    <select id="unlocks-select">
-      <option value="start">Only Starting Parts</option>
-      <option value="full">All Base Game</option>
-      <option value="dlc" selected>Base Game + DLC</option>
-    </select>
   </dialog>
 
   <dialog id="custom-formula-dialog" class="overflow" autofocus>
