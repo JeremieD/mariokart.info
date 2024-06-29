@@ -7,12 +7,20 @@ const host = "localhost";
 const port = 8510;
 
 const requestListener = function(req, res) {
-  const pathname = new uri.URIPath(req.url).pathname;
+  const url = new uri.URIPath(req.url);
+  const pathname = url.pathname;
 
   switch (req.method) {
     case "GET":
       if (pathname === "/") {
-        static.serveFile(req, res, "/index.html");
+        // Redirect
+        res.setHeader("Location", "/mk8dx" + url.query);
+        res.writeHead(301);
+        res.end();
+        return;
+
+      } else if (pathname === "/mk8dx") {
+        static.serveFile(req, res, "/mk8dx.html");
 
       } else if (req.url.startsWith("/resources/")) {
         static.serveFile(req, res);
