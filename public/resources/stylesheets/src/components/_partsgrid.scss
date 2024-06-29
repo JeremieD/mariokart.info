@@ -1,3 +1,5 @@
+@use "responsive" as *;
+
 .parts-grid {
   --columns: 6;
   display: grid;
@@ -30,7 +32,15 @@
     &:not([open]) {
       opacity: 0;
       scale: .875;
-      pointer-events: none;
+      pointer-events: none; // redundant with inert but more supported.
+    }
+    &.left {
+      left: 0;
+      translate: -.666rem -50%;
+    }
+    &.right {
+      left: 100%;
+      translate: calc(-100% + .666rem) -50%;
     }
   }
 
@@ -42,11 +52,12 @@
     position: relative;
     padding: 0;
     background-color: transparent;
-    border-radius: var(--border-radius-0);
+    border-radius: var(--border-radius-1);
     aspect-ratio: 25 / 16;
     width: auto;
     height: auto;
     min-width: 0;
+    transition: .1s ease background-color;
 
     img { width: 100%; }
 
@@ -63,5 +74,11 @@
     grid-column: 1 / span var(--columns);
     height: .25rem;
     background-color: transparent;
+  }
+}
+
+@include hover-capable {
+  .parts-grid button:not(.selected):hover {
+    background-color: var(--color-interactive);
   }
 }

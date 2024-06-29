@@ -450,11 +450,12 @@ function formatFormula(formula) {
   if (state.locks.glider) locks.push(S("gliders", combo.gliderID));
 
   let exclusionsString = "";
-  if (!state.locks.body || (state.locks.body &&
-      (combo.parts.body.type == "kart"  && formula.excludeKarts) ||
+  const bodyConflict = state.locks.body &&
+      ((combo.parts.body.type == "kart"  && formula.excludeKarts) ||
       (combo.parts.body.type == "atv"   && formula.excludeATVs) ||
       (combo.parts.body.type == "bike"  && formula.excludeBikes) ||
-      (combo.parts.body.type == "sport" && formula.excludeSportBikes))) {
+      (combo.parts.body.type == "sport" && formula.excludeSportBikes));
+  if (!state.locks.body || bodyConflict) {
     const exclusions = [];
     if (formula.excludeKarts) exclusions.push("karts");
     if (formula.excludeATVs) exclusions.push("ATVs");
@@ -481,9 +482,12 @@ function formatFormula(formula) {
   }
 
   if (locks.length > 0 || exclusionsString.length > 0) s += "<br>";
+  if (!bodyConflict) { s += "<span>"; }
+  else { s += "<span class=\"invalid\">"; }
   s += locks.join(", ");
   if (locks.length > 0 && exclusionsString.length > 0) s += " — ";
   s += exclusionsString;
+  s += "</span>";
 
   return s;
 }
@@ -501,44 +505,56 @@ function drawDriverDialog() {
     V.drivers.grid.innerHTML = "";
     const drivers = data.drivers;
     for (const driver of drivers) {
-      let img = "drivers/";
+      let id;
       let eventHandler;
       const classes = [];
       let folder;
       if (driver.folder == undefined) {
-        img += driver.id;
+        id = driver.id;
         if (driver.id == state.driver) classes.push("selected");
         if (driver.group == state.selectedSlot.combo.parts.driver.group) classes.push("highlight");
         eventHandler = () => { setDriver(driver.id); };
       } else {
-        img += state.driverPrefs[driver.id];
+        id = state.driverPrefs[driver.id];
         folder = document.createElement("div");
+        folder.setAttribute("inert", "");
         folder.classList.add("parts-grid", "square");
         if (driver.folder.length == 2) folder.classList.add("two");
         if (driver.folder.length >= 3) folder.classList.add("three");
-        eventHandler = e => { drawPopover(folder); e.stopPropagation(); };
+        eventHandler = e => { drawPopover(folder); };
         addEventListener("click", e => {
           if (state.openedDialog !== "driver") return;
-          if (isOutside(folder, e)) folder.removeAttribute("open");
+          if (isOutside(folder, e)) {
+            folder.removeAttribute("open");
+            folder.setAttribute("inert", "");
+          }
         });
         for (const driverVariant of driver.folder) {
-          const id = driverVariant.id;
-          const classesVariant = [];
-          if (id == state.driver) {
-            classesVariant.push("selected");
+          const variantID = driverVariant.id;
+          const variantClasses = [];
+          if (variantID == state.driver) {
+            variantClasses.push("selected");
             classes.push("selected");
           }
           if (driverVariant.group == state.selectedSlot.combo.parts.driver.group) {
-            classesVariant.push("highlight");
+            variantClasses.push("highlight");
             classes.push("highlight");
           }
-          const button = newPartButton("drivers/" + id, id, classesVariant);
-          button.addEventListener("click", () => { setDriver(id); });
+          const button = newPartButton("drivers/" + variantID, variantID, variantClasses);
+          button.addEventListener("click", () => { setDriver(variantID); });
+          button.addEventListener("mouseenter", () => { drawDriverTitle(variantID); });
+          button.addEventListener("mouseleave", () => { drawDriverTitle(state.driver); });
+          button.addEventListener("focus", () => { drawDriverTitle(variantID); });
+          button.addEventListener("blur", () => { drawDriverTitle(state.driver); });
           folder.append(button);
       } }
-      const button = newPartButton(img, driver.id, classes);
-      if (folder !== undefined) { button.append(folder); }
+      const button = newPartButton("drivers/" + id, driver.id, classes);
       button.addEventListener("click", eventHandler);
+      if (folder !== undefined) { button.append(folder); }
+      button.addEventListener("mouseenter", () => { drawDriverTitle(id); });
+      button.addEventListener("mouseleave", () => { drawDriverTitle(state.driver); });
+      button.addEventListener("focus", () => { drawDriverTitle(id); });
+      button.addEventListener("blur", () => { drawDriverTitle(state.driver); });
       V.drivers.grid.append(button);
     }
   });
@@ -566,6 +582,18 @@ function drawBodyDialog() {
         if (body.group == state.selectedSlot.combo.parts.body.group) classes.push("highlight");
         const button = newPartButton("bodies/" + id, id, classes);
         button.addEventListener("click", () => { setBody(id); });
+        button.addEventListener("mouseenter", () => {
+          drawBodyTitle(id, bodies.id);
+        });
+        button.addEventListener("mouseleave", () => {
+          drawBodyTitle(state.body, state.selectedSlot.combo.parts.body.type);
+        });
+        button.addEventListener("focus", () => {
+          drawBodyTitle(id, bodies.id);
+        });
+        button.addEventListener("blur", () => {
+          drawBodyTitle(state.body, state.selectedSlot.combo.parts.body.type);
+        });
         V.bodies.grid.append(button);
       }
       V.bodies.grid.append(document.createElement("hr"));
@@ -596,6 +624,10 @@ function drawTireDialog() {
       if (tire.group == state.selectedSlot.combo.parts.tire.group) classes.push("highlight");
       const button = newPartButton("tires/" + id, id, classes);
       button.addEventListener("click", () => { setTire(id); });
+      button.addEventListener("mouseenter", () => { drawTireTitle(id); });
+      button.addEventListener("mouseleave", () => { drawTireTitle(state.tire); });
+      button.addEventListener("focus", () => { drawTireTitle(id); });
+      button.addEventListener("blur", () => { drawTireTitle(state.tire); });
       V.tires.grid.append(button);
     }
   });
@@ -620,6 +652,10 @@ function drawGliderDialog() {
       if (glider.group == state.selectedSlot.combo.parts.glider.group) classes.push("highlight");
       const button = newPartButton("gliders/" + id, id, classes);
       button.addEventListener("click", () => { setGlider(id); });
+      button.addEventListener("mouseenter", () => { drawGliderTitle(id); });
+      button.addEventListener("mouseleave", () => { drawGliderTitle(state.glider); });
+      button.addEventListener("focus", () => { drawGliderTitle(id); });
+      button.addEventListener("blur", () => { drawGliderTitle(state.glider); });
       V.gliders.grid.append(button);
     }
   });
@@ -627,6 +663,21 @@ function drawGliderDialog() {
   V.gliders.lock.classList.toggle("selected", state.locks.glider);
   V.gliders.lockLabel.innerText = state.locks.glider ? "Unlock Glider" : "Lock Glider";
   V.gliders.dialog.showModal();
+}
+
+function drawDriverTitle(id) {
+  V.drivers.title.innerText = S("drivers", id);
+  V.drivers.icon.src = graphicsRoot + "emblems/" + id + ".webp";
+}
+function drawBodyTitle(id, type) {
+  V.bodies.title.innerText = S("bodies", id);
+  V.bodies.icon.setAttribute("src", graphicsRoot + "icons/" + type + ".svg");
+}
+function drawTireTitle(id) {
+  V.tires.title.innerText = S("tires", id);
+}
+function drawGliderTitle(id) {
+  V.gliders.title.innerText = S("gliders", id);;
 }
 
 function newPartButton(imgSrc, value, classes = []) {
@@ -642,6 +693,11 @@ function drawPopover(el) {
   // TODO: Make this popover system not jank.
   //       State variables feel overkill but would be cleaner.
   el.setAttribute("open", "");
+  el.removeAttribute("inert");
+  el.classList.remove("left", "right");
+  const rect = el.getBoundingClientRect();
+  el.classList.toggle("left", rect.left < 0);
+  el.classList.toggle("right", rect.right > innerWidth);
 }
 
 function drawFormulaDialog() {
@@ -722,9 +778,16 @@ function drawCollapses() {
   }
 }
 
-// Returns weather the click event *e* is inside element *el*.
+// Returns whether the click event *e* is inside element *el*.
 function isOutside(el, e) {
   const rect = el.getBoundingClientRect();
+  // If the click event was fired with a keyboard press, e.detail will be 0.
+  if (e.detail == 0) {
+    // In that case, clientX and Y will be 0, so we use the target element's position instead.
+    const target = e.originalTarget.getBoundingClientRect();
+    return target.top < rect.top   || target.bottom > rect.bottom
+        || target.left < rect.left || target.right > rect.right;
+  }
   return e.clientY < rect.top  || e.clientY > rect.bottom
       || e.clientX < rect.left || e.clientX > rect.right;
 }
