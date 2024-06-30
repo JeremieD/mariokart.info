@@ -12,6 +12,7 @@
   overflow: hidden;
   @include mask(url(/resources/graphics/metermask.svg));
   @include mask-size(100% 100%);
+  color: var(--color-yellow);
 
   // --value: 5;
 
@@ -23,12 +24,8 @@
     transition: .2s ease opacity;
     width: calc(var(--value) / 6 * 100%);
     transition: .2s ease width;
-    background-color: var(--color-yellow);
+    background-color: currentColor;
   }
-  &.ground::after { background-color: var(--color-orange); }
-  &.anti-gravity::after { background-color: var(--color-purple); }
-  &.water::after{ background-color: var(--color-blue); }
-  &.air::after { background-color: var(--color-cyan); }
 }
 
 .multimeter {

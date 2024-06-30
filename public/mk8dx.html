@@ -106,7 +106,7 @@
             <div class="multimeter">
               <div class="meter ground" tooltip-align="left-middle" tooltip="" id="spdGr-meter"></div>
               <div class="meter anti-gravity" tooltip-align="left-middle" tooltip="" id="spdAg-meter"></div>
-              <div class="meter water" tooltip-align="left-middle" tooltip="" id="spdWt-meter"></div>
+              <div class="meter underwater" tooltip-align="left-middle" tooltip="" id="spdWt-meter"></div>
               <div class="meter air" tooltip-align="left-middle" tooltip="" id="spdAr-meter"></div>
             </div>
           </div>
@@ -123,7 +123,7 @@
             <div class="multimeter">
               <div class="meter ground" tooltip-align="left-middle" tooltip="" id="hndGr-meter"></div>
               <div class="meter anti-gravity" tooltip-align="left-middle" tooltip="" id="hndAg-meter"></div>
-              <div class="meter water" tooltip-align="left-middle" tooltip="" id="hndWt-meter"></div>
+              <div class="meter underwater" tooltip-align="left-middle" tooltip="" id="hndWt-meter"></div>
               <div class="meter air" tooltip-align="left-middle" tooltip="" id="hndAr-meter"></div>
             </div>
           </div>
@@ -214,9 +214,9 @@
     <header>
       <hgroup>
         <h2>Custom Formula</h2>
-        <button class="inline"><jd-icon icon="help"></jd-icon></button>
+        <button id="formula-help-open" class="icon inline"><jd-icon icon="help"></jd-icon></button>
       </hgroup>
-      <p>Cook up your own formula to find the exact combo you need. Positive&nbsp;multipliers will maximize the stat, negative multipliers will minimize&nbsp;it.</p>
+      <p>Cook up your own formula to find the exact combo you need. Positive&nbsp;coefficients will maximize the stat, negative coefficients will minimize&nbsp;it.</p>
     </header>
 
     <div class="formula-factors">
@@ -557,6 +557,32 @@
           <button id="formula-save" class="button primary">Save</button>
         </div>
     </footer>
+  </dialog>
+
+  <dialog id="formula-help" class="overflow">
+    <header>
+      <hgroup>
+        <h2>Custom Formula Help</h2>
+        <button id="formula-help-close" class="icon inline"><jd-icon icon="x"></jd-icon></button>
+      </hgroup>
+    </header>
+    <div>
+      <h3>Formula Coefficients</h3>
+      <p>Every combo is scored by multiplying each stat’s value by&nbsp;its <em>coefficient</em> and summing them all.</p>
+      <p>A positive coefficient <em>maximizes</em> the stat, a&nbsp;negative one <em>minimizes</em> it, and zero means the stat is&nbsp;ignored.</p>
+
+      <h3>Speed and Handling</h3>
+      <p>The Speed and Handling stats are <em>unified</em> versions of their four&nbsp;component stats.</p>
+      <p>Internally, the coefficient you set for these is split into the component stats as follows: 80%&nbsp;to <em class="ground">ground</em>, 15% to&nbsp;<em class="anti-gravity">anti&#8209;gravity</em>, 4% to <em class="air">air</em> and 1%&nbsp;to&nbsp;<em class="underwater">underwater</em>.</p>
+
+      <h3>Filters and Locks</h3>
+      <p>You can set <em>minimum</em> and <em>maximum</em> values for each stat. Combos&nbsp;outside this range will be excluded.</p>
+      <p>Use the checkboxes at the bottom to <em>exclude types of&nbsp;vehicles</em> from the results.</p>
+      <p>Note that your <em>locks</em> are respected, and may conflict with&nbsp;these filters.</p>
+
+      <h3>More Info</h3>
+      <p>For info about the game’s stats, see the&nbsp;<a href="https://www.mariowiki.com/Mario_Kart_8_Deluxe_in-game_statistics" target="_blank">Mario Wiki</a>.</p>
+    </div>
   </dialog>
 </body>
 

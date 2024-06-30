@@ -444,6 +444,15 @@ function toggleIncludeSportBikes() {
   drawFormulaDialog();
 }
 
+function openFormulaHelpDialog() {
+  state.openedDialog = "formula-help";
+  drawFormulaHelpDialog();
+}
+function closeFormulaHelpDialog() {
+  state.openedDialog = "formula";
+  drawFormulaHelpDialog();
+}
+
 function init() {
   readURLParams();
   getAvailableParts();

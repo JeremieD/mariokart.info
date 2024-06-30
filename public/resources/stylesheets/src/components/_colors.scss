@@ -51,6 +51,11 @@
 	background: var(--color-background);
 }
 
+.ground { color: var(--color-orange) !important; }
+.anti-gravity { color: var(--color-purple) !important; }
+.underwater { color: var(--color-blue) !important; }
+.air { color: var(--color-cyan) !important; }
+
 @include darkmode {
 	:root {
 		--color-background: var(--color-dark1);

@@ -117,6 +117,10 @@ whenDOMReady(() => {
   V.formula.cancel = document.getElementById("formula-cancel");
   V.formula.save   = document.getElementById("formula-save");
 
+  V.formula.helpOpen   = document.getElementById("formula-help-open");
+  V.formula.helpClose  = document.getElementById("formula-help-close");
+  V.formula.helpDialog = document.getElementById("formula-help");
+
 
   /******** View OUT ********/
 
@@ -210,6 +214,12 @@ whenDOMReady(() => {
   V.formula.includeBikes.addEventListener("click", toggleIncludeBikes);
   V.formula.includeSportBikes.addEventListener("click", toggleIncludeSportBikes);
 
+  V.formula.helpOpen.addEventListener("click", openFormulaHelpDialog);
+  V.formula.helpClose.addEventListener("click", closeFormulaHelpDialog);
+  V.formula.helpDialog.addEventListener("click", e => {
+    if (isOutside(V.formula.helpDialog, e)) closeFormulaHelpDialog();
+  });
+
   locale = V.settings.localeSelect.value; // on init
   V.settings.localeSelect.addEventListener("change", () => {
     changeLocale(V.settings.localeSelect.value);
@@ -223,12 +233,15 @@ whenDOMReady(() => {
     } else if (e.key == "b") {
       selectB();
     } else if (e.key == "Escape") {
-      closeDriverDialog();
-      closeBodyDialog();
-      closeTireDialog();
-      closeGliderDialog();
-      revertFormula();
       e.preventDefault();
+      switch (state.openedDialog) {
+        case "driver": return closeDriverDialog();
+        case "body": return closeBodyDialog();
+        case "tire": return closeTireDialog();
+        case "glider": return closeGliderDialog();
+        case "formula": return revertFormula();
+        case "formula-help": return closeFormulaHelpDialog();
+      }
     }
   });
 
@@ -798,6 +811,14 @@ function drawCollapses() {
     const height = (isOn ? tabOn : tabOff).getBoundingClientRect().height;
     container.style.height = height + "px";
   }
+}
+
+function drawFormulaHelpDialog() {
+  if (state.openedDialog !== "formula-help") {
+    V.formula.helpDialog.close();
+    return;
+  }
+  V.formula.helpDialog.showModal();
 }
 
 // Returns whether the click event *e* is inside element *el*.
