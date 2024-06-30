@@ -91,7 +91,7 @@ class Combo {
   };
   size = -1;
 
-  constructor(driver, body, tire, glider) {
+  constructor(driver = "mario", body = "std", tire = "std", glider = "super") {
     // TODO: Check parts
     try {
       this.code = parts.drivers[driver].code
@@ -99,7 +99,8 @@ class Combo {
                 + parts.tires[tire].code
                 + parts.gliders[glider].code;
     } catch (e) {
-      throw "Error: Unknown combo: “" + driver + ", " + body + ", " + tire + ", " + glider + "”";
+      throw "Error: Unknown combo: “" + driver + ", "
+          + body + ", " + tire + ", " + glider + "”";
     }
 
     this.driverID = driver;
@@ -163,7 +164,7 @@ class Combo {
       tireCode   = code.substring(3, 4);
       gliderCode = code.substring(4, 5);
     } else {
-      throw "Error: Could not parse combo code: “" + code + "”";
+      return new Combo();
     }
 
     const driver = driverCodes[driverCode];
