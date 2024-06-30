@@ -175,7 +175,7 @@ function setGlider(glider) {
   closeGliderDialog();
 }
 
-function setCombo(combo, slot) {
+function setCombo(combo, slot, replaceURL = false) {
   if (slot == "A" && state.selectedSlotID == "B"
    || slot == "B" && state.selectedSlotID == "A") {
     state.offSlot.combo = combo;
@@ -194,7 +194,7 @@ function setCombo(combo, slot) {
     drawSimilarCombos();
     drawCustomCombos();
   }
-  updateURLParams();
+  updateURLParams(replaceURL);
 }
 
 function updateRelatedCombos(slot) {
@@ -472,19 +472,15 @@ function readURLParams() {
   state.selectedSlotID = BCode == undefined ? "A" : "B";
 
   const aCombo = Stats.post("getCombo", aCode ?? "MAAA")
-  .then(combo => { setCombo(combo, "A") });
+  .then(combo => { setCombo(combo, "A", true) });
 
   const bCombo = Stats.post("getCombo", bCode ?? BCode ?? "LMSA")
-  .then(combo => { setCombo(combo, "B") });
-
-  state.lastState.aCode = state.slot.A.combo.code;
-  state.lastState.bCode = state.slot.B.combo.code;
+  .then(combo => { setCombo(combo, "B", true) });
 }
 
-function updateURLParams() {
+function updateURLParams(forceReplace = false) {
   const aCode = state.slot.A.combo.code;
   const bCode = state.slot.B.combo.code;
-
   const url = new URL(location.href);
   url.searchParams.delete("A");
   url.searchParams.delete("a");
@@ -498,9 +494,15 @@ function updateURLParams() {
     url.searchParams.set("A", aCode);
     url.searchParams.set("b", bCode);
   }
-  if (aCode !== state.lastState.aCode || bCode !== state.lastState.bCode) {
+  if (!forceReplace && (aCode != state.lastState.aCode
+                     || bCode != state.lastState.bCode)) {
     history.pushState({}, "", url.toString());
+  } else {
+    history.replaceState({}, "", url.toString());
   }
+
+  state.lastState.aCode = state.slot.A.combo.code;
+  state.lastState.bCode = state.slot.B.combo.code;
 }
 
 function changeLocale(locl) {
