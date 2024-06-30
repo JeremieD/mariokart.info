@@ -40,7 +40,7 @@
     <a href="/" id="logo">
       <h1>MK8DX Combo Builder</h1>
     </a>
-    <select class="inline" id="locale-select">
+    <select class="inline" id="locale-select" title="Language">
       <option value="en-A" selected>English (NOA)</option>
       <option value="en-E">English (NOE)</option>
       <option value="fr-A">Français (NOA)</option>
@@ -65,7 +65,7 @@
       <div id="combo-topbar">
         <div class="button-group">
           <button id="random-combo">Random</button>
-          <button id="share-combo" class="big-type square"><jd-icon icon="link"></jd-icon></button>
+          <button id="share-combo" class="big-type square" title="Copy combo link to clipboard"><jd-icon icon="link"></jd-icon></button>
         </div>
         <div id="combo-tabs" class="button-group radio">
           <button id="combo-a" value="a" class="big-type square selected" accesskey="a">A</button>
@@ -175,7 +175,7 @@
   <footer>
     <p>© Design & Code by <a href="https://jeremiedupuis.com" target="_blank">Jérémie Dupuis</a> 🏳️‍🌈 / Data & Images from <a href="https://www.mariowiki.com/Mario_Kart_8_Deluxe_in-game_statistics" target="_blank">Mario Wiki</a>, licensed&nbsp;under&nbsp;<a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank">CC&#8209;BY&#8209;SA</a></p>
     <p>Please send any bugs or suggestions my&nbsp;way. I&nbsp;am&nbsp;<a href="https://discord.com/users/198249043141328897" target="_blank">🅹🅴🅹&nbsp;(jeremied)</a> on Discord</a>.</p>
-    <p>Last updated 29 Jun 2024 / v1.0.0 / <a href="https://github.com/JeremieD/MK8DX-Combo-Builder" target="_blank">GitHub</a></p>
+    <p>Last updated 30 Jun 2024 / v1.0.0 / <a href="https://github.com/JeremieD/MK8DX-Combo-Builder" target="_blank">GitHub</a></p>
   </footer>
 
   <dialog id="driver-picker" autofocus>
@@ -186,7 +186,7 @@
     <div id="driver-grid" class="parts-grid square eight"></div>
   </dialog>
 
-  <dialog id="body-picker" autofocus>
+  <dialog id="body-picker">
     <header><hgroup>
       <h2><jd-icon id="body-icon" src="/resources/graphics/icons/kart.svg"></jd-icon><span id="body-title">Vehicles</span></h2>
       <button id="body-lock" class="inline"><label id="body-lock-label">Lock Body</label><jd-icon icon="lock"></jd-icon></button>
@@ -194,7 +194,7 @@
     <div id="body-grid" class="parts-grid"></div>
   </dialog>
 
-  <dialog id="tire-picker" autofocus>
+  <dialog id="tire-picker">
     <header><hgroup>
       <h2><jd-icon src="/resources/graphics/icons/tire.svg"></jd-icon><span id="tire-title">Tires</span></h2>
       <button id="tire-lock" class="inline"><label id="tire-lock-label">Lock Tire</label><jd-icon icon="lock"></jd-icon></button>
@@ -202,7 +202,7 @@
     <div id="tire-grid" class="parts-grid"></div>
   </dialog>
 
-  <dialog id="glider-picker" autofocus>
+  <dialog id="glider-picker">
     <header><hgroup>
       <h2><jd-icon src="/resources/graphics/icons/glider.svg"></jd-icon><span id="glider-title">Gliders</span></h2>
       <button id="glider-lock" class="inline"><label id="glider-lock-label">Lock Glider</label><jd-icon icon="lock"></jd-icon></button>
@@ -210,7 +210,7 @@
     <div id="glider-grid" class="parts-grid"></div>
   </dialog>
 
-  <dialog id="custom-formula-dialog" class="overflow" autofocus>
+  <dialog id="custom-formula-dialog" class="overflow">
     <header>
       <hgroup>
         <h2>Custom Formula</h2>
@@ -240,7 +240,7 @@
       </div>
 
       <div id="formula-spd-collapse" class="collapse-container">
-        <button id="formula-use-spd" class="inline"><jd-icon icon="chevron-right"></jd-icon></button>
+        <button id="formula-use-spd" class="icon inline"><jd-icon icon="chevron-right"></jd-icon></button>
         <div class="selected">
           <div class="factor-widget">
             <hgroup>
@@ -376,7 +376,7 @@
       </div>
 
       <div id="formula-hnd-collapse" class="collapse-container">
-        <button id="formula-use-hnd" class="inline"><jd-icon icon="chevron-right"></jd-icon></button>
+        <button id="formula-use-hnd" class="icon inline"><jd-icon icon="chevron-right"></jd-icon></button>
         <div class="selected">
           <div class="factor-widget">
             <hgroup>

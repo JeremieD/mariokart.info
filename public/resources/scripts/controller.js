@@ -497,4 +497,7 @@ function updateURLParams() {
 function changeLocale(locl) {
   locale = locl;
   drawCurrentCombo();
+  drawDominantCombos();
+  drawSimilarCombos();
+  drawCustomCombos();
 }

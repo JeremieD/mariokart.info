@@ -34,10 +34,17 @@ button {
     display: flex;
     gap: .25em;
     align-items: center;
+    width: auto;
     height: auto;
     min-width: 0;
     padding: 0;
     background-color: transparent;
+  }
+
+  &.icon {
+    min-width: .5rem;
+    min-height: .5rem;
+    padding: .125rem;
   }
 }
 

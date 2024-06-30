@@ -9,6 +9,7 @@
 
   &>* {
     position: absolute;
+    width: 100%;
     top: 0;
     transition: .25s ease opacity;
     padding: 0 1.333rem;
@@ -16,10 +17,11 @@
   }
 
   &>button {
-    top: .875em;
+    top: .66em;
     left: 0;
-    translate: 2ch 0;
+    translate: 1.5ch 0;
     font-size: .5rem;
+    z-index: 100;
 
     jd-icon { transition: .2s ease rotate; }
     &.rotated jd-icon {

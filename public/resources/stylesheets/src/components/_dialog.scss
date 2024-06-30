@@ -1,5 +1,6 @@
 @use "type" as *;
 @use "responsive" as *;
+@use "prefix" as *;
 
 dialog {
   --dialog-width: var(--width-column);
@@ -28,7 +29,7 @@ dialog {
   }
   &::backdrop {
     background: rgba(0,0,0, 0.5);
-    backdrop-filter: blur(5px);
+    @include backdrop-filter(blur(5px));
   }
 
   &.overflow { overflow-y: scroll; }
