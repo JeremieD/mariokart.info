@@ -1,3 +1,5 @@
+@use "prefix" as *;
+
 jd-slider {
   --size: 1.625rem;
 
@@ -8,6 +10,7 @@ jd-slider {
   padding: 0 calc(var(--size)/2);
   color: var(--color-subdued);
   transition: .1s ease color;
+  @include user-select(none);
 
   .scale {
     display: flex;

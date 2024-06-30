@@ -249,14 +249,22 @@ function drawCurrentCombo() {
   const bodyImg = combo.bodyID + combo.bodyVariant;
   const tireImg = combo.tireID;
   const gliderImg = combo.gliderID + combo.gliderVariant;
+  const driverName = S("drivers", combo.driverID);
+  const bodyName = S("bodies", combo.bodyID);
+  const tireName = S("tires", combo.tireID);
+  const gliderName = S("gliders", combo.gliderID);
   V.combo.driverImg.src = graphicsRoot + "drivers/" + driverImg + ".webp";
   V.combo.bodyImg.src = graphicsRoot + "bodies/" + bodyImg + ".webp";
   V.combo.tireImg.src = graphicsRoot + "tires/" + tireImg + ".webp";
   V.combo.gliderImg.src = graphicsRoot + "gliders/" + gliderImg + ".webp";
-  V.combo.driver.title = S("drivers", combo.driverID);
-  V.combo.body.title = S("bodies", combo.bodyID);
-  V.combo.tire.title = S("tires", combo.tireID);
-  V.combo.glider.title = S("gliders", combo.gliderID);
+  V.combo.driverImg.alt = driverName;
+  V.combo.bodyImg.alt = bodyName;
+  V.combo.tireImg.alt = tireName;
+  V.combo.gliderImg.alt = gliderName;
+  V.combo.driver.title = driverName;
+  V.combo.body.title = bodyName;
+  V.combo.tire.title = tireName;
+  V.combo.glider.title = gliderName;
   V.combo.driverLock.classList.toggle("selected", state.locks.driver);
   V.combo.bodyLock.classList.toggle("selected", state.locks.body);
   V.combo.tireLock.classList.toggle("selected", state.locks.tire);
@@ -343,6 +351,10 @@ function drawComboTable(container, combos, limit = 50) {
     const bodyImg   = document.createElement("img");
     const tireImg   = document.createElement("img");
     const gliderImg = document.createElement("img");
+    const driverName = S("drivers", combo.driverID);
+    const bodyName = S("bodies", combo.bodyID);
+    const tireName = S("tires", combo.tireID);
+    const gliderName = S("gliders", combo.gliderID);
     const driverImgPath = combo.driverID;
     const bodyImgPath = combo.bodyID + combo.bodyVariant;
     const tireImgPath = combo.tireID;
@@ -351,12 +363,16 @@ function drawComboTable(container, combos, limit = 50) {
     bodyImg.src = graphicsRoot + "bodies/" + bodyImgPath + ".webp";
     tireImg.src = graphicsRoot + "tires/" + tireImgPath + ".webp";
     gliderImg.src = graphicsRoot + "gliders/" + gliderImgPath + ".webp";
+    driverImg.alt = driverName;
+    bodyImg.alt = bodyName;
+    tireImg.alt = tireName;
+    gliderImg.alt = gliderName;
     driverImg.loading = "lazy"; bodyImg.loading = "lazy";
     tireImg.loading = "lazy"; gliderImg.loading = "lazy";
-    driverBox.title = S("drivers", combo.driverID);
-    bodyBox.title = S("bodies", combo.bodyID);
-    tireBox.title = S("tires", combo.tireID);
-    gliderBox.title = S("gliders", combo.gliderID);
+    driverBox.title = driverName;
+    bodyBox.title = bodyName;
+    tireBox.title = tireName;
+    gliderBox.title = gliderName;
     driverBox.append(driverImg); bodyBox.append(bodyImg);
     tireBox.append(tireImg); gliderBox.append(gliderImg);
     comboDisplay.append(driverBox, bodyBox, tireBox, gliderBox);
@@ -545,7 +561,7 @@ function drawDriverDialog() {
             variantClasses.push("highlight");
             classes.push("highlight");
           }
-          const button = newPartButton("drivers/" + variantID, variantID, variantClasses);
+          const button = newPartButton("drivers/" + variantID, variantID, variantClasses, S("drivers", variantID));
           button.addEventListener("click", () => { setDriver(variantID); });
           button.addEventListener("mouseenter", () => { drawDriverTitle(variantID); });
           button.addEventListener("mouseleave", () => { drawDriverTitle(state.driver); });
@@ -553,7 +569,7 @@ function drawDriverDialog() {
           button.addEventListener("blur", () => { drawDriverTitle(state.driver); });
           folder.append(button);
       } }
-      const button = newPartButton("drivers/" + id, driver.id, classes);
+      const button = newPartButton("drivers/" + id, driver.id, classes, S("drivers", id));
       button.addEventListener("click", eventHandler);
       if (folder !== undefined) { button.append(folder); }
       button.addEventListener("mouseenter", () => { drawDriverTitle(id); });
@@ -585,7 +601,7 @@ function drawBodyDialog() {
         const classes = [];
         if (id == state.body) classes.push("selected");
         if (body.group == state.selectedSlot.combo.parts.body.group) classes.push("highlight");
-        const button = newPartButton("bodies/" + id, id, classes);
+        const button = newPartButton("bodies/" + id, id, classes, S("bodies", id));
         button.addEventListener("click", () => { setBody(id); });
         button.addEventListener("mouseenter", () => {
           drawBodyTitle(id, bodies.id);
@@ -627,7 +643,7 @@ function drawTireDialog() {
       const classes = [];
       if (id == state.tire) classes.push("selected");
       if (tire.group == state.selectedSlot.combo.parts.tire.group) classes.push("highlight");
-      const button = newPartButton("tires/" + id, id, classes);
+      const button = newPartButton("tires/" + id, id, classes, S("tires", id));
       button.addEventListener("click", () => { setTire(id); });
       button.addEventListener("mouseenter", () => { drawTireTitle(id); });
       button.addEventListener("mouseleave", () => { drawTireTitle(state.tire); });
@@ -655,7 +671,7 @@ function drawGliderDialog() {
       const classes = [];
       if (id == state.glider) classes.push("selected");
       if (glider.group == state.selectedSlot.combo.parts.glider.group) classes.push("highlight");
-      const button = newPartButton("gliders/" + id, id, classes);
+      const button = newPartButton("gliders/" + id, id, classes, S("gliders", id));
       button.addEventListener("click", () => { setGlider(id); });
       button.addEventListener("mouseenter", () => { drawGliderTitle(id); });
       button.addEventListener("mouseleave", () => { drawGliderTitle(state.glider); });
@@ -685,11 +701,12 @@ function drawGliderTitle(id) {
   V.gliders.title.innerText = S("gliders", id);;
 }
 
-function newPartButton(imgSrc, value, classes = []) {
+function newPartButton(imgSrc, value, classes = [], alt = "") {
   const button = document.createElement("button");
   button.classList.add(...classes);
   const img = document.createElement("img");
   img.src = graphicsRoot + imgSrc + ".webp";
+  if (alt !== "") img.alt = alt;
   button.append(img);
   return button;
 }

@@ -14,7 +14,7 @@ const requestListener = function(req, res) {
     case "GET":
       if (pathname === "/") {
         // Redirect
-        res.setHeader("Location", "/mk8dx" + url.query);
+        res.setHeader("Location", "/mk8dx" + (url.query ?? ""));
         res.writeHead(301);
         res.end();
         return;
