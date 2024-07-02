@@ -10,11 +10,11 @@ whenDOMReady(() => {
 });
 
 Tooltip.attach = el => {
-  el.addEventListener("mouseenter", () => {
+  el.addEventListener("pointerenter", () => {
     showTooltip(el);
   }, { passive: true });
 
-  el.addEventListener("mouseleave", () => {
+  el.addEventListener("pointerleave", () => {
     hideTooltip();
   }, { passive: true });
 

@@ -38,20 +38,28 @@ class JDSlider extends HTMLElement {
     }
     this.knob = document.createElement("div");
     this.knob.classList.add("knob");
-    this.addEventListener("mousedown", this.mouseDownHandler);
-    addEventListener("mousemove", this.mouseMoveHandler);
-    addEventListener("mouseup", this.mouseUpHandler);
+    this.addEventListener("mousedown", this.pointerDownHandler, { passive: true });
+    this.addEventListener("touchstart", this.pointerDownHandler, { passive: true });
+    addEventListener("mousemove", this.pointerMoveHandler);
+    addEventListener("touchmove", this.pointerMoveHandler);
+    addEventListener("mouseup", this.pointerUpHandler, { passive: true });
+    addEventListener("touchend", this.pointerUpHandler, { passive: true });
     this.append(this.scale, this.knob);
   }
 
-  mouseDownHandler = e => {
-    this.held = true;
+  pointerDownHandler = e => {
+    if (e.button === 0 || (e.type === "touchstart" && e.touches.length === 1)) {
+      this.held = true;
+      this.classList.add("held");
+      forAllScrollContainers(this, disableScroll);
+    }
   }
 
-  mouseMoveHandler = e => {
-    if (!this.held) return;
+  pointerMoveHandler = e => {
+    if (!this.held || (e.type === "touchend" && e.touches.length > 1)) return;
+    e.preventDefault();
     const scale = this.scale.getBoundingClientRect();
-    let value = (e.clientX - scale.left) / scale.width * (this.max - this.min) + this.min;
+    let value = (unify(e).clientX - scale.left) / scale.width * (this.max - this.min) + this.min;
     if (value < this.min) value = this.min;
     if (value > this.max) value = this.max;
     this.value = toNearestMultiple(value, this.step);
@@ -59,9 +67,11 @@ class JDSlider extends HTMLElement {
     this.draw();
   }
 
-  mouseUpHandler = e => {
-    if (!this.held) return;
+  pointerUpHandler = e => {
+    if (!this.held || (e.type === "mouseup" && e.button !== 0)) return;
     this.held = false;
+    this.classList.remove("held");
+    forAllScrollContainers(this, enableScroll);
   }
 
   set value(x) {
@@ -105,5 +115,15 @@ function toNearestMultiple(n, p = 1) {
   return Math.round(n * factor) / factor;
 }
 
+const unify = e => e.changedTouches ? e.changedTouches[0] : e;
+
+const forAllScrollContainers = (el, fn) => { // except root
+  const parent = el.parentElement;
+  if (parent === document.documentElement) return;
+  if (parent.scrollHeight > parent.clientHeight) {
+    fn(parent);
+  }
+  forAllScrollContainers(parent, fn);
+};
 
 customElements.define("jd-slider", JDSlider);

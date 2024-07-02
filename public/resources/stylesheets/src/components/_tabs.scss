@@ -47,7 +47,7 @@
   }
 
   &>.tab-panels {
-    overflow-y: scroll;
+    overflow-y: auto;
     min-height: 30rem;
     height: 66svh;
     border-radius: var(--border-radius-0) var(--border-radius-2) var(--border-radius-2) var(--border-radius-2);

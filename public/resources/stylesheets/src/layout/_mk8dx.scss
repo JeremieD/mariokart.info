@@ -54,6 +54,11 @@
     flex-direction: column;
     gap: .75rem;
 
+    &:not(:last-child) {
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--color-interactive);
+    }
+
     &>div:first-child {
       display: flex;
       align-items: center;

@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, interactive-widget=overlays-content">
 
   <title>Mario Kart 8 Deluxe Combo Builder</title>
   <meta name="description" content="Find, optimize, and compare Mario Kart 8 Deluxe builds according to your personal stats preferences. This is the best MK8DX Combo Builder out there!">
@@ -41,21 +41,21 @@
       <h1>MK8DX Combo Builder</h1>
     </a>
     <select class="inline" id="locale-select" title="Language">
-      <option value="en-A" selected>English (NOA)</option>
-      <option value="en-E">English (NOE)</option>
-      <option value="fr-A">Français (NOA)</option>
-      <option value="fr-E">Français (NOE)</option>
+      <option value="en-US" selected>English (NOA)</option>
+      <option value="en-GB">English (NOE)</option>
+      <option value="fr-CA">Français (NOA)</option>
+      <option value="fr-FR">Français (NOE)</option>
       <option value="de">Deutsch</option>
-      <option value="es-A">Español (NOA)</option>
-      <option value="es-E">Español (NOE)</option>
+      <option value="es-MX">Español (NOA)</option>
+      <option value="es-ES">Español (NOE)</option>
       <option value="it">Italiano</option>
       <option value="nl">Nederlands</option>
-      <option value="pt-A">Português (NOA)</option>
-      <option value="pt-E">Português (NOE)</option>
+      <option value="pt-BR">Português (NOA)</option>
+      <option value="pt-PT">Português (NOE)</option>
       <option value="ru">Русский</option>
       <option value="ja">日本語</option>
-      <option value="zh-T">繁體中文</option>
-      <option value="zh-S">简体中文</option>
+      <option value="zh-TW">繁體中文</option>
+      <option value="zh-CN">简体中文</option>
       <option value="ko">한국어</option>
     </select>
   </header>
@@ -175,12 +175,12 @@
   <footer>
     <p>© Design & Code by <a href="https://jeremiedupuis.com" target="_blank">Jérémie Dupuis</a> 🏳️‍🌈 / Data & Images from <a href="https://www.mariowiki.com/Mario_Kart_8_Deluxe_in-game_statistics" target="_blank">Mario Wiki</a>, licensed&nbsp;under&nbsp;<a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank">CC&#8209;BY&#8209;SA</a></p>
     <p>Please send any bugs or suggestions my&nbsp;way. I&nbsp;am&nbsp;<a href="https://discord.com/users/198249043141328897" target="_blank">🅹🅴🅹&nbsp;(jeremied)</a> on Discord</a>.</p>
-    <p>Last updated 30 Jun 2024 / v1.0.0 / <a href="https://github.com/JeremieD/MK8DX-Combo-Builder" target="_blank">GitHub</a></p>
+    <p>Last updated 1 Jul 2024 / v1.0.0 / <a href="https://github.com/JeremieD/MK8DX-Combo-Builder" target="_blank">GitHub</a></p>
   </footer>
 
-  <dialog id="driver-picker" autofocus>
+  <dialog id="driver-picker">
     <header><hgroup>
-      <h2><img id="driver-icon"/><span id="driver-title">Drivers</span></h2>
+      <h2><img id="driver-icon" alt="Driver Emblem"/><span id="driver-title">Drivers</span></h2>
       <button id="driver-lock" class="inline"><label id="driver-lock-label">Lock Driver</label><jd-icon icon="lock"></jd-icon></button>
     </hgroup></header>
     <div id="driver-grid" class="parts-grid square eight"></div>
@@ -214,7 +214,7 @@
     <header>
       <hgroup>
         <h2>Custom Formula</h2>
-        <button id="formula-help-open" class="icon inline"><jd-icon icon="help"></jd-icon></button>
+        <button id="formula-help-open" class="icon inline" title="Custom Formula Help"><jd-icon icon="help"></jd-icon></button>
       </hgroup>
       <p>Cook up your own formula to find the exact combo you need. Positive&nbsp;coefficients will maximize the stat, negative coefficients will minimize&nbsp;it.</p>
     </header>
@@ -226,21 +226,21 @@
           <button id="formula-mintb-mode" class="inline">Ignore</button>
         </hgroup>
         <div>
-          <jd-slider id="formula-mintb-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-          <input id="formula-mintb-factor" type="number" min="-16" max="16" step="1" placeholder="0"/>
+          <jd-slider id="formula-mintb-slider" value="16" min="-16" max="16" step="1" stops="8"></jd-slider>
+          <input id="formula-mintb-factor" type="number" inputmode="decimal" min="-16" max="16" step="1" placeholder="0"/>
         </div>
         <div>
           <div class="field-group">
-            <label>Min</label><input id="formula-mintb-min" type="number" min="0" max="6" step=".25" placeholder="0"/>
+            <label>Min</label><input id="formula-mintb-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
           </div>
           <div class="field-group">
-            <label>Max</label><input id="formula-mintb-max" type="number" min="0" max="6" step=".25" placeholder="6"/>
+            <label>Max</label><input id="formula-mintb-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
           </div>
         </div>
       </div>
 
       <div id="formula-spd-collapse" class="collapse-container">
-        <button id="formula-use-spd" class="icon inline"><jd-icon icon="chevron-right"></jd-icon></button>
+        <button id="formula-use-spd" class="icon inline" title="Toggle Unified Speed"><jd-icon icon="chevron-right"></jd-icon></button>
         <div class="selected">
           <div class="factor-widget">
             <hgroup>
@@ -248,15 +248,15 @@
               <button id="formula-spd-mode" class="inline">Ignore</button>
             </hgroup>
             <div>
-              <jd-slider id="formula-spd-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input id="formula-spd-factor" type="number" min="-100" max="100" step="1" placeholder="0"/>
+              <jd-slider id="formula-spd-slider" value="15" min="-16" max="16" step="1" stops="8"></jd-slider>
+              <input id="formula-spd-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
             </div>
             <div>
               <div class="field-group">
-                <label>Min</label><input id="formula-spd-min" type="number" min="0" max="6" step=".25" placeholder="0"/>
+                <label>Min</label><input id="formula-spd-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
               </div>
               <div class="field-group">
-                <label>Max</label><input id="formula-spd-max" type="number" min="0" max="6" step=".25" placeholder="6"/>
+                <label>Max</label><input id="formula-spd-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
               </div>
             </div>
           </div>
@@ -269,14 +269,14 @@
             </hgroup>
             <div>
               <jd-slider id="formula-spdGr-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input id="formula-spdGr-factor" type="number" min="-100" max="100" step="1" placeholder="0"/>
+              <input id="formula-spdGr-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
             </div>
             <div>
               <div class="field-group">
-                <label>Min</label><input id="formula-spdGr-min" type="number" min="0" max="6" step=".25" placeholder="0"/>
+                <label>Min</label><input id="formula-spdGr-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
               </div>
               <div class="field-group">
-                <label>Max</label><input id="formula-spdGr-max" type="number" min="0" max="6" step=".25" placeholder="6"/>
+                <label>Max</label><input id="formula-spdGr-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
               </div>
             </div>
           </div>
@@ -287,14 +287,14 @@
             </hgroup>
             <div>
               <jd-slider id="formula-spdAg-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input id="formula-spdAg-factor" type="number" min="-100" max="100" step="1" placeholder="0"/>
+              <input id="formula-spdAg-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
             </div>
             <div>
               <div class="field-group">
-                <label>Min</label><input id="formula-spdAg-min" type="number" min="0" max="6" step=".25" placeholder="0"/>
+                <label>Min</label><input id="formula-spdAg-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
               </div>
               <div class="field-group">
-                <label>Max</label><input id="formula-spdAg-max" type="number" min="0" max="6" step=".25" placeholder="6"/>
+                <label>Max</label><input id="formula-spdAg-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
               </div>
             </div>
           </div>
@@ -305,14 +305,14 @@
             </hgroup>
             <div>
               <jd-slider id="formula-spdWt-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input id="formula-spdWt-factor" type="number" min="-100" max="100" step="1" placeholder="0"/>
+              <input id="formula-spdWt-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
             </div>
             <div>
               <div class="field-group">
-                <label>Min</label><input id="formula-spdWt-min" type="number" min="0" max="6" step=".25" placeholder="0"/>
+                <label>Min</label><input id="formula-spdWt-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
               </div>
               <div class="field-group">
-                <label>Max</label><input id="formula-spdWt-max" type="number" min="0" max="6" step=".25" placeholder="6"/>
+                <label>Max</label><input id="formula-spdWt-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
               </div>
             </div>
           </div>
@@ -323,14 +323,14 @@
             </hgroup>
             <div>
               <jd-slider id="formula-spdAr-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input id="formula-spdAr-factor" type="number" min="-100" max="100" step="1" placeholder="0"/>
+              <input id="formula-spdAr-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
             </div>
             <div>
               <div class="field-group">
-                <label>Min</label><input id="formula-spdAr-min" type="number" min="0" max="6" step=".25" placeholder="0"/>
+                <label>Min</label><input id="formula-spdAr-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
               </div>
               <div class="field-group">
-                <label>Max</label><input id="formula-spdAr-max" type="number" min="0" max="6" step=".25" placeholder="6"/>
+                <label>Max</label><input id="formula-spdAr-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
               </div>
             </div>
           </div>
@@ -343,15 +343,15 @@
           <button id="formula-accel-mode" class="inline">Ignore</button>
         </hgroup>
         <div>
-          <jd-slider id="formula-accel-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-          <input id="formula-accel-factor" type="number" min="-100" max="100" step="1" placeholder="0"/>
+          <jd-slider id="formula-accel-slider" value="1" min="-16" max="16" step="1" stops="8"></jd-slider>
+          <input id="formula-accel-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
         </div>
         <div>
           <div class="field-group">
-            <label>Min</label><input id="formula-accel-min" type="number" min="0" max="6" step=".25" placeholder="0"/>
+            <label>Min</label><input id="formula-accel-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
           </div>
           <div class="field-group">
-            <label>Max</label><input id="formula-accel-max" type="number" min="0" max="6" step=".25" placeholder="6"/>
+            <label>Max</label><input id="formula-accel-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
           </div>
         </div>
       </div>
@@ -362,21 +362,21 @@
           <button id="formula-weigt-mode" class="inline">Ignore</button>
         </hgroup>
         <div>
-          <jd-slider id="formula-weigt-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-          <input id="formula-weigt-factor" type="number" min="-100" max="100" step="1" placeholder="0"/>
+          <jd-slider id="formula-weigt-slider" value="1" min="-16" max="16" step="1" stops="8"></jd-slider>
+          <input id="formula-weigt-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
         </div>
         <div>
           <div class="field-group">
-            <label>Min</label><input id="formula-weigt-min" type="number" min="0" max="6" step=".25" placeholder="0"/>
+            <label>Min</label><input id="formula-weigt-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
           </div>
           <div class="field-group">
-            <label>Max</label><input id="formula-weigt-max" type="number" min="0" max="6" step=".25" placeholder="6"/>
+            <label>Max</label><input id="formula-weigt-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
           </div>
         </div>
       </div>
 
       <div id="formula-hnd-collapse" class="collapse-container">
-        <button id="formula-use-hnd" class="icon inline"><jd-icon icon="chevron-right"></jd-icon></button>
+        <button id="formula-use-hnd" class="icon inline" title="Toggle Unified Handling"><jd-icon icon="chevron-right"></jd-icon></button>
         <div class="selected">
           <div class="factor-widget">
             <hgroup>
@@ -384,15 +384,15 @@
               <button id="formula-hnd-mode" class="inline">Ignore</button>
             </hgroup>
             <div>
-              <jd-slider id="formula-hnd-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input id="formula-hnd-factor" type="number" min="-100" max="100" step="1" placeholder="0"/>
+              <jd-slider id="formula-hnd-slider" value=".5" min="-16" max="16" step="1" stops="8"></jd-slider>
+              <input id="formula-hnd-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
             </div>
             <div>
               <div class="field-group">
-                <label>Min</label><input id="formula-hnd-min" type="number" min="0" max="6" step=".25" placeholder="0"/>
+                <label>Min</label><input id="formula-hnd-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
               </div>
               <div class="field-group">
-                <label>Max</label><input id="formula-hnd-max" type="number" min="0" max="6" step=".25" placeholder="6"/>
+                <label>Max</label><input id="formula-hnd-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
               </div>
             </div>
           </div>
@@ -404,15 +404,15 @@
               <button id="formula-hndGr-mode" class="inline">Ignore</button>
             </hgroup>
             <div>
-              <jd-slider id="formula-hndGr-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input id="formula-hndGr-factor" type="number" min="-100" max="100" step="1" placeholder="0"/>
+              <jd-slider id="formula-hndGr-slider" value=".5" min="-16" max="16" step="1" stops="8"></jd-slider>
+              <input id="formula-hndGr-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
             </div>
             <div>
               <div class="field-group">
-                <label>Min</label><input id="formula-hndGr-min" type="number" min="0" max="6" step=".25" placeholder="0"/>
+                <label>Min</label><input id="formula-hndGr-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
               </div>
               <div class="field-group">
-                <label>Max</label><input id="formula-hndGr-max" type="number" min="0" max="6" step=".25" placeholder="6"/>
+                <label>Max</label><input id="formula-hndGr-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
               </div>
             </div>
           </div>
@@ -423,14 +423,14 @@
             </hgroup>
             <div>
               <jd-slider id="formula-hndAg-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input id="formula-hndAg-factor" type="number" min="-100" max="100" step="1" placeholder="0"/>
+              <input id="formula-hndAg-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
             </div>
             <div>
               <div class="field-group">
-                <label>Min</label><input id="formula-hndAg-min" type="number" min="0" max="6" step=".25" placeholder="0"/>
+                <label>Min</label><input id="formula-hndAg-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
               </div>
               <div class="field-group">
-                <label>Max</label><input id="formula-hndAg-max" type="number" min="0" max="6" step=".25" placeholder="6"/>
+                <label>Max</label><input id="formula-hndAg-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
               </div>
             </div>
           </div>
@@ -441,14 +441,14 @@
             </hgroup>
             <div>
               <jd-slider id="formula-hndWt-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input id="formula-hndWt-factor" type="number" min="-100" max="100" step="1" placeholder="0"/>
+              <input id="formula-hndWt-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
             </div>
             <div>
               <div class="field-group">
-                <label>Min</label><input id="formula-hndWt-min" type="number" min="0" max="6" step=".25" placeholder="0"/>
+                <label>Min</label><input id="formula-hndWt-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
               </div>
               <div class="field-group">
-                <label>Max</label><input id="formula-hndWt-max" type="number" min="0" max="6" step=".25" placeholder="6"/>
+                <label>Max</label><input id="formula-hndWt-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
               </div>
             </div>
           </div>
@@ -459,14 +459,14 @@
             </hgroup>
             <div>
               <jd-slider id="formula-hndAr-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input id="formula-hndAr-factor" type="number" min="-100" max="100" step="1" placeholder="0"/>
+              <input id="formula-hndAr-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
             </div>
             <div>
               <div class="field-group">
-                <label>Min</label><input id="formula-hndAr-min" type="number" min="0" max="6" step=".25" placeholder="0"/>
+                <label>Min</label><input id="formula-hndAr-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
               </div>
               <div class="field-group">
-                <label>Max</label><input id="formula-hndAr-max" type="number" min="0" max="6" step=".25" placeholder="6"/>
+                <label>Max</label><input id="formula-hndAr-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
               </div>
             </div>
           </div>
@@ -480,14 +480,14 @@
         </hgroup>
         <div>
           <jd-slider id="formula-trctn-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-          <input id="formula-trctn-factor" type="number" min="-100" max="100" step="1" placeholder="0"/>
+          <input id="formula-trctn-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
         </div>
         <div>
           <div class="field-group">
-            <label>Min</label><input id="formula-trctn-min" type="number" min="0" max="6" step=".25" placeholder="0"/>
+            <label>Min</label><input id="formula-trctn-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
           </div>
           <div class="field-group">
-            <label>Max</label><input id="formula-trctn-max" type="number" min="0" max="6" step=".25" placeholder="6"/>
+            <label>Max</label><input id="formula-trctn-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
           </div>
         </div>
       </div>
@@ -499,14 +499,14 @@
         </hgroup>
         <div>
           <jd-slider id="formula-invcb-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-          <input id="formula-invcb-factor" type="number" min="-100" max="100" step="1" placeholder="0"/>
+          <input id="formula-invcb-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
         </div>
         <div>
           <div class="field-group">
-            <label>Min</label><input id="formula-invcb-min" type="number" min="0" max="6" step=".25" placeholder="0"/>
+            <label>Min</label><input id="formula-invcb-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
           </div>
           <div class="field-group">
-            <label>Max</label><input id="formula-invcb-max" type="number" min="0" max="6" step=".25" placeholder="6"/>
+            <label>Max</label><input id="formula-invcb-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
           </div>
         </div>
       </div>
@@ -518,14 +518,14 @@
         </hgroup>
         <div>
           <jd-slider id="formula-size-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-          <input id="formula-size-factor" type="number" min="-100" max="100" step="1" placeholder="0"/>
+          <input id="formula-size-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
         </div>
         <div>
           <div class="field-group">
-            <label>Min</label><input id="formula-size-min" type="number" min="0" max="2" step="1" placeholder="0"/>
+            <label>Min</label><input id="formula-size-min" type="number" inputmode="decimal" min="0" max="2" step="1" placeholder="0"/>
           </div>
           <div class="field-group">
-            <label>Max</label><input id="formula-size-max" type="number" min="0" max="2" step="1" placeholder="2"/>
+            <label>Max</label><input id="formula-size-max" type="number" inputmode="decimal" min="0" max="2" step="1" placeholder="2"/>
           </div>
         </div>
       </div>
@@ -563,7 +563,7 @@
     <header>
       <hgroup>
         <h2>Custom Formula Help</h2>
-        <button id="formula-help-close" class="icon inline"><jd-icon icon="x"></jd-icon></button>
+        <button id="formula-help-close" class="icon inline" title="Close Custom Formula Help"><jd-icon icon="x"></jd-icon></button>
       </hgroup>
     </header>
     <div>

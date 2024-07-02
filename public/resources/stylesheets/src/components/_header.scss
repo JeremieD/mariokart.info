@@ -7,8 +7,8 @@ body>header {
 	justify-content: space-between;
 	align-items: center;
 	width: var(--width-page);
-	margin: 0 auto 1rem;
-	padding: 1rem 0;
+	margin: 0 auto;
+	padding: 1.5rem 0;
 
 	@include user-select(none);
 
