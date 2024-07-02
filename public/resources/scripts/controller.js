@@ -128,6 +128,7 @@ const state = {
   formula: structuredClone(defaultFormula),
   workingFormula: structuredClone(defaultFormula),
   openedDialog: "",
+  inspectorTimeout: 0,
   lastState: {
     aCode: "",
     bCode: "", }
@@ -147,7 +148,7 @@ Stats.post = (...args) => {
         } else {
           resolve(data);
       } }
-    });
+    }, { passive: true });
     Stats.postMessage([exchangeID, args]);
   });
 };
@@ -307,25 +308,25 @@ function selectB() {
 
 function toggleDriverLock() {
   state.locks.driver = !state.locks.driver;
-  drawDriverDialog();
+  drawDriverLock();
   updateRelatedCombos("A");
   updateRelatedCombos("B");
 }
 function toggleBodyLock() {
   state.locks.body = !state.locks.body;
-  drawBodyDialog();
+  drawBodyLock();
   updateRelatedCombos("A");
   updateRelatedCombos("B");
 }
 function toggleTireLock() {
   state.locks.tire = !state.locks.tire;
-  drawTireDialog();
+  drawTireLock();
   updateRelatedCombos("A");
   updateRelatedCombos("B");
 }
 function toggleGliderLock() {
   state.locks.glider = !state.locks.glider;
-  drawGliderDialog();
+  drawGliderLock();
   updateRelatedCombos("A");
   updateRelatedCombos("B");
 }

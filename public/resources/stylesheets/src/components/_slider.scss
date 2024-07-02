@@ -35,7 +35,9 @@ jd-slider {
     background-color: currentColor;
     outline: .25rem solid var(--color-foreground);
     translate: 0 -50%;
+    transition: .2s ease left;
   }
+  &.held .knob { transition: none; }
 }
 jd-slider+input {
   flex-basis: 33%;

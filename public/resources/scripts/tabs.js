@@ -18,7 +18,7 @@ whenDOMReady(() => {
       const handle = handles[i];
       handle.addEventListener("click", e => {
         selectTab(handle.dataset.tabId);
-      });
+      }, { passive: true });
       handle.addEventListener("keydown", e => {
         if (e.key == "Enter") clickHandler(e);
         if (e.key == "ArrowLeft") {
@@ -29,7 +29,7 @@ whenDOMReady(() => {
           const nextId = i == handles.length - 1 ? 0 : i + 1;
           selectTab(handles[nextId].dataset.tabId);
         }
-      });
+      }, { passive: true });
     }
   }
 });

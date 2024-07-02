@@ -9,5 +9,6 @@ jd-icon {
 		height: 100%;
 		overflow: visible;
 		transition: .2s ease color;
+		will-change: translate; // fixes jank with movement animations in WebKit
 	}
 }

@@ -1,22 +1,22 @@
 "use strict";
-let locale = "en-A";
+let locale = "en-US";
 const fallbacks = {
-  "en-A": [ "en-E" ],
-  "en-E": [ "en-A" ],
-  "fr-A": [ "fr-E", "en-A" ],
-  "fr-E": [ "fr-A", "en-A" ],
-  "de": [ "en-A" ],
-  "ja": [ "en-A" ],
-  "zh-S": [ "zh-T", "en-A" ],
-  "zh-T": [ "zh-S", "en-A" ],
-  "ru": [ "en-A" ],
-  "nl": [ "en-A" ],
-  "it": [ "en-A" ],
-  "ko": [ "en-A" ],
-  "pt-A": [ "pt-E", "en-A" ],
-  "pt-E": [ "pt-A", "en-A" ],
-  "es-A": [ "es-E", "en-A" ],
-  "es-E": [ "es-A", "en-A" ]
+  "en-US": [ "en-GB" ],
+  "en-GB": [ "en-US" ],
+  "fr-CA": [ "fr-FR", "en-US" ],
+  "fr-FR": [ "fr-CA", "en-US" ],
+  "de": [ "en-US" ],
+  "ja": [ "en-US" ],
+  "zh-CN": [ "zh-TW", "en-US" ],
+  "zh-TW": [ "zh-CN", "en-US" ],
+  "ru": [ "en-US" ],
+  "nl": [ "en-US" ],
+  "it": [ "en-US" ],
+  "ko": [ "en-US" ],
+  "pt-BR": [ "pt-PT", "en-US" ],
+  "pt-PT": [ "pt-BR", "en-US" ],
+  "es-MX": [ "es-ES", "en-US" ],
+  "es-ES": [ "es-MX", "en-US" ]
 };
 
 function S(ns, id) {
@@ -29,7 +29,7 @@ function S(ns, id) {
 }
 
 const strings = {
-  "en-A": {
+  "en-US": {
     drivers: {
       mario: "Mario",
       luigi: "Luigi",
@@ -199,7 +199,7 @@ const strings = {
       paraglider: "Paraglider"
     }
   },
-  "en-E": {
+  "en-GB": {
     bodies: {
       biddy: "Buggybud",
       sneeker: "Bounder",
@@ -220,7 +220,7 @@ const strings = {
       ancient: "Ancient Tyres"
     }
   },
-  "fr-A": {
+  "fr-CA": {
     drivers: {
       marioTan: "Mario tanooki",
       peachCat: "Peach chat",
@@ -309,7 +309,7 @@ const strings = {
     gliders: {
       gold: "Cerf-volant doré"
     }},
-  "fr-E": {
+  "fr-FR": {
     drivers: {
       peach: "Peach",
       daisy: "Daisy",
@@ -411,7 +411,7 @@ const strings = {
       paraglider: "Paravoile"
     }
   },
-  "es-A": {
+  "es-MX": {
     drivers: {
       rosalina: "Rosalina",
       marioTan: "Mario tanuki",
@@ -509,7 +509,7 @@ const strings = {
       gold: "Ala dorada"
     }
   },
-  "es-E": {
+  "es-ES": {
     drivers: {
       rosalina: "Estela",
       marioTan: "Mario Tanuki",
@@ -768,7 +768,7 @@ const strings = {
       paraglider: "Paravela"
     }
   },
-  "pt-A": {
+  "pt-BR": {
     bodies: {
       pipe: "Tuboturbo",
       mach: "Mach 8",
@@ -805,7 +805,7 @@ const strings = {
       paraglider: "Asa-delta"
     }
   },
-  "pt-E": {
+  "pt-PT": {
     drivers: {
       marioTan: "Mario Tanuki",
       peachCat: "Peach Gatta",
@@ -1670,7 +1670,7 @@ const strings = {
       paraglider: "패러세일"
     }
   },
-  "zh-S": {
+  "zh-CN": {
     drivers: {
       mario: "马力欧",
       luigi: "路易吉",
@@ -1834,7 +1834,7 @@ const strings = {
       paraglider: "滑翔帆"
     }
   },
-  "zh-T": {
+  "zh-TW": {
     drivers: {
       mario: "瑪利歐",
       peach: "碧姬公主",
