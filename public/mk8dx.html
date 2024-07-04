@@ -178,7 +178,7 @@
     <p>Last updated 1 Jul 2024 / v1.0.0 / <a href="https://github.com/JeremieD/MK8DX-Combo-Builder" target="_blank">GitHub</a></p>
   </footer>
 
-  <dialog id="driver-picker">
+  <dialog id="driver-picker" inert>
     <header><hgroup>
       <h2><img id="driver-icon" alt="Driver Emblem"/><span id="driver-title">Drivers</span></h2>
       <button id="driver-lock" class="inline"><label id="driver-lock-label">Lock Driver</label><jd-icon icon="lock"></jd-icon></button>
@@ -186,7 +186,7 @@
     <div id="driver-grid" class="parts-grid square eight"></div>
   </dialog>
 
-  <dialog id="body-picker">
+  <dialog id="body-picker" inert>
     <header><hgroup>
       <h2><jd-icon id="body-icon" src="/resources/graphics/icons/kart.svg"></jd-icon><span id="body-title">Vehicles</span></h2>
       <button id="body-lock" class="inline"><label id="body-lock-label">Lock Body</label><jd-icon icon="lock"></jd-icon></button>
@@ -194,7 +194,7 @@
     <div id="body-grid" class="parts-grid"></div>
   </dialog>
 
-  <dialog id="tire-picker">
+  <dialog id="tire-picker" inert>
     <header><hgroup>
       <h2><jd-icon src="/resources/graphics/icons/tire.svg"></jd-icon><span id="tire-title">Tires</span></h2>
       <button id="tire-lock" class="inline"><label id="tire-lock-label">Lock Tire</label><jd-icon icon="lock"></jd-icon></button>
@@ -202,7 +202,7 @@
     <div id="tire-grid" class="parts-grid"></div>
   </dialog>
 
-  <dialog id="glider-picker">
+  <dialog id="glider-picker" inert>
     <header><hgroup>
       <h2><jd-icon src="/resources/graphics/icons/glider.svg"></jd-icon><span id="glider-title">Gliders</span></h2>
       <button id="glider-lock" class="inline"><label id="glider-lock-label">Lock Glider</label><jd-icon icon="lock"></jd-icon></button>
@@ -210,7 +210,7 @@
     <div id="glider-grid" class="parts-grid"></div>
   </dialog>
 
-  <dialog id="custom-formula-dialog" class="overflow">
+  <dialog id="custom-formula-dialog" inert class="overflow">
     <header>
       <hgroup>
         <h2>Custom Formula</h2>
@@ -559,7 +559,7 @@
     </footer>
   </dialog>
 
-  <dialog id="formula-help" class="overflow">
+  <dialog id="formula-help" inert class="overflow">
     <header>
       <hgroup>
         <h2>Custom Formula Help</h2>
