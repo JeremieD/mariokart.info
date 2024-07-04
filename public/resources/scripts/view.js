@@ -234,7 +234,6 @@ whenDOMReady(() => {
     if (isOutside(V.credits.dialog, e)) closeCreditsDialog();
   }, { passive: true });
 
-  locale = V.settings.localeSelect.value ?? "en-US"; // on init
   V.settings.localeSelect.addEventListener("change", () => {
     changeLocale(V.settings.localeSelect.value);
   }, { passive: true });
@@ -247,7 +246,7 @@ whenDOMReady(() => {
     } else if (e.key == "b" || e.key == "B") {
       selectB();
     } else if (e.key == "Escape") {
-      e.preventDefault();
+      if (state.openedDialog !== "") e.preventDefault();
       switch (state.openedDialog) {
         case "driver": return closeDriverDialog();
         case "body": return closeBodyDialog();
@@ -266,10 +265,21 @@ whenDOMReady(() => {
 
   // Redraw on back
   addEventListener("popstate", readURLParams, { passive: true });
+
+  // Init
+  initView();
 });
 
 
 /******** View IN ********/
+
+function initView() {
+  locale = V.settings.localeSelect.value ?? "en-US";
+  initDriverDialog();
+  initBodyDialog();
+  initTireDialog();
+  initGliderDialog();
+}
 
 function drawCurrentCombo() {
   // A-B Tabs
@@ -547,6 +557,55 @@ function drawShareNotice() {
   Tooltip.draw("Link copied to clipboard.", { el: V.combo.share, pos: "bottom" });
 }
 
+function initDriverDialog() {
+  state.parts.then(({drivers}) => {
+    for (const driver of drivers) {
+      let eventHandler, folder;
+      const id = driver.id;
+      if (driver.folder == undefined) {
+        eventHandler = () => { setDriver(id); };
+      } else {
+        folder = document.createElement("div");
+        folder.setAttribute("inert", "");
+        folder.classList.add("parts-grid", "square");
+        if (driver.folder.length == 2) folder.classList.add("two");
+        if (driver.folder.length >= 3) folder.classList.add("three");
+        eventHandler = e => {
+          if (!folder.contains(e.target)) drawPopover(folder);
+        };
+        V.drivers.dialog.addEventListener("focusout", e => {
+          if (!folder.contains(e.relatedTarget)) closePopover(folder);
+        });
+        V.drivers.dialog.addEventListener("click", e => {
+          if (isOutside(folder, e)) closePopover(folder);
+        }, { passive: true });
+        for (const driverVariant of driver.folder) {
+          const variantID = driverVariant.id;
+          const button = newPartButton("drivers/" + variantID, "driver-" + variantID);
+          button.addEventListener("click", () => {
+            closePopover(folder);
+            setDriver(variantID);
+          }, { passive: true });
+          button.addEventListener("mouseenter", () => { drawDriverTitle(variantID); }, { passive: true });
+          button.addEventListener("mouseleave", () => { delay(() => drawDriverTitle(state.driver)) }, { passive: true });
+          button.addEventListener("focus", () => { drawDriverTitle(variantID); }, { passive: true });
+          button.addEventListener("blur", () => { drawDriverTitle(state.driver); }, { passive: true });
+          folder.append(button);
+        }
+      }
+      const buttonID = (folder == undefined ? "driver-" : "folder-") + id;
+      const button = newPartButton(folder == undefined ? "drivers/" + id : undefined, buttonID);
+      button.dataset.value = id;
+      button.addEventListener("click", eventHandler, { passive: true });
+      if (folder !== undefined) { button.append(folder); }
+      button.addEventListener("mouseenter", () => { drawDriverTitle(button.dataset.value); }, { passive: true });
+      button.addEventListener("mouseleave", () => { delay(() => drawDriverTitle(state.driver)) }, { passive: true });
+      button.addEventListener("focus", () => { drawDriverTitle(button.dataset.value); }, { passive: true });
+      button.addEventListener("blur", () => { drawDriverTitle(state.driver); }, { passive: true });
+      V.drivers.grid.append(button);
+    }
+  });
+}
 function drawDriverDialog() {
   if (state.openedDialog !== "driver") {
     V.drivers.dialog.inert = true;
@@ -554,73 +613,77 @@ function drawDriverDialog() {
     enableScroll(document.documentElement);
     return;
   }
-  state.parts.then(data => {
-    V.drivers.grid.innerHTML = "";
-    const drivers = data.drivers;
+  state.parts.then(({drivers}) => {
     for (const driver of drivers) {
-      let id;
-      let eventHandler;
-      const classes = [];
-      let folder;
+      const id = driver.id;
       if (driver.folder == undefined) {
-        id = driver.id;
-        if (driver.id == state.driver) classes.push("selected");
-        if (driver.group == state.selectedSlot.combo.parts.driver.group) classes.push("highlight");
-        eventHandler = () => { setDriver(driver.id); };
+        const button = document.getElementById("driver-" + id);
+        const name = S("drivers", id);
+        button.querySelector("img").alt = name;
+        button.title = name;
+        button.classList.toggle("selected", id == state.driver);
+        button.classList.toggle("highlight", driver.group == state.selectedSlot.combo.parts.driver.group);
       } else {
-        id = state.driverPrefs[driver.id];
-        folder = document.createElement("div");
-        folder.setAttribute("inert", "");
-        folder.classList.add("parts-grid", "square");
-        if (driver.folder.length == 2) folder.classList.add("two");
-        if (driver.folder.length >= 3) folder.classList.add("three");
-        eventHandler = e => { drawPopover(folder); };
-        addEventListener("click", e => {
-          if (state.openedDialog !== "driver") return;
-          if (isOutside(folder, e)) {
-            folder.removeAttribute("open");
-            folder.setAttribute("inert", "");
-          }
-        }, { passive: true });
+        const button = document.getElementById("folder-" + id);
+        const driverPref = state.driverPrefs[id];
+        button.dataset.value = driverPref;
+        const img = button.querySelector("img");
+        img.src = graphicsRoot + "drivers/" + driverPref + ".webp";
+        const name = S("drivers", driverPref);
+        img.alt = name;
+        button.title = name;
         for (const driverVariant of driver.folder) {
           const variantID = driverVariant.id;
-          const variantClasses = [];
-          if (variantID == state.driver) {
-            variantClasses.push("selected");
-            classes.push("selected");
-          }
-          if (driverVariant.group == state.selectedSlot.combo.parts.driver.group) {
-            variantClasses.push("highlight");
-            classes.push("highlight");
-          }
-          const button = newPartButton("drivers/" + variantID, variantID, variantClasses, S("drivers", variantID));
-          button.addEventListener("click", () => { setDriver(variantID); }, { passive: true });
-          button.addEventListener("mouseenter", () => { drawDriverTitle(variantID); }, { passive: true });
-          button.addEventListener("mouseleave", () => { delay(() => drawDriverTitle(state.driver)) }, { passive: true });
-          button.addEventListener("focus", () => { drawDriverTitle(variantID); }, { passive: true });
-          button.addEventListener("blur", () => { drawDriverTitle(state.driver); }, { passive: true });
-          folder.append(button);
-      } }
-      const button = newPartButton("drivers/" + id, driver.id, classes, S("drivers", id));
-      button.addEventListener("click", eventHandler, { passive: true });
-      if (folder !== undefined) { button.append(folder); }
-      button.addEventListener("mouseenter", () => { drawDriverTitle(id); }, { passive: true });
-      button.addEventListener("mouseleave", () => { delay(() => drawDriverTitle(state.driver)) }, { passive: true });
-      button.addEventListener("focus", () => { drawDriverTitle(id); }, { passive: true });
-      button.addEventListener("blur", () => { drawDriverTitle(state.driver); }, { passive: true });
-      V.drivers.grid.append(button);
+          const variantButton = document.getElementById("driver-" + variantID);
+          const variantName = S("drivers", variantID);
+          variantButton.querySelector("img").alt = variantName;
+          variantButton.title = variantName;
+          const selected = variantID == state.driver;
+          variantButton.classList.toggle("selected", selected);
+          button.classList.toggle("selected", selected);
+          const highlight = driverVariant.group == state.selectedSlot.combo.parts.driver.group;
+          variantButton.classList.toggle("highlight", highlight);
+          button.classList.toggle("highlight", highlight);
+        }
+      }
     }
   });
-  V.drivers.icon.setAttribute("src",
-    graphicsRoot + "emblems/" + state.driver + ".webp");
+  V.drivers.icon.setAttribute("src", graphicsRoot + "emblems/" + state.driver + ".webp");
   V.drivers.title.innerText = S("drivers", state.driver);
   drawDriverLock();
   disableScroll(document.documentElement);
   V.drivers.dialog.inert = false;
-  if (V.drivers.dialog.open) return;
-  V.drivers.dialog.showModal();
+  if (!V.drivers.dialog.open) V.drivers.dialog.showModal();
 }
 
+function initBodyDialog() {
+  state.parts.then(({bodies: types}) => {
+    for (const bodies of types) {
+    for (const body of bodies.folder) {
+      const id = body.id;
+      const button = newPartButton("bodies/" + id, "body-" + id);
+      button.addEventListener("click", () => { setBody(id); }, { passive: true });
+      button.addEventListener("mouseenter", () => {
+        drawBodyTitle(id, bodies.id);
+      }, { passive: true });
+      button.addEventListener("mouseleave", () => {
+        delay(() => drawBodyTitle(state.body, state.selectedSlot.combo.parts.body.type));
+      }, { passive: true });
+      button.addEventListener("focus", () => {
+        drawBodyTitle(id, bodies.id);
+      }, { passive: true });
+      button.addEventListener("blur", () => {
+        drawBodyTitle(state.body, state.selectedSlot.combo.parts.body.type);
+      }, { passive: true });
+      V.bodies.grid.append(button);
+    }
+    V.bodies.grid.append(document.createElement("hr"));
+    }
+    // Remove last hr. (ugly)
+    V.bodies.grid.children[V.bodies.grid.children.length - 1].remove();
+
+  });
+}
 function drawBodyDialog() {
   if (state.openedDialog !== "body") {
     V.bodies.dialog.inert = true;
@@ -628,35 +691,17 @@ function drawBodyDialog() {
     enableScroll(document.documentElement);
     return;
   }
-  state.parts.then(data => {
-    V.bodies.grid.innerHTML = "";
-    const types = data.bodies;
+  state.parts.then(({bodies: types}) => {
     for (const bodies of types) {
-      for (const body of bodies.folder) {
-        const id = body.id;
-        const classes = [];
-        if (id == state.body) classes.push("selected");
-        if (body.group == state.selectedSlot.combo.parts.body.group) classes.push("highlight");
-        const button = newPartButton("bodies/" + id, id, classes, S("bodies", id));
-        button.addEventListener("click", () => { setBody(id); }, { passive: true });
-        button.addEventListener("mouseenter", () => {
-          drawBodyTitle(id, bodies.id);
-        }, { passive: true });
-        button.addEventListener("mouseleave", () => {
-          delay(() => drawBodyTitle(state.body, state.selectedSlot.combo.parts.body.type));
-        }, { passive: true });
-        button.addEventListener("focus", () => {
-          drawBodyTitle(id, bodies.id);
-        }, { passive: true });
-        button.addEventListener("blur", () => {
-          drawBodyTitle(state.body, state.selectedSlot.combo.parts.body.type);
-        }, { passive: true });
-        V.bodies.grid.append(button);
-      }
-      V.bodies.grid.append(document.createElement("hr"));
-    }
-    // Remove last hr. (ugly)
-    V.bodies.grid.children[V.bodies.grid.children.length - 1].remove();
+    for (const body of bodies.folder) {
+      const id = body.id;
+      const button = document.getElementById("body-" + id);
+      const name = S("bodies", id);
+      button.querySelector("img").alt = name;
+      button.title = name;
+      button.classList.toggle("selected", id == state.body);
+      button.classList.toggle("highlight", body.group == state.selectedSlot.combo.parts.body.group);
+    } }
   });
   V.bodies.icon.setAttribute("src",
     graphicsRoot + "icons/" + state.selectedSlot.combo.parts.body.type + ".svg");
@@ -664,26 +709,14 @@ function drawBodyDialog() {
   drawBodyLock();
   disableScroll(document.documentElement);
   V.bodies.dialog.inert = false;
-  if (V.bodies.dialog.open) return;
-  V.bodies.dialog.showModal();
+  if (!V.bodies.dialog.open) V.bodies.dialog.showModal();
 }
 
-function drawTireDialog() {
-  if (state.openedDialog !== "tire") {
-    V.tires.dialog.inert = true;
-    V.tires.dialog.close();
-    enableScroll(document.documentElement);
-    return;
-  }
-  state.parts.then(data => {
-    V.tires.grid.innerHTML = "";
-    const tires = data.tires;
+function initTireDialog() {
+  state.parts.then(({tires}) => {
     for (const tire of tires) {
       const id = tire.id;
-      const classes = [];
-      if (id == state.tire) classes.push("selected");
-      if (tire.group == state.selectedSlot.combo.parts.tire.group) classes.push("highlight");
-      const button = newPartButton("tires/" + id, id, classes, S("tires", id));
+      const button = newPartButton("tires/" + id, "tire-" + id);
       button.addEventListener("click", () => { setTire(id); }, { passive: true });
       button.addEventListener("mouseenter", () => { drawTireTitle(id); }, { passive: true });
       button.addEventListener("mouseleave", () => { delay(() => drawTireTitle(state.tire)) }, { passive: true });
@@ -692,30 +725,37 @@ function drawTireDialog() {
       V.tires.grid.append(button);
     }
   });
+}
+function drawTireDialog() {
+  if (state.openedDialog !== "tire") {
+    V.tires.dialog.inert = true;
+    V.tires.dialog.close();
+    enableScroll(document.documentElement);
+    return;
+  }
+  state.parts.then(({tires}) => {
+    for (const tire of tires) {
+      const id = tire.id;
+      const button = document.getElementById("tire-" + id);
+      const name = S("tires", id);
+      button.querySelector("img").alt = name;
+      button.title = name;
+      button.classList.toggle("selected", id == state.tire);
+      button.classList.toggle("highlight", tire.group == state.selectedSlot.combo.parts.tire.group);
+    }
+  });
   V.tires.title.innerText = S("tires", state.tire);
   drawTireLock();
   disableScroll(document.documentElement);
   V.tires.dialog.inert = false;
-  if (V.tires.dialog.open) return;
-  V.tires.dialog.showModal();
+  if (!V.tires.dialog.open) V.tires.dialog.showModal();
 }
 
-function drawGliderDialog() {
-  if (state.openedDialog !== "glider") {
-    V.gliders.dialog.inert = true;
-    V.gliders.dialog.close();
-    enableScroll(document.documentElement);
-    return;
-  }
-  state.parts.then(data => {
-    V.gliders.grid.innerHTML = "";
-    const gliders = data.gliders;
+function initGliderDialog() {
+  state.parts.then(({gliders}) => {
     for (const glider of gliders) {
       const id = glider.id;
-      const classes = [];
-      if (id == state.glider) classes.push("selected");
-      if (glider.group == state.selectedSlot.combo.parts.glider.group) classes.push("highlight");
-      const button = newPartButton("gliders/" + id, id, classes, S("gliders", id));
+      const button = newPartButton("gliders/" + id, "glider-" + id);
       button.addEventListener("click", () => { setGlider(id); }, { passive: true });
       button.addEventListener("mouseenter", () => { drawGliderTitle(id); }, { passive: true });
       button.addEventListener("mouseleave", () => { delay(() => drawGliderTitle(state.glider)) }, { passive: true });
@@ -724,12 +764,31 @@ function drawGliderDialog() {
       V.gliders.grid.append(button);
     }
   });
+}
+function drawGliderDialog() {
+  if (state.openedDialog !== "glider") {
+    V.gliders.dialog.inert = true;
+    V.gliders.dialog.close();
+    enableScroll(document.documentElement);
+    return;
+  }
+  state.parts.then(data => {
+    const gliders = data.gliders;
+    for (const glider of gliders) {
+      const id = glider.id;
+      const button = document.getElementById("glider-" + id);
+      const name = S("gliders", id);
+      button.querySelector("img").alt = name;
+      button.title = name;
+      button.classList.toggle("selected", id == state.glider);
+      button.classList.toggle("highlight", glider.group == state.selectedSlot.combo.parts.glider.group);
+    }
+  });
   V.gliders.title.innerText = S("gliders", state.glider);
   drawGliderLock();
   disableScroll(document.documentElement);
   V.gliders.dialog.inert = false;
-  if (V.gliders.dialog.open) return;
-  V.gliders.dialog.showModal();
+  if (!V.gliders.dialog.open) V.gliders.dialog.showModal();
 }
 
 function drawDriverTitle(id) {
@@ -770,12 +829,12 @@ function drawGliderLock() {
   V.gliders.lockLabel.innerText = state.locks.glider ? "Unlock Glider" : "Lock Glider";
 }
 
-function newPartButton(imgSrc, value, classes = [], alt = "") {
+function newPartButton(imgSrc, id) {
   const button = document.createElement("button");
-  button.classList.add(...classes);
+  if (id) button.id = id;
   const img = document.createElement("img");
-  img.src = graphicsRoot + imgSrc + ".webp";
-  if (alt !== "") img.alt = alt;
+  if (imgSrc) img.src = graphicsRoot + imgSrc + ".webp";
+  img.loading = "lazy";
   button.append(img);
   return button;
 }
@@ -789,6 +848,10 @@ function drawPopover(el) {
   const rect = el.getBoundingClientRect();
   el.classList.toggle("left", rect.left - 12 < 0);
   el.classList.toggle("right", rect.right + 12 > innerWidth);
+}
+function closePopover(el) {
+  el.removeAttribute("open");
+  el.setAttribute("inert", "");
 }
 
 function drawFormulaDialog() {
