@@ -454,6 +454,15 @@ function closeFormulaHelpDialog() {
   drawFormulaHelpDialog();
 }
 
+function openCreditsDialog() {
+  state.openedDialog = "credits";
+  drawCreditsDialog();
+}
+function closeCreditsDialog() {
+  state.openedDialog = "";
+  drawCreditsDialog();
+}
+
 function init() {
   readURLParams();
   getAvailableParts();
