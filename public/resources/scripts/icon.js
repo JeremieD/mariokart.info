@@ -19,32 +19,32 @@ class JDIcon extends HTMLElement {
 
   draw() {
     // TODO: Clean this up.
-    if (this.hasAttribute("icon")) {
-      this.iconName = this.getAttribute("icon");
-
-      const safeIconName = encodeURI(this.iconName);
-
-      if (JDIcon.cache[safeIconName] !== undefined) {
-        JDIcon.cache[safeIconName].then(svg => {
-          this.innerHTML = svg;
-        });
-        return;
-      }
-
-      this.classList.add("placeholder");
-
-      const iconPath = `https://centrale.jeremiedupuis.com/graphics/icons/${safeIconName}.svg`;
-      JDIcon.cache[safeIconName] = httpGet(iconPath).then(svg => {
-        this.innerHTML = svg;
-        this.classList.remove("placeholder");
-        return svg;
-      });
-    } else {
+    if (this.hasAttribute("src")) {
       httpGet(this.getAttribute("src")).then(svg => {
         this.innerHTML = svg;
         this.classList.remove("placeholder");
       });
+      return;
     }
+
+    this.iconName ??= this.getAttribute("icon");
+    const safeIconName = encodeURI(this.iconName);
+
+    if (JDIcon.cache[safeIconName] !== undefined) {
+      JDIcon.cache[safeIconName].then(svg => {
+        this.innerHTML = svg;
+      });
+      return;
+    }
+
+    this.classList.add("placeholder");
+
+    const iconPath = `https://centrale.jeremiedupuis.com/graphics/icons/${safeIconName}.svg`;
+    JDIcon.cache[safeIconName] = httpGet(iconPath).then(svg => {
+      this.innerHTML = svg;
+      this.classList.remove("placeholder");
+      return svg;
+    });
   }
 
   // Holds SVG icons. Access with [iconName].

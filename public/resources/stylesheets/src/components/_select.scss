@@ -1,5 +1,55 @@
 @use "button" as *;
 
-select {
-  text-align: right;
+jd-select {
+  position: relative;
+  cursor: default;
+
+  &.right {
+    &>output { text-align: right; }
+    &>ol { right: 0; }
+  }
+
+  &>jd-icon {
+    height: .333em;
+    margin-left: .375em;
+    vertical-align: .2em;
+  }
+
+  &>ol {
+    position: absolute;
+    top: -.375em;
+    max-height: 75svh;
+    overflow-y: scroll;
+    display: flex;
+    width: max-content;
+    max-width: 32ch;
+    flex-direction: column;
+    background-color: var(--color-overlay);
+    box-shadow: 0 .333rem 2.666rem 0 rgba(0,0,0, .5);
+    border-radius: var(--border-radius-1);
+    padding: .333em;
+    z-index: 15;
+
+    li {
+      padding: .375em 1em .375em .5em;
+      border-radius: var(--border-radius-0);
+      &>jd-icon {
+        margin-right: .375em;
+        &>svg { transition: none; }
+      }
+    }
+  }
+
+  &>ol li:hover:not(:active),
+  &>ol:not(:hover) li:focus-visible,
+  &:not(.open)>ol li.selected { // For blinking on select
+    background-color: var(--color-accent);
+    color: var(--color-light1);
+  }
+
+  &:not(.open)>ol {
+    opacity: 0;
+    pointer-events: none;
+    transition: .05s .2s ease opacity;
+  }
 }

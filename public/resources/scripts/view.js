@@ -234,7 +234,7 @@ whenDOMReady(() => {
     if (isOutside(V.credits.dialog, e)) closeCreditsDialog();
   }, { passive: true });
 
-  locale = V.settings.localeSelect.value; // on init
+  locale = V.settings.localeSelect.value ?? "en-US"; // on init
   V.settings.localeSelect.addEventListener("change", () => {
     changeLocale(V.settings.localeSelect.value);
   }, { passive: true });
@@ -907,7 +907,7 @@ function isOutside(el, e) {
   // If the click event was fired with a keyboard press, e.detail will be 0.
   if (e.detail == 0) {
     // In that case, clientX and Y will be 0, so we use the target element's position instead.
-    const target = e.originalTarget.getBoundingClientRect();
+    const target = e.target.getBoundingClientRect();
     return target.top < rect.top   || target.bottom > rect.bottom
         || target.left < rect.left || target.right > rect.right;
   }
