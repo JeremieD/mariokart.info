@@ -16,7 +16,8 @@ const V = {
   tires: {},
   gliders: {},
   formula: {},
-  settings: {}
+  settings: {},
+  credits: {}
 }; // View object
 
 whenDOMReady(() => {
@@ -121,6 +122,10 @@ whenDOMReady(() => {
   V.formula.helpClose  = document.getElementById("formula-help-close");
   V.formula.helpDialog = document.getElementById("formula-help");
 
+  V.credits.open = document.getElementById("credits-open");
+  V.credits.close = document.getElementById("credits-close");
+  V.credits.dialog = document.getElementById("credits-dialog");
+
 
   /******** View OUT ********/
 
@@ -218,6 +223,12 @@ whenDOMReady(() => {
   V.formula.helpClose.addEventListener("click", closeFormulaHelpDialog, { passive: true });
   V.formula.helpDialog.addEventListener("click", e => {
     if (isOutside(V.formula.helpDialog, e)) closeFormulaHelpDialog();
+  }, { passive: true });
+
+  V.credits.open.addEventListener("click", openCreditsDialog, { passive: true });
+  V.credits.close.addEventListener("click", closeCreditsDialog, { passive: true });
+  V.credits.dialog.addEventListener("click", e => {
+    if (isOutside(V.credits.dialog, e)) closeCreditsDialog();
   }, { passive: true });
 
   locale = V.settings.localeSelect.value; // on init
@@ -864,6 +875,17 @@ function drawFormulaHelpDialog() {
   V.formula.helpDialog.inert = false;
   if (V.formula.helpDialog.open) return;
   V.formula.helpDialog.showModal();
+}
+
+function drawCreditsDialog() {
+  if (state.openedDialog !== "credits") {
+    V.credits.dialog.inert = true;
+    V.credits.dialog.close();
+    return;
+  }
+  V.credits.dialog.inert = false;
+  if (V.credits.dialog.open) return;
+  V.credits.dialog.showModal();
 }
 
 function disableScroll(el) { el.classList.add("no-scroll"); };
