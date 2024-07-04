@@ -197,6 +197,24 @@ const strings = {
       hylian: "Hylian Kite",
       paper: "Paper Glider",
       paraglider: "Paraglider"
+    },
+    stats: {
+      mintb: "Mini-Turbo",
+      spd:   "Speed",
+      spdGr: "Ground Speed",
+      spdAg: "Anti-Gravity Speed",
+      spdWt: "Underwater Speed",
+      spdAr: "Air Speed",
+      accel: "Acceleration",
+      weigt: "Weight",
+      hnd:   "Handling",
+      hndGr: "Ground Handling",
+      hndAg: "Anti-Gravity Handling",
+      hndWt: "Underwater Handling",
+      hndAr: "Air Handling",
+      trctn: "Traction",
+      invcb: "Invincibility",
+      size:  "Size"
     }
   },
   "en-GB": {

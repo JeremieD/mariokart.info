@@ -314,6 +314,7 @@ function drawCurrentCombo() {
   // Meters
   for (const stat of stats) {
     V.combo[stat].style.setProperty("--value", combo.lvl[stat]);
+    V.combo[stat].title = S("stats", stat) + ": " + combo.lvl[stat];
   }
 
   // Page Title

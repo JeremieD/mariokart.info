@@ -52,6 +52,5 @@ p + :is(h1, h2, h3, hgroup) { margin-top: 1em; }
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		gap: 1rem;
-		align-items: top;
 	}
 }
