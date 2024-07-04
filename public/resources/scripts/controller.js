@@ -127,6 +127,7 @@ const state = {
     mii: "miiM" },
   formula: structuredClone(defaultFormula),
   workingFormula: structuredClone(defaultFormula),
+  formulaDialogScrollTop: 0,
   openedDialog: "",
   inspectorTimeout: 0,
   lastState: {
@@ -284,7 +285,8 @@ function randomCombo() {
 }
 
 function share() {
-  navigator.clipboard.writeText(location.href).then(drawShareNotice);
+  const link = location.origin + location.pathname + "?A=" + state.selectedSlot.combo.code;
+  navigator.clipboard.writeText(link).then(drawShareNotice);
 }
 
 function selectA() {

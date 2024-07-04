@@ -76,7 +76,7 @@ class JDSlider extends HTMLElement {
 
   set value(x) {
     this.#value = parseFloat(x);
-      if (isNaN(this.#value)) this.#value = parseFloat(this.getAttribute("value"));
+    if (isNaN(this.#value)) this.#value = 0;
     if (this.#linkedInput !== undefined) this.#linkedInput.value = x;
     this.draw();
   }
@@ -87,7 +87,7 @@ class JDSlider extends HTMLElement {
     this.#linkedInput = el;
     el.addEventListener("input", () => {
       this.#value = parseFloat(el.value);
-      if (isNaN(this.#value)) this.#value = parseFloat(this.getAttribute("value"));
+      if (isNaN(this.#value)) this.#value = 0;
       this.draw();
     });
   }

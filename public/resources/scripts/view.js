@@ -225,7 +225,10 @@ whenDOMReady(() => {
     if (isOutside(V.formula.helpDialog, e)) closeFormulaHelpDialog();
   }, { passive: true });
 
-  V.credits.open.addEventListener("click", openCreditsDialog, { passive: true });
+  V.credits.open.addEventListener("click", e => {
+    openCreditsDialog();
+    e.preventDefault(); // To conserve page scroll position
+  });
   V.credits.close.addEventListener("click", closeCreditsDialog, { passive: true });
   V.credits.dialog.addEventListener("click", e => {
     if (isOutside(V.credits.dialog, e)) closeCreditsDialog();
@@ -253,6 +256,10 @@ whenDOMReady(() => {
         case "formula": return revertFormula();
         case "formula-help": return closeFormulaHelpDialog();
       }
+    } else if (e.key == "Enter") {
+      if (state.openedDialog != "formula") return;
+      commitFormula();
+      e.preventDefault();
     }
   });
 
@@ -785,6 +792,7 @@ function drawPopover(el) {
 
 function drawFormulaDialog() {
   if (state.openedDialog !== "formula") {
+    state.formulaDialogScrollTop = V.formula.dialog.scrollTop;
     V.formula.dialog.inert = true;
     V.formula.dialog.close();
     enableScroll(document.documentElement);
@@ -818,6 +826,7 @@ function drawFormulaDialog() {
   disableScroll(document.documentElement);
   if (V.formula.dialog.open) return;
   V.formula.dialog.showModal();
+  V.formula.dialog.scrollTop = state.formulaDialogScrollTop;
 }
 
 // Update rest of the widget according to the numeric input.
