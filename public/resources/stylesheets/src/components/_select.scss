@@ -19,7 +19,7 @@ jd-select {
     position: absolute;
     top: -.375em;
     max-height: 75svh;
-    overflow-y: scroll;
+    overflow-y: auto;
     display: flex;
     width: max-content;
     max-width: 32ch;

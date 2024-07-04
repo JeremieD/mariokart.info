@@ -255,6 +255,7 @@ whenDOMReady(() => {
         case "glider": return closeGliderDialog();
         case "formula": return revertFormula();
         case "formula-help": return closeFormulaHelpDialog();
+        case "credits": return closeCreditsDialog();
       }
     } else if (e.key == "Enter") {
       if (state.openedDialog != "formula") return;
