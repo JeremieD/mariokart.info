@@ -529,6 +529,7 @@ function drawShareNotice() {
 
 function drawDriverDialog() {
   if (state.openedDialog !== "driver") {
+    V.drivers.dialog.inert = true;
     V.drivers.dialog.close();
     enableScroll(document.documentElement);
     return;
@@ -594,12 +595,15 @@ function drawDriverDialog() {
     graphicsRoot + "emblems/" + state.driver + ".webp");
   V.drivers.title.innerText = S("drivers", state.driver);
   drawDriverLock();
-  if (!V.drivers.dialog.open) V.drivers.dialog.showModal();
   disableScroll(document.documentElement);
+  V.drivers.dialog.inert = false;
+  if (V.drivers.dialog.open) return;
+  V.drivers.dialog.showModal();
 }
 
 function drawBodyDialog() {
   if (state.openedDialog !== "body") {
+    V.bodies.dialog.inert = true;
     V.bodies.dialog.close();
     enableScroll(document.documentElement);
     return;
@@ -638,12 +642,15 @@ function drawBodyDialog() {
     graphicsRoot + "icons/" + state.selectedSlot.combo.parts.body.type + ".svg");
   V.bodies.title.innerText = S("bodies", state.body);
   drawBodyLock();
-  if (!V.bodies.dialog.open) V.bodies.dialog.showModal();
   disableScroll(document.documentElement);
+  V.bodies.dialog.inert = false;
+  if (V.bodies.dialog.open) return;
+  V.bodies.dialog.showModal();
 }
 
 function drawTireDialog() {
   if (state.openedDialog !== "tire") {
+    V.tires.dialog.inert = true;
     V.tires.dialog.close();
     enableScroll(document.documentElement);
     return;
@@ -667,12 +674,15 @@ function drawTireDialog() {
   });
   V.tires.title.innerText = S("tires", state.tire);
   drawTireLock();
-  if (!V.tires.dialog.open) V.tires.dialog.showModal();
   disableScroll(document.documentElement);
+  V.tires.dialog.inert = false;
+  if (V.tires.dialog.open) return;
+  V.tires.dialog.showModal();
 }
 
 function drawGliderDialog() {
   if (state.openedDialog !== "glider") {
+    V.gliders.dialog.inert = true;
     V.gliders.dialog.close();
     enableScroll(document.documentElement);
     return;
@@ -696,8 +706,10 @@ function drawGliderDialog() {
   });
   V.gliders.title.innerText = S("gliders", state.glider);
   drawGliderLock();
-  if (!V.gliders.dialog.open) V.gliders.dialog.showModal();
   disableScroll(document.documentElement);
+  V.gliders.dialog.inert = false;
+  if (V.gliders.dialog.open) return;
+  V.gliders.dialog.showModal();
 }
 
 function drawDriverTitle(id) {
@@ -761,14 +773,11 @@ function drawPopover(el) {
 
 function drawFormulaDialog() {
   if (state.openedDialog !== "formula") {
+    V.formula.dialog.inert = true;
     V.formula.dialog.close();
     enableScroll(document.documentElement);
     return;
   }
-
-  if (!V.formula.dialog.open) V.formula.dialog.showModal();
-  disableScroll(document.documentElement);
-  drawCollapses();
 
   const formula = state.workingFormula;
   for (const stat of scoreStats) {
@@ -790,6 +799,13 @@ function drawFormulaDialog() {
   V.formula.includeATVs.classList.toggle("selected", !state.workingFormula.excludeATVs);
   V.formula.includeBikes.classList.toggle("selected", !state.workingFormula.excludeBikes);
   V.formula.includeSportBikes.classList.toggle("selected", !state.workingFormula.excludeSportBikes);
+
+  drawCollapses();
+
+  V.formula.dialog.inert = false;
+  disableScroll(document.documentElement);
+  if (V.formula.dialog.open) return;
+  V.formula.dialog.showModal();
 }
 
 // Update rest of the widget according to the numeric input.
@@ -841,10 +857,13 @@ function drawCollapses() {
 
 function drawFormulaHelpDialog() {
   if (state.openedDialog !== "formula-help") {
+    V.formula.helpDialog.inert = true;
     V.formula.helpDialog.close();
     return;
   }
-  if (!V.formula.helpDialog.open) V.formula.helpDialog.showModal();
+  V.formula.helpDialog.inert = false;
+  if (V.formula.helpDialog.open) return;
+  V.formula.helpDialog.showModal();
 }
 
 function disableScroll(el) { el.classList.add("no-scroll"); };
