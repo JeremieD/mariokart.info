@@ -151,7 +151,7 @@ Stats.post = (...args) => {
       } }
     }, { passive: true });
     Stats.postMessage([exchangeID, args]);
-  });
+  }).catch(console.error);
 };
 
 init();
