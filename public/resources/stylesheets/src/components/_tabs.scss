@@ -52,6 +52,7 @@
     height: 66svh;
     border-radius: var(--border-radius-0) var(--border-radius-2) var(--border-radius-2) var(--border-radius-2);
     background-color: var(--color-foreground);
+    scrollbar-gutter: stable;
 
     &>*:not(.selected) { display: none; }
 
