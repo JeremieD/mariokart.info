@@ -154,7 +154,7 @@ Stats.post = (...args) => {
   }).catch(console.error);
 };
 
-init();
+initController();
 
 function setDriver(driver) {
   Stats.post("getCombo", driver, state.body, state.tire, state.glider)
@@ -465,7 +465,7 @@ function closeCreditsDialog() {
   drawCreditsDialog();
 }
 
-function init() {
+function initController() {
   readURLParams();
   getAvailableParts();
 }

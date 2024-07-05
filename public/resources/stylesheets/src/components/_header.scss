@@ -19,5 +19,6 @@ body>header {
 
 	h1 {
 		@include type("head-1");
+		font-feature-settings: "case" on;
 	}
 }

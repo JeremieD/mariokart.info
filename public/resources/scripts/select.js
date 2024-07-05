@@ -24,6 +24,7 @@ class JDSelect extends HTMLElement {
       this.addOption(option.innerText, option.value);
       if (option.hasAttribute("selected")) this.value = option.value;
     }
+    this.draw();
 
     this.addEventListener("click", this.open, { passive: true } );
     addEventListener("click", e => {
@@ -36,13 +37,18 @@ class JDSelect extends HTMLElement {
   set value(v) {
     if (!this.#options.includes(v)) return;
     this.#value = v;
-    for (const optionEl of this.#optionEls) {
-      const optionElValue = optionEl.getAttribute("value");
-      optionEl.classList.toggle("selected", optionElValue == v);
-      if (optionElValue == v) this.#outputEl.innerText = optionEl.innerText;
-    }
+    this.draw();
     this.dispatchEvent(new Event("change"));
     this.close();
+  }
+
+  draw() {
+    for (const optionEl of this.#optionEls) {
+      const optionElValue = optionEl.getAttribute("value");
+      const isSelected = optionElValue == this.#value;
+      optionEl.classList.toggle("selected", isSelected);
+      if (isSelected) this.#outputEl.innerText = optionEl.innerText;
+    }
   }
 
   open(e) {

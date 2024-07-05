@@ -8,6 +8,11 @@ function whenDOMReady(callback, options = { once: true, passive: true }) {
   }
 }
 
+whenDOMReady(() => {
+  initController();
+  initView();
+});
+
 /**
  * Async wrapper for XMLHttpRequest.
  * @param {string} url - The requested URL.

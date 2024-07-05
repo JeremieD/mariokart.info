@@ -24,7 +24,7 @@
 } */
 
 /* Set display: none; elements. These should never appear. */
-head, base, link, meta, title, script, source, style, template, dialog:not([open]) {
+head, base, link, meta, title, script, source, style, option, template, dialog:not([open]) {
 	display: none;
 }
 
