@@ -40,8 +40,8 @@ class JDSlider extends HTMLElement {
     this.knob.classList.add("knob");
     this.addEventListener("mousedown", this.pointerDownHandler, { passive: true });
     this.addEventListener("touchstart", this.pointerDownHandler, { passive: true });
-    addEventListener("mousemove", this.pointerMoveHandler);
-    addEventListener("touchmove", this.pointerMoveHandler);
+    addEventListener("mousemove", this.pointerMoveHandler, { passive: false });
+    addEventListener("touchmove", this.pointerMoveHandler, { passive: false });
     addEventListener("mouseup", this.pointerUpHandler, { passive: true });
     addEventListener("touchend", this.pointerUpHandler, { passive: true });
     this.append(this.scale, this.knob);
