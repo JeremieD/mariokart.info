@@ -27,15 +27,15 @@ jd-slider {
 
   .knob {
     position: absolute;
-    top: 50%;
-    left: calc(var(--size)/2);
+    top: calc(50% - var(--size)/2);
+    left: 0;
     width: var(--size);
     height: var(--size);
     border-radius: 50%;
     background-color: currentColor;
     outline: .25rem solid var(--color-foreground);
-    translate: 0 -50%;
-    transition: .2s ease left;
+    transition: .2s ease translate;
+    will-change: transform;
   }
   &.held .knob { transition: none; }
 }

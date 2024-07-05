@@ -103,7 +103,7 @@ class JDSlider extends HTMLElement {
     pos += Math.abs(this.min);
     pos /= (max - min);
     pos *= scale.width;
-    this.knob.style.left = pos + "px";
+    this.knob.style.translate = pos + "px 0";
   }
 
   static get observedAttributes() {

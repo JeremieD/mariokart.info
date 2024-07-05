@@ -172,7 +172,7 @@ whenDOMReady(() => {
     const max = V.formula[stat].max;
     const mode = V.formula[stat].mode;
     factor.addEventListener("input", () => {
-      state.workingFormula[stat].factor = factor.value;
+      state.workingFormula[stat].factor = parseValue(factor.value);
       drawFactorWidget(stat);
     }, { passive: true });
     slider.addEventListener("change", () => {
@@ -181,11 +181,11 @@ whenDOMReady(() => {
     }, { passive: true });
     slider.linkedInput = factor;
     min.addEventListener("input", () => {
-      state.workingFormula[stat].min = parseFloat(min.value);
+      state.workingFormula[stat].min = parseValue(min.value);
       validateBounds(stat);
     }, { passive: true });
     max.addEventListener("input", () => {
-      state.workingFormula[stat].max = parseFloat(max.value);
+      state.workingFormula[stat].max = parseValue(max.value, max.max);
       validateBounds(stat);
     }, { passive: true });
     mode.addEventListener("click", () => { toggleFactorSign(stat); }, { passive: true });
@@ -485,13 +485,25 @@ function formatFormula(formula) {
     if (stat == "hndWt" &&  formula.hnd.use) continue;
     if (stat == "hndAr" &&  formula.hnd.use) continue;
     let factor = formula[stat].factor;
-    if (factor == 0) continue;
+    let isMinSet = formula[stat].min !== 0;
+    let isMaxSet = formula[stat].max !== parseFloat(V.formula[stat].max.max);
+    if (factor == 0 && !isMinSet && !isMaxSet) continue;
     const sign = factor < 0 ? "−" : "";
-    const className = factor < 0 ? "negative" : "positive";
+    let term = "<span";
+    if (factor < 0) term += " class='negative'";
+    if (factor > 0) term += " class='positive'";
+    term += ">"
     factor = Math.abs(factor).toString();
     if (factor[0] == "0") factor = factor.substr(1);
-    const term = '<span class="' + className + '">' + sign + factor
-               + '<span class="multiply">×</span>' + stat + "</span>";
+    term += sign;
+    if (factor !== "") term += factor + "<span class='multiply'>×</span>";
+    term += stat.toUpperCase();
+    if (isMinSet || isMaxSet) {
+      term += "<span";
+      if (!isMinSet || !isMaxSet) term += " class='subdued'";
+      term += ">*</span>";
+    }
+    term += "</span>";
     stats.push(term);
   }
   s += '<span class="formula">' + stats.join(" + ") + "</span>";
@@ -973,4 +985,10 @@ function isOutside(el, e) {
   }
   return e.clientY < rect.top  || e.clientY > rect.bottom
       || e.clientX < rect.left || e.clientX > rect.right;
+}
+
+function parseValue(v, defaultV = 0) {
+  v = parseFloat(v);
+  if (isNaN(v)) return parseFloat(defaultV);
+  return v;
 }
