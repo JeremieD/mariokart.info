@@ -16,6 +16,8 @@
 
 	/* Slightly opinionated things. */
 	box-sizing: border-box;
+
+	touch-action: manipulation;
 }
 
 /* Accessible by default. */
