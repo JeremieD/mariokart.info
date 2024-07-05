@@ -23,15 +23,15 @@
   <link rel="stylesheet" href="/resources/stylesheets/main.css">
 
   <!-- Scripts -->
-  <script src="/resources/scripts/utilities.js"></script>
   <script src="/resources/scripts/locl.js"></script>
-  <script src="/resources/scripts/controller.js"></script>
-  <script src="/resources/scripts/view.js" async></script>
   <script src="/resources/scripts/icon.js"></script>
-  <script src="/resources/scripts/select.js" defer></script>
+  <script src="/resources/scripts/utilities.js"></script>
+  <script src="/resources/scripts/view.js"></script>
+  <script src="/resources/scripts/controller.js"></script>
   <script src="/resources/scripts/tooltip.js" async></script>
   <script src="/resources/scripts/slider.js" async></script>
   <script src="/resources/scripts/tabs.js" async></script>
+  <script src="/resources/scripts/select.js" defer></script>
 
   <!-- <script src="https://analytique.jeremiedupuis.com/collect?o=mariokart.info" async></script> -->
 </head>
@@ -78,63 +78,63 @@
         <div id="combo-display">
           <div class="combo">
             <button id="driver">
-              <img id="driver-img" src="" width="128" height="128"/>
+              <img id="driver-img" width="128" height="128"/>
               <jd-icon id="driver-lock-display" icon="lock"></jd-icon>
             </button>
             <button id="body">
-              <img id="body-img" src="" width="200" height="128"/>
+              <img id="body-img" width="200" height="128"/>
               <jd-icon id="body-lock-display" icon="lock"></jd-icon>
             </button>
             <button id="tire">
-              <img id="tire-img" src="" width="200" height="128"/>
+              <img id="tire-img" width="200" height="128"/>
               <jd-icon id="tire-lock-display" icon="lock"></jd-icon>
             </button>
             <button id="glider">
-              <img id="glider-img" src="" width="200" height="128"/>
+              <img id="glider-img" width="200" height="128"/>
               <jd-icon id="glider-lock-display" icon="lock"></jd-icon>
             </button>
           </div>
-          <div id="combo-details">Small Frame, Inside Drift</div>
+          <div id="combo-details"></div>
         </div>
 
         <div id="combo-stats">
           <div>
             <label class="stat-code" id="mintb-label" title="Mini-Turbo">MINTB</label>
-            <div class="meter" tooltip-align="left-middle" tooltip="" id="mintb-meter"></div>
+            <div class="meter" tooltip-align="left-middle" id="mintb-meter"></div>
           </div>
           <div>
             <label class="stat-code" id="spd-label" title="Speed">SPEED</label>
             <div class="multimeter">
-              <div class="meter ground" tooltip-align="left-middle" tooltip="" id="spdGr-meter"></div>
-              <div class="meter anti-gravity" tooltip-align="left-middle" tooltip="" id="spdAg-meter"></div>
-              <div class="meter underwater" tooltip-align="left-middle" tooltip="" id="spdWt-meter"></div>
-              <div class="meter air" tooltip-align="left-middle" tooltip="" id="spdAr-meter"></div>
+              <div class="meter ground" tooltip-align="left-middle" id="spdGr-meter"></div>
+              <div class="meter anti-gravity" tooltip-align="left-middle" id="spdAg-meter"></div>
+              <div class="meter underwater" tooltip-align="left-middle" id="spdWt-meter"></div>
+              <div class="meter air" tooltip-align="left-middle" id="spdAr-meter"></div>
             </div>
           </div>
           <div>
             <label class="stat-code" id="accel-label" title="Acceleration">ACCEL</label>
-            <div class="meter" tooltip-align="left-middle" tooltip="" id="accel-meter"></div>
+            <div class="meter" tooltip-align="left-middle" id="accel-meter"></div>
           </div>
           <div>
             <label class="stat-code" id="weigt-label" title="Weight">WEIGT</label>
-            <div class="meter" tooltip-align="left-middle" tooltip="" id="weigt-meter"></div>
+            <div class="meter" tooltip-align="left-middle" id="weigt-meter"></div>
           </div>
           <div>
             <label class="stat-code" id="hnd-label" title="Handling">HNDLG</label>
             <div class="multimeter">
-              <div class="meter ground" tooltip-align="left-middle" tooltip="" id="hndGr-meter"></div>
-              <div class="meter anti-gravity" tooltip-align="left-middle" tooltip="" id="hndAg-meter"></div>
-              <div class="meter underwater" tooltip-align="left-middle" tooltip="" id="hndWt-meter"></div>
-              <div class="meter air" tooltip-align="left-middle" tooltip="" id="hndAr-meter"></div>
+              <div class="meter ground" tooltip-align="left-middle" id="hndGr-meter"></div>
+              <div class="meter anti-gravity" tooltip-align="left-middle" id="hndAg-meter"></div>
+              <div class="meter underwater" tooltip-align="left-middle" id="hndWt-meter"></div>
+              <div class="meter air" tooltip-align="left-middle" id="hndAr-meter"></div>
             </div>
           </div>
           <div>
             <label class="stat-code" id="trctn-label" title="Traction">TRCTN</label>
-            <div class="meter" tooltip-align="left-middle" tooltip="" id="trctn-meter"></div>
+            <div class="meter" tooltip-align="left-middle" id="trctn-meter"></div>
           </div>
           <div>
             <label class="stat-code" id="invcb-label" title="Invincibility">INVCB</label>
-            <div class="meter" tooltip-align="left-middle" tooltip="" id="invcb-meter"></div>
+            <div class="meter" tooltip-align="left-middle" id="invcb-meter"></div>
           </div>
         </div>
       </div>
@@ -142,9 +142,9 @@
 
     <section class="tab-container">
       <nav class="tab-handles">
-        <button data-tab-id="dominant-combos" class="selected">Dominant<sup id="dominant-combos-count">1000</sup></button>
-        <button data-tab-id="similar-combos">Similar<sup id="similar-combos-count">1000</sup></button>
-        <button data-tab-id="custom-combos">Custom Search<sup id="custom-combos-count">1000</sup></button>
+        <button data-tab-id="dominant-combos" class="selected">Dominant<sup id="dominant-combos-count">0</sup></button>
+        <button data-tab-id="similar-combos">Similar<sup id="similar-combos-count">0</sup></button>
+        <button data-tab-id="custom-combos">Custom Search<sup id="custom-combos-count">0</sup></button>
       </nav>
       <div class="tab-panels">
         <div class="selected" id="dominant-combos">

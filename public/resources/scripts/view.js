@@ -265,16 +265,12 @@ whenDOMReady(() => {
 
   // Redraw on back
   addEventListener("popstate", readURLParams, { passive: true });
-
-  // Init
-  initView();
 });
 
 
 /******** View IN ********/
 
 function initView() {
-  locale = V.settings.localeSelect.value ?? "en-US";
   initDriverDialog();
   initBodyDialog();
   initTireDialog();
