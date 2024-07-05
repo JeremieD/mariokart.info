@@ -62,9 +62,10 @@ class JDSlider extends HTMLElement {
     let value = (unify(e).clientX - scale.left) / scale.width * (this.max - this.min) + this.min;
     if (value < this.min) value = this.min;
     if (value > this.max) value = this.max;
-    this.value = toNearestMultiple(value, this.step);
+    const roundedValue = toNearestMultiple(value, this.step);
+    if (this.#value === roundedValue) return;
+    this.value = roundedValue;
     this.dispatchEvent(new Event("change"));
-    this.draw();
   }
 
   pointerUpHandler = e => {
@@ -77,7 +78,7 @@ class JDSlider extends HTMLElement {
   set value(x) {
     this.#value = parseFloat(x);
     if (isNaN(this.#value)) this.#value = 0;
-    if (this.#linkedInput !== undefined) this.#linkedInput.value = x;
+    if (this.#linkedInput !== undefined) this.#linkedInput.value = this.#value;
     this.draw();
   }
 
@@ -120,9 +121,7 @@ const unify = e => e.changedTouches ? e.changedTouches[0] : e;
 const forAllScrollContainers = (el, fn) => { // except root
   const parent = el.parentElement;
   if (parent === document.documentElement) return;
-  if (parent.scrollHeight > parent.clientHeight) {
-    fn(parent);
-  }
+  if (parent.scrollHeight > parent.clientHeight) fn(parent);
   forAllScrollContainers(parent, fn);
 };
 
