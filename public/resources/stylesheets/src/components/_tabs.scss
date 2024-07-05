@@ -54,6 +54,7 @@
     background-color: var(--color-foreground);
     scrollbar-gutter: stable;
 
+    &>* { content-visibility: auto; }
     &>*:not(.selected) { display: none; }
 
     &::after {

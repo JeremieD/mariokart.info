@@ -95,11 +95,13 @@
   display: inline-block;
   @include type("code-1");
   line-height: 1.5;
-  text-transform: uppercase;
   text-wrap: balance;
-  font-feature-settings: "case" on;
 
   .multiply { margin: 0 .25em; }
+  span {
+    color: var(--color-text);
+    &.subdued { color: var(--color-subdued); }
+  }
 }
 .invalid { color: var(--color-red); }
 
