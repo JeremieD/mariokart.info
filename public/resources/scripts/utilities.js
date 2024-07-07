@@ -48,3 +48,7 @@ async function httpGet(url) {
 }
 // { url: { time, data }, ... }
 const httpGetCache = {};
+
+window.structuredClone ??= obj => {
+  return JSON.parse(JSON.stringify(obj));
+};
