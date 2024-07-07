@@ -50,7 +50,7 @@ p + :is(h1, h2, h3, hgroup) { margin-top: 1em; }
 	:root { --width-page: 57rem; }
 	main {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: var(--width-column) var(--width-column);
 		gap: 1rem;
 	}
 }
