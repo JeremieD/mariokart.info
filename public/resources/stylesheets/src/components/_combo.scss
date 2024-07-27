@@ -21,13 +21,9 @@
       }
     }
 
-    img {
-      width: 100%;
-      aspect-ratio: 200 / 128;
-    }
+    img { width: 100%; }
     &:nth-child(1) {
       flex-grow: .64; // 128÷200
-      img { aspect-ratio: 1 / 1; }
     }
 
     jd-icon {
