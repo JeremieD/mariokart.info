@@ -104,14 +104,15 @@
             <label class="stat-code" id="mintb-label" title="Mini-Turbo">MINTB</label>
             <div class="meter" tooltip-align="left-middle" id="mintb-meter"></div>
           </div>
-          <div>
+          <div class="multimeter" id="spd-multimeter">
             <label class="stat-code" id="spd-label" title="Speed">SPEED</label>
-            <div class="multimeter">
-              <div class="meter ground" tooltip-align="left-middle" id="spdGr-meter"></div>
-              <div class="meter anti-gravity" tooltip-align="left-middle" id="spdAg-meter"></div>
-              <div class="meter underwater" tooltip-align="left-middle" id="spdWt-meter"></div>
-              <div class="meter air" tooltip-align="left-middle" id="spdAr-meter"></div>
-            </div>
+            <div class="meter ground" tooltip-align="left-middle" id="spdGr-meter"></div>
+            <label class="stat-code anti-gravity" title="Anti-Gravity">AG</label>
+            <div class="meter anti-gravity" tooltip-align="left-middle" id="spdAg-meter"></div>
+            <label class="stat-code underwater">WATER</label>
+            <div class="meter underwater" tooltip-align="left-middle" id="spdWt-meter"></div>
+            <label class="stat-code air">AIR</label>
+            <div class="meter air" tooltip-align="left-middle" id="spdAr-meter"></div>
           </div>
           <div>
             <label class="stat-code" id="accel-label" title="Acceleration">ACCEL</label>
@@ -121,14 +122,15 @@
             <label class="stat-code" id="weigt-label" title="Weight">WEIGT</label>
             <div class="meter" tooltip-align="left-middle" id="weigt-meter"></div>
           </div>
-          <div>
+          <div class="multimeter" id="hnd-multimeter">
             <label class="stat-code" id="hnd-label" title="Handling">HNDLG</label>
-            <div class="multimeter">
-              <div class="meter ground" tooltip-align="left-middle" id="hndGr-meter"></div>
-              <div class="meter anti-gravity" tooltip-align="left-middle" id="hndAg-meter"></div>
-              <div class="meter underwater" tooltip-align="left-middle" id="hndWt-meter"></div>
-              <div class="meter air" tooltip-align="left-middle" id="hndAr-meter"></div>
-            </div>
+            <div class="meter ground" tooltip-align="left-middle" id="hndGr-meter"></div>
+            <label class="stat-code anti-gravity" title="Anti-Gravity">AG</label>
+            <div class="meter anti-gravity" tooltip-align="left-middle" id="hndAg-meter"></div>
+            <label class="stat-code underwater">WATER</label>
+            <div class="meter underwater" tooltip-align="left-middle" id="hndWt-meter"></div>
+            <label class="stat-code air">AIR</label>
+            <div class="meter air" tooltip-align="left-middle" id="hndAr-meter"></div>
           </div>
           <div>
             <label class="stat-code" id="trctn-label" title="Traction">TRCTN</label>
@@ -177,7 +179,7 @@
 
   <footer>
     <p><a id="credits-open" href="#">Credits & Info</a></p>
-    <p>Last updated 5 Jul 2024 / v1.0.0</p>
+    <p>Last updated 28 Aug 2024 / v1.0.1</p>
   </footer>
 
   <dialog id="driver-picker" inert>

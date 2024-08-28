@@ -54,6 +54,9 @@ whenDOMReady(() => {
   V.combo.trctn = document.getElementById("trctn-meter");
   V.combo.invcb = document.getElementById("invcb-meter");
 
+  V.combo.spdMultimeter = document.getElementById("spd-multimeter");
+  V.combo.hndMultimeter = document.getElementById("hnd-multimeter");
+
   V.dominant.rows    = document.getElementById("dominant-combos-rows");
   V.dominant.count   = document.getElementById("dominant-combos-count");
   V.similar.rows     = document.getElementById("similar-combos-rows");
@@ -138,6 +141,21 @@ whenDOMReady(() => {
   V.combo.body.addEventListener("click", openBodyDialog, { passive: true });
   V.combo.tire.addEventListener("click", openTireDialog, { passive: true });
   V.combo.glider.addEventListener("click", openGliderDialog, { passive: true });
+
+  V.combo.spdMultimeter.addEventListener("click", () => {
+    if (V.combo.spdMultimeter.classList.contains("show")) return;
+    V.combo.spdMultimeter.classList.add("show");
+    V.combo.spdMultimeter.addEventListener("animationend", () => {
+      V.combo.spdMultimeter.classList.remove("show");
+    }, { passive: true });
+  }, { passive: true });
+  V.combo.hndMultimeter.addEventListener("click", () => {
+    if (V.combo.hndMultimeter.classList.contains("show")) return;
+    V.combo.hndMultimeter.classList.add("show");
+    V.combo.hndMultimeter.addEventListener("animationend", () => {
+      V.combo.hndMultimeter.classList.remove("show");
+    }, { passive: true });
+  }, { passive: true });
 
   V.custom.customize.addEventListener("click", openFormulaDialog, { passive: true });
 
