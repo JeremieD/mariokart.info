@@ -22,7 +22,9 @@
   gap: .875rem;
   margin-top: 1rem;
 
-  &>div {
+  label { text-align: right; }
+
+  &>div:not(.multimeter) {
     display: flex;
     gap: .625rem;
     align-items: baseline;

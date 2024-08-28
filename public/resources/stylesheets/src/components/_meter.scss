@@ -29,10 +29,19 @@
 }
 
 .multimeter {
-  display: flex;
-  flex-direction: column;
-  gap: .5rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: .5rem .625rem;
   width: 100%;
+  label:not(:first-of-type) { opacity: 0; }
+  &.show label:not(:first-of-type) { animation: show 5s; }
+}
+
+@keyframes show {
+  0% { opacity: 0; }
+  5% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
 }
 
 .stat-code {
