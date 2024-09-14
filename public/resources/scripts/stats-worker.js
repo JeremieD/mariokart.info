@@ -174,10 +174,11 @@ class Combo {
     return new Combo(driver, body, tire, glider);
   }
 
-  static PERCENT_GR = .80; // Best estimate for percent of time on ground.
-  static PERCENT_AG = .15; // Best estimate for percent of time in anti-gravity.
-  static PERCENT_WT = .04; // Best estimate for percent of time underwater.
-  static PERCENT_AR = .01; // Best estimate for percent of time airborne.
+  // Data from Dospe [docs.google.com/spreadsheets/d/1Z41bvL2DTH6neOD41w6L0_eZwTxZMA3w4KJNzBEKzs8]
+  static PERCENT_GR = .75; // Best estimate for percent of time on ground.
+  static PERCENT_AG = .17; // Best estimate for percent of time in anti-gravity.
+  static PERCENT_WT = .03; // Best estimate for percent of time underwater.
+  static PERCENT_AR = .05; // Best estimate for percent of time airborne.
 }
 
 // IDEA: Move this into View. Work with raw values in worker to avoid calculations.
@@ -591,7 +592,7 @@ function getAvailableParts(set) {
   }
 }
 
-function setTerrainRatios(gr = .8, ag = .15, wt = .04, ar = .01) {
+function setTerrainRatios(gr, ag, wt, ar) {
   if (gr+ag+wt+ar !== 1) throw "Error: Terrain ratios do not add up to 1";
   Combo.PERCENT_GR = gr;
   Combo.PERCENT_AG = ag;

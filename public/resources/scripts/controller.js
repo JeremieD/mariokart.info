@@ -37,7 +37,7 @@ const defaultFormula = {
     max: 6 },
   hnd: {
     use: true,
-    factor: .5,
+    factor: 1,
     min: 0,
     max: 6 },
   hndGr: {
@@ -57,7 +57,7 @@ const defaultFormula = {
     min: 0,
     max: 6 },
   trctn: {
-    factor: .5,
+    factor: 1,
     min: 0,
     max: 6
   },
