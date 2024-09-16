@@ -1,4 +1,4 @@
 RewriteEngine On
-RewriteRule ^/$ /mk8dx [R]
-RewriteRule ^/mk8dx\.html$ /mk8dx [R]
-RewriteRule ^/mk8dx$ /mk8dx.html
+RewriteRule "^$" "/mk8dx" [R,END]
+RewriteRule "^mk8dx\.html$" "/mk8dx" [R=permanent,END]
+RewriteRule "^mk8dx$" "/mk8dx.html" [END]
