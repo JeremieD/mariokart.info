@@ -420,6 +420,10 @@ function drawComboTable(container, combos, limit = 50) {
     bodyImg.alt = bodyName;
     tireImg.alt = tireName;
     gliderImg.alt = gliderName;
+    driverImg.width = "128"; driverImg.height = "128";
+    bodyImg.width = "200"; bodyImg.height = "128";
+    tireImg.width = "200"; tireImg.height = "128";
+    gliderImg.width = "200"; gliderImg.height = "128";
     driverImg.loading = "lazy"; bodyImg.loading = "lazy";
     tireImg.loading = "lazy"; gliderImg.loading = "lazy";
     driverBox.title = driverName;
