@@ -5,6 +5,7 @@
   gap: .5rem;
   width: 100%;
   justify-content: stretch;
+  align-content: stretch;
 
   &>* {
     position: relative;
@@ -21,9 +22,13 @@
       }
     }
 
-    img { width: 100%; }
+    img {
+      width: 100%;
+      aspect-ratio: 25 / 16; // 200 / 128
+    }
     &:nth-child(1) {
       flex-grow: .64; // 128÷200
+      img { aspect-ratio: 1 / 1; }
     }
 
     jd-icon {
