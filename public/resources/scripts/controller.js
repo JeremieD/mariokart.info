@@ -484,10 +484,14 @@ function readURLParams() {
   state.selectedSlotID = BCode == undefined ? "A" : "B";
 
   const aCombo = Stats.post("getCombo", aCode ?? "MAAA")
-  .then(combo => { setCombo(combo, "A", true) });
+  .then(combo => {
+    whenDOMReady(() => { setCombo(combo, "A", true); });
+  });
 
   const bCombo = Stats.post("getCombo", bCode ?? BCode ?? "LMSA")
-  .then(combo => { setCombo(combo, "B", true) });
+  .then(combo => {
+    whenDOMReady(() => { setCombo(combo, "B", true); });
+  });
 }
 
 function updateURLParams(forceReplace = false) {
