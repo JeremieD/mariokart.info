@@ -100,19 +100,20 @@
 
     .stat-diffs {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, min-content auto);
       gap: .125em 1em;
       font-size: var(--font-size-1);
 
       &>div {
-        display: flex;
+        display: grid;
+        grid-template-columns: subgrid;
+        grid-column: span 2;
         gap: .375em;
         align-items: baseline;
         font-feature-settings: "tnum" on;
       }
       label {
         @extend .stat-code;
-        min-width: 6ch;
         text-align: right;
       }
     }
