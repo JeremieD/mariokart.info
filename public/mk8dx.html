@@ -90,9 +90,9 @@
 
         <div id="combo-stats" class="values-hidden">
           <div>
-            <label class="stat-code" id="mintb-label" title="Mini-Turbo">MTB</label>
-            <div class="meter" tooltip-align="left-middle" id="mintb-meter"></div>
-            <output id="mintb-value"></output>
+            <label class="stat-code" id="mtb-label" title="Mini-Turbo">MTB</label>
+            <div class="meter" tooltip-align="left-middle" id="mtb-meter"></div>
+            <output id="mtb-value"></output>
           </div>
 
           <div id="spd-multimeter">
@@ -111,15 +111,15 @@
           </div>
 
           <div>
-            <label class="stat-code" id="accel-label" title="Acceleration">ACC</label>
-            <div class="meter" tooltip-align="left-middle" id="accel-meter"></div>
-            <output id="accel-value"></output>
+            <label class="stat-code" id="acc-label" title="Acceleration">ACC</label>
+            <div class="meter" tooltip-align="left-middle" id="acc-meter"></div>
+            <output id="acc-value"></output>
           </div>
 
           <div>
-            <label class="stat-code" id="weigt-label" title="Weight">WGT</label>
-            <div class="meter" tooltip-align="left-middle" id="weigt-meter"></div>
-            <output id="weigt-value"></output>
+            <label class="stat-code" id="wgt-label" title="Weight">WGT</label>
+            <div class="meter" tooltip-align="left-middle" id="wgt-meter"></div>
+            <output id="wgt-value"></output>
           </div>
 
           <div id="hnd-multimeter">
@@ -138,15 +138,15 @@
           </div>
 
           <div>
-            <label class="stat-code" id="trctn-label" title="Traction">TRN</label>
-            <div class="meter" tooltip-align="left-middle" id="trctn-meter"></div>
-            <output id="trctn-value"></output>
+            <label class="stat-code" id="trn-label" title="Traction">TRN</label>
+            <div class="meter" tooltip-align="left-middle" id="trn-meter"></div>
+            <output id="trn-value"></output>
           </div>
 
           <div>
-            <label class="stat-code" id="invcb-label" title="Invincibility">INV</label>
-            <div class="meter" tooltip-align="left-middle" id="invcb-meter"></div>
-            <output id="invcb-value"></output>
+            <label class="stat-code" id="inv-label" title="Invincibility">INV</label>
+            <div class="meter" tooltip-align="left-middle" id="inv-meter"></div>
+            <output id="inv-value"></output>
           </div>
         </div>
       </div>
@@ -235,18 +235,18 @@
       <div class="factor-widget">
         <hgroup>
           <h3>Mini-Turbo</h3>
-          <button id="formula-mintb-mode" class="inline">Ignore</button>
+          <button id="formula-mtb-mode" class="inline">Ignore</button>
         </hgroup>
         <div>
-          <jd-slider id="formula-mintb-slider" value="16" min="-16" max="16" step="1" stops="8"></jd-slider>
-          <input id="formula-mintb-factor" type="number" inputmode="decimal" min="-16" max="16" step="1" placeholder="0"/>
+          <jd-slider id="formula-mtb-slider" value="16" min="-16" max="16" step="1" stops="8"></jd-slider>
+          <input id="formula-mtb-factor" type="number" inputmode="decimal" min="-16" max="16" step="1" placeholder="0"/>
         </div>
         <div>
           <div class="field-group">
-            <label>Min</label><input id="formula-mintb-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
+            <label>Min</label><input id="formula-mtb-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
           </div>
           <div class="field-group">
-            <label>Max</label><input id="formula-mintb-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
+            <label>Max</label><input id="formula-mtb-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
           </div>
         </div>
       </div>
@@ -352,18 +352,18 @@
       <div class="factor-widget">
         <hgroup>
           <h3>Acceleration</h3>
-          <button id="formula-accel-mode" class="inline">Ignore</button>
+          <button id="formula-acc-mode" class="inline">Ignore</button>
         </hgroup>
         <div>
-          <jd-slider id="formula-accel-slider" value="1" min="-16" max="16" step="1" stops="8"></jd-slider>
-          <input id="formula-accel-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
+          <jd-slider id="formula-acc-slider" value="1" min="-16" max="16" step="1" stops="8"></jd-slider>
+          <input id="formula-acc-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
         </div>
         <div>
           <div class="field-group">
-            <label>Min</label><input id="formula-accel-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
+            <label>Min</label><input id="formula-acc-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
           </div>
           <div class="field-group">
-            <label>Max</label><input id="formula-accel-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
+            <label>Max</label><input id="formula-acc-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
           </div>
         </div>
       </div>
@@ -371,18 +371,18 @@
       <div class="factor-widget">
         <hgroup>
           <h3>Weight</h3>
-          <button id="formula-weigt-mode" class="inline">Ignore</button>
+          <button id="formula-wgt-mode" class="inline">Ignore</button>
         </hgroup>
         <div>
-          <jd-slider id="formula-weigt-slider" value="1" min="-16" max="16" step="1" stops="8"></jd-slider>
-          <input id="formula-weigt-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
+          <jd-slider id="formula-wgt-slider" value="1" min="-16" max="16" step="1" stops="8"></jd-slider>
+          <input id="formula-wgt-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
         </div>
         <div>
           <div class="field-group">
-            <label>Min</label><input id="formula-weigt-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
+            <label>Min</label><input id="formula-wgt-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
           </div>
           <div class="field-group">
-            <label>Max</label><input id="formula-weigt-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
+            <label>Max</label><input id="formula-wgt-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
           </div>
         </div>
       </div>
@@ -488,18 +488,18 @@
       <div class="factor-widget">
         <hgroup>
           <h3>Traction</h3>
-          <button id="formula-trctn-mode" class="inline">Ignore</button>
+          <button id="formula-trn-mode" class="inline">Ignore</button>
         </hgroup>
         <div>
-          <jd-slider id="formula-trctn-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-          <input id="formula-trctn-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
+          <jd-slider id="formula-trn-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
+          <input id="formula-trn-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
         </div>
         <div>
           <div class="field-group">
-            <label>Min</label><input id="formula-trctn-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
+            <label>Min</label><input id="formula-trn-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
           </div>
           <div class="field-group">
-            <label>Max</label><input id="formula-trctn-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
+            <label>Max</label><input id="formula-trn-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
           </div>
         </div>
       </div>
@@ -507,18 +507,18 @@
       <div class="factor-widget">
         <hgroup>
           <h3>Invincibility</h3>
-          <button id="formula-invcb-mode" class="inline">Ignore</button>
+          <button id="formula-inv-mode" class="inline">Ignore</button>
         </hgroup>
         <div>
-          <jd-slider id="formula-invcb-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-          <input id="formula-invcb-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
+          <jd-slider id="formula-inv-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
+          <input id="formula-inv-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
         </div>
         <div>
           <div class="field-group">
-            <label>Min</label><input id="formula-invcb-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
+            <label>Min</label><input id="formula-inv-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
           </div>
           <div class="field-group">
-            <label>Max</label><input id="formula-invcb-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
+            <label>Max</label><input id="formula-inv-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
           </div>
         </div>
       </div>

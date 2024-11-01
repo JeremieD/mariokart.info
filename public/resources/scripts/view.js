@@ -1,11 +1,11 @@
 "use strict";
 
 const graphicsRoot = "/resources/graphics/";
-const stats = [ "mintb", "spdGr", "spdAg", "spdWt", "spdAr", "accel",
-                "weigt", "hndGr", "hndAg", "hndWt", "hndAr", "trctn", "invcb" ];
-const scoreStats = [ "mintb", "spd", "spdGr", "spdAg", "spdWt", "spdAr",
-            "accel", "weigt", "hnd", "hndGr", "hndAg", "hndWt", "hndAr",
-            "trctn", "invcb", "size" ];
+const stats = [ "mtb", "spdGr", "spdAg", "spdWt", "spdAr", "acc",
+                "wgt", "hndGr", "hndAg", "hndWt", "hndAr", "trn", "inv" ];
+const scoreStats = [ "mtb", "spd", "spdGr", "spdAg", "spdWt", "spdAr",
+            "acc", "wgt", "hnd", "hndGr", "hndAg", "hndWt", "hndAr",
+            "trn", "inv", "size" ];
 const V = {
   combo: {},
   dominant: {},
@@ -42,9 +42,9 @@ whenDOMReady(() => {
   V.combo.details    = document.getElementById("combo-details");
   V.combo.meters     = document.getElementById("combo-stats");
 
-  V.combo.mintb = {
-    meter: document.getElementById("mintb-meter"),
-    value: document.getElementById("mintb-value")
+  V.combo.mtb = {
+    meter: document.getElementById("mtb-meter"),
+    value: document.getElementById("mtb-value")
   };
   V.combo.spdGr = {
     meter: document.getElementById("spdGr-meter"),
@@ -62,13 +62,13 @@ whenDOMReady(() => {
     meter: document.getElementById("spdAr-meter"),
     value: document.getElementById("spdAr-value")
   };
-  V.combo.accel = {
-    meter: document.getElementById("accel-meter"),
-    value: document.getElementById("accel-value")
+  V.combo.acc = {
+    meter: document.getElementById("acc-meter"),
+    value: document.getElementById("acc-value")
   };
-  V.combo.weigt = {
-    meter: document.getElementById("weigt-meter"),
-    value: document.getElementById("weigt-value")
+  V.combo.wgt = {
+    meter: document.getElementById("wgt-meter"),
+    value: document.getElementById("wgt-value")
   };
   V.combo.hndGr = {
     meter: document.getElementById("hndGr-meter"),
@@ -86,13 +86,13 @@ whenDOMReady(() => {
     meter: document.getElementById("hndAr-meter"),
     value: document.getElementById("hndAr-value")
   };
-  V.combo.trctn = {
-    meter: document.getElementById("trctn-meter"),
-    value: document.getElementById("trctn-value")
+  V.combo.trn = {
+    meter: document.getElementById("trn-meter"),
+    value: document.getElementById("trn-value")
   };
-  V.combo.invcb = {
-    meter: document.getElementById("invcb-meter"),
-    value: document.getElementById("invcb-value")
+  V.combo.inv = {
+    meter: document.getElementById("inv-meter"),
+    value: document.getElementById("inv-value")
   };
 
   V.combo.spdMultimeter = document.getElementById("spd-multimeter");
