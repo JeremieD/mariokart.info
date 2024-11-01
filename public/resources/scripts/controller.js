@@ -2,7 +2,7 @@
 // Controller
 
 const blankFormula = {
-  mintb: {
+  mtb: {
     factor: 0,
     min: 0,
     max: 20 },
@@ -27,11 +27,11 @@ const blankFormula = {
     factor: 0,
     min: 0,
     max: 20 },
-  accel: {
+  acc: {
     factor: 0,
     min: 0,
     max: 20 },
-  weigt: {
+  wgt: {
     factor: 0,
     min: 0,
     max: 20 },
@@ -56,12 +56,12 @@ const blankFormula = {
     factor: 0,
     min: 0,
     max: 20 },
-  trctn: {
+  trn: {
     factor: 0,
     min: 0,
     max: 20
   },
-  invcb: {
+  inv: {
     factor: 0,
     min: 0,
     max: 20 },
@@ -73,7 +73,7 @@ const blankFormula = {
   excludeBikes: false, excludeSportBikes: false,
 };
 const defaultFormula = {
-  mintb: {
+  mtb: {
     factor: 16,
     min: 0,
     max: 20 },
@@ -98,11 +98,11 @@ const defaultFormula = {
     factor: 0,
     min: 0,
     max: 20 },
-  accel: {
+  acc: {
     factor: 1,
     min: 0,
     max: 20 },
-  weigt: {
+  wgt: {
     factor: 1,
     min: 0,
     max: 20 },
@@ -127,12 +127,12 @@ const defaultFormula = {
     factor: 0,
     min: 0,
     max: 20 },
-  trctn: {
+  trn: {
     factor: 1,
     min: 0,
     max: 20
   },
-  invcb: {
+  inv: {
     factor: 0,
     min: 0,
     max: 20 },
@@ -288,13 +288,13 @@ function updateRelatedCombos(slot) {
 function getDominantCombos(combo) {
   const opts = {
     mustDiffer: true, sortBy: "diff",
-    mintb: { min: combo.lvl.mintb },
+    mtb: { min: combo.lvl.mtb },
     spdGr: { min: combo.lvl.spdGr }, spdWt: { min: combo.lvl.spdWt },
     spdAg: { min: combo.lvl.spdAg }, spdAr: { min: combo.lvl.spdAr },
-    accel: { min: combo.lvl.accel }, weigt: { min: combo.lvl.weigt },
+    acc: { min: combo.lvl.acc }, wgt: { min: combo.lvl.wgt },
     hndGr: { min: combo.lvl.hndGr }, hndWt: { min: combo.lvl.hndWt },
     hndAg: { min: combo.lvl.hndAg }, hndAr: { min: combo.lvl.hndAr },
-    trctn: { min: combo.lvl.trctn }, invcb: { min: combo.lvl.invcb },
+    trn: { min: combo.lvl.trn }, inv: { min: combo.lvl.inv },
     refCombo: combo,
     driverLock: state.locks.driver, bodyLock: state.locks.body,
     tireLock: state.locks.tire, gliderLock: state.locks.glider

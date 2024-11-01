@@ -44,11 +44,11 @@ onmessage = e => {
   postMessage(response);
 };
 
-const stats = [ "mintb", "spdGr", "spdAg", "spdWt", "spdAr", "accel",
-                "weigt", "hndGr", "hndAg", "hndWt", "hndAr", "trctn", "invcb" ];
-const scoreStats = [ "mintb", "spd", "spdGr", "spdAg", "spdWt", "spdAr",
-            "accel", "weigt", "hnd", "hndGr", "hndAg", "hndWt", "hndAr",
-            "trctn", "invcb", "size" ];
+const stats = [ "mtb", "spdGr", "spdAg", "spdWt", "spdAr", "acc",
+                "wgt", "hndGr", "hndAg", "hndWt", "hndAr", "trn", "inv" ];
+const scoreStats = [ "mtb", "spd", "spdGr", "spdAg", "spdWt", "spdAr",
+            "acc", "wgt", "hnd", "hndGr", "hndAg", "hndWt", "hndAr",
+            "trn", "inv", "size" ];
 
 class Combo {
   // TODO: Clean up a bit. Rename some stuff.
@@ -72,21 +72,21 @@ class Combo {
   };
   code = "";
   lvl = {
-    mintb: 0,
+    mtb: 0,
     spd: 0,
     spdGr: 0,
     spdAg: 0,
     spdWt: 0,
     spdAr: 0,
-    accel: 0,
-    weigt: 0,
+    acc: 0,
+    wgt: 0,
     hnd: 0,
     hndGr: 0,
     hndAg: 0,
     hndWt: 0,
     hndAr: 0,
-    trctn: 0,
-    invcb: 0,
+    trn: 0,
+    inv: 0,
     size: 0
   };
   size = -1;
@@ -210,21 +210,21 @@ function listCombos(opts = {}) {
   const bodyLock = opts.bodyLock ?? false;
   const tireLock = opts.tireLock ?? false;
   const gliderLock = opts.gliderLock ?? false;
-  const mintbMin = opts.mintb?.min ?? 0; const mintbMax = opts.mintb?.max ?? 20;
+  const mtbMin = opts.mtb?.min ?? 0; const mtbMax = opts.mtb?.max ?? 20;
   const spdMin = opts.spd?.min ?? 0; const spdMax = opts.spd?.max ?? 20;
   const spdGrMin = opts.spdGr?.min ?? 0; const spdGrMax = opts.spdGr?.max ?? 20;
   const spdWtMin = opts.spdWt?.min ?? 0; const spdWtMax = opts.spdWt?.max ?? 20;
   const spdAgMin = opts.spdAg?.min ?? 0; const spdAgMax = opts.spdAg?.max ?? 20;
   const spdArMin = opts.spdAr?.min ?? 0; const spdArMax = opts.spdAr?.max ?? 20;
-  const accelMin = opts.accel?.min ?? 0; const accelMax = opts.accel?.max ?? 20;
-  const weigtMin = opts.weigt?.min ?? 0; const weigtMax = opts.weigt?.max ?? 20;
+  const accMin = opts.acc?.min ?? 0; const accMax = opts.acc?.max ?? 20;
+  const wgtMin = opts.wgt?.min ?? 0; const wgtMax = opts.wgt?.max ?? 20;
   const hndMin = opts.hnd?.min ?? 0; const hndMax = opts.hnd?.max ?? 20;
   const hndGrMin = opts.hndGr?.min ?? 0; const hndGrMax = opts.hndGr?.max ?? 20;
   const hndWtMin = opts.hndWt?.min ?? 0; const hndWtMax = opts.hndWt?.max ?? 20;
   const hndAgMin = opts.hndAg?.min ?? 0; const hndAgMax = opts.hndAg?.max ?? 20;
   const hndArMin = opts.hndAr?.min ?? 0; const hndArMax = opts.hndAr?.max ?? 20;
-  const trctnMin = opts.trctn?.min ?? 0; const trctnMax = opts.trctn?.max ?? 20;
-  const invcbMin = opts.invcb?.min ?? 0; const invcbMax = opts.invcb?.max ?? 20;
+  const trnMin = opts.trn?.min ?? 0; const trnMax = opts.trn?.max ?? 20;
+  const invMin = opts.inv?.min ?? 0; const invMax = opts.inv?.max ?? 20;
   const sizeMin = opts.size?.min ?? 0; const sizeMax = opts.size?.max ?? 2;
   const excludeKarts = opts.excludeKarts ?? false;
   const excludeATVs = opts.excludeATVs ?? false;
@@ -232,15 +232,15 @@ function listCombos(opts = {}) {
   const excludeSportBikes = opts.excludeSportBikes ?? false;
   const sortBy = opts.sortBy ?? "diff";
   const factors = [
-    opts.mintb?.factor ?? 0,
+    opts.mtb?.factor ?? 0,
     opts.spd?.factor ?? 0,
     opts.spdGr?.factor ?? 0, opts.spdAg?.factor ?? 0,
     opts.spdWt?.factor ?? 0, opts.spdAr?.factor ?? 0,
-    opts.accel?.factor ?? 0, opts.weigt?.factor ?? 0,
+    opts.acc?.factor ?? 0, opts.wgt?.factor ?? 0,
     opts.hnd?.factor ?? 0,
     opts.hndGr?.factor ?? 0, opts.hndAg?.factor ?? 0,
     opts.hndWt?.factor ?? 0, opts.hndAr?.factor ?? 0,
-    opts.trctn?.factor ?? 0, opts.invcb?.factor ?? 0,
+    opts.trn?.factor ?? 0, opts.inv?.factor ?? 0,
     opts.size?.factor ?? 0
   ];
   const limit = opts.limit ?? 51;
@@ -271,52 +271,52 @@ function listCombos(opts = {}) {
     const combo = new Combo(driver, body, tire, glider);
 
     // Stat Checks
-    if (combo.lvl.mintb < mintbMin || combo.lvl.mintb > mintbMax) continue;
+    if (combo.lvl.mtb < mtbMin || combo.lvl.mtb > mtbMax) continue;
     if (combo.lvl.spd < spdMin || combo.lvl.spd > spdMax) continue;
     if (combo.lvl.spdGr < spdGrMin || combo.lvl.spdGr > spdGrMax) continue;
     if (combo.lvl.spdWt < spdWtMin || combo.lvl.spdWt > spdWtMax) continue;
     if (combo.lvl.spdAg < spdAgMin || combo.lvl.spdAg > spdAgMax) continue;
     if (combo.lvl.spdAr < spdArMin || combo.lvl.spdAr > spdArMax) continue;
-    if (combo.lvl.accel < accelMin || combo.lvl.accel > accelMax) continue;
-    if (combo.lvl.weigt < weigtMin || combo.lvl.weigt > weigtMax) continue;
+    if (combo.lvl.acc < accMin || combo.lvl.acc > accMax) continue;
+    if (combo.lvl.wgt < wgtMin || combo.lvl.wgt > wgtMax) continue;
     if (combo.lvl.hnd < hndMin || combo.lvl.hnd > hndMax) continue;
     if (combo.lvl.hndGr < hndGrMin || combo.lvl.hndGr > hndGrMax) continue;
     if (combo.lvl.hndWt < hndWtMin || combo.lvl.hndWt > hndWtMax) continue;
     if (combo.lvl.hndAg < hndAgMin || combo.lvl.hndAg > hndAgMax) continue;
     if (combo.lvl.hndAr < hndArMin || combo.lvl.hndAr > hndArMax) continue;
-    if (combo.lvl.trctn < trctnMin || combo.lvl.trctn > trctnMax) continue;
-    if (combo.lvl.invcb < invcbMin || combo.lvl.invcb > invcbMax) continue;
+    if (combo.lvl.trn < trnMin || combo.lvl.trn > trnMax) continue;
+    if (combo.lvl.inv < invMin || combo.lvl.inv > invMax) continue;
     if (combo.size < sizeMin || combo.size > sizeMax) continue;
 
     // Difference Checks
     const diff = {
-      mintb: combo.lvl.mintb - refCombo.lvl.mintb,
+      mtb: combo.lvl.mtb - refCombo.lvl.mtb,
       spdGr: combo.lvl.spdGr - refCombo.lvl.spdGr,
       spdWt: combo.lvl.spdWt - refCombo.lvl.spdWt,
       spdAg: combo.lvl.spdAg - refCombo.lvl.spdAg,
       spdAr: combo.lvl.spdAr - refCombo.lvl.spdAr,
-      accel: combo.lvl.accel - refCombo.lvl.accel,
-      weigt: combo.lvl.weigt - refCombo.lvl.weigt,
+      acc: combo.lvl.acc - refCombo.lvl.acc,
+      wgt: combo.lvl.wgt - refCombo.lvl.wgt,
       hndGr: combo.lvl.hndGr - refCombo.lvl.hndGr,
       hndWt: combo.lvl.hndWt - refCombo.lvl.hndWt,
       hndAg: combo.lvl.hndAg - refCombo.lvl.hndAg,
       hndAr: combo.lvl.hndAr - refCombo.lvl.hndAr,
-      trctn: combo.lvl.trctn - refCombo.lvl.trctn,
-      invcb: combo.lvl.invcb - refCombo.lvl.invcb
+      trn: combo.lvl.trn - refCombo.lvl.trn,
+      inv: combo.lvl.inv - refCombo.lvl.inv
     };
 
-    diff.total = diff.mintb + diff.spdGr + diff.spdWt + diff.spdAg + diff.spdAr
-               + diff.accel + diff.weigt + diff.hndGr + diff.hndWt + diff.hndAg
-               + diff.hndAr + diff.trctn + diff.invcb;
+    diff.total = diff.mtb + diff.spdGr + diff.spdWt + diff.spdAg + diff.spdAr
+               + diff.acc + diff.wgt + diff.hndGr + diff.hndWt + diff.hndAg
+               + diff.hndAr + diff.trn + diff.inv;
     if (diff.total > maxDiff || diff.total < minDiff) continue;
 
-    diff.absTotal = Math.abs(diff.mintb)
+    diff.absTotal = Math.abs(diff.mtb)
                   + Math.abs(diff.spdGr) + Math.abs(diff.spdWt)
                   + Math.abs(diff.spdAg) + Math.abs(diff.spdAr)
-                  + Math.abs(diff.accel) + Math.abs(diff.weigt)
+                  + Math.abs(diff.acc) + Math.abs(diff.wgt)
                   + Math.abs(diff.hndGr) + Math.abs(diff.hndWt)
                   + Math.abs(diff.hndAg) + Math.abs(diff.hndAr)
-                  + Math.abs(diff.trctn) + Math.abs(diff.invcb);
+                  + Math.abs(diff.trn) + Math.abs(diff.inv);
     if (diff.absTotal > maxAbsDiff) continue;
     if (mustDiffer && diff.absTotal == 0) continue;
 
@@ -598,10 +598,10 @@ function setTerrainRatios(gr, ag, wt, ar) {
 const classes = {
   drivers: {
     mario: {
-      weigt: 6,
-      accel: 2,
-      trctn: 2,
-      mintb: 3,
+      wgt: 6,
+      acc: 2,
+      trn: 2,
+      mtb: 3,
       spdGr: 7,
       spdWt: 7,
       spdAg: 7,
@@ -610,14 +610,14 @@ const classes = {
       hndWt: 4,
       hndAg: 4,
       hndAr: 4,
-      invcb: 3,
+      inv: 3,
       size: 1
     },
     luigi: {
-      weigt: 6,
-      accel: 2,
-      trctn: 1,
-      mintb: 3,
+      wgt: 6,
+      acc: 2,
+      trn: 1,
+      mtb: 3,
       spdGr: 7,
       spdWt: 7,
       spdAg: 7,
@@ -626,14 +626,14 @@ const classes = {
       hndWt: 5,
       hndAg: 5,
       hndAr: 5,
-      invcb: 3,
+      inv: 3,
       size: 1
     },
     peach: {
-      weigt: 4,
-      accel: 3,
-      trctn: 3,
-      mintb: 4,
+      wgt: 4,
+      acc: 3,
+      trn: 3,
+      mtb: 4,
       spdGr: 6,
       spdWt: 6,
       spdAg: 6,
@@ -642,14 +642,14 @@ const classes = {
       hndWt: 5,
       hndAg: 5,
       hndAr: 5,
-      invcb: 1,
+      inv: 1,
       size: 1
     },
     rosalina: {
-      weigt: 7,
-      accel: 1,
-      trctn: 3,
-      mintb: 2,
+      wgt: 7,
+      acc: 1,
+      trn: 3,
+      mtb: 2,
       spdGr: 8,
       spdWt: 8,
       spdAg: 8,
@@ -658,14 +658,14 @@ const classes = {
       hndWt: 3,
       hndAg: 3,
       hndAr: 3,
-      invcb: 4,
+      inv: 4,
       size: 2
     },
     petey: {
-      weigt: 10,
-      accel: 1,
-      trctn: 1,
-      mintb: 1,
+      wgt: 10,
+      acc: 1,
+      trn: 1,
+      mtb: 1,
       spdGr: 8,
       spdWt: 8,
       spdAg: 8,
@@ -674,14 +674,14 @@ const classes = {
       hndWt: 3,
       hndAg: 3,
       hndAr: 3,
-      invcb: 6,
+      inv: 6,
       size: 2
     },
     marioTan: {
-      weigt: 5,
-      accel: 3,
-      trctn: 1,
-      mintb: 4,
+      wgt: 5,
+      acc: 3,
+      trn: 1,
+      mtb: 4,
       spdGr: 6,
       spdWt: 6,
       spdAg: 6,
@@ -690,14 +690,14 @@ const classes = {
       hndWt: 5,
       hndAg: 5,
       hndAr: 5,
-      invcb: 1,
+      inv: 1,
       size: 1
     },
     peachCat: {
-      weigt: 3,
-      accel: 4,
-      trctn: 3,
-      mintb: 4,
+      wgt: 3,
+      acc: 4,
+      trn: 3,
+      mtb: 4,
       spdGr: 5,
       spdWt: 5,
       spdAg: 5,
@@ -706,14 +706,14 @@ const classes = {
       hndWt: 6,
       hndAg: 6,
       hndAr: 6,
-      invcb: 3,
+      inv: 3,
       size: 1
     },
     toad: {
-      weigt: 3,
-      accel: 4,
-      trctn: 4,
-      mintb: 4,
+      wgt: 3,
+      acc: 4,
+      trn: 4,
+      mtb: 4,
       spdGr: 4,
       spdWt: 4,
       spdAg: 4,
@@ -722,14 +722,14 @@ const classes = {
       hndWt: 7,
       hndAg: 7,
       hndAr: 7,
-      invcb: 3,
+      inv: 3,
       size: 0
     },
     koopa: {
-      weigt: 2,
-      accel: 4,
-      trctn: 5,
-      mintb: 4,
+      wgt: 2,
+      acc: 4,
+      trn: 5,
+      mtb: 4,
       spdGr: 3,
       spdWt: 3,
       spdAg: 3,
@@ -738,14 +738,14 @@ const classes = {
       hndWt: 8,
       hndAg: 8,
       hndAr: 8,
-      invcb: 4,
+      inv: 4,
       size: 0
     },
     toadette: {
-      weigt: 2,
-      accel: 5,
-      trctn: 2,
-      mintb: 4,
+      wgt: 2,
+      acc: 5,
+      trn: 2,
+      mtb: 4,
       spdGr: 3,
       spdWt: 3,
       spdAg: 3,
@@ -754,14 +754,14 @@ const classes = {
       hndWt: 7,
       hndAg: 7,
       hndAr: 7,
-      invcb: 3,
+      inv: 3,
       size: 0
     },
     marioBb: {
-      weigt: 1,
-      accel: 5,
-      trctn: 4,
-      mintb: 5,
+      wgt: 1,
+      acc: 5,
+      trn: 4,
+      mtb: 5,
       spdGr: 2,
       spdWt: 2,
       spdAg: 2,
@@ -770,14 +770,14 @@ const classes = {
       hndWt: 8,
       hndAg: 8,
       hndAr: 8,
-      invcb: 5,
+      inv: 5,
       size: 0
     },
     peachBb: {
-      weigt: 0,
-      accel: 4,
-      trctn: 5,
-      mintb: 5,
+      wgt: 0,
+      acc: 4,
+      trn: 5,
+      mtb: 5,
       spdGr: 1,
       spdWt: 1,
       spdAg: 1,
@@ -786,14 +786,14 @@ const classes = {
       hndWt: 10,
       hndAg: 10,
       hndAr: 10,
-      invcb: 6,
+      inv: 6,
       size: 0
     },
     rosalinaBb: {
-      weigt: 0,
-      accel: 5,
-      trctn: 3,
-      mintb: 5,
+      wgt: 0,
+      acc: 5,
+      trn: 3,
+      mtb: 5,
       spdGr: 1,
       spdWt: 1,
       spdAg: 1,
@@ -802,14 +802,14 @@ const classes = {
       hndWt: 9,
       hndAg: 9,
       hndAr: 9,
-      invcb: 6,
+      inv: 6,
       size: 0
     },
     marioGold: {
-      weigt: 10,
-      accel: 1,
-      trctn: 1,
-      mintb: 1,
+      wgt: 10,
+      acc: 1,
+      trn: 1,
+      mtb: 1,
       spdGr: 8,
       spdWt: 8,
       spdAg: 8,
@@ -818,14 +818,14 @@ const classes = {
       hndWt: 3,
       hndAg: 3,
       hndAr: 3,
-      invcb: 3,
+      inv: 3,
       size: 1
     },
     wiggler: {
-      weigt: 8,
-      accel: 1,
-      trctn: 0,
-      mintb: 1,
+      wgt: 8,
+      acc: 1,
+      trn: 0,
+      mtb: 1,
       spdGr: 9,
       spdWt: 9,
       spdAg: 9,
@@ -834,14 +834,14 @@ const classes = {
       hndWt: 2,
       hndAg: 2,
       hndAr: 2,
-      invcb: 4,
+      inv: 4,
       size: 1
     },
     wario: {
-      weigt: 9,
-      accel: 0,
-      trctn: 1,
-      mintb: 0,
+      wgt: 9,
+      acc: 0,
+      trn: 1,
+      mtb: 0,
       spdGr: 10,
       spdWt: 10,
       spdAg: 10,
@@ -850,14 +850,14 @@ const classes = {
       hndWt: 1,
       hndAg: 1,
       hndAr: 1,
-      invcb: 5,
+      inv: 5,
       size: 2
     },
     waluigi: {
-      weigt: 8,
-      accel: 1,
-      trctn: 0,
-      mintb: 1,
+      wgt: 8,
+      acc: 1,
+      trn: 0,
+      mtb: 1,
       spdGr: 9,
       spdWt: 9,
       spdAg: 9,
@@ -866,14 +866,14 @@ const classes = {
       hndWt: 2,
       hndAg: 2,
       hndAr: 2,
-      invcb: 4,
+      inv: 4,
       size: 2
     },
     bowser: {
-      weigt: 10,
-      accel: 0,
-      trctn: 0,
-      mintb: 0,
+      wgt: 10,
+      acc: 0,
+      trn: 0,
+      mtb: 0,
       spdGr: 10,
       spdWt: 10,
       spdAg: 10,
@@ -882,16 +882,16 @@ const classes = {
       hndWt: 0,
       hndAg: 0,
       hndAr: 0,
-      invcb: 6,
+      inv: 6,
       size: 2
     }
   },
   bodies: {
     std: {
-      weigt: 2,
-      accel: 4,
-      trctn: 3,
-      mintb: 5,
+      wgt: 2,
+      acc: 4,
+      trn: 3,
+      mtb: 5,
       spdGr: 3,
       spdWt: 3,
       spdAg: 3,
@@ -900,13 +900,13 @@ const classes = {
       hndWt: 2,
       hndAg: 3,
       hndAr: 3,
-      invcb: 3
+      inv: 3
     },
     gla300: {
-      weigt: 2,
-      accel: 4,
-      trctn: 3,
-      mintb: 5,
+      wgt: 2,
+      acc: 4,
+      trn: 3,
+      mtb: 5,
       spdGr: 3,
       spdWt: 3,
       spdAg: 3,
@@ -915,13 +915,13 @@ const classes = {
       hndWt: 2,
       hndAg: 3,
       hndAr: 3,
-      invcb: 4
+      inv: 4
     },
     pipe: {
-      weigt: 1,
-      accel: 6,
-      trctn: 4,
-      mintb: 6,
+      wgt: 1,
+      acc: 6,
+      trn: 4,
+      mtb: 6,
       spdGr: 2,
       spdWt: 3,
       spdAg: 1,
@@ -930,13 +930,13 @@ const classes = {
       hndWt: 4,
       hndAg: 4,
       hndAr: 2,
-      invcb: 3
+      inv: 3
     },
     varmint: {
-      weigt: 1,
-      accel: 6,
-      trctn: 4,
-      mintb: 6,
+      wgt: 1,
+      acc: 6,
+      trn: 4,
+      mtb: 6,
       spdGr: 2,
       spdWt: 3,
       spdAg: 1,
@@ -945,13 +945,13 @@ const classes = {
       hndWt: 4,
       hndAg: 4,
       hndAr: 2,
-      invcb: 2
+      inv: 2
     },
     mach: {
-      weigt: 3,
-      accel: 3,
-      trctn: 4,
-      mintb: 5,
+      wgt: 3,
+      acc: 3,
+      trn: 4,
+      mtb: 5,
       spdGr: 3,
       spdWt: 3,
       spdAg: 5,
@@ -960,13 +960,13 @@ const classes = {
       hndWt: 2,
       hndAg: 4,
       hndAr: 2,
-      invcb: 3
+      inv: 3
     },
     ink: {
-      weigt: 3,
-      accel: 3,
-      trctn: 4,
-      mintb: 5,
+      wgt: 3,
+      acc: 3,
+      trn: 4,
+      mtb: 5,
       spdGr: 3,
       spdWt: 3,
       spdAg: 5,
@@ -975,13 +975,13 @@ const classes = {
       hndWt: 2,
       hndAg: 4,
       hndAr: 2,
-      invcb: 1
+      inv: 1
     },
     steel: {
-      weigt: 4,
-      accel: 1,
-      trctn: 3,
-      mintb: 3,
+      wgt: 4,
+      acc: 1,
+      trn: 3,
+      mtb: 3,
       spdGr: 4,
       spdWt: 5,
       spdAg: 2,
@@ -990,13 +990,13 @@ const classes = {
       hndWt: 5,
       hndAg: 1,
       hndAr: 1,
-      invcb: 6
+      inv: 6
     },
     rattler: {
-      weigt: 4,
-      accel: 1,
-      trctn: 3,
-      mintb: 3,
+      wgt: 4,
+      acc: 1,
+      trn: 3,
+      mtb: 3,
       spdGr: 4,
       spdWt: 5,
       spdAg: 2,
@@ -1005,13 +1005,13 @@ const classes = {
       hndWt: 5,
       hndAg: 1,
       hndAr: 1,
-      invcb: 5
+      inv: 5
     },
     cat: {
-      weigt: 2,
-      accel: 5,
-      trctn: 3,
-      mintb: 6,
+      wgt: 2,
+      acc: 5,
+      trn: 3,
+      mtb: 6,
       spdGr: 2,
       spdWt: 2,
       spdAg: 3,
@@ -1020,13 +1020,13 @@ const classes = {
       hndWt: 2,
       hndAg: 3,
       hndAr: 4,
-      invcb: 3
+      inv: 3
     },
     comet: {
-      weigt: 2,
-      accel: 5,
-      trctn: 3,
-      mintb: 6,
+      wgt: 2,
+      acc: 5,
+      trn: 3,
+      mtb: 6,
       spdGr: 2,
       spdWt: 2,
       spdAg: 3,
@@ -1035,13 +1035,13 @@ const classes = {
       hndWt: 2,
       hndAg: 3,
       hndAr: 4,
-      invcb: 3
+      inv: 3
     },
     yoshi: {
-      weigt: 2,
-      accel: 5,
-      trctn: 3,
-      mintb: 6,
+      wgt: 2,
+      acc: 5,
+      trn: 3,
+      mtb: 6,
       spdGr: 2,
       spdWt: 2,
       spdAg: 3,
@@ -1050,13 +1050,13 @@ const classes = {
       hndWt: 2,
       hndAg: 3,
       hndAr: 4,
-      invcb: 2
+      inv: 2
     },
     teddy: {
-      weigt: 2,
-      accel: 5,
-      trctn: 3,
-      mintb: 6,
+      wgt: 2,
+      acc: 5,
+      trn: 3,
+      mtb: 6,
       spdGr: 2,
       spdWt: 2,
       spdAg: 3,
@@ -1065,13 +1065,13 @@ const classes = {
       hndWt: 2,
       hndAg: 3,
       hndAr: 4,
-      invcb: 1
+      inv: 1
     },
     circuit: {
-      weigt: 3,
-      accel: 1,
-      trctn: 1,
-      mintb: 3,
+      wgt: 3,
+      acc: 1,
+      trn: 1,
+      mtb: 3,
       spdGr: 5,
       spdWt: 1,
       spdAg: 4,
@@ -1080,13 +1080,13 @@ const classes = {
       hndWt: 1,
       hndAg: 2,
       hndAr: 0,
-      invcb: 6
+      inv: 6
     },
     wagon: {
-      weigt: 4,
-      accel: 0,
-      trctn: 5,
-      mintb: 3,
+      wgt: 4,
+      acc: 0,
+      trn: 5,
+      mtb: 3,
       spdGr: 5,
       spdWt: 2,
       spdAg: 3,
@@ -1095,13 +1095,13 @@ const classes = {
       hndWt: 1,
       hndAg: 1,
       hndAr: 0,
-      invcb: 7
+      inv: 7
     },
     atvStd: {
-      weigt: 4,
-      accel: 0,
-      trctn: 5,
-      mintb: 3,
+      wgt: 4,
+      acc: 0,
+      trn: 5,
+      mtb: 3,
       spdGr: 5,
       spdWt: 2,
       spdAg: 3,
@@ -1110,13 +1110,13 @@ const classes = {
       hndWt: 1,
       hndAg: 1,
       hndAr: 0,
-      invcb: 6
+      inv: 6
     },
     prancer: {
-      weigt: 1,
-      accel: 2,
-      trctn: 2,
-      mintb: 4,
+      wgt: 1,
+      acc: 2,
+      trn: 2,
+      mtb: 4,
       spdGr: 4,
       spdWt: 3,
       spdAg: 3,
@@ -1125,13 +1125,13 @@ const classes = {
       hndWt: 3,
       hndAg: 2,
       hndAr: 3,
-      invcb: 5
+      inv: 5
     },
     bikeSport: {
-      weigt: 1,
-      accel: 2,
-      trctn: 2,
-      mintb: 4,
+      wgt: 1,
+      acc: 2,
+      trn: 2,
+      mtb: 4,
       spdGr: 4,
       spdWt: 3,
       spdAg: 3,
@@ -1140,13 +1140,13 @@ const classes = {
       hndWt: 3,
       hndAg: 2,
       hndAr: 3,
-      invcb: 3
+      inv: 3
     },
     biddy: {
-      weigt: 0,
-      accel: 7,
-      trctn: 4,
-      mintb: 7,
+      wgt: 0,
+      acc: 7,
+      trn: 4,
+      mtb: 7,
       spdGr: 0,
       spdWt: 1,
       spdAg: 2,
@@ -1155,13 +1155,13 @@ const classes = {
       hndWt: 4,
       hndAg: 5,
       hndAr: 4,
-      invcb: 0
+      inv: 0
     },
     sneeker: {
-      weigt: 2,
-      accel: 2,
-      trctn: 0,
-      mintb: 4,
+      wgt: 2,
+      acc: 2,
+      trn: 0,
+      mtb: 4,
       spdGr: 4,
       spdWt: 2,
       spdAg: 3,
@@ -1170,13 +1170,13 @@ const classes = {
       hndWt: 2,
       hndAg: 3,
       hndAr: 2,
-      invcb: 5
+      inv: 5
     },
     gold: {
-      weigt: 2,
-      accel: 2,
-      trctn: 0,
-      mintb: 4,
+      wgt: 2,
+      acc: 2,
+      trn: 0,
+      mtb: 4,
       spdGr: 4,
       spdWt: 2,
       spdAg: 3,
@@ -1185,13 +1185,13 @@ const classes = {
       hndWt: 2,
       hndAg: 3,
       hndAr: 2,
-      invcb: 4
+      inv: 4
     },
     master: {
-      weigt: 2,
-      accel: 2,
-      trctn: 0,
-      mintb: 4,
+      wgt: 2,
+      acc: 2,
+      trn: 0,
+      mtb: 4,
       spdGr: 4,
       spdWt: 2,
       spdAg: 3,
@@ -1200,13 +1200,13 @@ const classes = {
       hndWt: 2,
       hndAg: 3,
       hndAr: 2,
-      invcb: 3
+      inv: 3
     },
     gla25: {
-      weigt: 1,
-      accel: 5,
-      trctn: 5,
-      mintb: 5,
+      wgt: 1,
+      acc: 5,
+      trn: 5,
+      mtb: 5,
       spdGr: 2,
       spdWt: 2,
       spdAg: 4,
@@ -1215,13 +1215,13 @@ const classes = {
       hndWt: 3,
       hndAg: 4,
       hndAr: 3,
-      invcb: 4
+      inv: 4
     },
     bikeStd: {
-      weigt: 1,
-      accel: 5,
-      trctn: 5,
-      mintb: 5,
+      wgt: 1,
+      acc: 5,
+      trn: 5,
+      mtb: 5,
       spdGr: 2,
       spdWt: 2,
       spdAg: 4,
@@ -1230,13 +1230,13 @@ const classes = {
       hndWt: 3,
       hndAg: 4,
       hndAr: 3,
-      invcb: 4
+      inv: 4
     },
     wiggler: {
-      weigt: 1,
-      accel: 5,
-      trctn: 5,
-      mintb: 5,
+      wgt: 1,
+      acc: 5,
+      trn: 5,
+      mtb: 5,
       spdGr: 2,
       spdWt: 2,
       spdAg: 4,
@@ -1245,13 +1245,13 @@ const classes = {
       hndWt: 3,
       hndAg: 4,
       hndAr: 3,
-      invcb: 4
+      inv: 4
     },
     falcon: {
-      weigt: 0,
-      accel: 3,
-      trctn: 3,
-      mintb: 4,
+      wgt: 0,
+      acc: 3,
+      trn: 3,
+      mtb: 4,
       spdGr: 4,
       spdWt: 2,
       spdAg: 4,
@@ -1260,13 +1260,13 @@ const classes = {
       hndWt: 3,
       hndAg: 5,
       hndAr: 1,
-      invcb: 4
+      inv: 4
     },
     splat: {
-      weigt: 0,
-      accel: 3,
-      trctn: 3,
-      mintb: 4,
+      wgt: 0,
+      acc: 3,
+      trn: 3,
+      mtb: 4,
       spdGr: 4,
       spdWt: 2,
       spdAg: 4,
@@ -1275,13 +1275,13 @@ const classes = {
       hndWt: 3,
       hndAg: 5,
       hndAr: 1,
-      invcb: 3
+      inv: 3
     },
     tanooki: {
-      weigt: 3,
-      accel: 2,
-      trctn: 7,
-      mintb: 5,
+      wgt: 3,
+      acc: 2,
+      trn: 7,
+      mtb: 5,
       spdGr: 3,
       spdWt: 4,
       spdAg: 3,
@@ -1290,13 +1290,13 @@ const classes = {
       hndWt: 4,
       hndAg: 3,
       hndAr: 3,
-      invcb: 4
+      inv: 4
     },
     koopa: {
-      weigt: 3,
-      accel: 2,
-      trctn: 7,
-      mintb: 5,
+      wgt: 3,
+      acc: 2,
+      trn: 7,
+      mtb: 5,
       spdGr: 3,
       spdWt: 4,
       spdAg: 3,
@@ -1305,13 +1305,13 @@ const classes = {
       hndWt: 4,
       hndAg: 3,
       hndAr: 3,
-      invcb: 3
+      inv: 3
     },
     streetle: {
-      weigt: 0,
-      accel: 6,
-      trctn: 6,
-      mintb: 6,
+      wgt: 0,
+      acc: 6,
+      trn: 6,
+      mtb: 6,
       spdGr: 2,
       spdWt: 5,
       spdAg: 0,
@@ -1320,13 +1320,13 @@ const classes = {
       hndWt: 5,
       hndAg: 2,
       hndAr: 3,
-      invcb: 3
+      inv: 3
     },
     landship: {
-      weigt: 0,
-      accel: 6,
-      trctn: 6,
-      mintb: 6,
+      wgt: 0,
+      acc: 6,
+      trn: 6,
+      mtb: 6,
       spdGr: 2,
       spdWt: 5,
       spdAg: 0,
@@ -1335,15 +1335,15 @@ const classes = {
       hndWt: 5,
       hndAg: 2,
       hndAr: 3,
-      invcb: 2
+      inv: 2
     }
   },
   tires: {
     std: {
-      weigt: 2,
-      accel: 4,
-      trctn: 5,
-      mintb: 4,
+      wgt: 2,
+      acc: 4,
+      trn: 5,
+      mtb: 4,
       spdGr: 2,
       spdWt: 3,
       spdAg: 2,
@@ -1352,13 +1352,13 @@ const classes = {
       hndWt: 3,
       hndAg: 3,
       hndAr: 3,
-      invcb: 4
+      inv: 4
     },
     gla: {
-      weigt: 2,
-      accel: 4,
-      trctn: 5,
-      mintb: 4,
+      wgt: 2,
+      acc: 4,
+      trn: 5,
+      mtb: 4,
       spdGr: 2,
       spdWt: 3,
       spdAg: 2,
@@ -1367,13 +1367,13 @@ const classes = {
       hndWt: 3,
       hndAg: 3,
       hndAr: 3,
-      invcb: 5
+      inv: 5
     },
     monster: {
-      weigt: 4,
-      accel: 2,
-      trctn: 7,
-      mintb: 3,
+      wgt: 4,
+      acc: 2,
+      trn: 7,
+      mtb: 3,
       spdGr: 3,
       spdWt: 2,
       spdAg: 2,
@@ -1382,13 +1382,13 @@ const classes = {
       hndWt: 1,
       hndAg: 0,
       hndAr: 1,
-      invcb: 6
+      inv: 6
     },
     ancient: {
-      weigt: 4,
-      accel: 2,
-      trctn: 7,
-      mintb: 3,
+      wgt: 4,
+      acc: 2,
+      trn: 7,
+      mtb: 3,
       spdGr: 3,
       spdWt: 2,
       spdAg: 2,
@@ -1397,13 +1397,13 @@ const classes = {
       hndWt: 1,
       hndAg: 0,
       hndAr: 1,
-      invcb: 5
+      inv: 5
     },
     roller: {
-      weigt: 0,
-      accel: 6,
-      trctn: 4,
-      mintb: 6,
+      wgt: 0,
+      acc: 6,
+      trn: 4,
+      mtb: 6,
       spdGr: 0,
       spdWt: 3,
       spdAg: 0,
@@ -1412,13 +1412,13 @@ const classes = {
       hndWt: 4,
       hndAg: 4,
       hndAr: 4,
-      invcb: 0
+      inv: 0
     },
     slim: {
-      weigt: 2,
-      accel: 2,
-      trctn: 1,
-      mintb: 3,
+      wgt: 2,
+      acc: 2,
+      trn: 1,
+      mtb: 3,
       spdGr: 3,
       spdWt: 2,
       spdAg: 4,
@@ -1427,13 +1427,13 @@ const classes = {
       hndWt: 4,
       hndAg: 3,
       hndAr: 4,
-      invcb: 5
+      inv: 5
     },
     slick: {
-      weigt: 3,
-      accel: 1,
-      trctn: 0,
-      mintb: 2,
+      wgt: 3,
+      acc: 1,
+      trn: 0,
+      mtb: 2,
       spdGr: 4,
       spdWt: 0,
       spdAg: 4,
@@ -1442,13 +1442,13 @@ const classes = {
       hndWt: 0,
       hndAg: 2,
       hndAr: 1,
-      invcb: 5
+      inv: 5
     },
     metal: {
-      weigt: 4,
-      accel: 0,
-      trctn: 2,
-      mintb: 2,
+      wgt: 4,
+      acc: 0,
+      trn: 2,
+      mtb: 2,
       spdGr: 4,
       spdWt: 3,
       spdAg: 1,
@@ -1457,13 +1457,13 @@ const classes = {
       hndWt: 2,
       hndAg: 1,
       hndAr: 0,
-      invcb: 6
+      inv: 6
     },
     gold: {
-      weigt: 4,
-      accel: 0,
-      trctn: 2,
-      mintb: 2,
+      wgt: 4,
+      acc: 0,
+      trn: 2,
+      mtb: 2,
       spdGr: 4,
       spdWt: 3,
       spdAg: 1,
@@ -1472,13 +1472,13 @@ const classes = {
       hndWt: 2,
       hndAg: 1,
       hndAr: 0,
-      invcb: 5
+      inv: 5
     },
     button: {
-      weigt: 0,
-      accel: 5,
-      trctn: 3,
-      mintb: 5,
+      wgt: 0,
+      acc: 5,
+      trn: 3,
+      mtb: 5,
       spdGr: 1,
       spdWt: 2,
       spdAg: 2,
@@ -1487,13 +1487,13 @@ const classes = {
       hndWt: 3,
       hndAg: 4,
       hndAr: 2,
-      invcb: 3
+      inv: 3
     },
     offroad: {
-      weigt: 3,
-      accel: 3,
-      trctn: 6,
-      mintb: 3,
+      wgt: 3,
+      acc: 3,
+      trn: 6,
+      mtb: 3,
       spdGr: 3,
       spdWt: 4,
       spdAg: 2,
@@ -1502,13 +1502,13 @@ const classes = {
       hndWt: 1,
       hndAg: 2,
       hndAr: 2,
-      invcb: 6
+      inv: 6
     },
     cushion: {
-      weigt: 1,
-      accel: 4,
-      trctn: 6,
-      mintb: 5,
+      wgt: 1,
+      acc: 4,
+      trn: 6,
+      mtb: 5,
       spdGr: 1,
       spdWt: 1,
       spdAg: 1,
@@ -1517,13 +1517,13 @@ const classes = {
       hndWt: 1,
       hndAg: 2,
       hndAr: 3,
-      invcb: 6
+      inv: 6
     },
     sponge: {
-      weigt: 1,
-      accel: 4,
-      trctn: 6,
-      mintb: 5,
+      wgt: 1,
+      acc: 4,
+      trn: 6,
+      mtb: 5,
       spdGr: 1,
       spdWt: 1,
       spdAg: 1,
@@ -1532,15 +1532,15 @@ const classes = {
       hndWt: 1,
       hndAg: 2,
       hndAr: 3,
-      invcb: 4
+      inv: 4
     }
   },
   gliders: {
     super: {
-      weigt: 1,
-      accel: 1,
-      trctn: 1,
-      mintb: 1,
+      wgt: 1,
+      acc: 1,
+      trn: 1,
+      mtb: 1,
       spdGr: 1,
       spdWt: 1,
       spdAg: 0,
@@ -1549,13 +1549,13 @@ const classes = {
       hndWt: 0,
       hndAg: 1,
       hndAr: 1,
-      invcb: 1
+      inv: 1
     },
     cloud: {
-      weigt: 0,
-      accel: 2,
-      trctn: 1,
-      mintb: 2,
+      wgt: 0,
+      acc: 2,
+      trn: 1,
+      mtb: 2,
       spdGr: 0,
       spdWt: 1,
       spdAg: 1,
@@ -1564,13 +1564,13 @@ const classes = {
       hndWt: 0,
       hndAg: 1,
       hndAr: 2,
-      invcb: 0
+      inv: 0
     },
     parafoil: {
-      weigt: 1,
-      accel: 2,
-      trctn: 0,
-      mintb: 2,
+      wgt: 1,
+      acc: 2,
+      trn: 0,
+      mtb: 2,
       spdGr: 0,
       spdWt: 0,
       spdAg: 1,
@@ -1579,13 +1579,13 @@ const classes = {
       hndWt: 1,
       hndAg: 0,
       hndAr: 2,
-      invcb: 0
+      inv: 0
     },
     gold: {
-      weigt: 2,
-      accel: 1,
-      trctn: 0,
-      mintb: 1,
+      wgt: 2,
+      acc: 1,
+      trn: 0,
+      mtb: 1,
       spdGr: 1,
       spdWt: 0,
       spdAg: 1,
@@ -1594,7 +1594,7 @@ const classes = {
       hndWt: 1,
       hndAg: 0,
       hndAr: 1,
-      invcb: 1
+      inv: 1
     }
   }
 };
