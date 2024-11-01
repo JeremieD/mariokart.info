@@ -1,7 +1,13 @@
-@use "button" as *;
+@use "button";
 
 jd-select {
+  @extend button;
   position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: normal;
+  text-align: left;
   cursor: default;
 
   &.right {
@@ -17,12 +23,12 @@ jd-select {
 
   &>ol {
     position: absolute;
-    top: -.375em;
+    top: 0;
+    left: -1.25em;
+    right: 0;
     max-height: 75svh;
     overflow-y: auto;
     display: flex;
-    width: max-content;
-    max-width: 32ch;
     flex-direction: column;
     background-color: var(--color-overlay);
     box-shadow: 0 .333rem 2.666rem 0 rgba(0,0,0, .5);

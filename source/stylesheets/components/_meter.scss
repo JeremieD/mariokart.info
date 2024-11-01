@@ -7,7 +7,7 @@
   // min-width: 240px;
   width: 100%;
   // max-width: 320px;
-  height: .625rem;
+  height: .5rem;
   background-color: var(--color-interactive);
   overflow: hidden;
   @include mask(url(/resources/graphics/metermask.svg));
@@ -28,24 +28,8 @@
   }
 }
 
-.multimeter {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: .5rem .625rem;
-  width: 100%;
-  label:not(:first-of-type) { opacity: 0; }
-  &.show label:not(:first-of-type) { animation: show 5s; }
-}
-
-@keyframes show {
-  0% { opacity: 0; }
-  5% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { opacity: 0; }
-}
-
 .stat-code {
-  height: .666rem;
   @include type("code-1");
   line-height: 1;
+  text-transform: uppercase;
 }

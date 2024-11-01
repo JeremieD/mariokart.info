@@ -1,0 +1,62 @@
+.stacked-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+}
+
+button.toggle {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: "box label"
+                       ".   desc";
+  gap: 0 .625rem;
+  text-align: left;
+  font-weight: normal;
+
+  &>label {
+    grid-area: label;
+    font-size: var(--font-size-2);
+  }
+
+  &>p {
+    grid-area: desc;
+    font-size: var(--font-size-1);
+    color: var(--color-subdued);
+  }
+}
+
+.toggle-gizmo {
+  position: relative;
+  width: 4em;
+  height: 2em;
+  background-color: var(--color-interactive-fg);
+  border-radius: 1em;
+  transition: .2s ease background-color;
+
+  &::after {
+    display: block;
+    content: "";
+    position: absolute;
+    width: 1.5em;
+    height: 1.5em;
+    top: .25em;
+    left: .25em;
+    background-color: var(--color-light1);
+    border-radius: 50%;
+    transition: .2s ease left;
+  }
+
+  .selected & {
+    background-color: var(--color-accent);
+    &::after {
+      left: 2.25em;
+      background-color: var(--color-light1);
+    }
+  }
+}

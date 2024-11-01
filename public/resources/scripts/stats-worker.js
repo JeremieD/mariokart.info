@@ -132,8 +132,6 @@ class Combo {
       lvl += this.classes.body[stat];
       lvl += this.classes.tire[stat];
       lvl += this.classes.glider[stat];
-      lvl = toLvl(lvl);
-
       this.lvl[stat] = lvl;
     }
     this.lvl.spd = round(this.lvl.spdGr * Combo.PERCENT_GR +
@@ -145,7 +143,7 @@ class Combo {
                          this.lvl.hndWt * Combo.PERCENT_WT +
                          this.lvl.hndAr * Combo.PERCENT_AR, 3);
     this.size = this.classes.driver.size;
-    this.lvl.size = this.size*2.5 + .75;
+    this.lvl.size = this.size * 10;
 
     this.name = getComboName(driver, body, tire, glider);
   }
@@ -181,9 +179,6 @@ class Combo {
   static PERCENT_AR = .05; // Best estimate for percent of time airborne.
 }
 
-// IDEA: Move this into View. Work with raw values in worker to avoid calculations.
-const toLvl = n => (n+3) / 4;
-
 function getCombo(...args) {
   if (args.length == 1) { // From code
     return Combo.fromCode(args[0]);
@@ -215,21 +210,21 @@ function listCombos(opts = {}) {
   const bodyLock = opts.bodyLock ?? false;
   const tireLock = opts.tireLock ?? false;
   const gliderLock = opts.gliderLock ?? false;
-  const mintbMin = opts.mintb?.min ?? 0; const mintbMax = opts.mintb?.max ?? 6;
-  const spdMin = opts.spd?.min ?? 0; const spdMax = opts.spd?.max ?? 6;
-  const spdGrMin = opts.spdGr?.min ?? 0; const spdGrMax = opts.spdGr?.max ?? 6;
-  const spdWtMin = opts.spdWt?.min ?? 0; const spdWtMax = opts.spdWt?.max ?? 6;
-  const spdAgMin = opts.spdAg?.min ?? 0; const spdAgMax = opts.spdAg?.max ?? 6;
-  const spdArMin = opts.spdAr?.min ?? 0; const spdArMax = opts.spdAr?.max ?? 6;
-  const accelMin = opts.accel?.min ?? 0; const accelMax = opts.accel?.max ?? 6;
-  const weigtMin = opts.weigt?.min ?? 0; const weigtMax = opts.weigt?.max ?? 6;
-  const hndMin = opts.hnd?.min ?? 0; const hndMax = opts.hnd?.max ?? 6;
-  const hndGrMin = opts.hndGr?.min ?? 0; const hndGrMax = opts.hndGr?.max ?? 6;
-  const hndWtMin = opts.hndWt?.min ?? 0; const hndWtMax = opts.hndWt?.max ?? 6;
-  const hndAgMin = opts.hndAg?.min ?? 0; const hndAgMax = opts.hndAg?.max ?? 6;
-  const hndArMin = opts.hndAr?.min ?? 0; const hndArMax = opts.hndAr?.max ?? 6;
-  const trctnMin = opts.trctn?.min ?? 0; const trctnMax = opts.trctn?.max ?? 6;
-  const invcbMin = opts.invcb?.min ?? 0; const invcbMax = opts.invcb?.max ?? 6;
+  const mintbMin = opts.mintb?.min ?? 0; const mintbMax = opts.mintb?.max ?? 20;
+  const spdMin = opts.spd?.min ?? 0; const spdMax = opts.spd?.max ?? 20;
+  const spdGrMin = opts.spdGr?.min ?? 0; const spdGrMax = opts.spdGr?.max ?? 20;
+  const spdWtMin = opts.spdWt?.min ?? 0; const spdWtMax = opts.spdWt?.max ?? 20;
+  const spdAgMin = opts.spdAg?.min ?? 0; const spdAgMax = opts.spdAg?.max ?? 20;
+  const spdArMin = opts.spdAr?.min ?? 0; const spdArMax = opts.spdAr?.max ?? 20;
+  const accelMin = opts.accel?.min ?? 0; const accelMax = opts.accel?.max ?? 20;
+  const weigtMin = opts.weigt?.min ?? 0; const weigtMax = opts.weigt?.max ?? 20;
+  const hndMin = opts.hnd?.min ?? 0; const hndMax = opts.hnd?.max ?? 20;
+  const hndGrMin = opts.hndGr?.min ?? 0; const hndGrMax = opts.hndGr?.max ?? 20;
+  const hndWtMin = opts.hndWt?.min ?? 0; const hndWtMax = opts.hndWt?.max ?? 20;
+  const hndAgMin = opts.hndAg?.min ?? 0; const hndAgMax = opts.hndAg?.max ?? 20;
+  const hndArMin = opts.hndAr?.min ?? 0; const hndArMax = opts.hndAr?.max ?? 20;
+  const trctnMin = opts.trctn?.min ?? 0; const trctnMax = opts.trctn?.max ?? 20;
+  const invcbMin = opts.invcb?.min ?? 0; const invcbMax = opts.invcb?.max ?? 20;
   const sizeMin = opts.size?.min ?? 0; const sizeMax = opts.size?.max ?? 2;
   const excludeKarts = opts.excludeKarts ?? false;
   const excludeATVs = opts.excludeATVs ?? false;

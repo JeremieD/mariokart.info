@@ -40,19 +40,58 @@ whenDOMReady(() => {
   V.combo.gliderLock = document.getElementById("glider-lock-display");
   V.combo.details    = document.getElementById("combo-details");
 
-  V.combo.mintb = document.getElementById("mintb-meter");
-  V.combo.spdGr = document.getElementById("spdGr-meter");
-  V.combo.spdAg = document.getElementById("spdAg-meter");
-  V.combo.spdWt = document.getElementById("spdWt-meter");
-  V.combo.spdAr = document.getElementById("spdAr-meter");
-  V.combo.accel = document.getElementById("accel-meter");
-  V.combo.weigt = document.getElementById("weigt-meter");
-  V.combo.hndGr = document.getElementById("hndGr-meter");
-  V.combo.hndAg = document.getElementById("hndAg-meter");
-  V.combo.hndWt = document.getElementById("hndWt-meter");
-  V.combo.hndAr = document.getElementById("hndAr-meter");
-  V.combo.trctn = document.getElementById("trctn-meter");
-  V.combo.invcb = document.getElementById("invcb-meter");
+  V.combo.mintb = {
+    meter: document.getElementById("mintb-meter"),
+    value: document.getElementById("mintb-value")
+  };
+  V.combo.spdGr = {
+    meter: document.getElementById("spdGr-meter"),
+    value: document.getElementById("spdGr-value")
+  };
+  V.combo.spdAg = {
+    meter: document.getElementById("spdAg-meter"),
+    value: document.getElementById("spdAg-value")
+  };
+  V.combo.spdWt = {
+    meter: document.getElementById("spdWt-meter"),
+    value: document.getElementById("spdWt-value")
+  };
+  V.combo.spdAr = {
+    meter: document.getElementById("spdAr-meter"),
+    value: document.getElementById("spdAr-value")
+  };
+  V.combo.accel = {
+    meter: document.getElementById("accel-meter"),
+    value: document.getElementById("accel-value")
+  };
+  V.combo.weigt = {
+    meter: document.getElementById("weigt-meter"),
+    value: document.getElementById("weigt-value")
+  };
+  V.combo.hndGr = {
+    meter: document.getElementById("hndGr-meter"),
+    value: document.getElementById("hndGr-value")
+  };
+  V.combo.hndAg = {
+    meter: document.getElementById("hndAg-meter"),
+    value: document.getElementById("hndAg-value")
+  };
+  V.combo.hndWt = {
+    meter: document.getElementById("hndWt-meter"),
+    value: document.getElementById("hndWt-value")
+  };
+  V.combo.hndAr = {
+    meter: document.getElementById("hndAr-meter"),
+    value: document.getElementById("hndAr-value")
+  };
+  V.combo.trctn = {
+    meter: document.getElementById("trctn-meter"),
+    value: document.getElementById("trctn-value")
+  };
+  V.combo.invcb = {
+    meter: document.getElementById("invcb-meter"),
+    value: document.getElementById("invcb-value")
+  };
 
   V.combo.spdMultimeter = document.getElementById("spd-multimeter");
   V.combo.hndMultimeter = document.getElementById("hnd-multimeter");
@@ -92,8 +131,6 @@ whenDOMReady(() => {
   V.gliders.lockLabel = document.getElementById("glider-lock-label");
   V.gliders.grid = document.getElementById("glider-grid");
 
-  V.settings.localeSelect = document.getElementById("locale-select");
-
   V.formula.dialog = document.getElementById("custom-formula-dialog");
   for (const stat of scoreStats) {
     V.formula[stat] = {};
@@ -125,8 +162,16 @@ whenDOMReady(() => {
   V.formula.helpClose  = document.getElementById("formula-help-close");
   V.formula.helpDialog = document.getElementById("formula-help");
 
-  V.credits.open = document.getElementById("credits-open");
-  V.credits.close = document.getElementById("credits-close");
+  V.settings.open   = document.getElementById("settings-open");
+  V.settings.close  = document.getElementById("settings-close");
+  V.settings.dialog = document.getElementById("settings-dialog");
+  V.settings.cookiesToggle     = document.getElementById("settings-cookies");
+  V.settings.localeSelect      = document.getElementById("settings-locale");
+  V.settings.statScaleSelect   = document.getElementById("settings-stat-scale");
+  V.settings.meterValuesToggle = document.getElementById("settings-show-meter-values");
+
+  V.credits.open   = document.getElementById("credits-open");
+  V.credits.close  = document.getElementById("credits-close");
   V.credits.dialog = document.getElementById("credits-dialog");
 
 
@@ -199,11 +244,11 @@ whenDOMReady(() => {
     }, { passive: true });
     slider.linkedInput = factor;
     min.addEventListener("input", () => {
-      state.workingFormula[stat].min = parseValue(min.value);
+      state.workingFormula[stat].min = unscaleStat(parseValue(min.value), stat);
       validateBounds(stat);
     }, { passive: true });
     max.addEventListener("input", () => {
-      state.workingFormula[stat].max = parseValue(max.value, max.max);
+      state.workingFormula[stat].max = unscaleStat(parseValue(max.value, max.max), stat);
       validateBounds(stat);
     }, { passive: true });
     mode.addEventListener("click", () => { toggleFactorSign(stat); }, { passive: true });
@@ -243,6 +288,23 @@ whenDOMReady(() => {
     if (isOutside(V.formula.helpDialog, e)) closeFormulaHelpDialog();
   }, { passive: true });
 
+  V.settings.open.addEventListener("click", e => {
+    openSettingsDialog();
+    e.preventDefault(); // To conserve page scroll position
+  });
+  V.settings.close.addEventListener("click", closeSettingsDialog, { passive: true });
+  V.settings.dialog.addEventListener("click", e => {
+    if (isOutside(V.settings.dialog, e)) closeSettingsDialog();
+  }, { passive: true });
+  V.settings.cookiesToggle.addEventListener("click", toggleCookies, { passive: true });
+  V.settings.localeSelect.addEventListener("change", () => {
+    changeLocale(V.settings.localeSelect.value);
+  }, { passive: true });
+  V.settings.statScaleSelect.addEventListener("change", () => {
+    changeStatScale(V.settings.statScaleSelect.value);
+  }, { passive: true });
+  V.settings.meterValuesToggle.addEventListener("click", toggleMeterValues, { passive: true });
+
   V.credits.open.addEventListener("click", e => {
     openCreditsDialog();
     e.preventDefault(); // To conserve page scroll position
@@ -250,10 +312,6 @@ whenDOMReady(() => {
   V.credits.close.addEventListener("click", closeCreditsDialog, { passive: true });
   V.credits.dialog.addEventListener("click", e => {
     if (isOutside(V.credits.dialog, e)) closeCreditsDialog();
-  }, { passive: true });
-
-  V.settings.localeSelect.addEventListener("change", () => {
-    changeLocale(V.settings.localeSelect.value);
   }, { passive: true });
 
   // Keyboard Shortcuts
@@ -272,6 +330,7 @@ whenDOMReady(() => {
         case "glider": return closeGliderDialog();
         case "formula": return revertFormula();
         case "formula-help": return closeFormulaHelpDialog();
+        case "settings": return closeSettingsDialog();
         case "credits": return closeCreditsDialog();
       }
     } else if (e.key == "Enter") {
@@ -345,8 +404,13 @@ function drawCurrentCombo() {
 
   // Meters
   for (const stat of stats) {
-    V.combo[stat].style.setProperty("--value", combo.lvl[stat]);
-    V.combo[stat].title = S("stats", stat) + ": " + combo.lvl[stat];
+    V.combo[stat].meter.style.setProperty("--value", toLvl(combo.lvl[stat]));
+    V.combo[stat].meter.title = S("stats", stat) + ": " + scaleStat(combo.lvl[stat], stat);
+    if (state.settings.showMeterValues) {
+      V.combo[stat].value.innerText = scaleStat(combo.lvl[stat]).toLocaleString("en", getStatLocaleOptions());
+    } else {
+      V.combo[stat].value.innerText = "";
+    }
   }
 
   // Page Title
@@ -459,7 +523,7 @@ function drawComboTable(container, combos, limit = 50) {
       const value = document.createElement("output");
       if (diff > 0) value.classList.add("positive");
       if (diff < 0) value.classList.add("negative");
-      value.innerText = formatStatDiff(diff);
+      value.innerText = formatStatDiff(scaleStatAbs(diff));
       statDiff.append(label, value);
       statsDisplay.append(statDiff);
     }
@@ -507,8 +571,8 @@ function formatFormula(formula) {
     if (stat == "hndWt" &&  formula.hnd.use) continue;
     if (stat == "hndAr" &&  formula.hnd.use) continue;
     let factor = formula[stat].factor;
-    let isMinSet = formula[stat].min !== 0;
-    let isMaxSet = formula[stat].max !== parseFloat(V.formula[stat].max.max);
+    let isMinSet = scaleStat(formula[stat].min, stat) !== 0;
+    let isMaxSet = scaleStat(formula[stat].max, stat) !== getScaledMax(stat);
     if (factor == 0 && !isMinSet && !isMaxSet) continue;
     const sign = factor < 0 ? "−" : "";
     let term = "<span";
@@ -571,7 +635,7 @@ function formatFormula(formula) {
   if (locks.length > 0 || exclusionsString.length > 0) s += "<br>";
   if (!bodyConflict) { s += "<span>"; }
   else { s += "<span class=\"invalid\">"; }
-  const listFormatter = new Intl.ListFormat(locale, {
+  const listFormatter = new Intl.ListFormat(state.settings.locale, {
     style: "short",
     type: "unit",
   });
@@ -895,17 +959,29 @@ function drawFormulaDialog() {
 
   const formula = state.workingFormula;
   for (const stat of scoreStats) {
+    const scaledMax = getScaledMax(stat);
+    const scaledStep = getScaledStep(stat);
+
+    V.formula[stat].min.max = scaledMax;
+    V.formula[stat].min.step = scaledStep;
+    V.formula[stat].max.max = scaledMax;
+    V.formula[stat].max.step = scaledStep;
+    V.formula[stat].max.placeholder = scaledMax;
+
     let factor = formula[stat].factor;
     V.formula[stat].slider.value = factor;
     if (factor == 0) factor = "";
     V.formula[stat].factor.value = factor;
     drawFactorWidget(stat);
-    let min = formula[stat].min;
+
+    let min = scaleStat(formula[stat].min, stat);
     if (min == V.formula[stat].min.min) min = "";
     V.formula[stat].min.value = min;
-    let max = formula[stat].max;
-    if (max == V.formula[stat].max.max) max = "";
+
+    let max = scaleStat(formula[stat].max, stat);
+    if (max == V.formula[stat].min.max) max = "";
     V.formula[stat].max.value = max;
+
     validateBounds(stat);
   }
 
@@ -981,6 +1057,21 @@ function drawFormulaHelpDialog() {
   V.formula.helpDialog.showModal();
 }
 
+function drawSettingsDialog() {
+  if (state.openedDialog !== "settings") {
+    V.settings.dialog.inert = true;
+    V.settings.dialog.close();
+    return;
+  }
+
+  V.settings.cookiesToggle.classList.toggle("selected", state.settings.allowCookies);
+  V.settings.meterValuesToggle.classList.toggle("selected", state.settings.showMeterValues);
+
+  V.settings.dialog.inert = false;
+  if (V.settings.dialog.open) return;
+  V.settings.dialog.showModal();
+}
+
 function drawCreditsDialog() {
   if (state.openedDialog !== "credits") {
     V.credits.dialog.inert = true;
@@ -1013,4 +1104,32 @@ function parseValue(v, defaultV = 0) {
   v = parseFloat(v);
   if (isNaN(v)) return parseFloat(defaultV);
   return v;
+}
+
+function scaleStat(x, stat) {
+  if (state.settings.statScale === "internal" || stat === "size") return x;
+  if (x == 0) return 0;
+  if (x == 20) return 6;
+  return toLvl(x);
+}
+function scaleStatAbs(x) {
+  if (state.settings.statScale === "internal") return x;
+  return x/4;
+}
+const getScaledMax = stat => {
+  if (stat === "size") return 2;
+  return state.settings.statScale === "internal" ? 20 : 6;
+}
+const getScaledStep = stat => {
+  if (stat === "size") return 1;
+  return state.settings.statScale === "internal" ? 1 : .25;
+}
+function unscaleStat(x, stat) {
+  if (state.settings.statScale === "internal" || stat === "size") return x;
+  return fromLvl(x);
+}
+const toLvl = n => (n+3) / 4;
+const fromLvl = n => n*4 - 3;
+function getStatLocaleOptions() {
+  return state.settings.statScale === "internal" ? { minimumIntegerDigits: 2 } : { minimumFractionDigits: 2 };
 }

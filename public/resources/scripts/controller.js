@@ -5,66 +5,66 @@ const defaultFormula = {
   mintb: {
     factor: 16,
     min: 0,
-    max: 6 },
+    max: 20 },
   spd: {
     use: true,
     factor: 15,
     min: 0,
-    max: 6 },
+    max: 20 },
   spdGr: {
     factor: 0,
     min: 0,
-    max: 6 },
+    max: 20 },
   spdAg: {
     factor: 0,
     min: 0,
-    max: 6 },
+    max: 20 },
   spdWt: {
     factor: 0,
     min: 0,
-    max: 6 },
+    max: 20 },
   spdAr: {
     factor: 0,
     min: 0,
-    max: 6 },
+    max: 20 },
   accel: {
     factor: 1,
     min: 0,
-    max: 6 },
+    max: 20 },
   weigt: {
     factor: 1,
     min: 0,
-    max: 6 },
+    max: 20 },
   hnd: {
     use: true,
     factor: 1,
     min: 0,
-    max: 6 },
+    max: 20 },
   hndGr: {
     factor: 0,
     min: 0,
-    max: 6 },
+    max: 20 },
   hndAg: {
     factor: 0,
     min: 0,
-    max: 6 },
+    max: 20 },
   hndWt: {
     factor: 0,
     min: 0,
-    max: 6 },
+    max: 20 },
   hndAr: {
     factor: 0,
     min: 0,
-    max: 6 },
+    max: 20 },
   trctn: {
     factor: 1,
     min: 0,
-    max: 6
+    max: 20
   },
   invcb: {
     factor: 0,
     min: 0,
-    max: 6 },
+    max: 20 },
   size: {
     factor: 0,
     min: 0,
@@ -74,9 +74,10 @@ const defaultFormula = {
 };
 const state = {
   settings: {
-    gameVersion: "v3.0.1",
-    locale: "",
-    availableParts: "all" },
+    allowCookies: false,
+    locale: "en-US",
+    statScale: "display",
+    showMeterValues: false },
   selectedSlotID: "A",
   slot: {
     A: {
@@ -231,7 +232,7 @@ function getDominantCombos(combo) {
 
 function getSimilarCombos(combo) {
   const opts = {
-    mustDiffer: true, maxAbsDiff: 2.5, minDiff: -.75,
+    mustDiffer: true, maxAbsDiff: 10, minDiff: -3,
     refCombo: combo, sortBy: "diff",
     driverLock: state.locks.driver, bodyLock: state.locks.body,
     tireLock: state.locks.tire, gliderLock: state.locks.glider
@@ -253,22 +254,22 @@ function getCustomCombos(combo) {
     opts.spdWt.factor = 0; opts.spdAr.factor = 0;
     opts.spdGr.min = 0; opts.spdAg.min = 0;
     opts.spdWt.min = 0; opts.spdAr.min = 0;
-    opts.spdGr.max = 6; opts.spdAg.max = 6;
-    opts.spdWt.max = 6; opts.spdAr.max = 6;
+    opts.spdGr.max = 20; opts.spdAg.max = 20;
+    opts.spdWt.max = 20; opts.spdAr.max = 20;
   } else {
     opts.spd.factor = 0;
-    opts.spd.min = 0; opts.spd.max = 6;
+    opts.spd.min = 0; opts.spd.max = 20;
   }
   if (state.formula.hnd.use) {
     opts.hndGr.factor= 0; opts.hndAg.factor = 0;
     opts.hndWt.factor = 0; opts.hndAr.factor = 0;
     opts.hndGr.min = 0; opts.hndAg.min = 0;
     opts.hndWt.min = 0; opts.hndAr.min = 0;
-    opts.hndGr.max = 6; opts.hndAg.max = 6;
-    opts.hndWt.max = 6; opts.hndAr.max = 6;
+    opts.hndGr.max = 20; opts.hndAg.max = 20;
+    opts.hndWt.max = 20; opts.hndAr.max = 20;
   } else {
     opts.hnd.factor = 0;
-    opts.hnd.min = 0; opts.hnd.max = 6;
+    opts.hnd.min = 0; opts.hnd.max = 20;
   }
 
   return Stats.post("listCombos", opts);
@@ -456,6 +457,15 @@ function closeFormulaHelpDialog() {
   drawFormulaHelpDialog();
 }
 
+function openSettingsDialog() {
+  state.openedDialog = "settings";
+  drawSettingsDialog();
+}
+function closeSettingsDialog() {
+  state.openedDialog = "";
+  drawSettingsDialog();
+}
+
 function openCreditsDialog() {
   state.openedDialog = "credits";
   drawCreditsDialog();
@@ -522,9 +532,36 @@ function updateURLParams(forceReplace = false) {
 }
 
 function changeLocale(locl) {
-  locale = locl;
+  state.settings.locale = locl;
   drawCurrentCombo();
   drawDominantCombos();
   drawSimilarCombos();
   drawCustomCombos();
+}
+
+function changeStatScale(mode) {
+  state.settings.statScale = mode;
+  drawCurrentCombo();
+  drawDominantCombos();
+  drawSimilarCombos();
+  drawCustomCombos();
+}
+
+function toggleMeterValues() {
+  state.settings.showMeterValues = !state.settings.showMeterValues;
+  drawSettingsDialog();
+  drawCurrentCombo();
+}
+
+function toggleCookies() {
+  state.settings.allowCookies = !state.settings.allowCookies;
+
+  if (state.settings.allowCookies) { // Store cookies
+
+
+  } else { // Delete cookies
+
+  }
+
+  drawSettingsDialog();
 }

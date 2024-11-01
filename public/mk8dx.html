@@ -41,24 +41,7 @@
     <a href="/mk8dx" id="logo">
       <h1>MK8DX Combo Builder</h1>
     </a>
-    <jd-select class="inline right" id="locale-select" title="Language">
-      <option value="en-US" selected>English (NOA)</option>
-      <option value="en-GB">English (NOE)</option>
-      <option value="fr-CA">Français (NOA)</option>
-      <option value="fr-FR">Français (NOE)</option>
-      <option value="de">Deutsch</option>
-      <option value="es-MX">Español (NOA)</option>
-      <option value="es-ES">Español (NOE)</option>
-      <option value="it">Italiano</option>
-      <option value="nl">Nederlands</option>
-      <option value="pt-BR">Português (NOA)</option>
-      <option value="pt-PT">Português (NOE)</option>
-      <option value="ru">Русский</option>
-      <option value="ja">日本語</option>
-      <option value="zh-TW">繁體中文</option>
-      <option value="zh-CN">简体中文</option>
-      <option value="ko">한국어</option>
-    </jd-select>
+    <button class="big-type square" id="settings-open" title="Settings"><jd-icon icon="cog"></jd-icon></button>
   </header>
 
   <main>
@@ -101,42 +84,61 @@
           <div>
             <label class="stat-code" id="mintb-label" title="Mini-Turbo">MINTB</label>
             <div class="meter" tooltip-align="left-middle" id="mintb-meter"></div>
+            <output id="mintb-value"></output>
           </div>
-          <div class="multimeter" id="spd-multimeter">
-            <label class="stat-code" id="spd-label" title="Speed">SPEED</label>
+
+          <div id="spd-multimeter">
+            <label class="stat-code" id="spd-label">SPEED</label>
             <div class="meter ground" tooltip-align="left-middle" id="spdGr-meter"></div>
+            <output class="ground" id="spdGr-value"></output>
             <label class="stat-code anti-gravity" title="Anti-Gravity">AG</label>
             <div class="meter anti-gravity" tooltip-align="left-middle" id="spdAg-meter"></div>
-            <label class="stat-code underwater">WATER</label>
+            <output class="anti-gravity" id="spdAg-value"></output>
+            <label class="stat-code underwater" title="Underwater">WATER</label>
             <div class="meter underwater" tooltip-align="left-middle" id="spdWt-meter"></div>
-            <label class="stat-code air">AIR</label>
+            <output class="underwater" id="spdWt-value"></output>
+            <label class="stat-code air" title="Air">AIR</label>
             <div class="meter air" tooltip-align="left-middle" id="spdAr-meter"></div>
+            <output class="air" id="spdAr-value"></output>
           </div>
+
           <div>
             <label class="stat-code" id="accel-label" title="Acceleration">ACCEL</label>
             <div class="meter" tooltip-align="left-middle" id="accel-meter"></div>
+            <output id="accel-value"></output>
           </div>
+
           <div>
             <label class="stat-code" id="weigt-label" title="Weight">WEIGT</label>
             <div class="meter" tooltip-align="left-middle" id="weigt-meter"></div>
+            <output id="weigt-value"></output>
           </div>
-          <div class="multimeter" id="hnd-multimeter">
-            <label class="stat-code" id="hnd-label" title="Handling">HNDLG</label>
+
+          <div id="hnd-multimeter">
+            <label class="stat-code" id="hnd-label">HNDLG</label>
             <div class="meter ground" tooltip-align="left-middle" id="hndGr-meter"></div>
+            <output class="ground" id="hndGr-value"></output>
             <label class="stat-code anti-gravity" title="Anti-Gravity">AG</label>
             <div class="meter anti-gravity" tooltip-align="left-middle" id="hndAg-meter"></div>
-            <label class="stat-code underwater">WATER</label>
+            <output class="anti-gravity" id="hndAg-value"></output>
+            <label class="stat-code underwater" title="Underwater">WATER</label>
             <div class="meter underwater" tooltip-align="left-middle" id="hndWt-meter"></div>
-            <label class="stat-code air">AIR</label>
+            <output class="underwater" id="hndWt-value"></output>
+            <label class="stat-code air" title="Air">AIR</label>
             <div class="meter air" tooltip-align="left-middle" id="hndAr-meter"></div>
+            <output class="air" id="hndAr-value"></output>
           </div>
+
           <div>
             <label class="stat-code" id="trctn-label" title="Traction">TRCTN</label>
             <div class="meter" tooltip-align="left-middle" id="trctn-meter"></div>
+            <output id="trctn-value"></output>
           </div>
+
           <div>
             <label class="stat-code" id="invcb-label" title="Invincibility">INVCB</label>
             <div class="meter" tooltip-align="left-middle" id="invcb-meter"></div>
+            <output id="invcb-value"></output>
           </div>
         </div>
       </div>
@@ -177,7 +179,7 @@
 
   <footer>
     <p><a id="credits-open" href="#">Credits & Info</a></p>
-    <p>Last updated 30 Sept 2024 / v1.1.2</p>
+    <p>Last updated 31 Oct 2024 / v1.2</p>
   </footer>
 
   <dialog id="driver-picker" inert>
@@ -584,6 +586,55 @@
 
       <h3>More Info</h3>
       <p>For info about the game’s stats, see the&nbsp;<a href="https://www.mariowiki.com/Mario_Kart_8_Deluxe_in-game_statistics" target="_blank">Mario Wiki</a>.</p>
+    </div>
+  </dialog>
+
+  <dialog id="settings-dialog" inert>
+    <header>
+      <hgroup>
+        <h2>Settings</h2>
+        <button id="settings-close" class="icon inline" title="Close Settings"><jd-icon icon="x"></jd-icon></button>
+      </hgroup>
+    </header>
+    <div class="stacked-form">
+      <button id="settings-cookies" class="inline toggle">
+        <div class="toggle-gizmo"></div>
+        <label>Allow Cookies</label>
+        <p>Cookies allow the app to remember your settings.<br>This site will not track you or collect your personal data.</p>
+      </button>
+      <hr />
+      <div class="input-group">
+        <label>Game Language</label>
+        <jd-select id="settings-locale">
+          <option value="en-US" selected>English (NOA)</option>
+          <option value="en-GB">English (NOE)</option>
+          <option value="fr-CA">Français (NOA)</option>
+          <option value="fr-FR">Français (NOE)</option>
+          <option value="de">Deutsch</option>
+          <option value="es-MX">Español (NOA)</option>
+          <option value="es-ES">Español (NOE)</option>
+          <option value="it">Italiano</option>
+          <option value="nl">Nederlands</option>
+          <option value="pt-BR">Português (NOA)</option>
+          <option value="pt-PT">Português (NOE)</option>
+          <option value="ru">Русский</option>
+          <option value="ja">日本語</option>
+          <option value="zh-TW">繁體中文</option>
+          <option value="zh-CN">简体中文</option>
+          <option value="ko">한국어</option>
+        </jd-select>
+      </div>
+      <div class="input-group">
+        <label>Numerical Stat Scale</label>
+        <jd-select id="settings-stat-scale">
+          <option value="display" selected>Display Values (0-6)</option>
+          <option value="internal">Internal Values (0-20)</option>
+        </jd-select>
+      </div>
+      <button id="settings-show-meter-values" class="inline toggle">
+        <jd-icon class="checkbox" icon="checkmark"></jd-icon>
+        <label>Show Numerical Values on Meters</label>
+      </button>
     </div>
   </dialog>
 
