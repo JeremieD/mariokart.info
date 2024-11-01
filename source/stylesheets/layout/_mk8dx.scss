@@ -27,6 +27,7 @@
     grid-template-columns: auto 1fr auto;
     gap: .375rem;
     align-items: center;
+
     label:not(:first-of-type) {
       text-align: right;
       opacity: 0;
@@ -47,6 +48,11 @@
       letter-spacing: 0;
       font-feature-settings: "zero" on;
     }
+  }
+
+  &.values-hidden>div {
+    grid-template-columns: auto 1fr;
+    output { display: none; }
   }
 }
 
