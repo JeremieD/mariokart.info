@@ -224,7 +224,19 @@ whenDOMReady(() => {
   }, { passive: true });
   V.gliders.lock.addEventListener("click", toggleGliderLock, { passive: true });
 
-  V.formula.reset.addEventListener("click", setDefaultFormula, { passive: true });
+  addEventListener("keydown", e => {
+    if (e.key === "Alt") V.formula.reset.innerText = "Revert to Blank Formula";
+  });
+  addEventListener("keyup", e => {
+    if (e.key === "Alt") V.formula.reset.innerText = "Revert to Default Formula";
+  });
+  V.formula.reset.addEventListener("click", e => {
+    if (e.altKey) {
+      setBlankFormula();
+    } else {
+      setDefaultFormula();
+    }
+  }, { passive: true });
   V.formula.cancel.addEventListener("click", revertFormula, { passive: true });
   V.formula.save.addEventListener("click", commitFormula, { passive: true });
 
