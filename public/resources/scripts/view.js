@@ -16,6 +16,7 @@ const V = {
   tires: {},
   gliders: {},
   formula: {},
+  help: {},
   settings: {},
   credits: {}
 }; // View object
@@ -161,6 +162,10 @@ whenDOMReady(() => {
   V.formula.helpOpen   = document.getElementById("formula-help-open");
   V.formula.helpClose  = document.getElementById("formula-help-close");
   V.formula.helpDialog = document.getElementById("formula-help");
+
+  V.help.open   = document.getElementById("help-open");
+  V.help.close  = document.getElementById("help-close");
+  V.help.dialog = document.getElementById("help-dialog");
 
   V.settings.open   = document.getElementById("settings-open");
   V.settings.close  = document.getElementById("settings-close");
@@ -308,6 +313,15 @@ whenDOMReady(() => {
     if (isOutside(V.formula.helpDialog, e)) closeFormulaHelpDialog();
   }, { passive: true });
 
+  V.help.open.addEventListener("click", e => {
+    openHelpDialog();
+    e.preventDefault(); // To conserve page scroll position
+  });
+  V.help.close.addEventListener("click", closeHelpDialog, { passive: true });
+  V.help.dialog.addEventListener("click", e => {
+    if (isOutside(V.help.dialog, e)) closeHelpDialog();
+  }, { passive: true });
+
   V.settings.open.addEventListener("click", e => {
     openSettingsDialog();
     e.preventDefault(); // To conserve page scroll position
@@ -350,6 +364,7 @@ whenDOMReady(() => {
         case "glider": return closeGliderDialog();
         case "formula": return revertFormula();
         case "formula-help": return closeFormulaHelpDialog();
+        case "help": return closeHelpDialog();
         case "settings": return closeSettingsDialog();
         case "credits": return closeCreditsDialog();
       }
@@ -539,7 +554,7 @@ function drawComboTable(container, combos, limit = 50) {
       if (diff == 0) continue;
       const statDiff = document.createElement("div");
       const label = document.createElement("label");
-      label.innerText = stat;
+      label.innerText = S("statsAbbr", stat);
       const value = document.createElement("output");
       if (diff > 0) value.classList.add("positive");
       if (diff < 0) value.classList.add("negative");
@@ -598,12 +613,13 @@ function formatFormula(formula) {
     let term = "<span";
     if (factor < 0) term += " class='negative'";
     if (factor > 0) term += " class='positive'";
+    term += "title='" + S("stats", stat) + "'";
     term += ">"
     factor = Math.abs(factor).toString();
     if (factor[0] == "0") factor = factor.substr(1);
     term += sign;
     if (factor !== "") term += factor + "<span class='multiply'>×</span>";
-    term += stat.toUpperCase();
+    term += S("statsAbbr", stat);
     if (isMinSet || isMaxSet) {
       term += "<span";
       if (!isMinSet || !isMaxSet) term += " class='subdued'";
@@ -1076,6 +1092,17 @@ function drawFormulaHelpDialog() {
   V.formula.helpDialog.inert = false;
   if (V.formula.helpDialog.open) return;
   V.formula.helpDialog.showModal();
+}
+
+function drawHelpDialog() {
+  if (state.openedDialog !== "help") {
+    V.help.dialog.inert = true;
+    V.help.dialog.close();
+    return;
+  }
+  V.help.dialog.inert = false;
+  if (V.help.dialog.open) return;
+  V.help.dialog.showModal();
 }
 
 function drawSettingsDialog() {

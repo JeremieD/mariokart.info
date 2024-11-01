@@ -46,6 +46,12 @@ dialog {
     border-bottom: 1px solid var(--color-interactive);
     border-radius: var(--border-radius-2) var(--border-radius-2) 0 0;
 
+    &.sticky {
+      position: sticky;
+      top: 0;
+      background-color: inherit;
+    }
+
     h2 {
       @include type("head-1");
       jd-icon, img {

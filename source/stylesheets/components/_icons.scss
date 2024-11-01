@@ -4,6 +4,11 @@ jd-icon {
 	vertical-align: -.1666em;
 	height: 1.125em;
 
+	&.inline {
+		height: 1em;
+		margin-right: .25em;
+	}
+
 	svg {
 		width: auto;
 		height: 100%;
