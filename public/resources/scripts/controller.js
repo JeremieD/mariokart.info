@@ -269,6 +269,7 @@ function setCombo(combo, slot, replaceURL = false) {
     drawCustomCombos();
   }
   updateURLParams(replaceURL);
+  commitState();
 }
 
 function updateRelatedCombos(slot) {
@@ -385,24 +386,28 @@ function toggleDriverLock() {
   drawDriverLock();
   updateRelatedCombos("A");
   updateRelatedCombos("B");
+  commitState();
 }
 function toggleBodyLock() {
   state.locks.body = !state.locks.body;
   drawBodyLock();
   updateRelatedCombos("A");
   updateRelatedCombos("B");
+  commitState();
 }
 function toggleTireLock() {
   state.locks.tire = !state.locks.tire;
   drawTireLock();
   updateRelatedCombos("A");
   updateRelatedCombos("B");
+  commitState();
 }
 function toggleGliderLock() {
   state.locks.glider = !state.locks.glider;
   drawGliderLock();
   updateRelatedCombos("A");
   updateRelatedCombos("B");
+  commitState();
 }
 
 function openDriverDialog() {
@@ -468,6 +473,7 @@ function commitFormula() {
   state.offSlot.custom = getCustomCombos(state.offSlot.combo);
   state.openedDialog = "";
   drawFormulaDialog();
+  commitState();
 }
 function revertFormula() {
   state.workingFormula = structuredClone(state.formula);
@@ -560,6 +566,7 @@ function closeCreditsDialog() {
 }
 
 function initController() {
+  readState();
   readURLParams();
   getAvailableParts();
 }
@@ -621,6 +628,7 @@ function changeLocale(locl) {
   drawDominantCombos();
   drawSimilarCombos();
   drawCustomCombos();
+  commitState();
 }
 
 function changeStatScale(mode) {
@@ -629,23 +637,49 @@ function changeStatScale(mode) {
   drawDominantCombos();
   drawSimilarCombos();
   drawCustomCombos();
+  commitState();
 }
 
 function toggleMeterValues() {
   state.settings.showMeterValues = !state.settings.showMeterValues;
   drawSettingsDialog();
   drawCurrentCombo();
+  commitState();
 }
 
 function toggleCookies() {
   state.settings.allowCookies = !state.settings.allowCookies;
 
-  if (state.settings.allowCookies) { // Store cookies
-
+  if (state.settings.allowCookies) { // Store Cookies
+    commitState();
 
   } else { // Delete cookies
-
+    localStorage.removeItem("mk8dx");
   }
 
   drawSettingsDialog();
+}
+
+function readState() {
+  const data = JSON.parse(localStorage.getItem("mk8dx"));
+  if (!data?.settings?.allowCookies) return;
+  for (const prop of Object.keys(data.settings)) {
+    state.settings[prop] = data.settings[prop];
+  }
+  state.locks = structuredClone(data.locks);
+  for (const prop of Object.keys(data.driverPrefs)) {
+    state.driverPrefs[prop] = data.driverPrefs[prop];
+  }
+  state.formula = structuredClone(data.formula);
+  state.workingFormula = structuredClone(state.formula);
+}
+function commitState() {
+  if (!state.settings.allowCookies) return;
+  const data = {
+    settings: structuredClone(state.settings),
+    locks: structuredClone(state.locks),
+    driverPrefs: structuredClone(state.driverPrefs),
+    formula: structuredClone(state.formula),
+  };
+  localStorage.setItem("mk8dx", JSON.stringify(data));
 }
