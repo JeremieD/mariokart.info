@@ -40,6 +40,7 @@ whenDOMReady(() => {
   V.combo.gliderImg  = document.getElementById("glider-img");
   V.combo.gliderLock = document.getElementById("glider-lock-display");
   V.combo.details    = document.getElementById("combo-details");
+  V.combo.meters     = document.getElementById("combo-stats");
 
   V.combo.mintb = {
     meter: document.getElementById("mintb-meter"),
@@ -438,6 +439,7 @@ function drawCurrentCombo() {
   V.combo.details.innerText = detailStr;
 
   // Meters
+  V.combo.meters.classList.toggle("values-hidden", !state.settings.showMeterValues);
   for (const stat of stats) {
     V.combo[stat].meter.style.setProperty("--value", toLvl(combo.lvl[stat]));
     V.combo[stat].meter.title = S("stats", stat) + ": " + toLvl(combo.lvl[stat], stat);
@@ -555,6 +557,7 @@ function drawComboTable(container, combos, limit = 50) {
       const statDiff = document.createElement("div");
       const label = document.createElement("label");
       label.innerText = S("statsAbbr", stat);
+      label.title = S("stats", stat);
       const value = document.createElement("output");
       if (diff > 0) value.classList.add("positive");
       if (diff < 0) value.classList.add("negative");
