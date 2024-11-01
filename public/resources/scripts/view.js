@@ -263,7 +263,15 @@ whenDOMReady(() => {
       state.workingFormula[stat].max = unscaleStat(parseValue(max.value, max.max), stat);
       validateBounds(stat);
     }, { passive: true });
-    mode.addEventListener("click", () => { toggleFactorSign(stat); }, { passive: true });
+    mode.addEventListener("click", e => {
+      if (e.altKey) {
+        for (const stat of scoreStats) {
+          toggleFactorSign(stat, true);
+        }
+      } else {
+        toggleFactorSign(stat);
+      }
+    }, { passive: true });
     mode.addEventListener("dblclick", () => { resetFactor(stat); }, { passive: true });
   }
 
