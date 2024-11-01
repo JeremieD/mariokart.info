@@ -1,6 +1,77 @@
 "use strict";
 // Controller
 
+const blankFormula = {
+  mintb: {
+    factor: 0,
+    min: 0,
+    max: 20 },
+  spd: {
+    use: true,
+    factor: 0,
+    min: 0,
+    max: 20 },
+  spdGr: {
+    factor: 0,
+    min: 0,
+    max: 20 },
+  spdAg: {
+    factor: 0,
+    min: 0,
+    max: 20 },
+  spdWt: {
+    factor: 0,
+    min: 0,
+    max: 20 },
+  spdAr: {
+    factor: 0,
+    min: 0,
+    max: 20 },
+  accel: {
+    factor: 0,
+    min: 0,
+    max: 20 },
+  weigt: {
+    factor: 0,
+    min: 0,
+    max: 20 },
+  hnd: {
+    use: true,
+    factor: 0,
+    min: 0,
+    max: 20 },
+  hndGr: {
+    factor: 0,
+    min: 0,
+    max: 20 },
+  hndAg: {
+    factor: 0,
+    min: 0,
+    max: 20 },
+  hndWt: {
+    factor: 0,
+    min: 0,
+    max: 20 },
+  hndAr: {
+    factor: 0,
+    min: 0,
+    max: 20 },
+  trctn: {
+    factor: 0,
+    min: 0,
+    max: 20
+  },
+  invcb: {
+    factor: 0,
+    min: 0,
+    max: 20 },
+  size: {
+    factor: 0,
+    min: 0,
+    max: 2 },
+  excludeKarts: false, excludeATVs: false,
+  excludeBikes: false, excludeSportBikes: false,
+};
 const defaultFormula = {
   mintb: {
     factor: 16,
@@ -407,6 +478,10 @@ function setDefaultFormula() {
   state.workingFormula = structuredClone(defaultFormula);
   drawFormulaDialog();
 }
+function setBlankFormula() {
+  state.workingFormula = structuredClone(blankFormula);
+  drawFormulaDialog();
+}
 
 function toggleSpdMode() {
   state.workingFormula.spd.use = !state.workingFormula.spd.use;
@@ -417,9 +492,9 @@ function toggleHndMode() {
   drawCollapses();
 }
 
-function toggleFactorSign(stat) {
+function toggleFactorSign(stat, strict = false) {
   const statState = state.workingFormula[stat];
-  if (statState.factor == 0) {
+  if (statState.factor == 0 && !strict) {
     statState.factor = 1;
   } else {
     statState.factor *= -1;
