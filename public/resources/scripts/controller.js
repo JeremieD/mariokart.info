@@ -532,6 +532,15 @@ function closeFormulaHelpDialog() {
   drawFormulaHelpDialog();
 }
 
+function openHelpDialog() {
+  state.openedDialog = "help";
+  drawHelpDialog();
+}
+function closeHelpDialog() {
+  state.openedDialog = "";
+  drawHelpDialog();
+}
+
 function openSettingsDialog() {
   state.openedDialog = "settings";
   drawSettingsDialog();

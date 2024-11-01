@@ -200,13 +200,13 @@ const strings = {
     },
     stats: {
       mintb: "Mini-Turbo",
-      spd:   "Speed",
+      spd:   "Speed (Unified)",
       spdGr: "Ground Speed",
       spdAg: "Anti-Gravity Speed",
       spdWt: "Underwater Speed",
       spdAr: "Air Speed",
       accel: "Acceleration",
-      weigt: "Weight",
+      weigt: "Weight (Unified)",
       hnd:   "Handling",
       hndGr: "Ground Handling",
       hndAg: "Anti-Gravity Handling",
@@ -215,6 +215,23 @@ const strings = {
       trctn: "Traction",
       invcb: "Invincibility",
       size:  "Size"
+    },
+    statsAbbr: {
+      mintb: "MTB",
+      spd:   "SPD",
+      spdGr: "SPDGR",
+      spdAg: "SPDAG",
+      spdWt: "SPDWT",
+      spdAr: "SPDAR",
+      accel: "ACC",
+      weigt: "WGT",
+      hnd:   "HND",
+      hndGr: "HNDGR",
+      hndAg: "HNDAG",
+      hndWt: "HNDWT",
+      hndAr: "HNDAR",
+      trctn: "TRN",
+      invcb: "INV"
     }
   },
   "en-GB": {

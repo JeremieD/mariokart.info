@@ -27,9 +27,3 @@
     background-color: currentColor;
   }
 }
-
-.stat-code {
-  @include type("code-1");
-  line-height: 1;
-  text-transform: uppercase;
-}
