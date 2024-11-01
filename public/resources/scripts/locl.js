@@ -1,5 +1,4 @@
 "use strict";
-let locale = "en-US";
 const fallbacks = {
   "en-US": [ "en-GB" ],
   "en-GB": [ "en-US" ],
@@ -19,7 +18,8 @@ const fallbacks = {
   "es-ES": [ "es-MX", "en-US" ]
 };
 
-function S(ns, id) {
+function S(ns, id, locale) {
+  locale ??= state?.settings?.locale ?? "en-US";
   for (const locl of [locale, ...fallbacks[locale]]) {
     const str = strings[locl]?.[ns]?.[id];
     if (str == undefined) continue;
