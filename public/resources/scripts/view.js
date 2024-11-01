@@ -1116,6 +1116,8 @@ function drawSettingsDialog() {
   }
 
   V.settings.cookiesToggle.classList.toggle("selected", state.settings.allowCookies);
+  V.settings.localeSelect.value = state.settings.locale;
+  V.settings.statScaleSelect.value = state.settings.statScale;
   V.settings.meterValuesToggle.classList.toggle("selected", state.settings.showMeterValues);
 
   V.settings.dialog.inert = false;
