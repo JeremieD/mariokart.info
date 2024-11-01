@@ -746,6 +746,7 @@ function drawDriverDialog() {
         const name = S("drivers", driverPref);
         img.alt = name;
         button.title = name;
+        button.classList.remove("selected", "highlight");
         for (const driverVariant of driver.folder) {
           const variantID = driverVariant.id;
           const variantButton = document.getElementById("driver-" + variantID);
@@ -754,10 +755,10 @@ function drawDriverDialog() {
           variantButton.title = variantName;
           const selected = variantID == state.driver;
           variantButton.classList.toggle("selected", selected);
-          button.classList.toggle("selected", selected);
           const highlight = driverVariant.group == state.selectedSlot.combo.parts.driver.group;
           variantButton.classList.toggle("highlight", highlight);
-          button.classList.toggle("highlight", highlight);
+          if (selected) button.classList.add("selected");
+          if (highlight) button.classList.add("highlight");
         }
       }
     }
