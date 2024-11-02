@@ -47,8 +47,8 @@ onmessage = e => {
 const stats = [ "mtb", "spdGr", "spdAg", "spdWt", "spdAr", "acc",
                 "wgt", "hndGr", "hndAg", "hndWt", "hndAr", "trn", "inv" ];
 const scoreStats = [ "mtb", "spd", "spdGr", "spdAg", "spdWt", "spdAr",
-            "acc", "wgt", "hnd", "hndGr", "hndAg", "hndWt", "hndAr",
-            "trn", "inv", "size" ];
+              "acc", "wgt", "hnd", "hndGr", "hndAg", "hndWt", "hndAr",
+              "trn", "inv", "size" ];
 
 class Combo {
   // TODO: Clean up a bit. Rename some stuff.
@@ -210,22 +210,22 @@ function listCombos(opts = {}) {
   const bodyLock = opts.bodyLock ?? false;
   const tireLock = opts.tireLock ?? false;
   const gliderLock = opts.gliderLock ?? false;
-  const mtbMin = opts.mtb?.min ?? 0; const mtbMax = opts.mtb?.max ?? 20;
-  const spdMin = opts.spd?.min ?? 0; const spdMax = opts.spd?.max ?? 20;
+  const mtbMin   = opts.mtb?.min ?? 0;   const mtbMax   = opts.mtb?.max ?? 20;
+  const spdMin   = opts.spd?.min ?? 0;   const spdMax   = opts.spd?.max ?? 20;
   const spdGrMin = opts.spdGr?.min ?? 0; const spdGrMax = opts.spdGr?.max ?? 20;
   const spdWtMin = opts.spdWt?.min ?? 0; const spdWtMax = opts.spdWt?.max ?? 20;
   const spdAgMin = opts.spdAg?.min ?? 0; const spdAgMax = opts.spdAg?.max ?? 20;
   const spdArMin = opts.spdAr?.min ?? 0; const spdArMax = opts.spdAr?.max ?? 20;
-  const accMin = opts.acc?.min ?? 0; const accMax = opts.acc?.max ?? 20;
-  const wgtMin = opts.wgt?.min ?? 0; const wgtMax = opts.wgt?.max ?? 20;
-  const hndMin = opts.hnd?.min ?? 0; const hndMax = opts.hnd?.max ?? 20;
+  const accMin   = opts.acc?.min ?? 0;   const accMax   = opts.acc?.max ?? 20;
+  const wgtMin   = opts.wgt?.min ?? 0;   const wgtMax   = opts.wgt?.max ?? 20;
+  const hndMin   = opts.hnd?.min ?? 0;   const hndMax   = opts.hnd?.max ?? 20;
   const hndGrMin = opts.hndGr?.min ?? 0; const hndGrMax = opts.hndGr?.max ?? 20;
   const hndWtMin = opts.hndWt?.min ?? 0; const hndWtMax = opts.hndWt?.max ?? 20;
   const hndAgMin = opts.hndAg?.min ?? 0; const hndAgMax = opts.hndAg?.max ?? 20;
   const hndArMin = opts.hndAr?.min ?? 0; const hndArMax = opts.hndAr?.max ?? 20;
-  const trnMin = opts.trn?.min ?? 0; const trnMax = opts.trn?.max ?? 20;
-  const invMin = opts.inv?.min ?? 0; const invMax = opts.inv?.max ?? 20;
-  const sizeMin = opts.size?.min ?? 0; const sizeMax = opts.size?.max ?? 2;
+  const trnMin   = opts.trn?.min ?? 0;   const trnMax   = opts.trn?.max ?? 20;
+  const invMin   = opts.inv?.min ?? 0;   const invMax   = opts.inv?.max ?? 20;
+  const sizeMin  = opts.size?.min ?? 0;   const sizeMax  = opts.size?.max ?? 2;
   const excludeKarts = opts.excludeKarts ?? false;
   const excludeATVs = opts.excludeATVs ?? false;
   const excludeBikes = opts.excludeBikes ?? false;
@@ -271,21 +271,21 @@ function listCombos(opts = {}) {
     const combo = new Combo(driver, body, tire, glider);
 
     // Stat Checks
-    if (combo.lvl.mtb < mtbMin || combo.lvl.mtb > mtbMax) continue;
-    if (combo.lvl.spd < spdMin || combo.lvl.spd > spdMax) continue;
+    if (combo.lvl.mtb   < mtbMin   || combo.lvl.mtb   > mtbMax) continue;
+    if (combo.lvl.spd   < spdMin   || combo.lvl.spd   > spdMax) continue;
     if (combo.lvl.spdGr < spdGrMin || combo.lvl.spdGr > spdGrMax) continue;
     if (combo.lvl.spdWt < spdWtMin || combo.lvl.spdWt > spdWtMax) continue;
     if (combo.lvl.spdAg < spdAgMin || combo.lvl.spdAg > spdAgMax) continue;
     if (combo.lvl.spdAr < spdArMin || combo.lvl.spdAr > spdArMax) continue;
-    if (combo.lvl.acc < accMin || combo.lvl.acc > accMax) continue;
-    if (combo.lvl.wgt < wgtMin || combo.lvl.wgt > wgtMax) continue;
-    if (combo.lvl.hnd < hndMin || combo.lvl.hnd > hndMax) continue;
+    if (combo.lvl.acc   < accMin   || combo.lvl.acc   > accMax) continue;
+    if (combo.lvl.wgt   < wgtMin   || combo.lvl.wgt   > wgtMax) continue;
+    if (combo.lvl.hnd   < hndMin   || combo.lvl.hnd   > hndMax) continue;
     if (combo.lvl.hndGr < hndGrMin || combo.lvl.hndGr > hndGrMax) continue;
     if (combo.lvl.hndWt < hndWtMin || combo.lvl.hndWt > hndWtMax) continue;
     if (combo.lvl.hndAg < hndAgMin || combo.lvl.hndAg > hndAgMax) continue;
     if (combo.lvl.hndAr < hndArMin || combo.lvl.hndAr > hndArMax) continue;
-    if (combo.lvl.trn < trnMin || combo.lvl.trn > trnMax) continue;
-    if (combo.lvl.inv < invMin || combo.lvl.inv > invMax) continue;
+    if (combo.lvl.trn   < trnMin   || combo.lvl.trn   > trnMax) continue;
+    if (combo.lvl.inv   < invMin   || combo.lvl.inv   > invMax) continue;
     if (combo.size < sizeMin || combo.size > sizeMax) continue;
 
     // Difference Checks
@@ -305,9 +305,8 @@ function listCombos(opts = {}) {
       inv: combo.lvl.inv - refCombo.lvl.inv
     };
 
-    diff.total = diff.mtb + diff.spdGr + diff.spdWt + diff.spdAg + diff.spdAr
-               + diff.acc + diff.wgt + diff.hndGr + diff.hndWt + diff.hndAg
-               + diff.hndAr + diff.trn + diff.inv;
+    diff.total = diff.mtb + diff.spdGr + diff.spdWt + diff.spdAg + diff.spdAr + diff.acc
+               + diff.wgt + diff.hndGr + diff.hndWt + diff.hndAg + diff.hndAr + diff.trn + diff.inv;
     if (diff.total > maxDiff || diff.total < minDiff) continue;
 
     diff.absTotal = Math.abs(diff.mtb)
@@ -2021,7 +2020,7 @@ const parts = {
       code: "h" },
     comet: {
       type: "sport",
-      class: "cat",
+      class: "comet",
       group: "cat",
       code: "c" },
     duke: {
@@ -2306,18 +2305,10 @@ const driverPartCount = driverParts.length;
 const bodyPartCount   = bodyParts.length;
 const tirePartCount   = tireParts.length;
 const gliderPartCount = gliderParts.length;
-for (const id of driverParts) {
-  parts.drivers[id].id = id;
-}
-for (const id of bodyParts) {
-  parts.bodies[id].id = id;
-}
-for (const id of tireParts) {
-  parts.tires[id].id = id;
-}
-for (const id of gliderParts) {
-  parts.gliders[id].id = id;
-}
+for (const id of driverParts) { parts.drivers[id].id = id; }
+for (const id of bodyParts) { parts.bodies[id].id = id; }
+for (const id of tireParts) { parts.tires[id].id = id; }
+for (const id of gliderParts) { parts.gliders[id].id = id; }
 
 const driverCodes = {};
 for (const driver of driverParts) {
