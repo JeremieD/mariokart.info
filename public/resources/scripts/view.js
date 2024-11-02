@@ -4,8 +4,8 @@ const graphicsRoot = "/resources/graphics/";
 const stats = [ "mtb", "spdGr", "spdAg", "spdWt", "spdAr", "acc",
                 "wgt", "hndGr", "hndAg", "hndWt", "hndAr", "trn", "inv" ];
 const scoreStats = [ "mtb", "spd", "spdGr", "spdAg", "spdWt", "spdAr",
-            "acc", "wgt", "hnd", "hndGr", "hndAg", "hndWt", "hndAr",
-            "trn", "inv", "size" ];
+              "acc", "wgt", "hnd", "hndGr", "hndAg", "hndWt", "hndAr",
+              "trn", "inv", "size" ];
 const V = {
   combo: {},
   dominant: {},
@@ -303,10 +303,22 @@ whenDOMReady(() => {
     V.formula.hnd.collapse.classList.remove("transitioning");
   }, { passive: true });
 
-  V.formula.includeKarts.addEventListener("click", toggleIncludeKarts, { passive: true });
-  V.formula.includeATVs.addEventListener("click", toggleIncludeATVs, { passive: true });
-  V.formula.includeBikes.addEventListener("click", toggleIncludeBikes, { passive: true });
-  V.formula.includeSportBikes.addEventListener("click", toggleIncludeSportBikes, { passive: true });
+  V.formula.includeKarts.addEventListener("click", e => {
+    if (e.altKey) return invertIncludes();
+    toggleIncludeKarts();
+  }, { passive: true });
+  V.formula.includeATVs.addEventListener("click", e => {
+    if (e.altKey) return invertIncludes();
+    toggleIncludeATVs();
+  }, { passive: true });
+  V.formula.includeBikes.addEventListener("click", e => {
+    if (e.altKey) return invertIncludes();
+    toggleIncludeBikes();
+  }, { passive: true });
+  V.formula.includeSportBikes.addEventListener("click", e => {
+    if (e.altKey) return invertIncludes();
+    toggleIncludeSportBikes();
+  }, { passive: true });
 
   V.formula.helpOpen.addEventListener("click", openFormulaHelpDialog, { passive: true });
   V.formula.helpClose.addEventListener("click", closeFormulaHelpDialog, { passive: true });
