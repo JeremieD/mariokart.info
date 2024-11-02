@@ -100,7 +100,7 @@
 
     .stat-diffs {
       display: grid;
-      grid-template-columns: repeat(3, min-content auto);
+      grid-template-columns: repeat(3, max-content auto);
       gap: .125em 1em;
       font-size: var(--font-size-1);
 
