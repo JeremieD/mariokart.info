@@ -628,7 +628,7 @@ function formatFormula(formula) {
     let term = "<span";
     if (factor < 0) term += " class='negative'";
     if (factor > 0) term += " class='positive'";
-    term += "title='" + S("stats", stat) + "'";
+    term += " title='" + S("stats", stat) + "'";
     term += ">"
     factor = Math.abs(factor).toString();
     if (factor[0] == "0") factor = factor.substr(1);
