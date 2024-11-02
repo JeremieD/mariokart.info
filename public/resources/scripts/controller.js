@@ -528,6 +528,13 @@ function toggleIncludeSportBikes() {
   state.workingFormula.excludeSportBikes = !state.workingFormula.excludeSportBikes;
   drawFormulaDialog();
 }
+function invertIncludes() {
+  state.workingFormula.excludeKarts = !state.workingFormula.excludeKarts;
+  state.workingFormula.excludeATVs = !state.workingFormula.excludeATVs;
+  state.workingFormula.excludeBikes = !state.workingFormula.excludeBikes;
+  state.workingFormula.excludeSportBikes = !state.workingFormula.excludeSportBikes;
+  drawFormulaDialog();
+}
 
 function openFormulaHelpDialog() {
   state.openedDialog = "formula-help";
