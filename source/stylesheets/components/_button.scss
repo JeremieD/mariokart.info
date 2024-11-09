@@ -27,7 +27,11 @@ button {
 
   &.square {
     width: $button-size;
-    padding: 0;
+    padding: 0 .666rem;
+    jd-icon {
+      width: 100%;
+      margin: .666rem 0;
+    }
   }
 
   &.inline {
