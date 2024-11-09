@@ -52,6 +52,7 @@ class JDSelect extends HTMLElement {
   }
 
   open(e) {
+    this.dispatchEvent(new Event("open"));
     this.classList.add("open");
     this.#dropdownEl.inert = false;
     if (e.type == "click") {
@@ -67,6 +68,7 @@ class JDSelect extends HTMLElement {
   }
 
   close() {
+    this.dispatchEvent(new Event("close"));
     this.classList.remove("open");
     this.#dropdownEl.inert = true;
   }

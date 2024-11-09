@@ -347,8 +347,14 @@ whenDOMReady(() => {
   V.settings.localeSelect.addEventListener("change", () => {
     changeLocale(V.settings.localeSelect.value);
   }, { passive: true });
+  V.settings.localeSelect.addEventListener("open", () => {
+    V.settings.statScaleSelect.close();
+  }, { passive: true });
   V.settings.statScaleSelect.addEventListener("change", () => {
     changeStatScale(V.settings.statScaleSelect.value);
+  }, { passive: true });
+  V.settings.statScaleSelect.addEventListener("open", () => {
+    V.settings.localeSelect.close();
   }, { passive: true });
   V.settings.meterValuesToggle.addEventListener("click", toggleMeterValues, { passive: true });
 
