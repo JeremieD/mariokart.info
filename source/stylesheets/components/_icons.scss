@@ -1,19 +1,19 @@
 jd-icon {
-	display: inline-block;
-	line-height: 0;
-	vertical-align: -.1666em;
-	height: 1.125em;
+  display: inline-block;
+  line-height: 0;
+  vertical-align: -.1666em;
+  height: 1.125em;
 
-	&.inline {
-		height: 1em;
-		margin-right: .25em;
-	}
+  &.inline {
+    height: 1em;
+    margin-right: .25em;
+  }
 
-	svg {
-		width: auto;
-		height: 100%;
-		overflow: visible;
-		transition: .2s ease color;
-		will-change: translate; // fixes jank with movement animations in WebKit
-	}
+  svg {
+    width: auto;
+    height: 100%;
+    overflow: visible;
+    transition: .2s ease color;
+    will-change: translate; // fixes jank with movement animations in WebKit
+  }
 }

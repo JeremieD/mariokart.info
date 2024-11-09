@@ -3,22 +3,22 @@
 @use "prefix" as *;
 
 body>header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	width: var(--width-page);
-	margin: 0 auto;
-	padding: 1.5rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: var(--width-page);
+  margin: 0 auto;
+  padding: 1.5rem 0;
 
-	@include user-select(none);
+  @include user-select(none);
 
-	a {
-		font-weight: bold;
-		@include text-decoration-color(transparent);
-	}
+  a {
+    font-weight: bold;
+    @include text-decoration-color(transparent);
+  }
 
-	h1 {
-		@include type("head-1");
-		font-feature-settings: "case" on;
-	}
+  h1 {
+    @include type("head-1");
+    font-feature-settings: "case" on;
+  }
 }

@@ -5,29 +5,29 @@
 
 /* Remove any value set by the user-agent stylesheet. */
 *:not(svg, svg *), ::before, ::after {
-	all: unset;
+  all: unset;
 
-	/* Webkit quirks */
-	-webkit-text-emphasis-color: initial;
-	-webkit-text-fill-color: initial;
+  /* Webkit quirks */
+  -webkit-text-emphasis-color: initial;
+  -webkit-text-fill-color: initial;
 
-	/* Chromium quirks */
-	color: inherit;
+  /* Chromium quirks */
+  color: inherit;
 
-	/* Slightly opinionated things. */
-	box-sizing: border-box;
+  /* Slightly opinionated things. */
+  box-sizing: border-box;
 
-	touch-action: manipulation;
+  touch-action: manipulation;
 }
 
 /* Accessible by default. */
 /* :focus {
-	outline: auto;
+  outline: auto;
 } */
 
 /* Set display: none; elements. These should never appear. */
 head, base, link, meta, title, script, source, style, option, template, dialog:not([open]) {
-	display: none;
+  display: none;
 }
 
 /* Set default block elements. Customize only for very general uses. */
@@ -39,7 +39,7 @@ div, p, hr,
 ul, ol, li,
 img, picture, video, svg
 figure, figcaption {
-	display: block;
+  display: block;
 }
 
 /* Set default table elements. These elements depend on this CSS to be of any use. */
