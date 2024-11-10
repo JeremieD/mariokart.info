@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="18.75" height="16" viewBox="0 0 1500 1280" class="icon-heart">
+  <style>
+    .icon-heart #mask path {
+      transform-origin: center;
+      scale: 1;
+      transition: .2s ease-in-out scale;
+    }
+    :is([selected], .selected) .icon-heart #mask path { scale: 0; }
+  </style>
+  <mask id="mask">
+    <rect width="1500" height="1280" fill="white" />
+    <path d="m 750,1280 640,-640 c 74,-73 110,-169 110,-265 0,-96 -36,-192 -110,-265 C 1317,36 1221,0 1125,0 1029,0 933,36 860,110 L 750,220 640,110 C 567,36 471,0 375,0 279,0 183,36 110,110 a 374.2,374.2 0 0 0 0,530 z" />
+  </mask>
+  <path d="m 750,1280 640,-640 c 74,-73 110,-169 110,-265 0,-96 -36,-192 -110,-265 C 1317,36 1221,0 1125,0 1029,0 933,36 860,110 L 750,220 640,110 C 567,36 471,0 375,0 279,0 183,36 110,110 a 374.2,374.2 0 0 0 0,530 z" fill="none" stroke="currentColor" stroke-width="160"/>
+  <path d="m 750,1280 640,-640 c 74,-73 110,-169 110,-265 0,-96 -36,-192 -110,-265 C 1317,36 1221,0 1125,0 1029,0 933,36 860,110 L 750,220 640,110 C 567,36 471,0 375,0 279,0 183,36 110,110 a 374.2,374.2 0 0 0 0,530 z" fill="currentColor" mask="url(#mask)"/>
+</svg>

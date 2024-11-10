@@ -153,11 +153,13 @@ const state = {
   slot: {
     A: {
       combo: {},
+      isFavorite: false,
       dominant: [],
       similar: [],
       custom: [] },
     B: {
       combo: {},
+      isFavorite: false,
       dominant: [],
       similar: [],
       custom: [] }
@@ -197,6 +199,7 @@ const state = {
     villager: "villagerM",
     link: "link1",
     mii: "miiM" },
+  favorites: [],
   formula: structuredClone(defaultFormula),
   workingFormula: structuredClone(defaultFormula),
   formulaDialogScrollTop: 0,
@@ -253,11 +256,13 @@ function setCombo(combo, slot, replaceURL = false) {
   if (slot == "A" && state.selectedSlotID == "B"
    || slot == "B" && state.selectedSlotID == "A") {
     state.offSlot.combo = combo;
+    state.offSlot.isFavorite = isFavorite(combo);
     state.offSlot.dominant = getDominantCombos(combo);
     state.offSlot.similar = getSimilarCombos(combo);
     state.offSlot.custom = getCustomCombos(combo);
   } else {
     state.selectedSlot.combo = combo;
+    state.selectedSlot.isFavorite = isFavorite(combo);
     for (const driverGroup of Object.keys(state.driverPrefs)) {
       if (state.driver.startsWith(driverGroup)) {
         state.driverPrefs[driverGroup] = state.driver;
@@ -460,6 +465,63 @@ function closeGliderDialog() {
   drawDominantCombos();
   drawSimilarCombos();
   drawCustomCombos();
+}
+
+function isFavorite(combo) {
+  for (const fav of state.favorites) {
+    if (combo.code === fav.combo.code) return true;
+  }
+  return false;
+}
+function favoriteCombo() {
+  if (state.selectedSlot.isFavorite) return openFavoritesDialog();
+  state.selectedSlot.isFavorite = true;
+  const newFav = {
+    name: state.selectedSlot.combo.name,
+    combo: state.selectedSlot.combo
+  };
+  state.favorites.push(newFav);
+  drawCurrentCombo();
+  commitState();
+}
+function unfavorite(combo) {
+  if (!isFavorite(combo)) throw combo.name + " is not in favorites";
+  state.favorites = state.favorites.filter(c => c.combo.code !== combo.code);
+  if (combo.code === state.selectedSlot.combo.code) state.selectedSlot.isFavorite = false;
+  if (combo.code === state.offSlot.combo.code) state.offSlot.isFavorite = false;
+  removeFavorite(combo);
+  drawCurrentCombo();
+  commitState();
+}
+function openFavoritesDialog() {
+  state.openedDialog = "favorites";
+  drawFavoritesDialog();
+}
+function closeFavoritesDialog() {
+  state.openedDialog = "";
+  drawFavoritesDialog();
+}
+function serializeFavorites(obj) {
+  const serial = [];
+  for (const fav of obj) {
+    serial.push({
+      name: fav.name,
+      combo: fav.combo.code
+    });
+  }
+  return serial;
+}
+function deserializeFavorites(serial) {
+  const obj = [];
+  for (const fav of serial) {
+    Stats.post("getCombo", fav.combo).then(combo => {
+      obj.push({
+        name: fav.name,
+        combo: combo
+      });
+    });
+  }
+  return obj;
 }
 
 function openFormulaDialog() {
@@ -677,6 +739,7 @@ function readState() {
   for (const prop of Object.keys(data.driverPrefs)) {
     state.driverPrefs[prop] = data.driverPrefs[prop];
   }
+  state.favorites = deserializeFavorites(data.favorites);
   state.formula = structuredClone(data.formula);
   state.workingFormula = structuredClone(state.formula);
 }
@@ -686,7 +749,8 @@ function commitState() {
     settings: structuredClone(state.settings),
     locks: structuredClone(state.locks),
     driverPrefs: structuredClone(state.driverPrefs),
-    formula: structuredClone(state.formula),
+    favorites: serializeFavorites(state.favorites),
+    formula: structuredClone(state.formula)
   };
   localStorage.setItem("mk8dx", JSON.stringify(data));
 }

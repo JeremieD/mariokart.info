@@ -39,6 +39,8 @@ dialog {
     scrollbar-width: thin;
   }
 
+  &.full-size { height: calc(100svh - 2*var(--dialog-pos)); }
+
   &>* { padding: 1.333rem; }
 
   header {

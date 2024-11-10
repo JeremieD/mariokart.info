@@ -56,6 +56,10 @@
     <section id="builder">
       <div id="combo-topbar">
         <div class="button-group">
+          <div class="button-group radio favourites">
+            <button id="favorite" class="square" title="Save this combo to your favorites."><jd-icon icon="heart"></jd-icon></button>
+            <button id="favorites-open" title="Open the favorites menu."><jd-icon icon="chevron-down"></jd-icon></button>
+          </div>
           <button id="random-combo">Random</button>
           <button id="share-combo" class="big-type square" title="Copy combo link to clipboard"><jd-icon icon="link"></jd-icon></button>
         </div>
@@ -187,7 +191,7 @@
 
   <footer>
     <p><a id="credits-open" href="#">Credits & Info</a></p>
-    <p>Updated 1 Nov 2024 / v1.2 / MK8DX&nbsp;v3.0.3★</p>
+    <p>Updated 9 Nov 2024 / v1.2 / MK8DX&nbsp;v3.0.3★</p>
   </footer>
 
   <dialog id="driver-picker" inert>
@@ -220,6 +224,16 @@
       <button id="glider-lock" class="inline"><label id="glider-lock-label">Lock Glider</label><jd-icon icon="lock"></jd-icon></button>
     </hgroup></header>
     <div id="glider-grid" class="parts-grid"></div>
+  </dialog>
+
+  <dialog id="favorites-dialog" inert class="overflow full-size">
+    <header class="sticky">
+      <hgroup>
+        <h2>Favorites</h2>
+        <button id="favorites-close" class="icon inline" title="Close Favorites"><jd-icon icon="x"></jd-icon></button>
+      </hgroup>
+    </header>
+    <div><ol id="favorites-list"></ol></div>
   </dialog>
 
   <dialog id="custom-formula-dialog" inert class="overflow">
