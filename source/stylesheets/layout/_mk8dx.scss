@@ -266,6 +266,7 @@ ul.bullet {
       font-weight: bold;
       min-width: 0;
       border-radius: var(--border-radius-0);
+      text-overflow: ellipsis;
     }
   }
 
@@ -275,4 +276,11 @@ ul.bullet {
     border-radius: var(--border-radius-1);
     padding: .25rem;
   }
+}
+
+#unfavorite-message {
+  font-size: var(--font-size-3);
+  font-weight: normal;
+  text-wrap: balance;
+  em { text-wrap: nowrap; }
 }
