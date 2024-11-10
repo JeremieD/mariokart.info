@@ -474,7 +474,7 @@ function isFavorite(combo) {
   return false;
 }
 function favoriteCombo() {
-  if (state.selectedSlot.isFavorite) return openFavoritesDialog();
+  if (state.selectedSlot.isFavorite) return;
   state.selectedSlot.isFavorite = true;
   const newFav = {
     name: state.selectedSlot.combo.name,
@@ -484,14 +484,33 @@ function favoriteCombo() {
   drawCurrentCombo();
   commitState();
 }
-function unfavorite(combo) {
+function unfavorite(combo, bypass = false) {
   if (!isFavorite(combo)) throw combo.name + " is not in favorites";
+  if (!bypass && getCustomName(combo) !== combo.name) {
+    drawUnfavoriteConfirmDialog(combo);
+    return;
+  }
   state.favorites = state.favorites.filter(c => c.combo.code !== combo.code);
   if (combo.code === state.selectedSlot.combo.code) state.selectedSlot.isFavorite = false;
   if (combo.code === state.offSlot.combo.code) state.offSlot.isFavorite = false;
   removeFavorite(combo);
   drawCurrentCombo();
   commitState();
+}
+function getCustomName(combo) {
+  for (const fav of state.favorites) {
+    if (fav.combo.code === combo.code) return fav.name;
+  }
+  return undefined;
+}
+function nameFavorite(combo, newName) {
+  for (const fav of state.favorites) {
+    if (fav.combo.code === combo.code) {
+      fav.name = newName;
+      commitState();
+      break;
+    }
+  }
 }
 function openFavoritesDialog() {
   state.openedDialog = "favorites";

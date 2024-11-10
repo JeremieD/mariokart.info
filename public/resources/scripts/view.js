@@ -139,6 +139,10 @@ whenDOMReady(() => {
   V.favorites.close = document.getElementById("favorites-close");
   V.favorites.dialog = document.getElementById("favorites-dialog");
   V.favorites.list = document.getElementById("favorites-list");
+  V.favorites.unfavoriteDialog = document.getElementById("unfavorite-dialog");
+  V.favorites.unfavoriteMessage = document.getElementById("unfavorite-message");
+  V.favorites.unfavoriteConfirmButton = document.getElementById("unfavorite-confirm");
+  V.favorites.unfavoriteCancelButton = document.getElementById("unfavorite-cancel");
 
   V.formula.dialog = document.getElementById("custom-formula-dialog");
   for (const stat of scoreStats) {
@@ -1086,6 +1090,11 @@ function drawFavoritesDialog() {
     const name = document.createElement("input");
     name.classList.add("inline");
     name.value = fav.name;
+    name.placeholder = combo.name;
+    name.addEventListener("change", e => {
+      if (e.target.value === "") e.target.value = combo.name;
+      nameFavorite(combo, e.target.value);
+    }, { passive: true });
 
     const buttonsDisplay = document.createElement("div");
     const loadButtons = document.createElement("div");
@@ -1128,6 +1137,37 @@ function removeFavorite(combo) {
       drawFavoritesDialog();
     }
   }, { passive: true });
+}
+function drawUnfavoriteConfirmDialog(combo) {
+  V.favorites.unfavoriteDialog.inert = false;
+  V.favorites.unfavoriteMessage.innerHTML = "Are you sure you want to remove <em>"
+                                          + getCustomName(combo)
+                                          + "</em> from your favorites?";
+
+  const previousDialog = state.openedDialog;
+  state.openedDialog = "unfavorite-confirm";
+  V.favorites.unfavoriteDialog.showModal();
+
+  const abort = new AbortController();
+
+  function confirm() {
+    abort.abort();
+    V.favorites.unfavoriteDialog.close();
+    state.openedDialog = previousDialog;
+    unfavorite(combo, true);
+  }
+  function cancel() {
+    abort.abort();
+    V.favorites.unfavoriteDialog.close();
+    state.openedDialog = previousDialog;
+  }
+
+  V.favorites.unfavoriteConfirmButton.addEventListener("click", confirm, { signal: abort.signal, passive: true });
+  V.favorites.unfavoriteCancelButton.addEventListener("click", cancel, { signal: abort.signal, passive: true });
+  addEventListener("keydown", e => {
+    if (e.shiftKey || e.ctrlKey || e.altKey || e.metaKey) return;
+    if (e.key === "Escape") cancel();
+  }, { signal: abort.signal, passive: true });
 }
 
 function drawFormulaDialog() {

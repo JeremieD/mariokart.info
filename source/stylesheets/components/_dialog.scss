@@ -41,6 +41,11 @@ dialog {
 
   &.full-size { height: calc(100svh - 2*var(--dialog-pos)); }
 
+  &.alert {
+    text-align: center;
+    footer button { width: 100%; }
+  }
+
   &>* { padding: 1.333rem; }
 
   header {
