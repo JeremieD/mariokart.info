@@ -28,6 +28,7 @@ class JDSelect extends HTMLElement {
 
     this.addEventListener("click", this.open, { passive: true } );
     addEventListener("click", e => {
+      if (!this.classList.contains("open")) return;
       if (isOutside(this.#dropdownEl, e)) this.close();
     }, { passive: true });
     this.addEventListener("keydown", this.keydownHandler);

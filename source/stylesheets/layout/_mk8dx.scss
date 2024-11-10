@@ -59,8 +59,32 @@
 #combo-topbar {
   display: flex;
   justify-content: space-between;
-  gap: .5rem;
   margin-bottom: .5rem;
+
+  .favourites { gap: .25rem; }
+  #favorite {
+    & svg { transition: .1s ease scale; }
+    &:active svg { scale: .75; }
+    &.selected {
+      background-color: var(--color-interactive);
+      color: var(--color-text);
+      &.user svg { animation: pulse .5s; }
+    }
+  }
+  #favorites-open {
+    min-width: 0;
+    padding: 0 .5rem;
+    jd-icon {
+      height: .375rem;
+      vertical-align: .125em;
+    }
+  }
+}
+
+@keyframes pulse {
+  25%  { scale: .5; }
+  50%  { scale: 1.375; }
+  85%  { scale: .875; }
 }
 
 .tab-panels ol {
@@ -193,5 +217,62 @@ ul.bullet {
       content: "• ";
       color: var(--color-subdued);
     }
+  }
+}
+
+#favorites-dialog {
+  ol {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  p {
+    text-align: center;
+    color: var(--color-subdued);
+    margin-top: 1rem;
+  }
+
+  li {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    margin-top: 0;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--color-interactive);
+    &:last-child {
+      padding-bottom: 0;
+      border: none;
+    }
+
+    &.remove {
+      height: 0 !important;
+      margin-top: -1.25rem;
+      padding-bottom: 0;
+      overflow: hidden;
+      transition: .2s ease-in-out height,
+                  .2s ease-in-out padding-bottom,
+                  .1s .1s ease-in-out margin-top;
+    }
+
+    & > :first-child {
+      display: flex;
+      gap: 1rem;
+      &>.button-group { gap: .75rem; }
+    }
+
+    input {
+      font-size: var(--font-size-4);
+      font-weight: bold;
+      min-width: 0;
+      border-radius: var(--border-radius-0);
+    }
+  }
+
+  .combo > :not(button) img {
+    width: 100%;
+    background-color: var(--color-interactive);
+    border-radius: var(--border-radius-1);
+    padding: .25rem;
   }
 }

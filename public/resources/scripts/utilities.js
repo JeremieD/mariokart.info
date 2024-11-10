@@ -9,7 +9,6 @@ function whenDOMReady(callback, options = { once: true, passive: true }) {
 }
 
 whenDOMReady(() => {
-  initController();
   initView();
 });
 

@@ -21,6 +21,11 @@ button {
     color: var(--color-light1);
   }
 
+  &.danger:not(.inline) {
+    background-color: var(--color-red);
+    color: var(--color-light1);
+  }
+
   &.big-type {
     @include type("body-3");
   }

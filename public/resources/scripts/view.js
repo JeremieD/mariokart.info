@@ -15,6 +15,7 @@ const V = {
   bodies: {},
   tires: {},
   gliders: {},
+  favorites: {},
   formula: {},
   help: {},
   settings: {},
@@ -22,6 +23,7 @@ const V = {
 }; // View object
 
 whenDOMReady(() => {
+  V.combo.favorite = document.getElementById("favorite");
   V.combo.random = document.getElementById("random-combo");
   V.combo.share = document.getElementById("share-combo");
   V.combo.a = document.getElementById("combo-a");
@@ -133,6 +135,11 @@ whenDOMReady(() => {
   V.gliders.lockLabel = document.getElementById("glider-lock-label");
   V.gliders.grid = document.getElementById("glider-grid");
 
+  V.favorites.open = document.getElementById("favorites-open");
+  V.favorites.close = document.getElementById("favorites-close");
+  V.favorites.dialog = document.getElementById("favorites-dialog");
+  V.favorites.list = document.getElementById("favorites-list");
+
   V.formula.dialog = document.getElementById("custom-formula-dialog");
   for (const stat of scoreStats) {
     V.formula[stat] = {};
@@ -183,6 +190,17 @@ whenDOMReady(() => {
 
   /******** View OUT ********/
 
+  V.combo.favorite.addEventListener("click", () => {
+    if (!V.combo.favorite.classList.contains("selected")) {
+      V.combo.favorite.classList.add("user");
+      favoriteCombo();
+    } else {
+      unfavorite(state.selectedSlot.combo);
+    }
+  }, { passive: true });
+  V.combo.favorite.addEventListener("animationend", () => {
+    V.combo.favorite.classList.remove("user");
+  }, { passive: true });
   V.combo.random.addEventListener("click", randomCombo, { passive: true });
   V.combo.share.addEventListener("click", share, { passive: true });
   V.combo.a.addEventListener("click", selectA, { passive: true });
@@ -211,24 +229,38 @@ whenDOMReady(() => {
   V.custom.customize.addEventListener("click", openFormulaDialog, { passive: true });
 
   V.drivers.dialog.addEventListener("click", e => {
+    if (!state.openedDialog === "drivers") return;
     if (isOutside(V.drivers.dialog, e)) closeDriverDialog();
   }, { passive: true });
   V.drivers.lock.addEventListener("click", toggleDriverLock, { passive: true });
 
   V.bodies.dialog.addEventListener("click", e => {
+    if (!state.openedDialog === "bodies") return;
     if (isOutside(V.bodies.dialog, e)) closeBodyDialog();
   }, { passive: true });
   V.bodies.lock.addEventListener("click", toggleBodyLock, { passive: true });
 
   V.tires.dialog.addEventListener("click", e => {
+    if (!state.openedDialog === "tires") return;
     if (isOutside(V.tires.dialog, e)) closeTireDialog();
   }, { passive: true });
   V.tires.lock.addEventListener("click", toggleTireLock, { passive: true });
 
   V.gliders.dialog.addEventListener("click", e => {
+    if (!state.openedDialog === "gliders") return;
     if (isOutside(V.gliders.dialog, e)) closeGliderDialog();
   }, { passive: true });
   V.gliders.lock.addEventListener("click", toggleGliderLock, { passive: true });
+
+  V.favorites.open.addEventListener("click", e => {
+    openFavoritesDialog();
+    e.preventDefault(); // To conserve page scroll position
+  });
+  V.favorites.close.addEventListener("click", closeFavoritesDialog, { passive: true });
+  V.favorites.dialog.addEventListener("click", e => {
+    if (!state.openedDialog === "favorites") return;
+    if (isOutside(V.favorites.dialog, e)) closeFavoritesDialog();
+  }, { passive: true });
 
   addEventListener("keydown", e => {
     if (e.key === "Alt") V.formula.reset.innerText = "Revert to Blank Formula";
@@ -323,6 +355,7 @@ whenDOMReady(() => {
   V.formula.helpOpen.addEventListener("click", openFormulaHelpDialog, { passive: true });
   V.formula.helpClose.addEventListener("click", closeFormulaHelpDialog, { passive: true });
   V.formula.helpDialog.addEventListener("click", e => {
+    if (!state.openedDialog === "formula-help") return;
     if (isOutside(V.formula.helpDialog, e)) closeFormulaHelpDialog();
   }, { passive: true });
 
@@ -332,6 +365,7 @@ whenDOMReady(() => {
   });
   V.help.close.addEventListener("click", closeHelpDialog, { passive: true });
   V.help.dialog.addEventListener("click", e => {
+    if (!state.openedDialog === "help") return;
     if (isOutside(V.help.dialog, e)) closeHelpDialog();
   }, { passive: true });
 
@@ -341,6 +375,7 @@ whenDOMReady(() => {
   });
   V.settings.close.addEventListener("click", closeSettingsDialog, { passive: true });
   V.settings.dialog.addEventListener("click", e => {
+    if (!state.openedDialog === "settings") return;
     if (isOutside(V.settings.dialog, e)) closeSettingsDialog();
   }, { passive: true });
   V.settings.cookiesToggle.addEventListener("click", toggleCookies, { passive: true });
@@ -364,6 +399,7 @@ whenDOMReady(() => {
   });
   V.credits.close.addEventListener("click", closeCreditsDialog, { passive: true });
   V.credits.dialog.addEventListener("click", e => {
+    if (!state.openedDialog === "credits") return;
     if (isOutside(V.credits.dialog, e)) closeCreditsDialog();
   }, { passive: true });
 
@@ -381,6 +417,7 @@ whenDOMReady(() => {
         case "body": return closeBodyDialog();
         case "tire": return closeTireDialog();
         case "glider": return closeGliderDialog();
+        case "favorites": return closeFavoritesDialog();
         case "formula": return revertFormula();
         case "formula-help": return closeFormulaHelpDialog();
         case "help": return closeHelpDialog();
@@ -468,6 +505,10 @@ function drawCurrentCombo() {
     }
   }
 
+  // Favorite
+  V.combo.favorite.classList.toggle("selected", state.selectedSlot.isFavorite);
+  V.combo.favorite.title = state.selectedSlot.isFavorite ? "Remove this combo from your favorites." : "Save this combo to your favorites."
+
   // Page Title
   document.title = combo.name + " | MK8DX Combo Builder";
 }
@@ -513,45 +554,7 @@ function drawComboTable(container, combos, limit = 50) {
     const li = document.createElement("li");
     const top = document.createElement("div");
 
-    const comboDisplay = document.createElement("div");
-    comboDisplay.classList.add("combo", "button-group", "radio");
-    const driverBox = document.createElement("div");
-    const bodyBox   = document.createElement("div");
-    const tireBox   = document.createElement("div");
-    const gliderBox = document.createElement("div");
-    const driverImg = document.createElement("img");
-    const bodyImg   = document.createElement("img");
-    const tireImg   = document.createElement("img");
-    const gliderImg = document.createElement("img");
-    const driverName = S("drivers", combo.driverID);
-    const bodyName = S("bodies", combo.bodyID);
-    const tireName = S("tires", combo.tireID);
-    const gliderName = S("gliders", combo.gliderID);
-    const driverImgPath = combo.driverID;
-    const bodyImgPath = combo.bodyID + combo.bodyVariant;
-    const tireImgPath = combo.tireID;
-    const gliderImgPath = combo.gliderID + combo.gliderVariant;
-    driverImg.src = graphicsRoot + "drivers/" + driverImgPath + ".webp";
-    bodyImg.src = graphicsRoot + "bodies/" + bodyImgPath + ".webp";
-    tireImg.src = graphicsRoot + "tires/" + tireImgPath + ".webp";
-    gliderImg.src = graphicsRoot + "gliders/" + gliderImgPath + ".webp";
-    driverImg.alt = driverName;
-    bodyImg.alt = bodyName;
-    tireImg.alt = tireName;
-    gliderImg.alt = gliderName;
-    driverImg.width = "128"; driverImg.height = "128";
-    bodyImg.width = "200"; bodyImg.height = "128";
-    tireImg.width = "200"; tireImg.height = "128";
-    gliderImg.width = "200"; gliderImg.height = "128";
-    driverImg.loading = "lazy"; bodyImg.loading = "lazy";
-    tireImg.loading = "lazy"; gliderImg.loading = "lazy";
-    driverBox.title = driverName;
-    bodyBox.title = bodyName;
-    tireBox.title = tireName;
-    gliderBox.title = gliderName;
-    driverBox.append(driverImg); bodyBox.append(bodyImg);
-    tireBox.append(tireImg); gliderBox.append(gliderImg);
-    comboDisplay.append(driverBox, bodyBox, tireBox, gliderBox);
+    const comboDisplay = newComboDisplay(combo);
 
     const buttonsDisplay = document.createElement("div");
     buttonsDisplay.classList.add("button-group", "radio");
@@ -561,8 +564,8 @@ function drawComboTable(container, combos, limit = 50) {
     loadInB.innerText = "→B";
     loadInA.classList.toggle("primary", state.selectedSlotID == "A");
     loadInB.classList.toggle("primary", state.selectedSlotID == "B");
-    loadInA.addEventListener("click", () => { setCombo(combo, "A") }, { passive: true });
-    loadInB.addEventListener("click", () => { setCombo(combo, "B") }, { passive: true });
+    loadInA.addEventListener("click", () => { setCombo(combo, "A"); }, { passive: true });
+    loadInB.addEventListener("click", () => { setCombo(combo, "B"); }, { passive: true });
     buttonsDisplay.append(loadInA, loadInB);
 
     top.append(comboDisplay, buttonsDisplay);
@@ -990,6 +993,54 @@ function newPartButton(imgSrc, id) {
   button.append(img);
   return button;
 }
+function newComboDisplay(combo) {
+  const comboDisplay = document.createElement("div");
+  comboDisplay.classList.add("combo", "button-group", "radio");
+
+  const driverBox = document.createElement("div");
+  const bodyBox   = document.createElement("div");
+  const tireBox   = document.createElement("div");
+  const gliderBox = document.createElement("div");
+
+  const driverImg = document.createElement("img");
+  const bodyImg   = document.createElement("img");
+  const tireImg   = document.createElement("img");
+  const gliderImg = document.createElement("img");
+
+  const driverName = S("drivers", combo.driverID);
+  const bodyName = S("bodies", combo.bodyID);
+  const tireName = S("tires", combo.tireID);
+  const gliderName = S("gliders", combo.gliderID);
+
+  const driverImgPath = combo.driverID;
+  const bodyImgPath = combo.bodyID + combo.bodyVariant;
+  const tireImgPath = combo.tireID;
+  const gliderImgPath = combo.gliderID + combo.gliderVariant;
+
+  driverImg.src = graphicsRoot + "drivers/" + driverImgPath + ".webp";
+  bodyImg.src = graphicsRoot + "bodies/" + bodyImgPath + ".webp";
+  tireImg.src = graphicsRoot + "tires/" + tireImgPath + ".webp";
+  gliderImg.src = graphicsRoot + "gliders/" + gliderImgPath + ".webp";
+
+  driverImg.alt = driverName; bodyImg.alt = bodyName;
+  tireImg.alt = tireName; gliderImg.alt = gliderName;
+
+  driverImg.width = "128"; driverImg.height = "128";
+  bodyImg.width = "200"; bodyImg.height = "128";
+  tireImg.width = "200"; tireImg.height = "128";
+  gliderImg.width = "200"; gliderImg.height = "128";
+
+  driverImg.loading = "lazy"; bodyImg.loading = "lazy";
+  tireImg.loading = "lazy"; gliderImg.loading = "lazy";
+
+  driverBox.title = driverName; bodyBox.title = bodyName;
+  tireBox.title = tireName; gliderBox.title = gliderName;
+
+  driverBox.append(driverImg); bodyBox.append(bodyImg);
+  tireBox.append(tireImg); gliderBox.append(gliderImg);
+  comboDisplay.append(driverBox, bodyBox, tireBox, gliderBox);
+  return comboDisplay;
+}
 
 function drawPopover(el) {
   // TODO: Make this popover system not jank.
@@ -1004,6 +1055,79 @@ function drawPopover(el) {
 function closePopover(el) {
   el.removeAttribute("open");
   el.setAttribute("inert", "");
+}
+
+function drawFavoritesDialog() {
+  if (state.openedDialog !== "favorites") {
+    V.favorites.dialog.inert = true;
+    V.favorites.dialog.close();
+    return;
+  }
+
+  V.favorites.list.innerHTML = "";
+
+  if (state.favorites.length == 0) {
+    V.favorites.list.classList.add("empty");
+    const para = document.createElement("p");
+    para.innerText = "No favorite combos.";
+    V.favorites.list.append(para);
+  } else {
+    V.favorites.list.classList.remove("empty");
+  }
+
+  for (const fav of state.favorites) {
+    const combo = fav.combo;
+
+    const li = document.createElement("li");
+    li.id = combo.code;
+    const header = document.createElement("div");
+    const comboDisplay = newComboDisplay(combo);
+
+    const name = document.createElement("input");
+    name.classList.add("inline");
+    name.value = fav.name;
+
+    const buttonsDisplay = document.createElement("div");
+    const loadButtons = document.createElement("div");
+    buttonsDisplay.classList.add("button-group");
+    loadButtons.classList.add("button-group", "radio");
+    const remove = document.createElement("button");
+    const loadInA = document.createElement("button");
+    const loadInB = document.createElement("button");
+    remove.append(new JDIcon("heart-slash"));
+    loadInA.innerText = "→A";
+    loadInB.innerText = "→B";
+    remove.classList.add("square", "danger", "selected");
+    loadInA.classList.toggle("primary", state.selectedSlotID == "A");
+    loadInB.classList.toggle("primary", state.selectedSlotID == "B");
+    remove.addEventListener("click", () => { unfavorite(combo); }, { passive: true });
+    loadInA.addEventListener("click", () => { setCombo(combo, "A"); }, { passive: true });
+    loadInB.addEventListener("click", () => { setCombo(combo, "B"); }, { passive: true });
+    loadButtons.append(loadInA, loadInB);
+    buttonsDisplay.append(remove, loadButtons);
+
+    header.append(name, buttonsDisplay);
+
+    li.append(header, comboDisplay);
+    V.favorites.list.append(li);
+  }
+
+  V.favorites.dialog.inert = false;
+  if (V.favorites.dialog.open) return;
+  V.favorites.dialog.showModal();
+}
+function removeFavorite(combo) {
+  const li = document.getElementById(combo.code);
+  if (li == undefined) return;
+  li.style.height = li.offsetHeight + "px";
+  li.getClientRects(); // Force recalculation of layout.
+  li.classList.add("remove");
+  li.addEventListener("transitionend", () => {
+    li.remove();
+    if (V.favorites.list.children.length === 0) {
+      drawFavoritesDialog();
+    }
+  }, { passive: true });
 }
 
 function drawFormulaDialog() {

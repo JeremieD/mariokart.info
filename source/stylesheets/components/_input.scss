@@ -1,7 +1,7 @@
 @use "button" as *;
 @use "type" as *;
 
-input {
+input:not(.inline) {
   @extend button;
   @include type("code-1");
   font-weight: normal;
