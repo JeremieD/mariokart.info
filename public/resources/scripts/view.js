@@ -438,6 +438,8 @@ whenDOMReady(() => {
 
   // Redraw on back
   addEventListener("popstate", readURLParams, { passive: true });
+
+  initView();
 });
 
 
