@@ -449,6 +449,11 @@ function initView() {
   initGliderDialog();
 }
 
+function drawPageTitle() {
+  const combo = state.selectedSlot.combo;
+  document.title = (getCustomName(combo) ?? combo.name) + " | MK8DX Combo Builder";
+}
+
 function drawCurrentCombo() {
   // A-B Tabs
   V.combo.a.classList.toggle("selected", state.selectedSlotID == "A");
@@ -513,8 +518,7 @@ function drawCurrentCombo() {
   V.combo.favorite.classList.toggle("selected", state.selectedSlot.isFavorite);
   V.combo.favorite.title = state.selectedSlot.isFavorite ? "Remove this combo from your favorites." : "Save this combo to your favorites."
 
-  // Page Title
-  document.title = combo.name + " | MK8DX Combo Builder";
+  drawPageTitle();
 }
 
 function drawDominantCombos() {
