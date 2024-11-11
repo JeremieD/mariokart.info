@@ -195,6 +195,7 @@ whenDOMReady(() => {
   /******** View OUT ********/
 
   V.combo.favorite.addEventListener("click", () => {
+    if (!state.settings.allowCookies) return openFavoritesDialog();
     if (!V.combo.favorite.classList.contains("selected")) {
       V.combo.favorite.classList.add("user");
       favoriteCombo();
@@ -1074,55 +1075,68 @@ function drawFavoritesDialog() {
 
   V.favorites.list.innerHTML = "";
 
-  if (state.favorites.length == 0) {
-    V.favorites.list.classList.add("empty");
-    const para = document.createElement("p");
-    para.innerText = "No favorite combos.";
-    V.favorites.list.append(para);
+  if (state.settings.allowCookies) {
+    if (state.favorites.length == 0) {
+      V.favorites.list.classList.add("empty");
+      const para = document.createElement("p");
+      para.innerText = "No favorite combos.";
+      V.favorites.list.append(para);
+    } else {
+      V.favorites.list.classList.remove("empty");
+    }
+
+    for (const fav of state.favorites) {
+      const combo = fav.combo;
+
+      const li = document.createElement("li");
+      li.id = combo.code;
+      const header = document.createElement("div");
+      const comboDisplay = newComboDisplay(combo);
+
+      const name = document.createElement("input");
+      name.classList.add("inline");
+      name.value = fav.name;
+      name.placeholder = combo.name;
+      name.addEventListener("change", e => {
+        if (e.target.value === "") e.target.value = combo.name;
+        nameFavorite(combo, e.target.value);
+      }, { passive: true });
+
+      const buttonsDisplay = document.createElement("div");
+      const loadButtons = document.createElement("div");
+      buttonsDisplay.classList.add("button-group");
+      loadButtons.classList.add("button-group", "radio");
+      const remove = document.createElement("button");
+      const loadInA = document.createElement("button");
+      const loadInB = document.createElement("button");
+      remove.append(new JDIcon("heart-slash"));
+      loadInA.innerText = "→A";
+      loadInB.innerText = "→B";
+      remove.classList.add("square", "danger", "selected");
+      loadInA.classList.toggle("primary", state.selectedSlotID == "A");
+      loadInB.classList.toggle("primary", state.selectedSlotID == "B");
+      remove.addEventListener("click", () => { unfavorite(combo); }, { passive: true });
+      loadInA.addEventListener("click", () => { setCombo(combo, "A"); }, { passive: true });
+      loadInB.addEventListener("click", () => { setCombo(combo, "B"); }, { passive: true });
+      loadButtons.append(loadInA, loadInB);
+      buttonsDisplay.append(remove, loadButtons);
+
+      header.append(name, buttonsDisplay);
+
+      li.append(header, comboDisplay);
+      V.favorites.list.append(li);
+    }
   } else {
-    V.favorites.list.classList.remove("empty");
-  }
-
-  for (const fav of state.favorites) {
-    const combo = fav.combo;
-
-    const li = document.createElement("li");
-    li.id = combo.code;
-    const header = document.createElement("div");
-    const comboDisplay = newComboDisplay(combo);
-
-    const name = document.createElement("input");
-    name.classList.add("inline");
-    name.value = fav.name;
-    name.placeholder = combo.name;
-    name.addEventListener("change", e => {
-      if (e.target.value === "") e.target.value = combo.name;
-      nameFavorite(combo, e.target.value);
+    const para = document.createElement("p");
+    para.innerHTML = "Enable <em>cookies</em> in settings to use the favorites feature.<br>";
+    const link = document.createElement("a");
+    link.innerText = "Take me there!";
+    para.append(link);
+    link.addEventListener("click", () => {
+      closeFavoritesDialog();
+      openSettingsDialog();
     }, { passive: true });
-
-    const buttonsDisplay = document.createElement("div");
-    const loadButtons = document.createElement("div");
-    buttonsDisplay.classList.add("button-group");
-    loadButtons.classList.add("button-group", "radio");
-    const remove = document.createElement("button");
-    const loadInA = document.createElement("button");
-    const loadInB = document.createElement("button");
-    remove.append(new JDIcon("heart-slash"));
-    loadInA.innerText = "→A";
-    loadInB.innerText = "→B";
-    remove.classList.add("square", "danger", "selected");
-    loadInA.classList.toggle("primary", state.selectedSlotID == "A");
-    loadInB.classList.toggle("primary", state.selectedSlotID == "B");
-    remove.addEventListener("click", () => { unfavorite(combo); }, { passive: true });
-    loadInA.addEventListener("click", () => { setCombo(combo, "A"); }, { passive: true });
-    loadInB.addEventListener("click", () => { setCombo(combo, "B"); }, { passive: true });
-    loadButtons.append(loadInA, loadInB);
-    buttonsDisplay.append(remove, loadButtons);
-
-    header.append(name, buttonsDisplay);
-
-    li.append(header, comboDisplay);
-    V.favorites.list.append(li);
+    V.favorites.list.append(para);
   }
 
   V.favorites.dialog.inert = false;
