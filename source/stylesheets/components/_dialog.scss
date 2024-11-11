@@ -42,6 +42,8 @@ dialog {
   &.full-size { height: calc(100svh - 2*var(--dialog-pos)); }
 
   &.alert {
+    top: 50%;
+    translate: 0 -50%;
     text-align: center;
     footer button { width: 100%; }
   }
@@ -99,5 +101,6 @@ dialog {
   dialog {
     --dialog-width: 32rem;
     --dialog-pos: 4rem;
+    &.alert { top: 33%; }
   }
 }
