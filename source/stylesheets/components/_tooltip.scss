@@ -3,10 +3,11 @@ jd-tooltip {
 
   position: absolute;
   padding: var(--tt-padding);
+  width: max-content;
+  max-width: 32ch;
   background-color: var(--color-overlay);
   border-radius: var(--border-radius-1);
   box-shadow: 0 .333rem 2.666rem 0 rgba(0,0,0, .5);
-  z-index: 100;
   transition: .2s ease opacity;
 
   &:not(.shown) {
@@ -26,7 +27,7 @@ jd-tooltip {
     rotate: 45deg;
   }
 
-  &.anchor-top {
+  &.pos-top {
     translate: -50% calc(-100% - var(--tt-padding));
     &::before {
       left: 50%;
@@ -34,12 +35,20 @@ jd-tooltip {
       border-radius: 0 0 var(--border-radius-0) 0;
     }
   }
-  &.anchor-bottom {
+  &.pos-bottom {
     translate: -50% var(--tt-padding);
     &::before {
       left: 50%;
       top: 0;
       border-radius: var(--border-radius-0) 0 0 0;
+    }
+    &.align-left {
+      translate: 0 var(--tt-padding);
+      &::before { left: 1.75rem; }
+    }
+    &.align-right {
+      translate: -100% var(--tt-padding);
+      &::before { left: calc(100% - 1.75rem); }
     }
   }
 }
