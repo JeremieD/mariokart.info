@@ -1123,8 +1123,14 @@ function drawFavoritesDialog() {
       loadInA.classList.toggle("primary", state.selectedSlotID == "A");
       loadInB.classList.toggle("primary", state.selectedSlotID == "B");
       remove.addEventListener("click", () => { unfavorite(combo); }, { passive: true });
-      loadInA.addEventListener("click", () => { setCombo(combo, "A"); }, { passive: true });
-      loadInB.addEventListener("click", () => { setCombo(combo, "B"); }, { passive: true });
+      loadInA.addEventListener("click", () => {
+        setCombo(combo, "A");
+        Tooltip.draw("Loaded into slot A.", { el: loadInA, pos: "bottom", align: "right", dialog: V.favorites.dialog });
+      }, { passive: true });
+      loadInB.addEventListener("click", () => {
+        setCombo(combo, "B");
+        Tooltip.draw("Loaded into slot B.", { el: loadInB, pos: "bottom", align: "right", dialog: V.favorites.dialog });
+      }, { passive: true });
       loadButtons.append(loadInA, loadInB);
       buttonsDisplay.append(remove, loadButtons);
 
