@@ -507,6 +507,9 @@ function nameFavorite(combo, newName) {
   for (const fav of state.favorites) {
     if (fav.combo.code === combo.code) {
       fav.name = newName;
+      if (state.selectedSlot.combo.code === combo.code) {
+        drawPageTitle();
+      }
       commitState();
       break;
     }
