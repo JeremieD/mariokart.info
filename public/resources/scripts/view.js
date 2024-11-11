@@ -1097,9 +1097,14 @@ function drawFavoritesDialog() {
 
       const name = document.createElement("input");
       name.classList.add("inline");
+      name.type = "text";
       name.value = fav.name;
       name.placeholder = combo.name;
+      name.autocapitalize = true;
+      name.autocomplete = false;
+      name.spellcheck = false;
       name.addEventListener("change", e => {
+        e.target.value = e.target.value.trim();
         if (e.target.value === "") e.target.value = combo.name;
         nameFavorite(combo, e.target.value);
       }, { passive: true });
