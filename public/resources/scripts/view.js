@@ -206,10 +206,34 @@ whenDOMReady(() => {
   V.combo.a.addEventListener("click", selectA, { passive: true });
   V.combo.b.addEventListener("click", selectB, { passive: true });
 
-  V.combo.driver.addEventListener("click", openDriverDialog, { passive: true });
-  V.combo.body.addEventListener("click", openBodyDialog, { passive: true });
-  V.combo.tire.addEventListener("click", openTireDialog, { passive: true });
-  V.combo.glider.addEventListener("click", openGliderDialog, { passive: true });
+  V.combo.driver.addEventListener("click", e => {
+    if (e.altKey) {
+      toggleDriverLock(true);
+    } else {
+      openDriverDialog();
+    }
+  }, { passive: true });
+  V.combo.body.addEventListener("click", e => {
+    if (e.altKey) {
+      toggleBodyLock(true);
+    } else {
+      openBodyDialog();
+    }
+  }, { passive: true });
+  V.combo.tire.addEventListener("click", e => {
+    if (e.altKey) {
+      toggleTireLock(true);
+    } else {
+      openTireDialog();
+    }
+  }, { passive: true });
+  V.combo.glider.addEventListener("click", e => {
+    if (e.altKey) {
+      toggleGliderLock(true);
+    } else {
+      openGliderDialog();
+    }
+  }, { passive: true });
 
   V.combo.spdMultimeter.addEventListener("click", () => {
     if (V.combo.spdMultimeter.classList.contains("show")) return;
@@ -485,6 +509,10 @@ function drawCurrentCombo() {
   V.combo.bodyLock.classList.toggle("selected", state.locks.body);
   V.combo.tireLock.classList.toggle("selected", state.locks.tire);
   V.combo.gliderLock.classList.toggle("selected", state.locks.glider);
+  V.combo.driverLock.title = state.locks.driver ? "Driver is locked. ⌥+Click to unlock." : "";
+  V.combo.bodyLock.title = state.locks.body ? "Body is locked. ⌥+Click to unlock." : "";
+  V.combo.tireLock.title = state.locks.tire ? "Tire is locked. ⌥+Click to unlock." : "";
+  V.combo.gliderLock.title = state.locks.glider ? "Glider is locked. ⌥+Click to unlock." : "";
 
   // Combo Details
   let detailStr;
