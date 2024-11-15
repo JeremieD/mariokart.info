@@ -1,4 +1,116 @@
-// Cycle through all possible combos and check some stuff.
-// Validate unicity of codes and check which are available.
+"use strict";
 
-const AllCombos = {};
+// Check part codes
+state.parts.then(parts => {
+  let driverCount = 0;
+  let bodyCount = 0;
+  let tireCount = 0;
+  let gliderCount = 0;
+  const driverCodes = [];
+  const bodyCodes = [];
+  const tireCodes = [];
+  const gliderCodes = [];
+
+  for (const driver of parts.drivers) {
+    if (driver.folder) {
+      for (const variant of driver.folder) {
+        driverCount++;
+        if (driverCodes.includes(variant.code)) {
+          console.error("Duplicate driver code: " + variant.code);
+          continue;
+        }
+        driverCodes.push(variant.code);
+      }
+      continue;
+    }
+    driverCount++;
+    if (driverCodes.includes(driver.code)) {
+      console.error("Duplicate driver code: " + driver.code);
+      continue;
+    }
+    driverCodes.push(driver.code);
+  }
+  for (const folder of parts.bodies) {
+    for (const body of folder.folder) {
+      bodyCount++;
+      if (bodyCodes.includes(body.code)) {
+        console.error("Duplicate body code: " + body.code);
+        continue;
+      }
+      bodyCodes.push(body.code);
+    }
+  }
+  for (const tire of parts.tires) {
+    tireCount++;
+    if (tireCodes.includes(tire.code)) {
+      console.error("Duplicate tire code: " + tire.code);
+      continue;
+    }
+    tireCodes.push(tire.code);
+  }
+  for (const glider of parts.gliders) {
+    gliderCount++;
+    if (gliderCodes.includes(glider.code)) {
+      console.error("Duplicate glider code: " + glider.code);
+      continue;
+    }
+    gliderCodes.push(glider.code);
+  }
+
+  const codeSpace =  ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",
+                      "a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",
+                      "0","1","2","3","4","5","6","7","8","9"];
+  const availableDriverCodes = [];
+  const availableBodyCodes = [];
+  const availableTireCodes = [];
+  const availableGliderCodes = [];
+  for (const symbol of codeSpace) {
+    if (!driverCodes.includes(symbol)) availableDriverCodes.push(symbol);
+    if (!bodyCodes.includes(symbol))   availableBodyCodes.push(symbol);
+    if (!tireCodes.includes(symbol))   availableTireCodes.push(symbol);
+    if (!gliderCodes.includes(symbol)) availableGliderCodes.push(symbol);
+  }
+  console.log("Available driver codes: " + availableDriverCodes);
+  console.log("Available body codes: " + availableBodyCodes);
+  console.log("Available tire codes: " + availableTireCodes);
+  console.log("Available glider codes: " + availableGliderCodes);
+});
+
+// Test important combos' stats
+testStats("mario", "std", "std", "super", [4, 3.5, 3.5, 3.5, 3.5, 1]); // Mario Std
+testStats("luigi", "mach", "slim", "super", [4.25, 2.75, 3.75, 3.75, 2.5, 1]); // Luigi Mach
+testStats("yoshi", "teddy", "roller", "cloud", [2.75, 4.75, 2.25, 4.25, 3.5, 1]); // Yoshi Meta
+testStats("waluigi", "wiggler", "roller", "paper", [3.5, 4.25, 3, 3.5, 3.25, 2]); // Old Meta
+testStats("shyguy4", "biddy", "roller", "cloud", [1.75, 5.5, 1.5, 5, 4, 0]); // Jej
+testStats("marioGold", "gold", "gold", "gold", [5, 1.75, 5.25, 3, 1.5, 1]); // All Gold
+testStats("wario", "wagon", "offroad", "wario", [5.5, 1.75, 5.25, 1.5, 3.75, 2]); // Wario
+testStats("bowser", "koopa", "monsterHot", "bowser", [4.75, 2.25, 5.25, 2, 4.25, 2]); // Bowser
+testStats("lemmy", "landship", "button", "plane", [2, 5, 1.25, 5, 3.75, 0]);
+testStats("wendy", "gla", "roller", "bowser", [2.75, 4, 2.5, 3.75, 3.5, 0]);
+testStats("kingboo", "pwing", "offroad", "gold", [5, 2.25, 4.5, 2.25, 3.25, 2]);
+testStats("villagerM", "city", "leaf", "paper", [3, 4.75, 2.25, 4.25, 3, 1]); // AC
+testStats("inklingF2", "splat", "rollerBlue", "super", [3.25, 4.25, 1.75, 4, 3.5, 1]);
+testStats("inklingM1", "atvStd", "slickPurple", "cloud", [4.5, 2.25, 3.75, 2.75, 2.5, 1]);
+testStats("link", "master", "triforce", "hylian", [4.75, 2.5, 4, 2.75, 3.25, 2]); // Zelda
+testStats("link1", "masterZero", "ancient", "paraglider", [4.5, 2.25, 4.75, 2.75, 5, 2]); // BOTW
+testStats("isabelle", "master", "monster", "cloud", [3.25, 3.5, 2.75, 3.5, 3.25, 0]);
+testStats("toadette", "sneeker", "ancient", "parachute", [3.25, 3.5, 2.75, 3.5, 3.25, 0]);
+testStats("marioBb", "biddy", "roller", "cloud", [1.25, 5.75, 1, 5.25, 4, 0]);
+testStats("wario", "circuit", "slickPurple", "super", [5.75, 1.5, 4.75, 2, 1.5, 2]);
+testStats("petey", "steel", "monster", "gold", [4.75, 2, 5.75, 2, 3.5, 2]);
+testStats("peachBb", "pipe", "roller", "super", [1.75, 5, 1.25, 5.75, 4.25, 0]);
+testStats("koopa", "tanooki", "monster", "super", [3.25, 3, 3.25, 4, 5.75, 0]);
+testStats("petey", "wagon", "monster", "super", [5, 1.75, 5.5, 1.75, 4.25, 2]);
+
+// In-game stats: spdGr [1], acc[5], wgt[6], hndGr[7], trn[11], (size[13])
+function testStats(driver, body, tire, glider, expectedStats) {
+  Stats.post("getCombo", driver, body, tire, glider)
+  .then(combo => {
+    if (toLvl(combo.lvl[1])  !== expectedStats[0]) throw new Error("spdGr does not match for combo " + combo.code);
+    if (toLvl(combo.lvl[5])  !== expectedStats[1]) throw new Error("acc does not match for combo " + combo.code);
+    if (toLvl(combo.lvl[6])  !== expectedStats[2]) throw new Error("wgt does not match for combo " + combo.code);
+    if (toLvl(combo.lvl[7])  !== expectedStats[3]) throw new Error("hndGr does not match for combo " + combo.code);
+    if (toLvl(combo.lvl[11]) !== expectedStats[4]) throw new Error("trn does not match for combo " + combo.code);
+    if (combo.size !== expectedStats[5]) throw new Error("size does not match for combo " + combo.code);
+  });
+}
