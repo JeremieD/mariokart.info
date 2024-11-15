@@ -450,6 +450,8 @@ function initView() {
   initBodyDialog();
   initTireDialog();
   initGliderDialog();
+  viewLoaded = true;
+  dispatchEvent(new Event("viewLoaded"));
 }
 
 function drawPageTitle() {
