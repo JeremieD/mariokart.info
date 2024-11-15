@@ -8,6 +8,15 @@ function whenDOMReady(callback, options = { once: true, passive: true }) {
   }
 }
 
+var viewLoaded = false;
+function whenViewReady(callback, options = { once: true, passive: true }) {
+  if (!viewLoaded) {
+    addEventListener("viewLoaded", callback, options);
+  } else {
+    callback();
+  }
+}
+
 /**
  * Async wrapper for XMLHttpRequest.
  * @param {string} url - The requested URL.
