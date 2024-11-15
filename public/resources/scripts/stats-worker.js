@@ -44,11 +44,14 @@ onmessage = e => {
   postMessage(response);
 };
 
+const statIndex = {
+  mtb: 0, spdGr: 1, spdAg: 2, spdWt: 3, spdAr: 4,  acc: 5,
+  wgt: 6, hndGr: 7, hndAg: 8, hndWt: 9, hndAr: 10, trn: 11, inv: 12,
+  size: 13, spd: 14, hnd: 15
+};
 const stats = [ "mtb", "spdGr", "spdAg", "spdWt", "spdAr", "acc",
-                "wgt", "hndGr", "hndAg", "hndWt", "hndAr", "trn", "inv" ];
-const scoreStats = [ "mtb", "spd", "spdGr", "spdAg", "spdWt", "spdAr",
-              "acc", "wgt", "hnd", "hndGr", "hndAg", "hndWt", "hndAr",
-              "trn", "inv", "size" ];
+                "wgt", "hndGr", "hndAg", "hndWt", "hndAr", "trn", "inv",
+                "size", "spd", "hnd" ];
 
 class Combo {
   // TODO: Clean up a bit. Rename some stuff.
@@ -71,24 +74,7 @@ class Combo {
     glider: undefined,
   };
   code = "";
-  lvl = {
-    mtb: 0,
-    spd: 0,
-    spdGr: 0,
-    spdAg: 0,
-    spdWt: 0,
-    spdAr: 0,
-    acc: 0,
-    wgt: 0,
-    hnd: 0,
-    hndGr: 0,
-    hndAg: 0,
-    hndWt: 0,
-    hndAr: 0,
-    trn: 0,
-    inv: 0,
-    size: 0
-  };
+  lvl = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
   size = -1;
 
   constructor(driver = "mario", body = "std", tire = "std", glider = "super") {
@@ -108,7 +94,7 @@ class Combo {
     this.tireID   = tire;
     this.gliderID = glider;
 
-    this.bodyVariant = getBodyVariant(body, driver);
+    this.bodyVariant   = getBodyVariant(body, driver);
     this.gliderVariant = getGliderVariant(glider, driver);
 
     this.parts.driver = parts.drivers[driver];
@@ -126,7 +112,7 @@ class Combo {
     this.classes.tire   = classes.tires[tireClassID];
     this.classes.glider = classes.gliders[gliderClassID];
 
-    for (const stat of stats) {
+    for (let stat = 0; stat < 13; stat++) {
       let lvl = 0;
       lvl += this.classes.driver[stat];
       lvl += this.classes.body[stat];
@@ -134,16 +120,16 @@ class Combo {
       lvl += this.classes.glider[stat];
       this.lvl[stat] = lvl;
     }
-    this.lvl.spd = round(this.lvl.spdGr * Combo.PERCENT_GR +
-                         this.lvl.spdAg * Combo.PERCENT_AG +
-                         this.lvl.spdWt * Combo.PERCENT_WT +
-                         this.lvl.spdAr * Combo.PERCENT_AR, 3);
-    this.lvl.hnd = round(this.lvl.hndGr * Combo.PERCENT_GR +
-                         this.lvl.hndAg * Combo.PERCENT_AG +
-                         this.lvl.hndWt * Combo.PERCENT_WT +
-                         this.lvl.hndAr * Combo.PERCENT_AR, 3);
-    this.size = this.classes.driver.size;
-    this.lvl.size = this.size * 10;
+    this.size = this.classes.driver[13];
+    this.lvl[13] = this.size * 10;
+    this.lvl[14] = round(this.lvl[1]  * Combo.PERCENT_GR +
+                         this.lvl[2]  * Combo.PERCENT_AG +
+                         this.lvl[3]  * Combo.PERCENT_WT +
+                         this.lvl[4]  * Combo.PERCENT_AR, 3);
+    this.lvl[15] = round(this.lvl[7]  * Combo.PERCENT_GR +
+                         this.lvl[8]  * Combo.PERCENT_AG +
+                         this.lvl[9]  * Combo.PERCENT_WT +
+                         this.lvl[10] * Combo.PERCENT_AR, 3);
 
     this.name = getComboName(driver, body, tire, glider);
   }
@@ -207,48 +193,36 @@ function listCombos(opts = {}) {
   const minDiff = opts.minDiff ?? -Infinity;
   const maxDiff = opts.maxDiff ?? Infinity;
   const driverLock = opts.driverLock ?? false;
-  const bodyLock = opts.bodyLock ?? false;
-  const tireLock = opts.tireLock ?? false;
+  const bodyLock   = opts.bodyLock   ?? false;
+  const tireLock   = opts.tireLock   ?? false;
   const gliderLock = opts.gliderLock ?? false;
-  const mtbMin   = opts.mtb?.min ?? 0;   const mtbMax   = opts.mtb?.max ?? 20;
-  const spdMin   = opts.spd?.min ?? 0;   const spdMax   = opts.spd?.max ?? 20;
-  const spdGrMin = opts.spdGr?.min ?? 0; const spdGrMax = opts.spdGr?.max ?? 20;
-  const spdWtMin = opts.spdWt?.min ?? 0; const spdWtMax = opts.spdWt?.max ?? 20;
-  const spdAgMin = opts.spdAg?.min ?? 0; const spdAgMax = opts.spdAg?.max ?? 20;
-  const spdArMin = opts.spdAr?.min ?? 0; const spdArMax = opts.spdAr?.max ?? 20;
-  const accMin   = opts.acc?.min ?? 0;   const accMax   = opts.acc?.max ?? 20;
-  const wgtMin   = opts.wgt?.min ?? 0;   const wgtMax   = opts.wgt?.max ?? 20;
-  const hndMin   = opts.hnd?.min ?? 0;   const hndMax   = opts.hnd?.max ?? 20;
-  const hndGrMin = opts.hndGr?.min ?? 0; const hndGrMax = opts.hndGr?.max ?? 20;
-  const hndWtMin = opts.hndWt?.min ?? 0; const hndWtMax = opts.hndWt?.max ?? 20;
-  const hndAgMin = opts.hndAg?.min ?? 0; const hndAgMax = opts.hndAg?.max ?? 20;
-  const hndArMin = opts.hndAr?.min ?? 0; const hndArMax = opts.hndAr?.max ?? 20;
-  const trnMin   = opts.trn?.min ?? 0;   const trnMax   = opts.trn?.max ?? 20;
-  const invMin   = opts.inv?.min ?? 0;   const invMax   = opts.inv?.max ?? 20;
-  const sizeMin  = opts.size?.min ?? 0;   const sizeMax  = opts.size?.max ?? 2;
-  const excludeKarts = opts.excludeKarts ?? false;
-  const excludeATVs = opts.excludeATVs ?? false;
-  const excludeBikes = opts.excludeBikes ?? false;
+  const mtbMin   = opts.min?.[0]  ?? 0; const mtbMax   = opts.max?.[0]  ?? 20;
+  const spdGrMin = opts.min?.[1]  ?? 0; const spdGrMax = opts.max?.[1]  ?? 20;
+  const spdAgMin = opts.min?.[2]  ?? 0; const spdAgMax = opts.max?.[2]  ?? 20;
+  const spdWtMin = opts.min?.[3]  ?? 0; const spdWtMax = opts.max?.[3]  ?? 20;
+  const spdArMin = opts.min?.[4]  ?? 0; const spdArMax = opts.max?.[4]  ?? 20;
+  const accMin   = opts.min?.[5]  ?? 0; const accMax   = opts.max?.[5]  ?? 20;
+  const wgtMin   = opts.min?.[6]  ?? 0; const wgtMax   = opts.max?.[6]  ?? 20;
+  const hndGrMin = opts.min?.[7]  ?? 0; const hndGrMax = opts.max?.[7]  ?? 20;
+  const hndAgMin = opts.min?.[8]  ?? 0; const hndAgMax = opts.max?.[8]  ?? 20;
+  const hndWtMin = opts.min?.[9]  ?? 0; const hndWtMax = opts.max?.[9]  ?? 20;
+  const hndArMin = opts.min?.[10] ?? 0; const hndArMax = opts.max?.[10] ?? 20;
+  const trnMin   = opts.min?.[11] ?? 0; const trnMax   = opts.max?.[11] ?? 20;
+  const invMin   = opts.min?.[12] ?? 0; const invMax   = opts.max?.[12] ?? 20;
+  const sizeMin  = opts.min?.[13] ?? 0; const sizeMax  = opts.max?.[13] ?? 2;
+  const spdMin   = opts.min?.[14] ?? 0; const spdMax   = opts.max?.[14] ?? 20;
+  const hndMin   = opts.min?.[15] ?? 0; const hndMax   = opts.max?.[15] ?? 20;
+  const excludeKarts      = opts.excludeKarts      ?? false;
+  const excludeATVs       = opts.excludeATVs       ?? false;
+  const excludeBikes      = opts.excludeBikes      ?? false;
   const excludeSportBikes = opts.excludeSportBikes ?? false;
   const sortBy = opts.sortBy ?? "diff";
-  const factors = [
-    opts.mtb?.factor ?? 0,
-    opts.spd?.factor ?? 0,
-    opts.spdGr?.factor ?? 0, opts.spdAg?.factor ?? 0,
-    opts.spdWt?.factor ?? 0, opts.spdAr?.factor ?? 0,
-    opts.acc?.factor ?? 0, opts.wgt?.factor ?? 0,
-    opts.hnd?.factor ?? 0,
-    opts.hndGr?.factor ?? 0, opts.hndAg?.factor ?? 0,
-    opts.hndWt?.factor ?? 0, opts.hndAr?.factor ?? 0,
-    opts.trn?.factor ?? 0, opts.inv?.factor ?? 0,
-    opts.size?.factor ?? 0
-  ];
+  const factors = opts.factors ?? [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
   const limit = opts.limit ?? 51;
 
 
   // IDEA: If this is still too slow, I should try to calculate partial diffs
   //       and scores to eliminate whole classes in droves.
-  //       I should also use an array for lvls.
   const list = [];
   for (let driver of driverClasses) {
     if (driverLock && driver !== refCombo.parts.driver.class) continue;
@@ -271,67 +245,68 @@ function listCombos(opts = {}) {
     const combo = new Combo(driver, body, tire, glider);
 
     // Stat Checks
-    if (combo.lvl.mtb   < mtbMin   || combo.lvl.mtb   > mtbMax) continue;
-    if (combo.lvl.spd   < spdMin   || combo.lvl.spd   > spdMax) continue;
-    if (combo.lvl.spdGr < spdGrMin || combo.lvl.spdGr > spdGrMax) continue;
-    if (combo.lvl.spdWt < spdWtMin || combo.lvl.spdWt > spdWtMax) continue;
-    if (combo.lvl.spdAg < spdAgMin || combo.lvl.spdAg > spdAgMax) continue;
-    if (combo.lvl.spdAr < spdArMin || combo.lvl.spdAr > spdArMax) continue;
-    if (combo.lvl.acc   < accMin   || combo.lvl.acc   > accMax) continue;
-    if (combo.lvl.wgt   < wgtMin   || combo.lvl.wgt   > wgtMax) continue;
-    if (combo.lvl.hnd   < hndMin   || combo.lvl.hnd   > hndMax) continue;
-    if (combo.lvl.hndGr < hndGrMin || combo.lvl.hndGr > hndGrMax) continue;
-    if (combo.lvl.hndWt < hndWtMin || combo.lvl.hndWt > hndWtMax) continue;
-    if (combo.lvl.hndAg < hndAgMin || combo.lvl.hndAg > hndAgMax) continue;
-    if (combo.lvl.hndAr < hndArMin || combo.lvl.hndAr > hndArMax) continue;
-    if (combo.lvl.trn   < trnMin   || combo.lvl.trn   > trnMax) continue;
-    if (combo.lvl.inv   < invMin   || combo.lvl.inv   > invMax) continue;
-    if (combo.size < sizeMin || combo.size > sizeMax) continue;
+    if (combo.lvl[0]  < mtbMin   || combo.lvl[0]  > mtbMax) continue;
+    if (combo.lvl[1]  < spdGrMin || combo.lvl[1]  > spdGrMax) continue;
+    if (combo.lvl[2]  < spdAgMin || combo.lvl[2]  > spdAgMax) continue;
+    if (combo.lvl[3]  < spdWtMin || combo.lvl[3]  > spdWtMax) continue;
+    if (combo.lvl[4]  < spdArMin || combo.lvl[4]  > spdArMax) continue;
+    if (combo.lvl[5]  < accMin   || combo.lvl[5]  > accMax) continue;
+    if (combo.lvl[6]  < wgtMin   || combo.lvl[6]  > wgtMax) continue;
+    if (combo.lvl[7]  < hndGrMin || combo.lvl[7]  > hndGrMax) continue;
+    if (combo.lvl[8]  < hndAgMin || combo.lvl[8]  > hndAgMax) continue;
+    if (combo.lvl[9]  < hndWtMin || combo.lvl[9]  > hndWtMax) continue;
+    if (combo.lvl[10] < hndArMin || combo.lvl[10] > hndArMax) continue;
+    if (combo.lvl[11] < trnMin   || combo.lvl[11] > trnMax) continue;
+    if (combo.lvl[12] < invMin   || combo.lvl[12] > invMax) continue;
+    if (combo.size    < sizeMin  || combo.size    > sizeMax) continue;
+    if (combo.lvl[14] < spdMin   || combo.lvl[14] > spdMax) continue;
+    if (combo.lvl[15] < hndMin   || combo.lvl[15] > hndMax) continue;
 
     // Difference Checks
-    const diff = {
-      mtb: combo.lvl.mtb - refCombo.lvl.mtb,
-      spdGr: combo.lvl.spdGr - refCombo.lvl.spdGr,
-      spdWt: combo.lvl.spdWt - refCombo.lvl.spdWt,
-      spdAg: combo.lvl.spdAg - refCombo.lvl.spdAg,
-      spdAr: combo.lvl.spdAr - refCombo.lvl.spdAr,
-      acc: combo.lvl.acc - refCombo.lvl.acc,
-      wgt: combo.lvl.wgt - refCombo.lvl.wgt,
-      hndGr: combo.lvl.hndGr - refCombo.lvl.hndGr,
-      hndWt: combo.lvl.hndWt - refCombo.lvl.hndWt,
-      hndAg: combo.lvl.hndAg - refCombo.lvl.hndAg,
-      hndAr: combo.lvl.hndAr - refCombo.lvl.hndAr,
-      trn: combo.lvl.trn - refCombo.lvl.trn,
-      inv: combo.lvl.inv - refCombo.lvl.inv
-    };
+    const diffs = [
+      combo.lvl[0]  - refCombo.lvl[0],  // mtb
+      combo.lvl[1]  - refCombo.lvl[1],  // spdGr
+      combo.lvl[2]  - refCombo.lvl[2],  // spdAg
+      combo.lvl[3]  - refCombo.lvl[3],  // spdWt
+      combo.lvl[4]  - refCombo.lvl[4],  // spdAr
+      combo.lvl[5]  - refCombo.lvl[5],  // acc
+      combo.lvl[6]  - refCombo.lvl[6],  // wgt
+      combo.lvl[7]  - refCombo.lvl[7],  // hndGr
+      combo.lvl[8]  - refCombo.lvl[8],  // hndAg
+      combo.lvl[9]  - refCombo.lvl[9],  // hndWt
+      combo.lvl[10] - refCombo.lvl[10], // hndAr
+      combo.lvl[11] - refCombo.lvl[11], // trn
+      combo.lvl[12] - refCombo.lvl[12]  // inv
+    ];
 
-    diff.total = diff.mtb + diff.spdGr + diff.spdWt + diff.spdAg + diff.spdAr + diff.acc
-               + diff.wgt + diff.hndGr + diff.hndWt + diff.hndAg + diff.hndAr + diff.trn + diff.inv;
-    if (diff.total > maxDiff || diff.total < minDiff) continue;
+    const diffSum = diffs.reduce((s, a) => s + a, 0); // sum
+    if (diffSum > maxDiff || diffSum < minDiff) continue;
 
-    diff.absTotal = Math.abs(diff.mtb)
-                  + Math.abs(diff.spdGr) + Math.abs(diff.spdWt)
-                  + Math.abs(diff.spdAg) + Math.abs(diff.spdAr)
-                  + Math.abs(diff.acc) + Math.abs(diff.wgt)
-                  + Math.abs(diff.hndGr) + Math.abs(diff.hndWt)
-                  + Math.abs(diff.hndAg) + Math.abs(diff.hndAr)
-                  + Math.abs(diff.trn) + Math.abs(diff.inv);
-    if (diff.absTotal > maxAbsDiff) continue;
-    if (mustDiffer && diff.absTotal == 0) continue;
+    const diffSumAbs = Math.abs(diffs[0])
+                     + Math.abs(diffs[1]) + Math.abs(diffs[2])
+                     + Math.abs(diffs[3]) + Math.abs(diffs[4])
+                     + Math.abs(diffs[5]) + Math.abs(diffs[6])
+                     + Math.abs(diffs[7]) + Math.abs(diffs[8])
+                     + Math.abs(diffs[9]) + Math.abs(diffs[10])
+                     + Math.abs(diffs[11]) + Math.abs(diffs[12]);
+    if (diffSumAbs > maxAbsDiff) continue;
+    if (mustDiffer && diffSumAbs == 0) continue;
 
-    combo.diff = diff;
+    combo.diffs = diffs;
+    combo.diffSum = diffSum;
+    combo.diffSumAbs = diffSumAbs;
 
     list.push(combo);
   } } } }
 
   // Sort
-  let compare = (a, b) => b.lvl[sortBy] - a.lvl[sortBy];
+  let compare = (a, b) => b.lvl[statIndex[sortBy]] - a.lvl[statIndex[sortBy]];
   switch (sortBy) {
     case "diff":
-      compare = (a, b) => b.diff.total - a.diff.total;
+      compare = (a, b) => b.diffSum - a.diffSum;
       break;
     case "score":
-      compare = (a, b) => getScore(b, factors) - getScore(a, factors);
+      compare = (a, b) => getScore(b.lvl, factors) - getScore(a.lvl, factors);
   }
 
   list.sort(compare);
@@ -340,250 +315,231 @@ function listCombos(opts = {}) {
            combos: list.slice(0, limit) };
 }
 
-function getScore(combo, factors) {
-  const lvls = combo.lvl;
+function getScore(lvl, factors) {
   let score = 0;
-  for (let i = 0; i < factors.length; i++) {
-    score += factors[i] * lvls[scoreStats[i]];
+  for (let i = 0; i < 16; i++) {
+    score += factors[i] * lvl[i];
   }
   return score;
 }
 
 function getAvailableParts(set) {
-  switch (set) {
-    case "unlocks":
-      return {
-        drivers: [],
-        bodies: [],
-        tires: [],
-        gliders: [],
-      };
-    case "base":
-      return {
-        drivers: [],
-        bodies: [],
-        tires: [],
-        gliders: [],
-      };
-    case "all":
-    default:
-      return {
-        drivers: [
-          parts.drivers.mario,
-          parts.drivers.luigi,
-          parts.drivers.peach,
-          parts.drivers.daisy,
-          parts.drivers.rosalina,
-          parts.drivers.marioTan,
-          parts.drivers.peachCat,
-          {
-            id: "birdo",
-            folder: [
-              parts.drivers.birdo,
-              parts.drivers.birdo1,
-              parts.drivers.birdo2,
-              parts.drivers.birdo3,
-              parts.drivers.birdo4,
-              parts.drivers.birdo5,
-              parts.drivers.birdo6,
-              parts.drivers.birdo7,
-              parts.drivers.birdo8 ]
-          },
-          {
-            id: "yoshi",
-            folder: [
-              parts.drivers.yoshi,
-              parts.drivers.yoshi1,
-              parts.drivers.yoshi2,
-              parts.drivers.yoshi3,
-              parts.drivers.yoshi4,
-              parts.drivers.yoshi5,
-              parts.drivers.yoshi6,
-              parts.drivers.yoshi7,
-              parts.drivers.yoshi8 ]
-          },
-          parts.drivers.toad,
-          parts.drivers.koopa,
-          {
-            id: "shyguy",
-            folder: [
-              parts.drivers.shyguy,
-              parts.drivers.shyguy1,
-              parts.drivers.shyguy2,
-              parts.drivers.shyguy3,
-              parts.drivers.shyguy4,
-              parts.drivers.shyguy5,
-              parts.drivers.shyguy6,
-              parts.drivers.shyguy7,
-              parts.drivers.shyguy8 ]
-          },
-          parts.drivers.lakitu,
-          parts.drivers.toadette,
-          parts.drivers.kingboo,
-          parts.drivers.petey,
-          parts.drivers.marioBb,
-          parts.drivers.luigiBb,
-          parts.drivers.peachBb,
-          parts.drivers.daisyBb,
-          parts.drivers.rosalinaBb,
-          {
-            id: "marioGold",
-            folder: [
-              parts.drivers.marioGold1,
-              parts.drivers.marioGold ]
-          },
-          parts.drivers.peachGold,
-          parts.drivers.wiggler,
-          parts.drivers.wario,
-          parts.drivers.waluigi,
-          parts.drivers.dk,
-          parts.drivers.bowser,
-          parts.drivers.drybones,
-          parts.drivers.bowserJr,
-          parts.drivers.bowserDry,
-          parts.drivers.kamek,
-          parts.drivers.lemmy,
-          parts.drivers.larry,
-          parts.drivers.wendy,
-          parts.drivers.ludwig,
-          parts.drivers.iggy,
-          parts.drivers.roy,
-          parts.drivers.morton,
-          parts.drivers.peachette,
-          {
-            id: "inkling",
-            folder: [
-              parts.drivers.inklingF,
-              parts.drivers.inklingF1,
-              parts.drivers.inklingF2,
-              parts.drivers.inklingM,
-              parts.drivers.inklingM1,
-              parts.drivers.inklingM2 ]
-          },
-          {
-            id: "villager",
-            folder: [
-              parts.drivers.villagerM,
-              parts.drivers.villagerF ]
-          },
-          parts.drivers.isabelle,
-          {
-            id: "link",
-            folder: [
-              parts.drivers.link,
-              parts.drivers.link1 ]
-          },
-          parts.drivers.ddk,
-          parts.drivers.fk,
-          parts.drivers.pauline,
-          {
-            id: "mii",
-            folder: [
-              parts.drivers.miiS,
-              parts.drivers.miiM,
-              parts.drivers.miiL ]
-          }
-        ],
-        bodies: [
-          {
-            id: "kart",
-            folder: [
-              parts.bodies.std,
-              parts.bodies.pipe,
-              parts.bodies.mach,
-              parts.bodies.steel,
-              parts.bodies.cat,
-              parts.bodies.circuit,
-              parts.bodies.trispeed,
-              parts.bodies.wagon,
-              parts.bodies.prancer,
-              parts.bodies.biddy,
-              parts.bodies.landship,
-              parts.bodies.sneeker,
-              parts.bodies.coupe,
-              parts.bodies.gold,
-              parts.bodies.gla,
-              parts.bodies.gla25,
-              parts.bodies.gla300,
-              parts.bodies.falcon,
-              parts.bodies.tanooki,
-              parts.bodies.dasher,
-              parts.bodies.streetle,
-              parts.bodies.pwing,
-              parts.bodies.koopa ]
-          },
-          {
-            id: "atv",
-            folder: [
-              parts.bodies.atvStd,
-              parts.bodies.wiggler,
-              parts.bodies.teddy,
-              parts.bodies.rattler,
-              parts.bodies.splat,
-              parts.bodies.ink ]
-          },
-          {
-            id: "bike",
-            folder: [
-              parts.bodies.bikeStd,
-              parts.bodies.duke,
-              parts.bodies.flame,
-              parts.bodies.varmint,
-              parts.bodies.scooty,
-              parts.bodies.city,
-              parts.bodies.masterZero ]
-          },
-          {
-            id: "sport",
-            folder: [
-              parts.bodies.bikeSport,
-              parts.bodies.comet,
-              parts.bodies.jet,
-              parts.bodies.yoshi,
-              parts.bodies.master ]
-          }
-        ],
-        tires: [
-          parts.tires.std,
-          parts.tires.monster,
-          parts.tires.roller,
-          parts.tires.slim,
-          parts.tires.slick,
-          parts.tires.metal,
-          parts.tires.button,
-          parts.tires.offroad,
-          parts.tires.sponge,
-          parts.tires.wood,
-          parts.tires.cushion,
-          parts.tires.stdBlue,
-          parts.tires.monsterHot,
-          parts.tires.rollerBlue,
-          parts.tires.slimRed,
-          parts.tires.slickPurple,
-          parts.tires.offroadRetro,
-          parts.tires.gold,
-          parts.tires.gla,
-          parts.tires.triforce,
-          parts.tires.leaf,
-          parts.tires.ancient ],
-        gliders: [
-          parts.gliders.super,
-          parts.gliders.cloud,
-          parts.gliders.wario,
-          parts.gliders.squirrel,
-          parts.gliders.parasol,
-          parts.gliders.parachute,
-          parts.gliders.parafoil,
-          parts.gliders.flower,
-          parts.gliders.bowser,
-          parts.gliders.plane,
-          parts.gliders.parafoilTV,
-          parts.gliders.gold,
-          parts.gliders.hylian,
-          parts.gliders.paper,
-          parts.gliders.paraglider ]
-      };
-  }
+  return {
+    drivers: [
+      parts.drivers.mario,
+      parts.drivers.luigi,
+      parts.drivers.peach,
+      parts.drivers.daisy,
+      parts.drivers.rosalina,
+      parts.drivers.marioTan,
+      parts.drivers.peachCat,
+      {
+        id: "birdo",
+        folder: [
+          parts.drivers.birdo,
+          parts.drivers.birdo1,
+          parts.drivers.birdo2,
+          parts.drivers.birdo3,
+          parts.drivers.birdo4,
+          parts.drivers.birdo5,
+          parts.drivers.birdo6,
+          parts.drivers.birdo7,
+          parts.drivers.birdo8 ]
+      },
+      {
+        id: "yoshi",
+        folder: [
+          parts.drivers.yoshi,
+          parts.drivers.yoshi1,
+          parts.drivers.yoshi2,
+          parts.drivers.yoshi3,
+          parts.drivers.yoshi4,
+          parts.drivers.yoshi5,
+          parts.drivers.yoshi6,
+          parts.drivers.yoshi7,
+          parts.drivers.yoshi8 ]
+      },
+      parts.drivers.toad,
+      parts.drivers.koopa,
+      {
+        id: "shyguy",
+        folder: [
+          parts.drivers.shyguy,
+          parts.drivers.shyguy1,
+          parts.drivers.shyguy2,
+          parts.drivers.shyguy3,
+          parts.drivers.shyguy4,
+          parts.drivers.shyguy5,
+          parts.drivers.shyguy6,
+          parts.drivers.shyguy7,
+          parts.drivers.shyguy8 ]
+      },
+      parts.drivers.lakitu,
+      parts.drivers.toadette,
+      parts.drivers.kingboo,
+      parts.drivers.petey,
+      parts.drivers.marioBb,
+      parts.drivers.luigiBb,
+      parts.drivers.peachBb,
+      parts.drivers.daisyBb,
+      parts.drivers.rosalinaBb,
+      {
+        id: "marioGold",
+        folder: [
+          parts.drivers.marioGold1,
+          parts.drivers.marioGold ]
+      },
+      parts.drivers.peachGold,
+      parts.drivers.wiggler,
+      parts.drivers.wario,
+      parts.drivers.waluigi,
+      parts.drivers.dk,
+      parts.drivers.bowser,
+      parts.drivers.drybones,
+      parts.drivers.bowserJr,
+      parts.drivers.bowserDry,
+      parts.drivers.kamek,
+      parts.drivers.lemmy,
+      parts.drivers.larry,
+      parts.drivers.wendy,
+      parts.drivers.ludwig,
+      parts.drivers.iggy,
+      parts.drivers.roy,
+      parts.drivers.morton,
+      parts.drivers.peachette,
+      {
+        id: "inkling",
+        folder: [
+          parts.drivers.inklingF,
+          parts.drivers.inklingF1,
+          parts.drivers.inklingF2,
+          parts.drivers.inklingM,
+          parts.drivers.inklingM1,
+          parts.drivers.inklingM2 ]
+      },
+      {
+        id: "villager",
+        folder: [
+          parts.drivers.villagerM,
+          parts.drivers.villagerF ]
+      },
+      parts.drivers.isabelle,
+      {
+        id: "link",
+        folder: [
+          parts.drivers.link,
+          parts.drivers.link1 ]
+      },
+      parts.drivers.ddk,
+      parts.drivers.fk,
+      parts.drivers.pauline,
+      {
+        id: "mii",
+        folder: [
+          parts.drivers.miiS,
+          parts.drivers.miiM,
+          parts.drivers.miiL ]
+      }
+    ],
+    bodies: [
+      {
+        id: "kart",
+        folder: [
+          parts.bodies.std,
+          parts.bodies.pipe,
+          parts.bodies.mach,
+          parts.bodies.steel,
+          parts.bodies.cat,
+          parts.bodies.circuit,
+          parts.bodies.trispeed,
+          parts.bodies.wagon,
+          parts.bodies.prancer,
+          parts.bodies.biddy,
+          parts.bodies.landship,
+          parts.bodies.sneeker,
+          parts.bodies.coupe,
+          parts.bodies.gold,
+          parts.bodies.gla,
+          parts.bodies.gla25,
+          parts.bodies.gla300,
+          parts.bodies.falcon,
+          parts.bodies.tanooki,
+          parts.bodies.dasher,
+          parts.bodies.streetle,
+          parts.bodies.pwing,
+          parts.bodies.koopa ]
+      },
+      {
+        id: "atv",
+        folder: [
+          parts.bodies.atvStd,
+          parts.bodies.wiggler,
+          parts.bodies.teddy,
+          parts.bodies.rattler,
+          parts.bodies.splat,
+          parts.bodies.ink ]
+      },
+      {
+        id: "bike",
+        folder: [
+          parts.bodies.bikeStd,
+          parts.bodies.duke,
+          parts.bodies.flame,
+          parts.bodies.varmint,
+          parts.bodies.scooty,
+          parts.bodies.city,
+          parts.bodies.masterZero ]
+      },
+      {
+        id: "sport",
+        folder: [
+          parts.bodies.bikeSport,
+          parts.bodies.comet,
+          parts.bodies.jet,
+          parts.bodies.yoshi,
+          parts.bodies.master ]
+      }
+    ],
+    tires: [
+      parts.tires.std,
+      parts.tires.monster,
+      parts.tires.roller,
+      parts.tires.slim,
+      parts.tires.slick,
+      parts.tires.metal,
+      parts.tires.button,
+      parts.tires.offroad,
+      parts.tires.sponge,
+      parts.tires.wood,
+      parts.tires.cushion,
+      parts.tires.stdBlue,
+      parts.tires.monsterHot,
+      parts.tires.rollerBlue,
+      parts.tires.slimRed,
+      parts.tires.slickPurple,
+      parts.tires.offroadRetro,
+      parts.tires.gold,
+      parts.tires.gla,
+      parts.tires.triforce,
+      parts.tires.leaf,
+      parts.tires.ancient ],
+    gliders: [
+      parts.gliders.super,
+      parts.gliders.cloud,
+      parts.gliders.wario,
+      parts.gliders.squirrel,
+      parts.gliders.parasol,
+      parts.gliders.parachute,
+      parts.gliders.parafoil,
+      parts.gliders.flower,
+      parts.gliders.bowser,
+      parts.gliders.plane,
+      parts.gliders.parafoilTV,
+      parts.gliders.gold,
+      parts.gliders.hylian,
+      parts.gliders.paper,
+      parts.gliders.paraglider ]
+  };
 }
 
 function setTerrainRatios(gr, ag, wt, ar) {
@@ -596,1005 +552,77 @@ function setTerrainRatios(gr, ag, wt, ar) {
 
 const classes = {
   drivers: {
-    mario: {
-      wgt: 6,
-      acc: 2,
-      trn: 2,
-      mtb: 3,
-      spdGr: 7,
-      spdWt: 7,
-      spdAg: 7,
-      spdAr: 7,
-      hndGr: 4,
-      hndWt: 4,
-      hndAg: 4,
-      hndAr: 4,
-      inv: 3,
-      size: 1
-    },
-    luigi: {
-      wgt: 6,
-      acc: 2,
-      trn: 1,
-      mtb: 3,
-      spdGr: 7,
-      spdWt: 7,
-      spdAg: 7,
-      spdAr: 7,
-      hndGr: 5,
-      hndWt: 5,
-      hndAg: 5,
-      hndAr: 5,
-      inv: 3,
-      size: 1
-    },
-    peach: {
-      wgt: 4,
-      acc: 3,
-      trn: 3,
-      mtb: 4,
-      spdGr: 6,
-      spdWt: 6,
-      spdAg: 6,
-      spdAr: 6,
-      hndGr: 5,
-      hndWt: 5,
-      hndAg: 5,
-      hndAr: 5,
-      inv: 1,
-      size: 1
-    },
-    rosalina: {
-      wgt: 7,
-      acc: 1,
-      trn: 3,
-      mtb: 2,
-      spdGr: 8,
-      spdWt: 8,
-      spdAg: 8,
-      spdAr: 8,
-      hndGr: 3,
-      hndWt: 3,
-      hndAg: 3,
-      hndAr: 3,
-      inv: 4,
-      size: 2
-    },
-    petey: {
-      wgt: 10,
-      acc: 1,
-      trn: 1,
-      mtb: 1,
-      spdGr: 8,
-      spdWt: 8,
-      spdAg: 8,
-      spdAr: 8,
-      hndGr: 3,
-      hndWt: 3,
-      hndAg: 3,
-      hndAr: 3,
-      inv: 6,
-      size: 2
-    },
-    marioTan: {
-      wgt: 5,
-      acc: 3,
-      trn: 1,
-      mtb: 4,
-      spdGr: 6,
-      spdWt: 6,
-      spdAg: 6,
-      spdAr: 6,
-      hndGr: 5,
-      hndWt: 5,
-      hndAg: 5,
-      hndAr: 5,
-      inv: 1,
-      size: 1
-    },
-    peachCat: {
-      wgt: 3,
-      acc: 4,
-      trn: 3,
-      mtb: 4,
-      spdGr: 5,
-      spdWt: 5,
-      spdAg: 5,
-      spdAr: 5,
-      hndGr: 6,
-      hndWt: 6,
-      hndAg: 6,
-      hndAr: 6,
-      inv: 3,
-      size: 1
-    },
-    toad: {
-      wgt: 3,
-      acc: 4,
-      trn: 4,
-      mtb: 4,
-      spdGr: 4,
-      spdWt: 4,
-      spdAg: 4,
-      spdAr: 4,
-      hndGr: 7,
-      hndWt: 7,
-      hndAg: 7,
-      hndAr: 7,
-      inv: 3,
-      size: 0
-    },
-    koopa: {
-      wgt: 2,
-      acc: 4,
-      trn: 5,
-      mtb: 4,
-      spdGr: 3,
-      spdWt: 3,
-      spdAg: 3,
-      spdAr: 3,
-      hndGr: 8,
-      hndWt: 8,
-      hndAg: 8,
-      hndAr: 8,
-      inv: 4,
-      size: 0
-    },
-    toadette: {
-      wgt: 2,
-      acc: 5,
-      trn: 2,
-      mtb: 4,
-      spdGr: 3,
-      spdWt: 3,
-      spdAg: 3,
-      spdAr: 3,
-      hndGr: 7,
-      hndWt: 7,
-      hndAg: 7,
-      hndAr: 7,
-      inv: 3,
-      size: 0
-    },
-    marioBb: {
-      wgt: 1,
-      acc: 5,
-      trn: 4,
-      mtb: 5,
-      spdGr: 2,
-      spdWt: 2,
-      spdAg: 2,
-      spdAr: 2,
-      hndGr: 8,
-      hndWt: 8,
-      hndAg: 8,
-      hndAr: 8,
-      inv: 5,
-      size: 0
-    },
-    peachBb: {
-      wgt: 0,
-      acc: 4,
-      trn: 5,
-      mtb: 5,
-      spdGr: 1,
-      spdWt: 1,
-      spdAg: 1,
-      spdAr: 1,
-      hndGr: 10,
-      hndWt: 10,
-      hndAg: 10,
-      hndAr: 10,
-      inv: 6,
-      size: 0
-    },
-    rosalinaBb: {
-      wgt: 0,
-      acc: 5,
-      trn: 3,
-      mtb: 5,
-      spdGr: 1,
-      spdWt: 1,
-      spdAg: 1,
-      spdAr: 1,
-      hndGr: 9,
-      hndWt: 9,
-      hndAg: 9,
-      hndAr: 9,
-      inv: 6,
-      size: 0
-    },
-    marioGold: {
-      wgt: 10,
-      acc: 1,
-      trn: 1,
-      mtb: 1,
-      spdGr: 8,
-      spdWt: 8,
-      spdAg: 8,
-      spdAr: 8,
-      hndGr: 3,
-      hndWt: 3,
-      hndAg: 3,
-      hndAr: 3,
-      inv: 3,
-      size: 1
-    },
-    wiggler: {
-      wgt: 8,
-      acc: 1,
-      trn: 0,
-      mtb: 1,
-      spdGr: 9,
-      spdWt: 9,
-      spdAg: 9,
-      spdAr: 9,
-      hndGr: 2,
-      hndWt: 2,
-      hndAg: 2,
-      hndAr: 2,
-      inv: 4,
-      size: 1
-    },
-    wario: {
-      wgt: 9,
-      acc: 0,
-      trn: 1,
-      mtb: 0,
-      spdGr: 10,
-      spdWt: 10,
-      spdAg: 10,
-      spdAr: 10,
-      hndGr: 1,
-      hndWt: 1,
-      hndAg: 1,
-      hndAr: 1,
-      inv: 5,
-      size: 2
-    },
-    waluigi: {
-      wgt: 8,
-      acc: 1,
-      trn: 0,
-      mtb: 1,
-      spdGr: 9,
-      spdWt: 9,
-      spdAg: 9,
-      spdAr: 9,
-      hndGr: 2,
-      hndWt: 2,
-      hndAg: 2,
-      hndAr: 2,
-      inv: 4,
-      size: 2
-    },
-    bowser: {
-      wgt: 10,
-      acc: 0,
-      trn: 0,
-      mtb: 0,
-      spdGr: 10,
-      spdWt: 10,
-      spdAg: 10,
-      spdAr: 10,
-      hndGr: 0,
-      hndWt: 0,
-      hndAg: 0,
-      hndAr: 0,
-      inv: 6,
-      size: 2
-    }
+    mario: [3,7,7,7,7,2,6,4,4,4,4,2,3,1],
+    luigi: [3,7,7,7,7,2,6,5,5,5,5,1,3,1],
+    peach: [4,6,6,6,6,3,4,5,5,5,5,3,1,1],
+    rosalina: [2,8,8,8,8,1,7,3,3,3,3,3,4,2],
+    petey: [1,8,8,8,8,1,10,3,3,3,3,1,6,2],
+    marioTan: [4,6,6,6,6,3,5,5,5,5,5,1,1,1],
+    peachCat: [4,5,5,5,5,4,3,6,6,6,6,3,3,1],
+    toad: [4,4,4,4,4,4,3,7,7,7,7,4,3,0],
+    koopa: [4,3,3,3,3,4,2,8,8,8,8,5,4,0],
+    toadette: [4,3,3,3,3,5,2,7,7,7,7,2,3,0],
+    marioBb: [5,2,2,2,2,5,1,8,8,8,8,4,5,0],
+    peachBb: [5,1,1,1,1,4,0,10,10,10,10,5,6,0],
+    rosalinaBb: [5,1,1,1,1,5,0,9,9,9,9,3,6,0],
+    marioGold: [1,8,8,8,8,1,10,3,3,3,3,1,3,1],
+    wiggler: [1,9,9,9,9,1,8,2,2,2,2,0,4,1],
+    wario: [0,10,10,10,10,0,9,1,1,1,1,1,5,2],
+    waluigi: [1,9,9,9,9,1,8,2,2,2,2,0,4,2],
+    bowser: [0,10,10,10,10,0,10,0,0,0,0,0,6,2]
   },
   bodies: {
-    std: {
-      wgt: 2,
-      acc: 4,
-      trn: 3,
-      mtb: 5,
-      spdGr: 3,
-      spdWt: 3,
-      spdAg: 3,
-      spdAr: 3,
-      hndGr: 3,
-      hndWt: 2,
-      hndAg: 3,
-      hndAr: 3,
-      inv: 3
-    },
-    gla300: {
-      wgt: 2,
-      acc: 4,
-      trn: 3,
-      mtb: 5,
-      spdGr: 3,
-      spdWt: 3,
-      spdAg: 3,
-      spdAr: 3,
-      hndGr: 3,
-      hndWt: 2,
-      hndAg: 3,
-      hndAr: 3,
-      inv: 4
-    },
-    pipe: {
-      wgt: 1,
-      acc: 6,
-      trn: 4,
-      mtb: 6,
-      spdGr: 2,
-      spdWt: 3,
-      spdAg: 1,
-      spdAr: 1,
-      hndGr: 5,
-      hndWt: 4,
-      hndAg: 4,
-      hndAr: 2,
-      inv: 3
-    },
-    varmint: {
-      wgt: 1,
-      acc: 6,
-      trn: 4,
-      mtb: 6,
-      spdGr: 2,
-      spdWt: 3,
-      spdAg: 1,
-      spdAr: 1,
-      hndGr: 5,
-      hndWt: 4,
-      hndAg: 4,
-      hndAr: 2,
-      inv: 2
-    },
-    mach: {
-      wgt: 3,
-      acc: 3,
-      trn: 4,
-      mtb: 5,
-      spdGr: 3,
-      spdWt: 3,
-      spdAg: 5,
-      spdAr: 4,
-      hndGr: 2,
-      hndWt: 2,
-      hndAg: 4,
-      hndAr: 2,
-      inv: 3
-    },
-    ink: {
-      wgt: 3,
-      acc: 3,
-      trn: 4,
-      mtb: 5,
-      spdGr: 3,
-      spdWt: 3,
-      spdAg: 5,
-      spdAr: 4,
-      hndGr: 2,
-      hndWt: 2,
-      hndAg: 4,
-      hndAr: 2,
-      inv: 1
-    },
-    steel: {
-      wgt: 4,
-      acc: 1,
-      trn: 3,
-      mtb: 3,
-      spdGr: 4,
-      spdWt: 5,
-      spdAg: 2,
-      spdAr: 0,
-      hndGr: 1,
-      hndWt: 5,
-      hndAg: 1,
-      hndAr: 1,
-      inv: 6
-    },
-    rattler: {
-      wgt: 4,
-      acc: 1,
-      trn: 3,
-      mtb: 3,
-      spdGr: 4,
-      spdWt: 5,
-      spdAg: 2,
-      spdAr: 0,
-      hndGr: 1,
-      hndWt: 5,
-      hndAg: 1,
-      hndAr: 1,
-      inv: 5
-    },
-    cat: {
-      wgt: 2,
-      acc: 5,
-      trn: 3,
-      mtb: 6,
-      spdGr: 2,
-      spdWt: 2,
-      spdAg: 3,
-      spdAr: 4,
-      hndGr: 4,
-      hndWt: 2,
-      hndAg: 3,
-      hndAr: 4,
-      inv: 3
-    },
-    comet: {
-      wgt: 2,
-      acc: 5,
-      trn: 3,
-      mtb: 6,
-      spdGr: 2,
-      spdWt: 2,
-      spdAg: 3,
-      spdAr: 4,
-      hndGr: 4,
-      hndWt: 2,
-      hndAg: 3,
-      hndAr: 4,
-      inv: 3
-    },
-    yoshi: {
-      wgt: 2,
-      acc: 5,
-      trn: 3,
-      mtb: 6,
-      spdGr: 2,
-      spdWt: 2,
-      spdAg: 3,
-      spdAr: 4,
-      hndGr: 4,
-      hndWt: 2,
-      hndAg: 3,
-      hndAr: 4,
-      inv: 2
-    },
-    teddy: {
-      wgt: 2,
-      acc: 5,
-      trn: 3,
-      mtb: 6,
-      spdGr: 2,
-      spdWt: 2,
-      spdAg: 3,
-      spdAr: 4,
-      hndGr: 4,
-      hndWt: 2,
-      hndAg: 3,
-      hndAr: 4,
-      inv: 1
-    },
-    circuit: {
-      wgt: 3,
-      acc: 1,
-      trn: 1,
-      mtb: 3,
-      spdGr: 5,
-      spdWt: 1,
-      spdAg: 4,
-      spdAr: 2,
-      hndGr: 1,
-      hndWt: 1,
-      hndAg: 2,
-      hndAr: 0,
-      inv: 6
-    },
-    wagon: {
-      wgt: 4,
-      acc: 0,
-      trn: 5,
-      mtb: 3,
-      spdGr: 5,
-      spdWt: 2,
-      spdAg: 3,
-      spdAr: 1,
-      hndGr: 0,
-      hndWt: 1,
-      hndAg: 1,
-      hndAr: 0,
-      inv: 7
-    },
-    atvStd: {
-      wgt: 4,
-      acc: 0,
-      trn: 5,
-      mtb: 3,
-      spdGr: 5,
-      spdWt: 2,
-      spdAg: 3,
-      spdAr: 1,
-      hndGr: 0,
-      hndWt: 1,
-      hndAg: 1,
-      hndAr: 0,
-      inv: 6
-    },
-    prancer: {
-      wgt: 1,
-      acc: 2,
-      trn: 2,
-      mtb: 4,
-      spdGr: 4,
-      spdWt: 3,
-      spdAg: 3,
-      spdAr: 3,
-      hndGr: 3,
-      hndWt: 3,
-      hndAg: 2,
-      hndAr: 3,
-      inv: 5
-    },
-    bikeSport: {
-      wgt: 1,
-      acc: 2,
-      trn: 2,
-      mtb: 4,
-      spdGr: 4,
-      spdWt: 3,
-      spdAg: 3,
-      spdAr: 3,
-      hndGr: 3,
-      hndWt: 3,
-      hndAg: 2,
-      hndAr: 3,
-      inv: 3
-    },
-    biddy: {
-      wgt: 0,
-      acc: 7,
-      trn: 4,
-      mtb: 7,
-      spdGr: 0,
-      spdWt: 1,
-      spdAg: 2,
-      spdAr: 1,
-      hndGr: 5,
-      hndWt: 4,
-      hndAg: 5,
-      hndAr: 4,
-      inv: 0
-    },
-    sneeker: {
-      wgt: 2,
-      acc: 2,
-      trn: 0,
-      mtb: 4,
-      spdGr: 4,
-      spdWt: 2,
-      spdAg: 3,
-      spdAr: 3,
-      hndGr: 3,
-      hndWt: 2,
-      hndAg: 3,
-      hndAr: 2,
-      inv: 5
-    },
-    gold: {
-      wgt: 2,
-      acc: 2,
-      trn: 0,
-      mtb: 4,
-      spdGr: 4,
-      spdWt: 2,
-      spdAg: 3,
-      spdAr: 3,
-      hndGr: 3,
-      hndWt: 2,
-      hndAg: 3,
-      hndAr: 2,
-      inv: 4
-    },
-    master: {
-      wgt: 2,
-      acc: 2,
-      trn: 0,
-      mtb: 4,
-      spdGr: 4,
-      spdWt: 2,
-      spdAg: 3,
-      spdAr: 3,
-      hndGr: 3,
-      hndWt: 2,
-      hndAg: 3,
-      hndAr: 2,
-      inv: 3
-    },
-    gla25: {
-      wgt: 1,
-      acc: 5,
-      trn: 5,
-      mtb: 5,
-      spdGr: 2,
-      spdWt: 2,
-      spdAg: 4,
-      spdAr: 3,
-      hndGr: 4,
-      hndWt: 3,
-      hndAg: 4,
-      hndAr: 3,
-      inv: 4
-    },
-    bikeStd: {
-      wgt: 1,
-      acc: 5,
-      trn: 5,
-      mtb: 5,
-      spdGr: 2,
-      spdWt: 2,
-      spdAg: 4,
-      spdAr: 3,
-      hndGr: 4,
-      hndWt: 3,
-      hndAg: 4,
-      hndAr: 3,
-      inv: 4
-    },
-    wiggler: {
-      wgt: 1,
-      acc: 5,
-      trn: 5,
-      mtb: 5,
-      spdGr: 2,
-      spdWt: 2,
-      spdAg: 4,
-      spdAr: 3,
-      hndGr: 4,
-      hndWt: 3,
-      hndAg: 4,
-      hndAr: 3,
-      inv: 4
-    },
-    falcon: {
-      wgt: 0,
-      acc: 3,
-      trn: 3,
-      mtb: 4,
-      spdGr: 4,
-      spdWt: 2,
-      spdAg: 4,
-      spdAr: 3,
-      hndGr: 2,
-      hndWt: 3,
-      hndAg: 5,
-      hndAr: 1,
-      inv: 4
-    },
-    splat: {
-      wgt: 0,
-      acc: 3,
-      trn: 3,
-      mtb: 4,
-      spdGr: 4,
-      spdWt: 2,
-      spdAg: 4,
-      spdAr: 3,
-      hndGr: 2,
-      hndWt: 3,
-      hndAg: 5,
-      hndAr: 1,
-      inv: 3
-    },
-    tanooki: {
-      wgt: 3,
-      acc: 2,
-      trn: 7,
-      mtb: 5,
-      spdGr: 3,
-      spdWt: 4,
-      spdAg: 3,
-      spdAr: 3,
-      hndGr: 4,
-      hndWt: 4,
-      hndAg: 3,
-      hndAr: 3,
-      inv: 4
-    },
-    koopa: {
-      wgt: 3,
-      acc: 2,
-      trn: 7,
-      mtb: 5,
-      spdGr: 3,
-      spdWt: 4,
-      spdAg: 3,
-      spdAr: 3,
-      hndGr: 4,
-      hndWt: 4,
-      hndAg: 3,
-      hndAr: 3,
-      inv: 3
-    },
-    streetle: {
-      wgt: 0,
-      acc: 6,
-      trn: 6,
-      mtb: 6,
-      spdGr: 2,
-      spdWt: 5,
-      spdAg: 0,
-      spdAr: 2,
-      hndGr: 4,
-      hndWt: 5,
-      hndAg: 2,
-      hndAr: 3,
-      inv: 3
-    },
-    landship: {
-      wgt: 0,
-      acc: 6,
-      trn: 6,
-      mtb: 6,
-      spdGr: 2,
-      spdWt: 5,
-      spdAg: 0,
-      spdAr: 2,
-      hndGr: 4,
-      hndWt: 5,
-      hndAg: 2,
-      hndAr: 3,
-      inv: 2
-    }
+    std: [5,3,3,3,3,4,2,3,3,2,3,3,3],
+    gla300: [5,3,3,3,3,4,2,3,3,2,3,3,4],
+    pipe: [6,2,1,3,1,6,1,5,4,4,2,4,3],
+    varmint: [6,2,1,3,1,6,1,5,4,4,2,4,2],
+    mach: [5,3,5,3,4,3,3,2,4,2,2,4,3],
+    ink: [5,3,5,3,4,3,3,2,4,2,2,4,1],
+    steel: [3,4,2,5,0,1,4,1,1,5,1,3,6],
+    rattler: [3,4,2,5,0,1,4,1,1,5,1,3,5],
+    cat: [6,2,3,2,4,5,2,4,3,2,4,3,3],
+    comet: [6,2,3,2,4,5,2,4,3,2,4,3,3],
+    yoshi: [6,2,3,2,4,5,2,4,3,2,4,3,2],
+    teddy: [6,2,3,2,4,5,2,4,3,2,4,3,1],
+    circuit: [3,5,4,1,2,1,3,1,2,1,0,1,6],
+    wagon: [3,5,3,2,1,0,4,0,1,1,0,5,7],
+    atvStd: [3,5,3,2,1,0,4,0,1,1,0,5,6],
+    prancer: [4,4,3,3,3,2,1,3,2,3,3,2,5],
+    bikeSport: [4,4,3,3,3,2,1,3,2,3,3,2,3],
+    biddy: [7,0,2,1,1,7,0,5,5,4,4,4,0],
+    sneeker: [4,4,3,2,3,2,2,3,3,2,2,0,5],
+    gold: [4,4,3,2,3,2,2,3,3,2,2,0,4],
+    master: [4,4,3,2,3,2,2,3,3,2,2,0,3],
+    gla25: [5,2,4,2,3,5,1,4,4,3,3,5,4],
+    bikeStd: [5,2,4,2,3,5,1,4,4,3,3,5,4],
+    wiggler: [5,2,4,2,3,5,1,4,4,3,3,5,4],
+    falcon: [4,4,4,2,3,3,0,2,5,3,1,3,4],
+    splat: [4,4,4,2,3,3,0,2,5,3,1,3,3],
+    tanooki: [5,3,3,4,3,2,3,4,3,4,3,7,4],
+    koopa: [5,3,3,4,3,2,3,4,3,4,3,7,3],
+    streetle: [6,2,0,5,2,6,0,4,2,5,3,6,3],
+    landship: [6,2,0,5,2,6,0,4,2,5,3,6,2]
   },
   tires: {
-    std: {
-      wgt: 2,
-      acc: 4,
-      trn: 5,
-      mtb: 4,
-      spdGr: 2,
-      spdWt: 3,
-      spdAg: 2,
-      spdAr: 3,
-      hndGr: 3,
-      hndWt: 3,
-      hndAg: 3,
-      hndAr: 3,
-      inv: 4
-    },
-    gla: {
-      wgt: 2,
-      acc: 4,
-      trn: 5,
-      mtb: 4,
-      spdGr: 2,
-      spdWt: 3,
-      spdAg: 2,
-      spdAr: 3,
-      hndGr: 3,
-      hndWt: 3,
-      hndAg: 3,
-      hndAr: 3,
-      inv: 5
-    },
-    monster: {
-      wgt: 4,
-      acc: 2,
-      trn: 7,
-      mtb: 3,
-      spdGr: 3,
-      spdWt: 2,
-      spdAg: 2,
-      spdAr: 1,
-      hndGr: 0,
-      hndWt: 1,
-      hndAg: 0,
-      hndAr: 1,
-      inv: 6
-    },
-    ancient: {
-      wgt: 4,
-      acc: 2,
-      trn: 7,
-      mtb: 3,
-      spdGr: 3,
-      spdWt: 2,
-      spdAg: 2,
-      spdAr: 1,
-      hndGr: 0,
-      hndWt: 1,
-      hndAg: 0,
-      hndAr: 1,
-      inv: 5
-    },
-    roller: {
-      wgt: 0,
-      acc: 6,
-      trn: 4,
-      mtb: 6,
-      spdGr: 0,
-      spdWt: 3,
-      spdAg: 0,
-      spdAr: 3,
-      hndGr: 4,
-      hndWt: 4,
-      hndAg: 4,
-      hndAr: 4,
-      inv: 0
-    },
-    slim: {
-      wgt: 2,
-      acc: 2,
-      trn: 1,
-      mtb: 3,
-      spdGr: 3,
-      spdWt: 2,
-      spdAg: 4,
-      spdAr: 2,
-      hndGr: 4,
-      hndWt: 4,
-      hndAg: 3,
-      hndAr: 4,
-      inv: 5
-    },
-    slick: {
-      wgt: 3,
-      acc: 1,
-      trn: 0,
-      mtb: 2,
-      spdGr: 4,
-      spdWt: 0,
-      spdAg: 4,
-      spdAr: 0,
-      hndGr: 2,
-      hndWt: 0,
-      hndAg: 2,
-      hndAr: 1,
-      inv: 5
-    },
-    metal: {
-      wgt: 4,
-      acc: 0,
-      trn: 2,
-      mtb: 2,
-      spdGr: 4,
-      spdWt: 3,
-      spdAg: 1,
-      spdAr: 2,
-      hndGr: 2,
-      hndWt: 2,
-      hndAg: 1,
-      hndAr: 0,
-      inv: 6
-    },
-    gold: {
-      wgt: 4,
-      acc: 0,
-      trn: 2,
-      mtb: 2,
-      spdGr: 4,
-      spdWt: 3,
-      spdAg: 1,
-      spdAr: 2,
-      hndGr: 2,
-      hndWt: 2,
-      hndAg: 1,
-      hndAr: 0,
-      inv: 5
-    },
-    button: {
-      wgt: 0,
-      acc: 5,
-      trn: 3,
-      mtb: 5,
-      spdGr: 1,
-      spdWt: 2,
-      spdAg: 2,
-      spdAr: 2,
-      hndGr: 3,
-      hndWt: 3,
-      hndAg: 4,
-      hndAr: 2,
-      inv: 3
-    },
-    offroad: {
-      wgt: 3,
-      acc: 3,
-      trn: 6,
-      mtb: 3,
-      spdGr: 3,
-      spdWt: 4,
-      spdAg: 2,
-      spdAr: 1,
-      hndGr: 1,
-      hndWt: 1,
-      hndAg: 2,
-      hndAr: 2,
-      inv: 6
-    },
-    cushion: {
-      wgt: 1,
-      acc: 4,
-      trn: 6,
-      mtb: 5,
-      spdGr: 1,
-      spdWt: 1,
-      spdAg: 1,
-      spdAr: 4,
-      hndGr: 2,
-      hndWt: 1,
-      hndAg: 2,
-      hndAr: 3,
-      inv: 6
-    },
-    sponge: {
-      wgt: 1,
-      acc: 4,
-      trn: 6,
-      mtb: 5,
-      spdGr: 1,
-      spdWt: 1,
-      spdAg: 1,
-      spdAr: 4,
-      hndGr: 2,
-      hndWt: 1,
-      hndAg: 2,
-      hndAr: 3,
-      inv: 4
-    }
+    std: [4,2,2,3,3,4,2,3,3,3,3,5,4],
+    gla: [4,2,2,3,3,4,2,3,3,3,3,5,5],
+    monster: [3,3,2,2,1,2,4,0,0,1,1,7,6],
+    ancient: [3,3,2,2,1,2,4,0,0,1,1,7,5],
+    roller: [6,0,0,3,3,6,0,4,4,4,4,4,0],
+    slim: [3,3,4,2,2,2,2,4,3,4,4,1,5],
+    slick: [2,4,4,0,0,1,3,2,2,0,1,0,5],
+    metal: [2,4,1,3,2,0,4,2,1,2,0,2,6],
+    gold: [2,4,1,3,2,0,4,2,1,2,0,2,5],
+    button: [5,1,2,2,2,5,0,3,4,3,2,3,3],
+    offroad: [3,3,2,4,1,3,3,1,2,1,2,6,6],
+    cushion: [5,1,1,1,4,4,1,2,2,1,3,6,6],
+    sponge: [5,1,1,1,4,4,1,2,2,1,3,6,4]
   },
   gliders: {
-    super: {
-      wgt: 1,
-      acc: 1,
-      trn: 1,
-      mtb: 1,
-      spdGr: 1,
-      spdWt: 1,
-      spdAg: 0,
-      spdAr: 2,
-      hndGr: 1,
-      hndWt: 0,
-      hndAg: 1,
-      hndAr: 1,
-      inv: 1
-    },
-    cloud: {
-      wgt: 0,
-      acc: 2,
-      trn: 1,
-      mtb: 2,
-      spdGr: 0,
-      spdWt: 1,
-      spdAg: 1,
-      spdAr: 1,
-      hndGr: 1,
-      hndWt: 0,
-      hndAg: 1,
-      hndAr: 2,
-      inv: 0
-    },
-    parafoil: {
-      wgt: 1,
-      acc: 2,
-      trn: 0,
-      mtb: 2,
-      spdGr: 0,
-      spdWt: 0,
-      spdAg: 1,
-      spdAr: 1,
-      hndGr: 1,
-      hndWt: 1,
-      hndAg: 0,
-      hndAr: 2,
-      inv: 0
-    },
-    gold: {
-      wgt: 2,
-      acc: 1,
-      trn: 0,
-      mtb: 1,
-      spdGr: 1,
-      spdWt: 0,
-      spdAg: 1,
-      spdAr: 2,
-      hndGr: 1,
-      hndWt: 1,
-      hndAg: 0,
-      hndAr: 1,
-      inv: 1
-    }
+    super: [1,1,0,1,2,1,1,1,1,0,1,1,1],
+    cloud: [2,0,1,1,1,2,0,1,1,0,2,1,0],
+    parafoil: [2,0,1,0,1,2,1,1,0,1,2,0,0],
+    gold: [1,1,1,0,2,1,2,1,0,1,1,0,1]
   }
 };
 const driverClasses = Object.keys(classes.drivers);

@@ -1,147 +1,29 @@
 "use strict";
 // Controller
 
+const statIndex = {
+  mtb: 0, spdGr: 1, spdAg: 2, spdWt: 3, spdAr: 4,  acc: 5,
+  wgt: 6, hndGr: 7, hndAg: 8, hndWt: 9, hndAr: 10, trn: 11, inv: 12,
+  size: 13, spd: 14, hnd: 15
+};
+const stats = [ "mtb", "spdGr", "spdAg", "spdWt", "spdAr", "acc",
+                "wgt", "hndGr", "hndAg", "hndWt", "hndAr", "trn", "inv",
+                "size", "spd", "hnd" ];
 const blankFormula = {
-  mtb: {
-    factor: 0,
-    min: 0,
-    max: 20 },
-  spd: {
-    use: true,
-    factor: 0,
-    min: 0,
-    max: 20 },
-  spdGr: {
-    factor: 0,
-    min: 0,
-    max: 20 },
-  spdAg: {
-    factor: 0,
-    min: 0,
-    max: 20 },
-  spdWt: {
-    factor: 0,
-    min: 0,
-    max: 20 },
-  spdAr: {
-    factor: 0,
-    min: 0,
-    max: 20 },
-  acc: {
-    factor: 0,
-    min: 0,
-    max: 20 },
-  wgt: {
-    factor: 0,
-    min: 0,
-    max: 20 },
-  hnd: {
-    use: true,
-    factor: 0,
-    min: 0,
-    max: 20 },
-  hndGr: {
-    factor: 0,
-    min: 0,
-    max: 20 },
-  hndAg: {
-    factor: 0,
-    min: 0,
-    max: 20 },
-  hndWt: {
-    factor: 0,
-    min: 0,
-    max: 20 },
-  hndAr: {
-    factor: 0,
-    min: 0,
-    max: 20 },
-  trn: {
-    factor: 0,
-    min: 0,
-    max: 20
-  },
-  inv: {
-    factor: 0,
-    min: 0,
-    max: 20 },
-  size: {
-    factor: 0,
-    min: 0,
-    max: 2 },
+  factors: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  min:     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  max:     [20,20,20,20,20,20,20,20,20,20,20,20,20,2,20,20],
+  unified: { spd: true, hnd: true },
   excludeKarts: false, excludeATVs: false,
   excludeBikes: false, excludeSportBikes: false,
 };
 const defaultFormula = {
-  mtb: {
-    factor: 16,
-    min: 0,
-    max: 20 },
-  spd: {
-    use: true,
-    factor: 15,
-    min: 0,
-    max: 20 },
-  spdGr: {
-    factor: 0,
-    min: 0,
-    max: 20 },
-  spdAg: {
-    factor: 0,
-    min: 0,
-    max: 20 },
-  spdWt: {
-    factor: 0,
-    min: 0,
-    max: 20 },
-  spdAr: {
-    factor: 0,
-    min: 0,
-    max: 20 },
-  acc: {
-    factor: 1,
-    min: 0,
-    max: 20 },
-  wgt: {
-    factor: 1,
-    min: 0,
-    max: 20 },
-  hnd: {
-    use: true,
-    factor: 1,
-    min: 0,
-    max: 20 },
-  hndGr: {
-    factor: 0,
-    min: 0,
-    max: 20 },
-  hndAg: {
-    factor: 0,
-    min: 0,
-    max: 20 },
-  hndWt: {
-    factor: 0,
-    min: 0,
-    max: 20 },
-  hndAr: {
-    factor: 0,
-    min: 0,
-    max: 20 },
-  trn: {
-    factor: 1,
-    min: 0,
-    max: 20
-  },
-  inv: {
-    factor: 0,
-    min: 0,
-    max: 20 },
-  size: {
-    factor: 0,
-    min: 0,
-    max: 2 },
+  factors: [16,0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0,15, 1],
+  min:     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  max:     [20,20,20,20,20,20,20,20,20,20,20,20,20,2,20,20],
+  unified: { spd: true, hnd: true },
   excludeKarts: false, excludeATVs: false,
-  excludeBikes: false, excludeSportBikes: true,
+  excludeBikes: false, excludeSportBikes: true
 };
 const state = {
   settings: {
@@ -293,13 +175,21 @@ function updateRelatedCombos(slot) {
 function getDominantCombos(combo) {
   const opts = {
     mustDiffer: true, sortBy: "diff",
-    mtb: { min: combo.lvl.mtb },
-    spdGr: { min: combo.lvl.spdGr }, spdWt: { min: combo.lvl.spdWt },
-    spdAg: { min: combo.lvl.spdAg }, spdAr: { min: combo.lvl.spdAr },
-    acc: { min: combo.lvl.acc }, wgt: { min: combo.lvl.wgt },
-    hndGr: { min: combo.lvl.hndGr }, hndWt: { min: combo.lvl.hndWt },
-    hndAg: { min: combo.lvl.hndAg }, hndAr: { min: combo.lvl.hndAr },
-    trn: { min: combo.lvl.trn }, inv: { min: combo.lvl.inv },
+    min: [
+      combo.lvl[0],
+      combo.lvl[1],
+      combo.lvl[2],
+      combo.lvl[3],
+      combo.lvl[4],
+      combo.lvl[5],
+      combo.lvl[6],
+      combo.lvl[7],
+      combo.lvl[8],
+      combo.lvl[9],
+      combo.lvl[10],
+      combo.lvl[11],
+      combo.lvl[12]
+    ],
     refCombo: combo,
     driverLock: state.locks.driver, bodyLock: state.locks.body,
     tireLock: state.locks.tire, gliderLock: state.locks.glider
@@ -326,27 +216,21 @@ function getCustomCombos(combo) {
   opts.tireLock = state.locks.tire;
   opts.gliderLock = state.locks.glider;
 
-  if (state.formula.spd.use) {
-    opts.spdGr.factor = 0; opts.spdAg.factor = 0;
-    opts.spdWt.factor = 0; opts.spdAr.factor = 0;
-    opts.spdGr.min = 0; opts.spdAg.min = 0;
-    opts.spdWt.min = 0; opts.spdAr.min = 0;
-    opts.spdGr.max = 20; opts.spdAg.max = 20;
-    opts.spdWt.max = 20; opts.spdAr.max = 20;
+  if (state.formula.unified.spd) {
+    opts.factors[1] = 0; opts.max[1] = 20; opts.min[1] = 0;
+    opts.factors[2] = 0; opts.max[2] = 20; opts.min[2] = 0;
+    opts.factors[3] = 0; opts.max[3] = 20; opts.min[3] = 0;
+    opts.factors[4] = 0; opts.max[4] = 20; opts.min[4] = 0;
   } else {
-    opts.spd.factor = 0;
-    opts.spd.min = 0; opts.spd.max = 20;
+    opts.factors[14] = 0; opts.max[14] = 20; opts.min[14] = 0;
   }
-  if (state.formula.hnd.use) {
-    opts.hndGr.factor= 0; opts.hndAg.factor = 0;
-    opts.hndWt.factor = 0; opts.hndAr.factor = 0;
-    opts.hndGr.min = 0; opts.hndAg.min = 0;
-    opts.hndWt.min = 0; opts.hndAr.min = 0;
-    opts.hndGr.max = 20; opts.hndAg.max = 20;
-    opts.hndWt.max = 20; opts.hndAr.max = 20;
+  if (state.formula.unified.hnd) {
+    opts.factors[7]  = 0; opts.max[7]  = 20; opts.min[7]  = 0;
+    opts.factors[8]  = 0; opts.max[8]  = 20; opts.min[8]  = 0;
+    opts.factors[9]  = 0; opts.max[9]  = 20; opts.min[9]  = 0;
+    opts.factors[10] = 0; opts.max[10] = 20; opts.min[10] = 0;
   } else {
-    opts.hnd.factor = 0;
-    opts.hnd.min = 0; opts.hnd.max = 20;
+    opts.factors[15] = 0; opts.max[15] = 20; opts.min[15] = 0;
   }
 
   return Stats.post("listCombos", opts);
@@ -575,25 +459,24 @@ function setBlankFormula() {
 }
 
 function toggleSpdMode() {
-  state.workingFormula.spd.use = !state.workingFormula.spd.use;
+  state.workingFormula.unified.spd = !state.workingFormula.unified.spd;
   drawCollapses();
 }
 function toggleHndMode() {
-  state.workingFormula.hnd.use = !state.workingFormula.hnd.use;
+  state.workingFormula.unified.hnd = !state.workingFormula.unified.hnd;
   drawCollapses();
 }
 
-function toggleFactorSign(stat, strict = false) {
-  const statState = state.workingFormula[stat];
-  if (statState.factor == 0 && !strict) {
-    statState.factor = 1;
+function toggleFactorSign(statIndex, strict = false) {
+  if (state.workingFormula.factors[statIndex] == 0 && !strict) {
+    state.workingFormula.factors[statIndex] = 1;
   } else {
-    statState.factor *= -1;
+    state.workingFormula.factors[statIndex] *= -1;
   }
   drawFormulaDialog();
 }
-function resetFactor(stat) {
-  state.workingFormula[stat].factor = 0;
+function resetFactor(statIndex) {
+  state.workingFormula.factors[statIndex] = 0;
   drawFormulaDialog();
 }
 

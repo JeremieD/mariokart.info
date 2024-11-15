@@ -1,11 +1,6 @@
 "use strict";
 
 const graphicsRoot = "/resources/graphics/";
-const stats = [ "mtb", "spdGr", "spdAg", "spdWt", "spdAr", "acc",
-                "wgt", "hndGr", "hndAg", "hndWt", "hndAr", "trn", "inv" ];
-const scoreStats = [ "mtb", "spd", "spdGr", "spdAg", "spdWt", "spdAr",
-              "acc", "wgt", "hnd", "hndGr", "hndAg", "hndWt", "hndAr",
-              "trn", "inv", "size" ];
 const V = {
   combo: {},
   dominant: {},
@@ -145,7 +140,7 @@ whenDOMReady(() => {
   V.favorites.unfavoriteCancelButton = document.getElementById("unfavorite-cancel");
 
   V.formula.dialog = document.getElementById("custom-formula-dialog");
-  for (const stat of scoreStats) {
+  for (const stat of stats) {
     V.formula[stat] = {};
     V.formula[stat].mode   = document.getElementById(`formula-${stat}-mode`);
     V.formula[stat].slider = document.getElementById(`formula-${stat}-slider`);
@@ -283,39 +278,40 @@ whenDOMReady(() => {
   V.formula.cancel.addEventListener("click", revertFormula, { passive: true });
   V.formula.save.addEventListener("click", commitFormula, { passive: true });
 
-  for (const stat of scoreStats) {
+  for (let i = 0; i < 16; i++) {
+    const stat = stats[i];
     const factor = V.formula[stat].factor;
     const slider = V.formula[stat].slider;
     const min = V.formula[stat].min;
     const max = V.formula[stat].max;
     const mode = V.formula[stat].mode;
     factor.addEventListener("input", () => {
-      state.workingFormula[stat].factor = parseValue(factor.value);
+      state.workingFormula.factors[i] = parseValue(factor.value);
       drawFactorWidget(stat);
     }, { passive: true });
     slider.addEventListener("change", () => {
-      state.workingFormula[stat].factor = slider.value;
+      state.workingFormula.factors[i] = slider.value;
       drawFactorWidget(stat);
     }, { passive: true });
     slider.linkedInput = factor;
     min.addEventListener("input", () => {
-      state.workingFormula[stat].min = unscaleStat(parseValue(min.value), stat);
+      state.workingFormula.min[i] = unscaleStat(parseValue(min.value), i);
       validateBounds(stat);
     }, { passive: true });
     max.addEventListener("input", () => {
-      state.workingFormula[stat].max = unscaleStat(parseValue(max.value, max.max), stat);
+      state.workingFormula.max[i] = unscaleStat(parseValue(max.value, max.max), i);
       validateBounds(stat);
     }, { passive: true });
     mode.addEventListener("click", e => {
       if (e.altKey) {
-        for (const stat of scoreStats) {
-          toggleFactorSign(stat, true);
+        for (let j = 0; j < 16; j++) {
+          toggleFactorSign(j, true);
         }
       } else {
-        toggleFactorSign(stat);
+        toggleFactorSign(i);
       }
     }, { passive: true });
-    mode.addEventListener("dblclick", () => { resetFactor(stat); }, { passive: true });
+    mode.addEventListener("dblclick", () => { resetFactor(i); }, { passive: true });
   }
 
   V.formula.spd.use.addEventListener("click", toggleSpdMode, { passive: true });
@@ -492,7 +488,7 @@ function drawCurrentCombo() {
 
   // Combo Details
   let detailStr;
-  switch (combo.classes.driver.size) {
+  switch (combo.classes.driver[13]) {
     case 0:
       detailStr = "Small Frame";
       break;
@@ -502,18 +498,19 @@ function drawCurrentCombo() {
     case 2:
       detailStr = "Large Frame";
       break;
-    default: throw "Error: Unknown size: “" + combo.classes.driver.size + "”";
+    default: throw "Error: Unknown size: “" + combo.classes.driver[13] + "”";
   }
   detailStr += combo.parts.body.type == "sport" ? ", Inside Drift" : "";
   V.combo.details.innerText = detailStr;
 
   // Meters
   V.combo.meters.classList.toggle("values-hidden", !state.settings.showMeterValues);
-  for (const stat of stats) {
-    V.combo[stat].meter.style.setProperty("--value", toLvl(combo.lvl[stat]));
-    V.combo[stat].meter.title = S("stats", stat) + ": " + toLvl(combo.lvl[stat], stat);
+  for (let i = 0; i < 13; i++) {
+    const stat = stats[i];
+    V.combo[stat].meter.style.setProperty("--value", toLvl(combo.lvl[i]));
+    V.combo[stat].meter.title = S("stats", stat) + ": " + toLvl(combo.lvl[i], stat);
     if (state.settings.showMeterValues) {
-      V.combo[stat].value.innerText = scaleStat(combo.lvl[stat]).toLocaleString("en", getStatLocaleOptions());
+      V.combo[stat].value.innerText = scaleStat(combo.lvl[i]).toLocaleString("en", getStatLocaleOptions());
     } else {
       V.combo[stat].value.innerText = "";
     }
@@ -585,8 +582,9 @@ function drawComboTable(container, combos, limit = 50) {
 
     const statsDisplay = document.createElement("div");
     statsDisplay.classList.add("stat-diffs");
-    for (const stat of stats) {
-      const diff = combo.diff[stat];
+    for (let i = 0; i < 13; i++) {
+      const stat = stats[i];
+      const diff = combo.diffs[i];
       if (diff == 0) continue;
       const statDiff = document.createElement("div");
       const label = document.createElement("label");
@@ -630,21 +628,23 @@ function formatFormula(formula) {
   let s = "";
   const combo = state.selectedSlot.combo;
 
-  const stats = [];
-  for (const stat of scoreStats) {
-    if (stat == "spd"   && !formula.spd.use) continue;
-    if (stat == "spdGr" &&  formula.spd.use) continue;
-    if (stat == "spdAg" &&  formula.spd.use) continue;
-    if (stat == "spdWt" &&  formula.spd.use) continue;
-    if (stat == "spdAr" &&  formula.spd.use) continue;
-    if (stat == "hnd"   && !formula.hnd.use) continue;
-    if (stat == "hndGr" &&  formula.hnd.use) continue;
-    if (stat == "hndAg" &&  formula.hnd.use) continue;
-    if (stat == "hndWt" &&  formula.hnd.use) continue;
-    if (stat == "hndAr" &&  formula.hnd.use) continue;
-    let factor = formula[stat].factor;
-    let isMinSet = scaleStat(formula[stat].min, stat) !== 0;
-    let isMaxSet = scaleStat(formula[stat].max, stat) !== getScaledMax(stat);
+  const terms = [];
+  for (let stat of ["mtb", "spd", "spdGr", "spdAg", "spdWt", "spdAr", "acc",
+                    "wgt", "hnd", "hndGr", "hndAg", "hndWt", "hndAr", "trn", "inv", "size"]) {
+    const i = statIndex[stat];
+    if (i == 14 && !formula.unified.spd) continue;
+    if (i == 1  &&  formula.unified.spd) continue;
+    if (i == 2  &&  formula.unified.spd) continue;
+    if (i == 3  &&  formula.unified.spd) continue;
+    if (i == 4  &&  formula.unified.spd) continue;
+    if (i == 15 && !formula.unified.hnd) continue;
+    if (i == 7  &&  formula.unified.hnd) continue;
+    if (i == 8  &&  formula.unified.hnd) continue;
+    if (i == 9  &&  formula.unified.hnd) continue;
+    if (i == 10 &&  formula.unified.hnd) continue;
+    let factor = formula.factors[i];
+    let isMinSet = scaleStat(formula.min[i], i) !== 0;
+    let isMaxSet = scaleStat(formula.max[i], i) !== getScaledMax(i);
     if (factor == 0 && !isMinSet && !isMaxSet) continue;
     const sign = factor < 0 ? "−" : "";
     let term = "<span";
@@ -663,9 +663,9 @@ function formatFormula(formula) {
       term += ">*</span>";
     }
     term += "</span>";
-    stats.push(term);
+    terms.push(term);
   }
-  s += '<span class="formula">' + stats.join(" + ") + "</span>";
+  s += '<span class="formula">' + terms.join(" + ") + "</span>";
 
   const locks = [];
   if (state.locks.driver) locks.push(S("drivers", combo.driverID));
@@ -674,9 +674,9 @@ function formatFormula(formula) {
   if (state.locks.glider) locks.push(S("gliders", combo.gliderID));
 
   let exclusionsString = "";
-  const bodyConflict = state.locks.body &&
-      ((combo.parts.body.type == "kart" && formula.excludeKarts) ||
-      (combo.parts.body.type == "atv"   && formula.excludeATVs) ||
+  const bodyConflict = state.locks.body && (
+      (combo.parts.body.type == "kart"  && formula.excludeKarts) ||
+      (combo.parts.body.type == "atv"   && formula.excludeATVs)  ||
       (combo.parts.body.type == "bike"  && formula.excludeBikes) ||
       (combo.parts.body.type == "sport" && formula.excludeSportBikes));
   if (!state.locks.body || bodyConflict) {
@@ -1218,9 +1218,10 @@ function drawFormulaDialog() {
   }
 
   const formula = state.workingFormula;
-  for (const stat of scoreStats) {
-    const scaledMax = getScaledMax(stat);
-    const scaledStep = getScaledStep(stat);
+  for (const stat of stats) {
+    const i = statIndex[stat];
+    const scaledMax = getScaledMax(i);
+    const scaledStep = getScaledStep(i);
 
     V.formula[stat].min.max = scaledMax;
     V.formula[stat].min.step = scaledStep;
@@ -1228,17 +1229,17 @@ function drawFormulaDialog() {
     V.formula[stat].max.step = scaledStep;
     V.formula[stat].max.placeholder = scaledMax;
 
-    let factor = formula[stat].factor;
+    let factor = formula.factors[i];
     V.formula[stat].slider.value = factor;
     if (factor == 0) factor = "";
     V.formula[stat].factor.value = factor;
     drawFactorWidget(stat);
 
-    let min = scaleStat(formula[stat].min, stat);
+    let min = scaleStat(formula.min[i], i);
     if (min == V.formula[stat].min.min) min = "";
     V.formula[stat].min.value = min;
 
-    let max = scaleStat(formula[stat].max, stat);
+    let max = scaleStat(formula.max[i], i);
     if (max == V.formula[stat].min.max) max = "";
     V.formula[stat].max.value = max;
 
@@ -1281,8 +1282,9 @@ function drawFactorWidget(stat) {
 }
 
 function validateBounds(stat) {
-  const min = state.workingFormula[stat].min;
-  const max = state.workingFormula[stat].max;
+  const i = statIndex[stat];
+  const min = state.workingFormula.min[i];
+  const max = state.workingFormula.max[i];
   const invalidBounds = max < min;
   V.formula[stat].min.classList.toggle("invalid", invalidBounds);
   V.formula[stat].max.classList.toggle("invalid", invalidBounds);
@@ -1295,7 +1297,7 @@ function drawCollapses() {
     const chevron = container.children[0];
     const tabOn = container.children[1];
     const tabOff = container.children[2];
-    const isOn = formula[stat].use;
+    const isOn = formula.unified[stat];
     chevron.classList.toggle("rotated", !isOn);
     tabOn.classList.toggle("selected", isOn);
     tabOn.toggleAttribute("inert", !isOn);
@@ -1380,7 +1382,7 @@ function parseValue(v, defaultV = 0) {
 }
 
 function scaleStat(x, stat) {
-  if (state.settings.statScale === "internal" || stat === "size") return x;
+  if (state.settings.statScale === "internal" || stat === 13) return x;
   if (x == 0) return 0;
   if (x == 20) return 6;
   return toLvl(x);
@@ -1390,15 +1392,15 @@ function scaleStatAbs(x) {
   return x/4;
 }
 const getScaledMax = stat => {
-  if (stat === "size") return 2;
+  if (stat === 13) return 2;
   return state.settings.statScale === "internal" ? 20 : 6;
 }
 const getScaledStep = stat => {
-  if (stat === "size") return 1;
+  if (stat === 13) return 1;
   return state.settings.statScale === "internal" ? 1 : .25;
 }
 function unscaleStat(x, stat) {
-  if (state.settings.statScale === "internal" || stat === "size") return x;
+  if (state.settings.statScale === "internal" || stat === 13) return x;
   return fromLvl(x);
 }
 const toLvl = n => (n+3) / 4;
