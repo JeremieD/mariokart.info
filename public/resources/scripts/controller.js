@@ -360,6 +360,9 @@ function isFavorite(combo) {
 function favoriteCombo() {
   if (state.selectedSlot.isFavorite) return;
   state.selectedSlot.isFavorite = true;
+  if (state.offSlot.combo.code == state.selectedSlot.combo.code) {
+    state.offSlot.isFavorite = true;
+  }
   const newFav = {
     name: state.selectedSlot.combo.name,
     combo: state.selectedSlot.combo
