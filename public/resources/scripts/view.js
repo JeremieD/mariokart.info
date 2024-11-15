@@ -746,7 +746,7 @@ function initDriverDialog() {
         }, { passive: true });
         for (const driverVariant of driver.folder) {
           const variantID = driverVariant.id;
-          const button = newPartButton("drivers/" + variantID, "driver-" + variantID);
+          const button = newPartButton("drivers", variantID, "driver-" + variantID);
           button.addEventListener("click", () => {
             closePopover(folder);
             setDriver(variantID);
@@ -759,7 +759,7 @@ function initDriverDialog() {
         }
       }
       const buttonID = (folder == undefined ? "driver-" : "folder-") + id;
-      const button = newPartButton(folder == undefined ? "drivers/" + id : undefined, buttonID);
+      const button = newPartButton("drivers", folder == undefined ? id : undefined, buttonID);
       button.dataset.value = id;
       button.addEventListener("click", eventHandler, { passive: true });
       if (folder !== undefined) { button.append(folder); }
@@ -827,7 +827,7 @@ function initBodyDialog() {
     for (const bodies of types) {
     for (const body of bodies.folder) {
       const id = body.id;
-      const button = newPartButton("bodies/" + id, "body-" + id);
+      const button = newPartButton("bodies", id, "body-" + id);
       button.addEventListener("click", () => { setBody(id); }, { passive: true });
       button.addEventListener("mouseenter", () => {
         drawBodyTitle(id, bodies.id);
@@ -882,7 +882,7 @@ function initTireDialog() {
   state.parts.then(({tires}) => {
     for (const tire of tires) {
       const id = tire.id;
-      const button = newPartButton("tires/" + id, "tire-" + id);
+      const button = newPartButton("tires", id, "tire-" + id);
       button.addEventListener("click", () => { setTire(id); }, { passive: true });
       button.addEventListener("mouseenter", () => { drawTireTitle(id); }, { passive: true });
       button.addEventListener("mouseleave", () => { delay(() => drawTireTitle(state.tire)) }, { passive: true });
@@ -921,7 +921,7 @@ function initGliderDialog() {
   state.parts.then(({gliders}) => {
     for (const glider of gliders) {
       const id = glider.id;
-      const button = newPartButton("gliders/" + id, "glider-" + id);
+      const button = newPartButton("gliders", id, "glider-" + id);
       button.addEventListener("click", () => { setGlider(id); }, { passive: true });
       button.addEventListener("mouseenter", () => { drawGliderTitle(id); }, { passive: true });
       button.addEventListener("mouseleave", () => { delay(() => drawGliderTitle(state.glider)) }, { passive: true });
@@ -995,11 +995,16 @@ function drawGliderLock() {
   V.gliders.lockLabel.innerText = state.locks.glider ? "Unlock Glider" : "Lock Glider";
 }
 
-function newPartButton(imgSrc, id) {
+function newPartButton(ns, partID, id) {
   const button = document.createElement("button");
   if (id) button.id = id;
   const img = document.createElement("img");
-  if (imgSrc) img.src = graphicsRoot + imgSrc + ".webp";
+  if (partID) {
+    img.src = graphicsRoot + ns + "/" + partID + ".webp";
+    img.alt = S(ns, partID);
+  }
+  img.width = ns == "drivers" ? "128" : "200";
+  img.height = "128";
   img.loading = "lazy";
   button.append(img);
   return button;
