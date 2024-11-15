@@ -270,32 +270,56 @@ function selectB() {
   drawCustomCombos();
 }
 
-function toggleDriverLock() {
+function toggleDriverLock(draw = false) {
   state.locks.driver = !state.locks.driver;
+  updateRelatedCombos("A");
+  updateRelatedCombos("B");
   drawDriverLock();
-  updateRelatedCombos("A");
-  updateRelatedCombos("B");
+  if (draw === true) {
+    drawCurrentCombo();
+    drawDominantCombos();
+    drawSimilarCombos();
+    drawCustomCombos();
+  }
   commitState();
 }
-function toggleBodyLock() {
+function toggleBodyLock(draw = false) {
   state.locks.body = !state.locks.body;
+  updateRelatedCombos("A");
+  updateRelatedCombos("B");
   drawBodyLock();
-  updateRelatedCombos("A");
-  updateRelatedCombos("B");
+  if (draw === true) {
+    drawCurrentCombo();
+    drawDominantCombos();
+    drawSimilarCombos();
+    drawCustomCombos();
+  }
   commitState();
 }
-function toggleTireLock() {
+function toggleTireLock(draw = false) {
   state.locks.tire = !state.locks.tire;
-  drawTireLock();
   updateRelatedCombos("A");
   updateRelatedCombos("B");
+  drawTireLock();
+  if (draw === true) {
+    drawCurrentCombo();
+    drawDominantCombos();
+    drawSimilarCombos();
+    drawCustomCombos();
+  }
   commitState();
 }
-function toggleGliderLock() {
+function toggleGliderLock(draw = false) {
   state.locks.glider = !state.locks.glider;
-  drawGliderLock();
   updateRelatedCombos("A");
   updateRelatedCombos("B");
+  drawGliderLock();
+  if (draw === true) {
+    drawCurrentCombo();
+    drawDominantCombos();
+    drawSimilarCombos();
+    drawCustomCombos();
+  }
   commitState();
 }
 
