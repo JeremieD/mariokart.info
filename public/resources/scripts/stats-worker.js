@@ -1000,7 +1000,7 @@ const parts = {
       type: "kart",
       class: "steel",
       group: "steel",
-      code: "3" },
+      code: "Y" },
     wagon: {
       type: "kart",
       class: "wagon",
