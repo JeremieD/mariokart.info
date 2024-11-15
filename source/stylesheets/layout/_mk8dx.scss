@@ -1,3 +1,4 @@
+@use "../components/responsive" as *;
 @use "../components/type" as *;
 @use "../components/meter" as *;
 @use "../components/button" as *;
@@ -31,6 +32,7 @@
     label:not(:first-of-type) {
       text-align: right;
       opacity: 0;
+      @include high-contrast { opacity: 1; }
     }
     &.show label:not(:first-of-type) { animation: show 5s; }
     @keyframes show {

@@ -4,3 +4,5 @@
 
 @mixin hover-capable { @media (hover: hover) { @content; } }
 @mixin not-hover-capable { @media (hover: none) { @content; } }
+
+@mixin high-contrast { @media (prefers-contrast: more) { @content; } }
