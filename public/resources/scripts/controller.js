@@ -534,6 +534,7 @@ function serializeFavorites(obj) {
   return serial;
 }
 function deserializeFavorites(serial) {
+  if (serial == undefined) { return []; }
   const obj = [];
   for (const fav of serial) {
     Stats.post("getCombo", fav.combo).then(combo => {
@@ -754,16 +755,28 @@ function toggleCookies() {
 function readState() {
   const data = JSON.parse(localStorage.getItem("mk8dx"));
   if (!data?.settings?.allowCookies) return;
+
   for (const prop of Object.keys(data.settings)) {
+    if (data.settings[prop] == undefined) continue;
     state.settings[prop] = data.settings[prop];
   }
-  state.locks = structuredClone(data.locks);
+
+  if (data.locks != undefined) {
+    state.locks = structuredClone(data.locks);
+  }
+
   for (const prop of Object.keys(data.driverPrefs)) {
     state.driverPrefs[prop] = data.driverPrefs[prop];
   }
-  state.favorites = deserializeFavorites(data.favorites);
-  state.formula = structuredClone(data.formula);
-  state.workingFormula = structuredClone(state.formula);
+
+  if (data.favorites != undefined) {
+    state.favorites = deserializeFavorites(data.favorites);
+  }
+
+  if (data.formula != undefined) {
+    state.formula = structuredClone(data.formula);
+    state.workingFormula = structuredClone(state.formula);
+  }
 }
 function commitState() {
   if (!state.settings.allowCookies) return;
