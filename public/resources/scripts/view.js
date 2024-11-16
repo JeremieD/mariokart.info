@@ -846,8 +846,7 @@ function drawDriverDialog() {
       }
     }
   });
-  V.drivers.icon.setAttribute("src", graphicsRoot + "emblems/" + state.driver + ".webp");
-  V.drivers.title.innerText = S("drivers", state.driver);
+  drawDriverTitle(state.driver);
   drawDriverLock();
   disableScroll(document.documentElement);
   V.drivers.dialog.inert = false;
@@ -992,7 +991,7 @@ function drawGliderDialog() {
 function drawDriverTitle(id) {
   clearTimeout(state.inspectorTimeout);
   V.drivers.title.innerText = S("drivers", id);
-  V.drivers.icon.src = graphicsRoot + "emblems/" + id + ".webp";
+  V.drivers.icon.dataset.emblem = id;
 }
 function drawBodyTitle(id, type) {
   clearTimeout(state.inspectorTimeout);
