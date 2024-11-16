@@ -102,6 +102,8 @@ testStats("peachBb", "pipe", "roller", "super", [1.75, 5, 1.25, 5.75, 4.25, 0]);
 testStats("koopa", "tanooki", "monster", "super", [3.25, 3, 3.25, 4, 5.75, 0]);
 testStats("petey", "wagon", "monster", "super", [5, 1.75, 5.5, 1.75, 4.25, 2]);
 
+testRandomDistribution();
+
 // In-game stats: spdGr [1], acc[5], wgt[6], hndGr[7], trn[11], (size[13])
 function testStats(driver, body, tire, glider, expectedStats) {
   Stats.post("getCombo", driver, body, tire, glider)
@@ -112,5 +114,47 @@ function testStats(driver, body, tire, glider, expectedStats) {
     if (toLvl(combo.lvl[7])  !== expectedStats[3]) throw new Error("hndGr does not match for combo " + combo.code);
     if (toLvl(combo.lvl[11]) !== expectedStats[4]) throw new Error("trn does not match for combo " + combo.code);
     if (combo.size !== expectedStats[5]) throw new Error("size does not match for combo " + combo.code);
+  });
+}
+
+function testRandomDistribution() {
+  const combos = [];
+  for (let i = 0; i < 5000; i++) {
+    combos.push(Stats.post("getRandomCombo"));
+  }
+
+  Promise.all(combos).then(combos => {
+    const drivers = {};
+    const bodies = {};
+    const tires = {};
+    const gliders = {};
+
+    for (const combo of combos) {
+      if (drivers[combo.driverID] == undefined) {
+        drivers[combo.driverID] = 1;
+      } else {
+        drivers[combo.driverID]++;
+      }
+
+      if (bodies[combo.bodyID] == undefined) {
+        bodies[combo.bodyID] = 1;
+      } else {
+        bodies[combo.bodyID]++;
+      }
+
+      if (tires[combo.tireID] == undefined) {
+        tires[combo.tireID] = 1;
+      } else {
+        tires[combo.tireID]++;
+      }
+
+      if (gliders[combo.gliderID] == undefined) {
+        gliders[combo.gliderID] = 1;
+      } else {
+        gliders[combo.gliderID]++;
+      }
+    }
+
+    console.log(drivers, bodies, tires, gliders);
   });
 }

@@ -174,7 +174,65 @@ function getCombo(...args) {
   return "Error: Invalid arguments for getCombo: “" + args + "”";
 }
 
-function getRandomDriver() { return driverParts[randomInt(driverPartCount)]; }
+function getRandomDriver() {
+  const drivers = [
+    "mario",
+    "luigi",
+    "peach",
+    "daisy",
+    "rosalina",
+    "marioTan",
+    "peachCat",
+    [ "birdo", "birdo1", "birdo2", "birdo3", "birdo4", "birdo5", "birdo6", "birdo7", "birdo8" ],
+    [ "yoshi", "yoshi1", "yoshi2", "yoshi3", "yoshi4", "yoshi5", "yoshi6", "yoshi7", "yoshi8" ],
+    "toad",
+    "koopa",
+    [ "shyguy", "shyguy1", "shyguy2", "shyguy3", "shyguy4", "shyguy5", "shyguy6", "shyguy7", "shyguy8" ],
+    "lakitu",
+    "toadette",
+    "kingboo",
+    "petey",
+    "marioBb",
+    "luigiBb",
+    "peachBb",
+    "daisyBb",
+    "rosalinaBb",
+    [ "marioGold1", "marioGold" ],
+    "peachGold",
+    "wiggler",
+    "wario",
+    "waluigi",
+    "dk",
+    "bowser",
+    "drybones",
+    "bowserJr",
+    "bowserDry",
+    "kamek",
+    "lemmy",
+    "larry",
+    "wendy",
+    "ludwig",
+    "iggy",
+    "roy",
+    "morton",
+    "peachette",
+    [ "inklingF", "inklingF1", "inklingF2" ],
+    [ "inklingM", "inklingM1", "inklingM2" ],
+    "villagerM",
+    "villagerF",
+    "isabelle",
+    [ "link", "link1" ],
+    "ddk",
+    "fk",
+    "pauline",
+    [ "miiS", "miiM", "miiL" ]
+  ];
+  const randomDriver = drivers[randomInt(drivers.length)];
+  if (Array.isArray(randomDriver)) {
+    return randomDriver[randomInt(randomDriver.length)]; // Random variant
+  }
+  return randomDriver;
+}
 function getRandomBody()   { return bodyParts[randomInt(bodyPartCount)]; }
 function getRandomTire()   { return tireParts[randomInt(tirePartCount)]; }
 function getRandomGlider() { return gliderParts[randomInt(gliderPartCount)]; }
