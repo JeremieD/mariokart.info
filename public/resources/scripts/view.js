@@ -1410,9 +1410,9 @@ function parseValue(v, defaultV = 0) {
 }
 
 function scaleStat(x, stat) {
+  if (x <= 0) return 0;
+  if (x >= 20) return state.settings.statScale === "internal" ? 20 : 6;
   if (state.settings.statScale === "internal" || stat === 13) return x;
-  if (x == 0) return 0;
-  if (x == 20) return 6;
   return toLvl(x);
 }
 function scaleStatAbs(x) {
