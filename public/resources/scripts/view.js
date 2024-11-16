@@ -600,6 +600,8 @@ function drawComboTable(container, combos, limit = 50) {
     const loadInB = document.createElement("button");
     loadInA.innerText = "→A";
     loadInB.innerText = "→B";
+    loadInA.title = "Load this combo into A";
+    loadInB.title = "Load this combo into B";
     loadInA.classList.toggle("primary", state.selectedSlotID == "A");
     loadInB.classList.toggle("primary", state.selectedSlotID == "B");
     loadInA.addEventListener("click", () => { setCombo(combo, "A"); }, { passive: true });
@@ -1145,19 +1147,23 @@ function drawFavoritesDialog() {
       }, { passive: true });
 
       const buttonsDisplay = document.createElement("div");
-      const loadButtons = document.createElement("div");
       buttonsDisplay.classList.add("button-group");
-      loadButtons.classList.add("button-group", "radio");
+
       const remove = document.createElement("button");
+      remove.append(new JDIcon("heart-slash"));
+      remove.classList.add("square", "danger", "selected");
+      remove.addEventListener("click", () => { unfavorite(combo); }, { passive: true });
+
+      const loadButtons = document.createElement("div");
+      loadButtons.classList.add("button-group", "radio");
       const loadInA = document.createElement("button");
       const loadInB = document.createElement("button");
-      remove.append(new JDIcon("heart-slash"));
       loadInA.innerText = "→A";
       loadInB.innerText = "→B";
-      remove.classList.add("square", "danger", "selected");
+      loadInA.title = "Load this combo into A";
+      loadInB.title = "Load this combo into B";
       loadInA.classList.toggle("primary", state.selectedSlotID == "A");
       loadInB.classList.toggle("primary", state.selectedSlotID == "B");
-      remove.addEventListener("click", () => { unfavorite(combo); }, { passive: true });
       loadInA.addEventListener("click", () => {
         setCombo(combo, "A");
         Tooltip.draw("Loaded into slot A.", { el: loadInA, pos: "bottom", align: "right", dialog: V.favorites.dialog });
@@ -1167,6 +1173,7 @@ function drawFavoritesDialog() {
         Tooltip.draw("Loaded into slot B.", { el: loadInB, pos: "bottom", align: "right", dialog: V.favorites.dialog });
       }, { passive: true });
       loadButtons.append(loadInA, loadInB);
+
       buttonsDisplay.append(remove, loadButtons);
 
       header.append(name, buttonsDisplay);
