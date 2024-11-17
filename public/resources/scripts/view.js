@@ -430,6 +430,7 @@ whenDOMReady(() => {
 
   // Keyboard Shortcuts
   addEventListener("keydown", e => {
+    document.body.classList.toggle("opt-down", e.altKey);
     if (e.shiftKey || e.ctrlKey || e.altKey || e.metaKey) return;
     if (e.key == "a" || e.key == "A") {
       selectA();
@@ -454,6 +455,9 @@ whenDOMReady(() => {
       commitFormula();
       e.preventDefault();
     }
+  });
+  addEventListener("keyup", e => {
+    document.body.classList.toggle("opt-down", e.altKey);
   });
 
   // Redraw on back

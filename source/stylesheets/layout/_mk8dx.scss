@@ -10,6 +10,44 @@
   border-radius: var(--border-radius-1) var(--border-radius-1) var(--border-radius-2) var(--border-radius-2);
 }
 
+#combo-display {
+  button jd-icon {
+    position: absolute;
+    right: .25rem;
+    bottom: .25rem;
+    height: .875rem;
+    color: var(--color-subdued);
+    transition: .2s ease opacity;
+    transition-delay: .5s;
+    opacity: 0;
+    svg {
+      animation-delay: .25s;
+      path { transition-delay: .25s; }
+    }
+    &.selected {
+      opacity: 1;
+      transition-delay: .25s;
+      svg {
+        animation-delay: .5s;
+        path { transition-delay: .5s; }
+      }
+    }
+  }
+}
+
+.opt-down #combo-display {
+  button jd-icon {
+    transition-delay: 0s;
+    opacity: .66;
+    svg {
+      animation-delay: .25s;
+      path { transition-delay: 0s; }
+    }
+    &.selected { opacity: 1; }
+  }
+  button:hover jd-icon { opacity: 1; }
+}
+
 #combo-details {
   margin-top: .625rem;
   @include type("body-1");
