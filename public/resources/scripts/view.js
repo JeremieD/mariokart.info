@@ -505,10 +505,10 @@ function drawCurrentCombo() {
   V.combo.bodyImg.alt = bodyName;
   V.combo.tireImg.alt = tireName;
   V.combo.gliderImg.alt = gliderName;
-  V.combo.driver.title = driverName;
-  V.combo.body.title = bodyName;
-  V.combo.tire.title = tireName;
-  V.combo.glider.title = gliderName;
+  V.combo.driver.title = driverName + ". Click to change.";
+  V.combo.body.title = bodyName + ". Click to change.";
+  V.combo.tire.title = tireName + ". Click to change.";
+  V.combo.glider.title = gliderName + ". Click to change.";
   V.combo.driverLock.classList.toggle("selected", state.locks.driver);
   V.combo.bodyLock.classList.toggle("selected", state.locks.body);
   V.combo.tireLock.classList.toggle("selected", state.locks.tire);
@@ -604,8 +604,8 @@ function drawComboTable(container, combos, limit = 50) {
     const loadInB = document.createElement("button");
     loadInA.innerText = "→A";
     loadInB.innerText = "→B";
-    loadInA.title = "Load this combo into A";
-    loadInB.title = "Load this combo into B";
+    loadInA.title = "Load this combo into slot A.";
+    loadInB.title = "Load this combo into slot B.";
     loadInA.classList.toggle("primary", state.selectedSlotID == "A");
     loadInB.classList.toggle("primary", state.selectedSlotID == "B");
     loadInA.addEventListener("click", () => { setCombo(combo, "A"); }, { passive: true });
@@ -1153,6 +1153,7 @@ function drawFavoritesDialog() {
       buttonsDisplay.classList.add("button-group");
 
       const remove = document.createElement("button");
+      remove.title = "Remove this combo from your favorites.";
       remove.append(new JDIcon("heart-slash"));
       remove.classList.add("square", "danger", "selected");
       remove.addEventListener("click", () => { unfavorite(combo); }, { passive: true });
@@ -1163,8 +1164,8 @@ function drawFavoritesDialog() {
       const loadInB = document.createElement("button");
       loadInA.innerText = "→A";
       loadInB.innerText = "→B";
-      loadInA.title = "Load this combo into A";
-      loadInB.title = "Load this combo into B";
+      loadInA.title = "Load this combo into slot A.";
+      loadInB.title = "Load this combo into slot B.";
       loadInA.classList.toggle("primary", state.selectedSlotID == "A");
       loadInB.classList.toggle("primary", state.selectedSlotID == "B");
       loadInA.addEventListener("click", () => {
