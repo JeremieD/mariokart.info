@@ -1,6 +1,6 @@
 body>footer {
   display: flex;
-  gap: 1rem;
+  gap: .5rem;
   justify-content: space-between;
   width: var(--width-page);
   padding: .75rem 0 1.5rem;
@@ -8,4 +8,5 @@ body>footer {
   border-top: 1px solid var(--color-grey);
   color: var(--color-grey);
   p { margin: 0; }
+  &>:last-child { text-align: right; }
 }
