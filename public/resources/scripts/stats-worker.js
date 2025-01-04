@@ -363,6 +363,9 @@ function listCombos(opts = {}) {
     case "diff":
       compare = (a, b) => b.diffSum - a.diffSum;
       break;
+    case "similar":
+      compare = (a, b) => a.diffSumAbs - b.diffSumAbs;
+      break;
     case "score":
       compare = (a, b) => getScore(b.lvl, factors) - getScore(a.lvl, factors);
   }
