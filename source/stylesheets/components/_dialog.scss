@@ -50,6 +50,8 @@ dialog {
 
   &>* { padding: 1.333rem; }
 
+  p { @include user-select(text); }
+
   header {
     padding: 1.333rem 1.333rem 1rem 1.333rem;
     border-bottom: 1px solid var(--color-interactive);
