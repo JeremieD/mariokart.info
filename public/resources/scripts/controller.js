@@ -269,6 +269,13 @@ function selectB() {
   drawSimilarCombos();
   drawCustomCombos();
 }
+function toggleSelectedCombo() {
+  if (state.selectedSlotID === "A") {
+    selectB();
+  } else {
+    selectA();
+  }
+}
 
 function toggleDriverLock(draw = false) {
   state.locks.driver = !state.locks.driver;

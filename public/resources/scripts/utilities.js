@@ -1,3 +1,5 @@
+var isMobile = matchMedia("(hover: none)").matches;
+
 // Calls a function once the DOM has loaded.
 // Also calls the function if the DOM has *already* loaded.
 function whenDOMReady(callback, options = { once: true, passive: true }) {
