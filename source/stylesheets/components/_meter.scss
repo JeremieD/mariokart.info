@@ -21,7 +21,6 @@
     position: absolute;
     height: 100%;
     border-radius: .1666rem;
-    transition: .2s ease opacity;
     width: calc(var(--value) / 6 * 100%);
     transition: .2s ease width;
     background-color: currentColor;
