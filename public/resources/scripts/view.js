@@ -203,8 +203,20 @@ whenDOMReady(() => {
   }, { passive: true });
   V.combo.random.addEventListener("click", randomCombo, { passive: true });
   V.combo.share.addEventListener("click", share, { passive: true });
-  V.combo.a.addEventListener("click", selectA, { passive: true });
-  V.combo.b.addEventListener("click", selectB, { passive: true });
+  V.combo.a.addEventListener("click", () => {
+    if (isMobile) {
+      toggleSelectedCombo();
+    } else {
+      selectA();
+    }
+  }, { passive: true });
+  V.combo.b.addEventListener("click", () => {
+    if (isMobile) {
+      toggleSelectedCombo();
+    } else {
+      selectB();
+    }
+  }, { passive: true });
 
   V.combo.driver.addEventListener("click", e => {
     if (e.altKey) {
