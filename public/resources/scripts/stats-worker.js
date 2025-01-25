@@ -35,7 +35,7 @@ onmessage = e => {
       response[1] = getAvailableParts(...args);
       break;
     case "setTerrainRatios":
-      reponse[1] = setTerrainRatios(...args);
+      response[1] = setTerrainRatios(...args);
       break;
     default:
       response[1] = "Error: Unknown command: “" + cmd + "”";
