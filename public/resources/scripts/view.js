@@ -525,10 +525,10 @@ function drawCurrentCombo() {
   V.combo.bodyLock.classList.toggle("selected", state.locks.body);
   V.combo.tireLock.classList.toggle("selected", state.locks.tire);
   V.combo.gliderLock.classList.toggle("selected", state.locks.glider);
-  V.combo.driverLock.title = state.locks.driver ? "Driver is locked. ⌥+Click to unlock." : "";
-  V.combo.bodyLock.title = state.locks.body ? "Body is locked. ⌥+Click to unlock." : "";
-  V.combo.tireLock.title = state.locks.tire ? "Tire is locked. ⌥+Click to unlock." : "";
-  V.combo.gliderLock.title = state.locks.glider ? "Glider is locked. ⌥+Click to unlock." : "";
+  V.combo.driverLock.title = "Driver is " + (state.locks.driver ? "" : "un") + "locked. ⌥+Click to toggle.";
+  V.combo.bodyLock.title = "Body is " + (state.locks.body ? "" : "un") + "locked. ⌥+Click to toggle.";
+  V.combo.tireLock.title = "Tire is " + (state.locks.tire ? "" : "un") + "locked. ⌥+Click to toggle.";
+  V.combo.gliderLock.title = "Glider is " + (state.locks.glider ? "" : "un") + "locked. ⌥+Click to toggle.";
 
   // Combo Details
   let detailStr;
