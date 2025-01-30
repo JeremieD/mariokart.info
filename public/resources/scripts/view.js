@@ -1202,6 +1202,7 @@ function drawFavoritesDialog() {
     para.innerHTML = "Enable <em>cookies</em> in settings to use the favorites feature.<br>";
     const link = document.createElement("a");
     link.innerText = "Take me there!";
+    link.tabIndex = "0";
     para.append(link);
     link.addEventListener("click", () => {
       closeFavoritesDialog();
