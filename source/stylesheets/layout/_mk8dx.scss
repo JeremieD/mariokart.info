@@ -260,6 +260,18 @@ ul.bullet {
   }
 }
 
+
+.arrow-list {
+  position: relative;
+  padding-left: 1.125em;
+  li::before {
+    position: absolute;
+    left: 0;
+    content: "→ ";
+  }
+  li + li { margin-top: .25em; }
+}
+
 #favorites-dialog {
   ol {
     display: flex;
