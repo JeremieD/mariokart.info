@@ -5,8 +5,8 @@ mariokart.info is a web app that allows for finding, optimizing and comparing bu
 
 
 ## Contribute
-All contributions are welcome, wether it be code, [bug reports](https://github.com/JeremieD/mariokart.info/issues), or suggestions.
+All contributions are welcome, whether it be code, [bug reports](https://github.com/JeremieD/mariokart.info/issues), or suggestions.
 
-mariokart.info is a super simple static website. No JS librairies are used.
+mariokart.info is a super simple static website. No JS libraries are used.
 
-The only thing you'll need is [Sass](https://sass-lang.com) for contributing CSS.
+The only thing you'll need is [Sass](https://sass-lang.com) to contribute CSS.
