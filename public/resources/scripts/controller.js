@@ -565,6 +565,16 @@ function closeSettingsDialog() {
   drawSettingsDialog();
 }
 
+function openChangelogDialog() {
+  state.openedDialog = "changelog";
+  drawChangelogDialog();
+}
+function closeChangelogDialog() {
+  state.openedDialog = "";
+  drawChangelogDialog();
+}
+
+
 function openCreditsDialog() {
   state.openedDialog = "credits";
   drawCreditsDialog();

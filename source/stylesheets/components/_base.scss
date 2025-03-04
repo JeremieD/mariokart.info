@@ -30,7 +30,7 @@ hgroup {
 
 :is(p, h1, h2, h3) + p { margin-top: .25em; }
 hgroup + p { margin-top: .5em; }
-p + :is(h1, h2, h3, hgroup) { margin-top: 1.25em; }
+:is(p, ul) + :is(h1, h2, h3, hgroup) { margin-top: 1.25em; }
 
 abbr[title] { cursor: help; }
 
