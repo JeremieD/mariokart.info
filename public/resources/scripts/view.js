@@ -14,6 +14,7 @@ const V = {
   formula: {},
   help: {},
   settings: {},
+  changelog: {},
   credits: {}
 }; // View object
 
@@ -181,6 +182,10 @@ whenDOMReady(() => {
   V.settings.localeSelect      = document.getElementById("settings-locale");
   V.settings.statScaleSelect   = document.getElementById("settings-stat-scale");
   V.settings.meterValuesToggle = document.getElementById("settings-show-meter-values");
+
+  V.changelog.open   = document.getElementById("changelog-open");
+  V.changelog.close  = document.getElementById("changelog-close");
+  V.changelog.dialog = document.getElementById("changelog-dialog");
 
   V.credits.open   = document.getElementById("credits-open");
   V.credits.close  = document.getElementById("credits-close");
@@ -430,6 +435,17 @@ whenDOMReady(() => {
   }, { passive: true });
   V.settings.meterValuesToggle.addEventListener("click", toggleMeterValues, { passive: true });
 
+  V.changelog.open.addEventListener("click", e => {
+    openChangelogDialog();
+    e.preventDefault(); // To conserve page scroll position
+  });
+  V.changelog.close.addEventListener("click", closeChangelogDialog, { passive: true });
+  V.changelog.dialog.addEventListener("click", e => {
+    if (!state.openedDialog === "changelog") return;
+    if (isOutside(V.changelog.dialog, e)) closeChangelogDialog();
+  }, { passive: true });
+
+
   V.credits.open.addEventListener("click", e => {
     openCreditsDialog();
     e.preventDefault(); // To conserve page scroll position
@@ -460,6 +476,7 @@ whenDOMReady(() => {
         case "formula-help": return closeFormulaHelpDialog();
         case "help": return closeHelpDialog();
         case "settings": return closeSettingsDialog();
+        case "changelog": return closeChangelogDialog();
         case "credits": return closeCreditsDialog();
       }
     } else if (e.key == "Enter") {
@@ -1408,6 +1425,17 @@ function drawCreditsDialog() {
   V.credits.dialog.inert = false;
   if (V.credits.dialog.open) return;
   V.credits.dialog.showModal();
+}
+
+function drawChangelogDialog() {
+  if (state.openedDialog !== "changelog") {
+    V.changelog.dialog.inert = true;
+    V.changelog.dialog.close();
+    return;
+  }
+  V.changelog.dialog.inert = false;
+  if (V.changelog.dialog.open) return;
+  V.changelog.dialog.showModal();
 }
 
 function disableScroll(el) { el.classList.add("no-scroll"); };
