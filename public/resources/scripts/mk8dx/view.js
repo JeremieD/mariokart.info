@@ -1,6 +1,6 @@
 "use strict";
 
-const graphicsRoot = "/resources/graphics/";
+const graphicsRoot = "/resources/graphics/mk8dx/";
 const V = {
   combo: {},
   dominant: {},
