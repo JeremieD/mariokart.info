@@ -67,6 +67,7 @@ button .checkbox {
 
 .button-group {
   display: flex;
+  align-items: center;
   gap: .5rem;
 
   &.radio {

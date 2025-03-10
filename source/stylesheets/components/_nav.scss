@@ -1,0 +1,37 @@
+#menu-open { position: relative; }
+
+#menu {
+  position: absolute;
+  width: max-content;
+  max-width: var(--width-column);
+  top: calc(100% + .5rem);
+  left: 0;
+  padding: 1.333rem;
+  background-color: var(--color-foreground);
+  border-radius: var(--border-radius-2);
+  box-shadow: 0 .5rem 2.5rem 0 rgba(0,0,0,.5),
+              0 1px 10rem 0 rgba(0,0,0,.5);
+  transition: .1s ease all allow-discrete;
+  z-index: 50;
+
+  ol {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    align-items: start;
+
+    a {
+      display: flex;
+      gap: .5em;
+      align-items: center;
+
+      img { height: 1.5em; }
+    }
+  }
+}
+
+
+#menu-open:not(:focus-within) #menu {
+  opacity: 0;
+  display: none;
+}
