@@ -92,7 +92,7 @@ const state = {
     bCode: "", }
 };
 
-const Stats = new Worker("/resources/scripts/stats-worker.js");
+const Stats = new Worker("/resources/scripts/mk8dx/stats-worker.js");
 Stats.exchanges = 0;
 Stats.post = (...args) => {
   return new Promise((resolve, reject) => {
