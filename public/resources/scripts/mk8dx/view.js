@@ -933,8 +933,7 @@ function drawBodyDialog() {
       button.classList.toggle("highlight", body.group == state.selectedSlot.combo.parts.body.group);
     } }
   });
-  V.bodies.icon.setAttribute("src",
-    graphicsRoot + "icons/" + state.selectedSlot.combo.parts.body.type + ".svg");
+  V.bodies.icon.setAttribute("icon", state.selectedSlot.combo.parts.body.type);
   V.bodies.title.innerText = S("bodies", state.body);
   drawBodyLock();
   disableScroll(document.documentElement);
@@ -1029,7 +1028,7 @@ function drawDriverTitle(id) {
 function drawBodyTitle(id, type) {
   clearTimeout(state.inspectorTimeout);
   V.bodies.title.innerText = S("bodies", id);
-  V.bodies.icon.setAttribute("src", graphicsRoot + "icons/" + type + ".svg");
+  V.bodies.icon.setAttribute("icon", type);
 }
 function drawTireTitle(id) {
   clearTimeout(state.inspectorTimeout);

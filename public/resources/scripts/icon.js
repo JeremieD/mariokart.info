@@ -27,7 +27,8 @@ class JDIcon extends HTMLElement {
       return;
     }
 
-    this.iconName ??= this.getAttribute("icon");
+    if (this.iconName == undefined) this.iconName = this.getAttribute("icon");
+    if (this.iconName == "") return;
     const safeIconName = encodeURI(this.iconName);
 
     if (JDIcon.cache[safeIconName] !== undefined) {
