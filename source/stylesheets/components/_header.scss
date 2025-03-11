@@ -31,6 +31,13 @@ body>header {
   letter-spacing: -0.01em;
   font-feature-settings: "case" on;
   font-weight: bold;
+
+  sup {
+    font-size: .75em;
+    font-weight: normal;
+    color: var(--color-subdued);
+    translate: .25em -.5em;
+  }
 }
 
 @include darkmode {
