@@ -1,4 +1,7 @@
-#menu-open { position: relative; }
+#menu-open {
+  position: relative;
+  path { transition: .2s ease d; }
+}
 
 #menu {
   position: absolute;
@@ -11,7 +14,7 @@
   border-radius: var(--border-radius-2);
   box-shadow: 0 .5rem 2.5rem 0 rgba(0,0,0,.5),
               0 1px 10rem 0 rgba(0,0,0,.5);
-  transition: .1s ease all allow-discrete;
+  transition: .15s ease opacity;
   z-index: 50;
 
   ol {
@@ -30,8 +33,13 @@
   }
 }
 
-
 #menu-open:not(:focus-within) #menu {
   opacity: 0;
-  display: none;
+  pointer-events: none;
+}
+
+#menu-open:focus-within svg {
+  path:nth-child(1) { d: path("M0 0 L16 16"); }
+  path:nth-child(2) { d: path("M8 8 L8 8"); }
+  path:nth-child(3) { d: path("M0 16 L16 0"); }
 }
