@@ -584,6 +584,7 @@ function drawCurrentCombo() {
     const stat = stats[i];
     V.combo[stat].meter.style.setProperty("--value", toLvl(combo.lvl[i]));
     V.combo[stat].meter.title = S("stats", stat) + ": " + toLvl(combo.lvl[i], stat);
+    V.combo.meters.classList.toggle("internal", state.settings.statScale == "internal");
     if (state.settings.showMeterValues) {
       V.combo[stat].value.innerText = scaleStat(combo.lvl[i]).toLocaleString("en", getStatLocaleOptions());
     } else {
@@ -1500,5 +1501,5 @@ function unscaleStat(x, stat) {
 const toLvl = n => (n+3) / 4;
 const fromLvl = n => Math.max(n*4 - 3, 0);
 function getStatLocaleOptions() {
-  return state.settings.statScale === "internal" ? { minimumIntegerDigits: 2 } : { minimumFractionDigits: 2 };
+  return state.settings.statScale === "internal" ? { minimumIntegerDigits: 1 } : { minimumFractionDigits: 2 };
 }
