@@ -574,7 +574,9 @@ function drawCurrentCombo() {
   V.combo.details.children[0].innerText = detailStr;
 
   V.combo.details.children[1].innerHTML = "";
+  V.combo.details.children[1].title = "";
   if (state.settings.gameVersion !== "latest") {
+    V.combo.details.children[1].title = "Showing stats for " + state.settings.gameVersion + ".";
     V.combo.details.children[1].append(new JDIcon("warning"), state.settings.gameVersion);
   }
 

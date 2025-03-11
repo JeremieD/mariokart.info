@@ -48,13 +48,6 @@
   button:hover jd-icon { opacity: 1; }
 }
 
-#combo-details {
-  margin-top: .625rem;
-  @include type("body-1");
-  line-height: 1;
-  color: var(--color-subdued);
-}
-
 #combo-stats {
   display: flex;
   flex-direction: column;
