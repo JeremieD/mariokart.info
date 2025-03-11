@@ -642,7 +642,7 @@ function drawComboTable(container, combos, limit = 50) {
 
     const statsDisplay = document.createElement("div");
     statsDisplay.classList.add("stat-diffs");
-    for (let i = 0; i < 13; i++) {
+    for (let i = 0; i < 12; i++) {
       const stat = stats[i];
       const diff = combo.diffs[i];
       if (diff == 0) continue;
@@ -770,7 +770,7 @@ function formatFormula(formula) {
   else { s += "<span class=\"invalid\">"; }
   const listFormatter = new Intl.ListFormat(state.settings.locale, {
     style: "short",
-    type: "unit",
+    type: "unit"
   });
   s += listFormatter.format(locks);
   if (locks.length > 0 && exclusionsString.length > 0) s += " — ";
@@ -1287,12 +1287,13 @@ function drawFormulaDialog() {
     const i = statIndex[stat];
     const scaledMax = getScaledMax(i);
     const scaledStep = getScaledStep(i);
+    const scaledPlaceholder = getScaledPlaceholder(i);
 
     V.formula[stat].min.max = scaledMax;
     V.formula[stat].min.step = scaledStep;
     V.formula[stat].max.max = scaledMax;
     V.formula[stat].max.step = scaledStep;
-    V.formula[stat].max.placeholder = scaledMax;
+    V.formula[stat].max.placeholder = scaledPlaceholder;
 
     let factor = formula.factors[i];
     V.formula[stat].slider.value = factor;
@@ -1459,8 +1460,8 @@ function parseValue(v, defaultV = 0) {
 
 function scaleStat(x, stat) {
   if (x <= 0) return 0;
-  if (x >= 20) return state.settings.statScale === "internal" ? 20 : 6;
-  if (state.settings.statScale === "internal" || stat === 13) return x;
+  if (x >= 20) return state.settings.statScale === "internal" ? 20 : 5.75;
+  if (state.settings.statScale === "internal" || stat === 12) return x;
   return toLvl(x);
 }
 function scaleStatAbs(x) {
@@ -1469,14 +1470,18 @@ function scaleStatAbs(x) {
 }
 const getScaledMax = stat => {
   if (stat === 12) return 2;
-  return state.settings.statScale === "internal" ? 20 : 6;
+  return state.settings.statScale === "internal" ? 20 : 5.75;
 }
 const getScaledStep = stat => {
   if (stat === 12) return 1;
   return state.settings.statScale === "internal" ? 1 : .25;
 }
+const getScaledPlaceholder = stat => {
+  if (stat === 12) return 2;
+  return state.settings.statScale === "internal" ? 20 : 6;
+};
 function unscaleStat(x, stat) {
-  if (state.settings.statScale === "internal" || stat === 13) return x;
+  if (state.settings.statScale === "internal" || stat === 12) return x;
   return fromLvl(x);
 }
 const toLvl = n => (n+3) / 4;

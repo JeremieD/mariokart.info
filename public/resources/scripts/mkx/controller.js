@@ -15,7 +15,7 @@ const blankFormula = {
   max:     [20,20,20,20,20,20,20,20,20,20,20,20,20,2,20,20],
   unified: { spd: true, hnd: true },
   excludeKarts: false, excludeATVs: false,
-  excludeBikes: false, excludeSportBikes: false,
+  excludeBikes: false, excludeSportBikes: false
 };
 const defaultFormula = {
   factors: [16,0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0,15, 1],
@@ -90,7 +90,7 @@ const state = {
   inspectorTimeout: 0,
   lastState: {
     aCode: "",
-    bCode: "", }
+    bCode: "" }
 };
 
 const Stats = new Worker("/resources/scripts/mkx/stats-worker.js");
