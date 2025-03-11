@@ -1,0 +1,77 @@
+.emblem {
+  background-image: url(/resources/graphics/mk8dx/emblems.webp);
+  background-size: auto 100%;
+  background-position-x: calc(-100% * var(--o));
+  height: 18px; // Safari can't deal with half pixel size sprites. grrr :/
+}
+// [data-emblem="birdo"] { --o: 0; }
+[data-emblem="birdo1"] { --o: 1; }
+[data-emblem="birdo2"] { --o: 2; }
+[data-emblem="birdo3"] { --o: 3; }
+[data-emblem="birdo4"] { --o: 4; }
+[data-emblem="birdo5"] { --o: 5; }
+[data-emblem="birdo6"] { --o: 6; }
+[data-emblem="birdo7"] { --o: 7; }
+[data-emblem="birdo8"] { --o: 8; }
+[data-emblem="bowser"] { --o: 9; }
+[data-emblem="bowserDry"] { --o: 10; }
+[data-emblem="bowserJr"] { --o: 11; }
+[data-emblem="daisy"] { --o: 12; }
+[data-emblem="daisyBb"] { --o: 13; }
+[data-emblem="ddk"] { --o: 14; }
+[data-emblem="dk"] { --o: 15; }
+[data-emblem="drybones"] { --o: 16; }
+[data-emblem="fk"] { --o: 17; }
+[data-emblem="iggy"] { --o: 18; }
+[data-emblem="inklingF"] { --o: 19; }
+[data-emblem="inklingF1"] { --o: 20; }
+[data-emblem="inklingF2"] { --o: 21; }
+[data-emblem="inklingM"] { --o: 22; }
+[data-emblem="inklingM1"] { --o: 23; }
+[data-emblem="inklingM2"] { --o: 24; }
+[data-emblem="isabelle"] { --o: 25; }
+[data-emblem="kamek"] { --o: 26; }
+[data-emblem="kingboo"] { --o: 27; }
+[data-emblem="koopa"] { --o: 28; }
+[data-emblem="lakitu"] { --o: 29; }
+[data-emblem="larry"] { --o: 30; }
+[data-emblem="lemmy"] { --o: 31; }
+[data-emblem="link"] { --o: 32; }
+[data-emblem="link1"] { --o: 33; }
+[data-emblem="ludwig"] { --o: 34; }
+[data-emblem="luigi"] { --o: 35; }
+[data-emblem="luigiBb"] { --o: 36; }
+[data-emblem="mario"] { --o: 37; }
+[data-emblem="marioBb"] { --o: 38; }
+[data-emblem="marioGold"] { --o: 39; }
+[data-emblem="marioGold1"] { --o: 40; }
+[data-emblem="marioTan"] { --o: 41; }
+[data-emblem^="mii"] { --o: 42; }
+[data-emblem="morton"] { --o: 43; }
+[data-emblem="pauline"] { --o: 44; }
+[data-emblem="peach"] { --o: 45; }
+[data-emblem="peachBb"] { --o: 46; }
+[data-emblem="peachCat"] { --o: 47; }
+[data-emblem="peachette"] { --o: 48; }
+[data-emblem="peachGold"] { --o: 49; }
+[data-emblem="petey"] { --o: 50; }
+[data-emblem="rosalina"] { --o: 51; }
+[data-emblem="rosalinaBb"] { --o: 52; }
+[data-emblem="roy"] { --o: 53; }
+[data-emblem^="shyguy"] { --o: 54; }
+[data-emblem="toad"] { --o: 55; }
+[data-emblem="toadette"] { --o: 56; }
+[data-emblem^="villager"] { --o: 57; }
+[data-emblem="waluigi"] { --o: 58; }
+[data-emblem="wario"] { --o: 59; }
+[data-emblem="wendy"] { --o: 60; }
+[data-emblem="wiggler"] { --o: 61; }
+[data-emblem="yoshi"] { --o: 62; }
+[data-emblem="yoshi1"] { --o: 63; }
+[data-emblem="yoshi2"] { --o: 64; }
+[data-emblem="yoshi3"] { --o: 65; }
+[data-emblem="yoshi4"] { --o: 66; }
+[data-emblem="yoshi5"] { --o: 67; }
+[data-emblem="yoshi6"] { --o: 68; }
+[data-emblem="yoshi7"] { --o: 69; }
+[data-emblem="yoshi8"] { --o: 70; }
