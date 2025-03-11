@@ -65,13 +65,13 @@ class Combo {
     driver: undefined,
     body: undefined,
     tire: undefined,
-    glider: undefined,
+    glider: undefined
   };
   classes = {
     driver: undefined,
     body: undefined,
     tire: undefined,
-    glider: undefined,
+    glider: undefined
   };
   code = "";
   lvl = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
@@ -2245,7 +2245,7 @@ const gliderVariants = {
     rosalina: "rosalina",
     rosalinaBb: "rosalina",
     kamek: "rosalina",
-    fk: "rosalina",
+    fk: "rosalina"
   }
 };
 function getGliderVariant(glider, driver) {

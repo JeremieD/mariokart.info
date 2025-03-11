@@ -790,7 +790,7 @@ function formatFormula(formula) {
   else { s += "<span class=\"invalid\">"; }
   const listFormatter = new Intl.ListFormat(state.settings.locale, {
     style: "short",
-    type: "unit",
+    type: "unit"
   });
   s += listFormatter.format(locks);
   if (locks.length > 0 && exclusionsString.length > 0) s += " — ";
