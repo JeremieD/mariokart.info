@@ -172,6 +172,7 @@
       grid-template-columns: repeat(3, max-content auto);
       gap: .125em 1em;
       font-size: calc(.875 * var(--font-size-1));
+      font-feature-settings: "case" on, "zero" on;
 
       &>div {
         display: grid;
@@ -196,6 +197,7 @@
   @include type("code-1");
   line-height: 1.5;
   text-wrap: balance;
+  font-feature-settings: "case" on;
 
   .multiply { margin: 0 .25em; }
   span {
