@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.5">
-  <line x1="0" y1="2" x2="16" y2="2"/>
-  <line x1="0" y1="8" x2="16" y2="8" />
-  <line x1="0" y1="14" x2="16" y2="14" />
+  <path d="M0 2 L16 2"/>
+  <path d="M0 8 L16 8" />
+  <path d="M0 14 L16 14" />
 </svg>
