@@ -4,21 +4,35 @@
 
 body>header {
   display: flex;
+  gap: .5rem;
   justify-content: space-between;
   align-items: center;
   width: var(--width-page);
   margin: 0 auto;
   padding: 1.5rem 0;
-
   @include user-select(none);
 
-  a {
-    font-weight: bold;
-    @include text-decoration-color(transparent);
-  }
+  .button-group:first-child { flex-grow: 1; }
 
-  h1 {
-    @include type("head-1");
-    font-feature-settings: "case" on;
-  }
+  a { @include text-decoration-color(transparent); }
+}
+
+#logo {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 2.666rem;
+  background-image: linear-gradient(to right, var(--color-background), var(--color-background) 12.5%, transparent), url(../graphics/header-bg-light.svg);
+  background-size: auto calc(2.666rem / (5 / 2));
+  background-position: 100% 0;
+  border-radius: 0 var(--border-radius-1) var(--border-radius-1) 0;
+  font-size: 1.375rem;
+  line-height: var(--font-lead-display);
+  letter-spacing: -0.01em;
+  font-feature-settings: "case" on;
+  font-weight: bold;
+}
+
+@include darkmode {
+  #logo { background-image: linear-gradient(to right, var(--color-background), var(--color-background) 12.5%, transparent), url(../graphics/header-bg-dark.svg); }
 }
