@@ -1291,12 +1291,13 @@ function drawFormulaDialog() {
     const i = statIndex[stat];
     const scaledMax = getScaledMax(i);
     const scaledStep = getScaledStep(i);
+    const scaledPlaceholder = getScaledPlaceholder(i);
 
     V.formula[stat].min.max = scaledMax;
     V.formula[stat].min.step = scaledStep;
     V.formula[stat].max.max = scaledMax;
     V.formula[stat].max.step = scaledStep;
-    V.formula[stat].max.placeholder = scaledMax;
+    V.formula[stat].max.placeholder = scaledPlaceholder;
 
     let factor = formula.factors[i];
     V.formula[stat].slider.value = factor;
@@ -1463,7 +1464,7 @@ function parseValue(v, defaultV = 0) {
 
 function scaleStat(x, stat) {
   if (x <= 0) return 0;
-  if (x >= 20) return state.settings.statScale === "internal" ? 20 : 6;
+  if (x >= 20) return state.settings.statScale === "internal" ? 20 : 5.75;
   if (state.settings.statScale === "internal" || stat === 13) return x;
   return toLvl(x);
 }
@@ -1473,12 +1474,16 @@ function scaleStatAbs(x) {
 }
 const getScaledMax = stat => {
   if (stat === 13) return 2;
-  return state.settings.statScale === "internal" ? 20 : 6;
+  return state.settings.statScale === "internal" ? 20 : 5.75;
 }
 const getScaledStep = stat => {
   if (stat === 13) return 1;
   return state.settings.statScale === "internal" ? 1 : .25;
 }
+const getScaledPlaceholder = stat => {
+  if (stat === 13) return 2;
+  return state.settings.statScale === "internal" ? 20 : 6;
+};
 function unscaleStat(x, stat) {
   if (state.settings.statScale === "internal" || stat === 13) return x;
   return fromLvl(x);

@@ -73,13 +73,9 @@ const state = {
     tires: {},
     gliders: {} },
   driverPrefs: {
-    birdo: "birdo",
     yoshi: "yoshi",
     shyguy: "shyguy",
-    marioGold: "marioGold",
-    inkling: "inklingF",
     villager: "villagerM",
-    link: "link1",
     mii: "miiM" },
   favorites: [],
   formula: structuredClone(defaultFormula),
