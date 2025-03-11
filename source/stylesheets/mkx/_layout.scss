@@ -79,15 +79,20 @@
       90% { opacity: 1; }
       100% { opacity: 0; }
     }
+  }
 
-    output {
-      @include type("code-1");
-      line-height: 1;
-      text-transform: uppercase;
-      color: var(--color-yellow);
-      letter-spacing: 0;
-      font-feature-settings: "zero" on;
-    }
+  output {
+    font-size: calc(.875*var(--font-size-1));
+    letter-spacing: .025em;
+    line-height: 1;
+    color: var(--color-yellow);
+    font-feature-settings: "tnum" on;
+    width: 3.5ch;
+  }
+
+  &.internal output {
+    width: 2ch;
+    text-align: right;
   }
 
   &.values-hidden>div {
@@ -166,7 +171,7 @@
       display: grid;
       grid-template-columns: repeat(3, max-content auto);
       gap: .125em 1em;
-      font-size: var(--font-size-1);
+      font-size: calc(.875 * var(--font-size-1));
 
       &>div {
         display: grid;
@@ -174,7 +179,7 @@
         grid-column: span 2;
         gap: .375em;
         align-items: baseline;
-        font-feature-settings: "tnum" on;
+        font-family: var(--font-family-mono);
       }
       label {
         @extend .stat-code;
