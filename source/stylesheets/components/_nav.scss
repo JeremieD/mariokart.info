@@ -1,3 +1,5 @@
+@use "prefix" as *;
+
 #menu-open {
   position: relative;
   path { transition: .2s ease d; }
@@ -23,6 +25,7 @@
     gap: 1em;
     align-items: start;
 
+    a:not(:hover) { @include text-decoration-color(transparent); }
     a {
       display: flex;
       gap: .5em;

@@ -62,7 +62,11 @@
     min-width: 0;
     transition: .1s ease background-color;
 
-    img { width: 100%; }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
 
     &.highlight {
       outline: .1666rem dashed var(--color-interactive-fg);

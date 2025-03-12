@@ -13,8 +13,6 @@ body>header {
   @include user-select(none);
 
   .button-group:first-child { flex-grow: 1; }
-
-  a { @include text-decoration-color(transparent); }
 }
 
 #logo {
@@ -27,16 +25,22 @@ body>header {
   background-position: 100% 0;
   border-radius: 0 var(--border-radius-1) var(--border-radius-1) 0;
   font-size: 1.375rem;
-  line-height: var(--font-lead-display);
+  line-height: 1.1;
   letter-spacing: -0.01em;
   font-feature-settings: "case" on;
   font-weight: bold;
+
+  span {
+    display: block;
+    font-size: var(--font-size-2);
+    font-weight: normal;
+  }
 
   sup {
     font-size: .75em;
     font-weight: normal;
     color: var(--color-subdued);
-    translate: .25em -.5em;
+    translate: .25em -1em;
   }
 }
 
