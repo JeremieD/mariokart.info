@@ -11,26 +11,17 @@
   &>* {
     position: relative;
     height: auto;
-    flex-grow: 1;
 
     &:is(button) { padding: .25rem; }
     &:not(button) {
       height: 100%;
       padding: .125rem;
-      img {
-        width: auto;
-        height: 100%;
-        object-fit: contain;
-      }
     }
 
     img {
       width: 100%;
-      aspect-ratio: 25 / 16; // 200 / 128
-    }
-    &:nth-child(1) {
-      flex-grow: .64; // 128÷200
-      img { aspect-ratio: 1 / 1; }
+      height: 100%;
+      object-fit: contain;
     }
   }
 }
