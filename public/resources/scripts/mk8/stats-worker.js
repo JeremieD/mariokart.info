@@ -330,7 +330,7 @@ function listCombos(opts = {}) {
                      + Math.abs(diffs[5]) + Math.abs(diffs[6])
                      + Math.abs(diffs[7]) + Math.abs(diffs[8])
                      + Math.abs(diffs[9]) + Math.abs(diffs[10])
-                     + Math.abs(diffs[11]) + Math.abs(diffs[12]);
+                     + Math.abs(diffs[11]);
     if (diffSumAbs > maxAbsDiff) continue;
     if (mustDiffer && diffSumAbs == 0) continue;
 

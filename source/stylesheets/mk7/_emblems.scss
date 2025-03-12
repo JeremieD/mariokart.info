@@ -1,0 +1,23 @@
+.emblem {
+  background-image: url(/resources/graphics/mk7/emblems.webp);
+  background-size: auto 100%;
+  background-position-x: calc(-100% * var(--o));
+  height: 18px; // Safari can't deal with half pixel size sprites. grrr :/
+}
+// [data-emblem="bee"] { --o: 0; }
+[data-emblem="bowser"] { --o: 1; }
+[data-emblem="daisy"] { --o: 2; }
+[data-emblem="dk"] { --o: 3; }
+[data-emblem="koopa"] { --o: 4; }
+[data-emblem="lakitu"] { --o: 5; }
+[data-emblem="luigi"] { --o: 6; }
+[data-emblem="mario"] { --o: 7; }
+[data-emblem="marioMetal"] { --o: 8; }
+[data-emblem="mii"] { --o: 9; }
+[data-emblem="peach"] { --o: 10; }
+[data-emblem="rosalina"] { --o: 11; }
+[data-emblem="shyguy"] { --o: 12; }
+[data-emblem="toad"] { --o: 13; }
+[data-emblem="wario"] { --o: 14; }
+[data-emblem="wiggler"] { --o: 15; }
+[data-emblem="yoshi"] { --o: 16; }
