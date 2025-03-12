@@ -80,7 +80,11 @@ state.parts.then(parts => {
 testStats("mario", "std", "std", "super", [3.5, 3, 3.25, 2.75, 3.75, 1]); // Mario Std
 testStats("bowser", "bolt", "monster", "parafoil", [5, 1, 5.25, 1, 5, 2]);
 testStats("wario", "zucc", "monster", "super", [5.25, 1, 5.25, 1, 4.75, 2]);
-testStats("lakitu", "cloud", "roller", "super", [1.75, 5, 1, 5.5, 2.75, 0]);
+testStats("lakitu", "cloud", "roller", "swoop", [1.75, 5.25, .75, 5.5, 2.75, 0]);
+testStats("yoshi", "egg", "wood", "parafoil", [2.5, 4.75, 1.75, 4.25, 3.75, 1]);
+testStats("rosalina", "bd", "monster", "parasol", [4, 2.5, 4.25, 1.75, 4.75, 2]);
+testStats("bee", "bee", "sponge", "flower", [3.75, 3.25, 3, 2, 3.75, 2]);
+testStats("marioMetal", "gold", "gold", "gold", [5.25, 1.25, 5, 1.25, .75, 1]);
 
 testRandomDistribution();
 

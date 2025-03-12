@@ -483,7 +483,7 @@ function initView() {
 
 function drawPageTitle() {
   const combo = state.selectedSlot.combo;
-  document.title = (getCustomName(combo) ?? combo.name) + " | MK8 Combo Builder";
+  document.title = (getCustomName(combo) ?? combo.name) + " | MK7 Combo Builder";
 }
 
 function drawCurrentCombo() {
