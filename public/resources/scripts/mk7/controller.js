@@ -68,11 +68,6 @@ const state = {
     bodies: {},
     tires: {},
     gliders: {} },
-  driverPrefs: {
-    yoshi: "yoshi",
-    shyguy: "shyguy",
-    villager: "villagerM",
-    mii: "miiM" },
   favorites: [],
   formula: structuredClone(defaultFormula),
   workingFormula: structuredClone(defaultFormula),
@@ -138,10 +133,6 @@ function setCombo(combo, slot, replaceURL = false) {
   } else {
     state.selectedSlot.combo = combo;
     state.selectedSlot.isFavorite = isFavorite(combo);
-    for (const driverGroup of Object.keys(state.driverPrefs)) {
-      if (state.driver.startsWith(driverGroup)) {
-        state.driverPrefs[driverGroup] = state.driver;
-    } }
     drawCurrentCombo();
     updateRelatedCombos(slot);
     drawDominantCombos();
@@ -658,10 +649,6 @@ function readState() {
     state.locks = structuredClone(data.locks);
   }
 
-  for (const prop of Object.keys(data.driverPrefs)) {
-    state.driverPrefs[prop] = data.driverPrefs[prop];
-  }
-
   if (data.favorites != undefined) {
     state.favorites = deserializeFavorites(data.favorites);
   }
@@ -676,7 +663,6 @@ function commitState() {
   const data = {
     settings: structuredClone(state.settings),
     locks: structuredClone(state.locks),
-    driverPrefs: structuredClone(state.driverPrefs),
     favorites: serializeFavorites(state.favorites),
     formula: structuredClone(state.formula)
   };

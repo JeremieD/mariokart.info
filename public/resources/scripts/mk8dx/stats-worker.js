@@ -159,10 +159,10 @@ class Combo {
   }
 
   // Data from Dospe [docs.google.com/spreadsheets/d/1Z41bvL2DTH6neOD41w6L0_eZwTxZMA3w4KJNzBEKzs8]
-  static PERCENT_GR = .75; // Best estimate for percent of time on ground.
-  static PERCENT_AG = .17; // Best estimate for percent of time in anti-gravity.
-  static PERCENT_WT = .03; // Best estimate for percent of time underwater.
-  static PERCENT_AR = .05; // Best estimate for percent of time airborne.
+  static PERCENT_GR = .75; // Estimated percent of time on ground.
+  static PERCENT_AG = .17; // Estimated percent of time in anti-gravity.
+  static PERCENT_WT = .03; // Estimated percent of time underwater.
+  static PERCENT_AR = .05; // Estimated percent of time airborne.
 }
 
 function getCombo(...args) {
@@ -2388,7 +2388,7 @@ function getComboName(driver, body, tire, glider) {
     if (driverMorphs.pre) return fuse(driverMorphs.pre, bodyMorphs.full);
     if (driverMorphs.or) return fuse(driverMorphs.or, bodyMorphs.full);
   }
-  if ((!driverMorphs.pre || !driverMorphs.post)) {
+  if (!driverMorphs.pre || !driverMorphs.post) {
     for (const form of Object.keys(driverMorphs)) {
       switch (form) {
         case "pre":

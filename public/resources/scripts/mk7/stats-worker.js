@@ -337,8 +337,8 @@ function getAvailableParts(set) {
         id: "kart",
         folder: [
           parts.bodies.std,
+          parts.bodies.gold,
           parts.bodies.bd,
-          parts.bodies.bolt,
           parts.bodies.bee,
           parts.bodies.bruise,
           parts.bodies.soda,
@@ -351,29 +351,29 @@ function getAvailableParts(set) {
           parts.bodies.cloud,
           parts.bodies.zucc,
           parts.bodies.blue,
-          parts.bodies.pipe,
-          parts.bodies.gold ]
+          parts.bodies.bolt,
+          parts.bodies.pipe ]
       }
     ],
     tires: [
       parts.tires.std,
+      parts.tires.gold,
       parts.tires.roller,
-      parts.tires.monster,
       parts.tires.slim,
       parts.tires.slick,
       parts.tires.sponge,
       parts.tires.mushroom,
       parts.tires.wood,
       parts.tires.monsterRed,
-      parts.tires.gold ],
+      parts.tires.monster ],
     gliders: [
       parts.gliders.super,
+      parts.gliders.gold,
       parts.gliders.parasol,
       parts.gliders.flower,
+      parts.gliders.beast,
       parts.gliders.swoop,
-      parts.gliders.parafoil,
-      parts.gliders.gold,
-      parts.gliders.beast ]
+      parts.gliders.parafoil ]
   };
 }
 
@@ -754,8 +754,8 @@ const gliderVariants = {
   parasol: {
     daisy: "daisy",
     rosalina: "rosalina",
-    bee: "bee",
-  },
+    bee: "bee"
+  }
 };
 function getGliderVariant(glider, driver) {
   const variant = gliderVariants[glider]?.[driver];
@@ -811,8 +811,13 @@ function getComboName(driver, body, tire, glider) {
   // Special Cases
   if (driver == "mario" && body == "std" &&
       tire == "std" && glider == "super") return "The Standard";
-  if (driver == "bee" && body == "bee") return "The Bee";
-  if (driver == "bee" && body == "bee") return "Cloud 9";
+  if (body == "gold" && tire == "gold" && glider == "gold") return "24 Carat Gold";
+  if (driver == "bee" && body == "bee") return "Bumble Bee";
+  if (driver == "lakitu" && body == "cloud") return "Camera Koopa";
+  if (driver == "dk" && body == "train") return "Bodacious Jumbo Barrel";
+  if (driver == "koopa" && body == "tug") return "Koopa Thug";
+  if (driver == "bowser" && body == "koopa") return "King Koopa";
+  if (driver.isAny("peach", "daisy", "rosalina", "bee") && body == "bd" && glider == "parasol") return "Birthday Princess";
 
   // Generative
   if (Object.keys(bodyMorphs)[0] == "full") {
@@ -820,7 +825,7 @@ function getComboName(driver, body, tire, glider) {
     if (driverMorphs.pre) return fuse(driverMorphs.pre, bodyMorphs.full);
     if (driverMorphs.or) return fuse(driverMorphs.or, bodyMorphs.full);
   }
-  if ((!driverMorphs.pre || !driverMorphs.post)) {
+  if (!driverMorphs.pre || !driverMorphs.post) {
     for (const form of Object.keys(driverMorphs)) {
       switch (form) {
         case "pre":

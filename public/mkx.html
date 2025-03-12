@@ -63,12 +63,12 @@
             <button id="favorite" class="square" title="Save this combo to your favorites."><jd-icon icon="heart"></jd-icon></button>
             <button id="favorites-open" title="Open the favorites menu."><jd-icon icon="chevron-down"></jd-icon></button>
           </div>
-          <button id="random-combo">Random</button>
+          <button id="random-combo" title="Randomize combo parts.">Random</button>
           <button id="share-combo" class="big-type square" title="Copy combo link to clipboard."><jd-icon icon="link"></jd-icon></button>
         </div>
         <div id="combo-tabs" class="button-group radio">
-          <button id="combo-a" value="a" class="big-type square selected" accesskey="a">A</button>
-          <button id="combo-b" value="b" class="big-type square" accesskey="b">B</button>
+          <button id="combo-a" value="a" title="Change to A slot" class="big-type square selected" accesskey="a">A</button>
+          <button id="combo-b" value="b" title="Change to B slot" class="big-type square" accesskey="b">B</button>
         </div>
       </div>
 
@@ -197,7 +197,7 @@
 
   <footer>
     <p><a id="credits-open" href="#">Credits &&nbsp;Info</a></p>
-    <p>Updated 7 May 2025 / <a id="changelog-open" href="#">v0.5</a></p>
+    <p>Updated 7 May 2025 / <a id="changelog-open" title="Changelog" href="#">v0.9</a></p>
   </footer>
 
   <dialog id="driver-picker" inert>
@@ -646,6 +646,23 @@
       </hgroup>
     </header>
     <div>
+      <h3>Combo Parts</h3>
+      <p>A combo is comprised of a <em>driver</em>, a <em>body</em>, <em>wheels</em>, and a <em>glider</em>. The driver is usually the most important in terms of stat contribution. The glider is the least important.</p>
+      <p>Tap any combo part to change it.</p>
+
+      <h3>Part Classes</h3>
+      <p>Parts that have the same stats as your current combo have a dashed outline in the part picker.</p>
+      <p>Note that <abbr class="stat-code" title="Invincibility">INV</abbr> and frame size can change even between parts of the same class.</p>
+
+      <h3>Locks</h3>
+      <p>You can lock a part to limit which combos appear in the Dominant, Similar and Custom Search tabs. This can help you find interesting combos according to your style preferences.</p>
+
+      <h3>Random Combo</h3>
+      <p>Tap the Random Combo button to replace your currently active combo with random parts. <em>Lock</em> individual parts to keep them.</p>
+
+      <h3>Inside & Outside Drift</h3>
+      <p>There are 2 types of bikes: <em class="keep-all"><jd-icon icon="bike" class="inline"></jd-icon>Standard&nbsp;Bikes</em> and <em class="keep-all"><jd-icon icon="sport" class="inline"></jd-icon>Sport&nbsp;Bikes</em>. All bodies except Sport Bikes have outside&nbsp;drift.</p>
+
       <h3>Mini-Turbo (<abbr class="stat-code">MTB</abbr>)</h3>
       <p>The hidden Mini-Turbo stat determines the length and speed of drift boosts, and the length of jump boosts.</p>
 
@@ -667,25 +684,8 @@
       <h3>Invincibility (<abbr class="stat-code">INV</abbr>)</h3>
       <p>The hidden Invincibility stat determines how long you stay invulnerable after being hit.</p>
 
-      <h3>Combo Parts</h3>
-      <p>A combo is comprised of a <em>driver</em>, a <em>body</em>, <em>wheels</em>, and a <em>glider</em>. The driver is usually the most important in terms of stat contribution. The glider is the least important.</p>
-      <p>Tap any combo part to change it.</p>
-
-      <h3>Part Classes</h3>
-      <p>Parts that have the same stats as your current combo have a dashed outline in the part picker.</p>
-      <p>Note that <abbr class="stat-code" title="Invincibility">INV</abbr> and frame size can change even between parts of the same class.</p>
-
-      <h3>Locks</h3>
-      <p>You can lock a part to limit which combos appear in the Dominant, Similar and Custom Search tabs. This can help you find interesting combos according to your style preferences.</p>
-
-      <h3>Random Combo</h3>
-      <p>Tap the Random Combo button to replace your currently active combo with random parts. <em>Lock</em> individual parts to keep them.</p>
-
       <h3>Frame Size</h3>
       <p>The driver determines the combo’s frame size between small, medium, and large. This affects your in-game hitbox.</p>
-
-      <h3>Inside & Outside Drift</h3>
-      <p>There are 2 types of bikes: <em class="keep-all"><jd-icon icon="bike" class="inline"></jd-icon>Standard&nbsp;Bikes</em> and <em class="keep-all"><jd-icon icon="sport" class="inline"></jd-icon>Sport&nbsp;Bikes</em>. All bodies except Sport Bikes have outside&nbsp;drift.</p>
 
       <br/>
 
@@ -757,11 +757,11 @@
     </header>
     <div class="changelog">
       <hgroup>
-        <h3>v0.5</h3>
+        <h3>v0.9</h3>
         <span>7 May 2025</span>
       </hgroup>
       <ul>
-        <li>Initial Launch!</li>
+        <li>Beta Release!</li>
       </ul>
     </div>
   </dialog>
