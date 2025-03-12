@@ -247,7 +247,7 @@
     width: var(--width-page);
 
     >*, footer { padding: 1.5rem 2rem; }
-    >div:last-of-type { padding-top: .5rem; }
+    >div:last-of-type:not(:first-of-type) { padding-top: .5rem; }
     header {
       padding: 2rem 2rem .25rem 2rem;
       p { text-wrap: balance; }
