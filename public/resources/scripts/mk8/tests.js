@@ -79,26 +79,23 @@ state.parts.then(parts => {
 // Test important combos' stats
 // testStats("mario", "std", "std", "super", [4, 3.5, 3.5, 3.5, 3.5, 1]); // Mario Std
 // testStats("luigi", "mach", "slim", "super", [4.25, 2.75, 3.75, 3.75, 2.5, 1]); // Luigi Mach
-testStats("lemmy", "bikeSport", "slim", "bowser", [2.5, 4, 1.75, 5.75, 2.75, 0]); // Luigi Mach
-// testStats("yoshi", "teddy", "roller", "cloud", [2.75, 4.75, 2.25, 4.25, 3.5, 1]); // Yoshi Meta
-// testStats("waluigi", "wiggler", "roller", "paper", [3.5, 4.25, 3, 3.5, 3.25, 2]); // Old Meta
-// testStats("shyguy4", "biddy", "roller", "cloud", [1.75, 5.5, 1.5, 5, 4, 0]); // Jej
-// testStats("marioMetal", "gold", "gold", "gold", [5, 1.75, 5.25, 3, 1.5, 1]); // All Gold
-// testStats("wario", "wagon", "offroad", "wario", [5.5, 1.75, 5.25, 1.5, 3.75, 2]); // Wario
-// testStats("lemmy", "landship", "button", "plane", [2, 5, 1.25, 5, 3.75, 0]);
-// testStats("wendy", "gla", "roller", "bowser", [2.75, 4, 2.5, 3.75, 3.5, 0]);
-// testStats("villagerM", "city", "leaf", "paper", [3, 4.75, 2.25, 4.25, 3, 1]); // AC
-// testStats("link", "master", "triforce", "hylian", [4.75, 2.5, 4, 2.75, 3.25, 2]); // Zelda
-// testStats("isabelle", "master", "monster", "cloud", [3.25, 3.5, 2.75, 3.5, 3.25, 0]);
-// testStats("toadette", "sneeker", "ancient", "parachute", [3.25, 3.5, 2.75, 3.5, 3.25, 0]);
-// testStats("marioBb", "biddy", "roller", "cloud", [1.25, 5.75, 1, 5.25, 4, 0]);
-// testStats("wario", "circuit", "slickPurple", "super", [5.75, 1.5, 4.75, 2, 1.5, 2]);
-// testStats("peachBb", "pipe", "roller", "super", [1.75, 5, 1.25, 5.75, 4.25, 0]);
-// testStats("koopa", "tanooki", "monster", "super", [3.25, 3, 3.25, 4, 5.75, 0]);
+testStats("mario", "std", "std", "super", [3.75, 2.5, 3.75, 3.25, 3.75, 1]);
+testStats("luigi", "mach", "slim", "super", [4.5, 2, 4, 3.5, 2.25, 1]);
+testStats("lemmy", "bikeSport", "slim", "bowser", [2.5, 4, 1.75, 5.75, 2.75, 0]);
+testStats("yoshi", "teddy", "rollerBlue", "flower", [2.75, 4, 2.5, 4, 3.75, 1]); // Yoshi Meta
+testStats("waluigi", "wiggler", "roller", "parachute", [3.75, 3.75, 3.25, 3.5, 2.75, 2]); // Old Meta
+testStats("shyguy4", "biddy", "roller", "cloud", [1.5, 5.5, 1.5, 5, 3.75, 0]); // Jej
+testStats("marioMetal", "gold", "gold", "gold", [5, 1.25, 5.5, 2.75, 1.75, 1]); // Metal
+testStats("roy", "falcon", "slick", "plane", [5, 2.25, 4.25, 2.75, 2, 2]);
+testStats("villagerM", "city", "leaf", "paper", [3.25, 4, 2.75, 4, 3, 1]); // AC
+testStats("link", "master", "triforce", "hylian", [4.75, 2.25, 4, 3.5, 2.25, 2]); // Zelda
+testStats("toadette", "atvStd", "roller", "parafoil", [2.25, 3.75, 2.5, 4, 4.5, 0]);
+testStats("dk", "circuit", "slickPurple", "wario", [5.25, 1.75, 4.75, 2.75, 1.5, 2]);
+testStats("lakitu", "tanooki", "monster", "squirrel", [2.75, 2.25, 3.5, 3.25, 5.25, 0]);
 
 testRandomDistribution();
 
-// In-game stats: spdGr[1], acc[5], wgt[6], hndGr[7], trn[11], (size[12])
+// In-game stats: spdGr[1], acc[5], wgt[6], hndGr[7], trn[11], size
 function testStats(driver, body, tire, glider, expectedStats) {
   Stats.post("getCombo", driver, body, tire, glider)
   .then(combo => {
