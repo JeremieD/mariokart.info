@@ -18,7 +18,7 @@ const blankFormula = {
   excludeBikes: false, excludeSportBikes: false
 };
 const defaultFormula = {
-  factors: [16,0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0,15, 1],
+  factors: [8, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0,16, 0],
   min:     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   max:     [20,20,20,20,20,20,20,20,20,20,20,20,2,20,20],
   unified: { spd: true, hnd: true },

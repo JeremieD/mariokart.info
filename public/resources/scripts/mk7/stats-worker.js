@@ -156,10 +156,10 @@ class Combo {
     return new Combo(driver, body, tire, glider);
   }
 
-  // Temp data
-  static PERCENT_GR = .75; // Estimated percent of time on ground.
-  static PERCENT_WT = .20; // Estimated percent of time underwater.
-  static PERCENT_AR = .05; // Estimated percent of time airborne.
+  // Raw data: [https://docs.google.com/spreadsheets/d/1OPSPNbtrmYpeqNDBfNXFwJXcH1KAxxd9XjjDuDSBl9I]
+  static PERCENT_GR = .85; // Estimated percent of time on ground.
+  static PERCENT_WT = .5;  // Estimated percent of time underwater.
+  static PERCENT_AR = .10; // Estimated percent of time airborne.
 }
 
 function getCombo(...args) {

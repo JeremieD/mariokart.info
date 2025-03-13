@@ -100,7 +100,7 @@ const strings = {
       hndGr: "Ground Handling",
       hndWt: "Underwater Handling",
       hndAr: "Air Handling",
-      off:   "Traction",
+      off:   "Off-Road",
       stb:   "Stability",
       dft:   "Drift",
       size:  "Size"
