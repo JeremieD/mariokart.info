@@ -56,6 +56,9 @@
 .underwater { color: var(--color-blue) !important; }
 .air { color: var(--color-cyan) !important; }
 
+.positive { color: var(--color-positive) !important; }
+.negative { color: var(--color-negative) !important; }
+
 @include darkmode {
   :root {
     --color-background: var(--color-dark1);

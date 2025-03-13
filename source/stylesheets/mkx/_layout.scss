@@ -3,9 +3,6 @@
 @use "../components/meter" as *;
 @use "../components/button" as *;
 
-.positive { color: var(--color-positive) !important; }
-.negative { color: var(--color-negative) !important; }
-
 #combo-card {
   border-radius: var(--border-radius-1) var(--border-radius-1) var(--border-radius-2) var(--border-radius-2);
 }
