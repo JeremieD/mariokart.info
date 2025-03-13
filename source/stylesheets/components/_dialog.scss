@@ -29,7 +29,7 @@ dialog {
     translate: 0 1svh;
   }
   &::backdrop {
-    background: rgba(0,0,0, 0.5);
+    background: rgba(0,0,0, .5);
     @include backdrop-filter(blur(5px));
   }
 
