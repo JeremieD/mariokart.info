@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, interactive-widget=overlays-content">
 
   <title>Mario Kart 7 Combo Builder</title>
-  <meta name="description" content="Find, compare, and optimize Mario Kart 8 builds, or cook up your own custom formula!">
-  <meta name="keywords" content="mario, kart, 7, 3ds combo, build, character, vehicle, best, stats, meta">
+  <meta name="description" content="Find, compare, and optimize Mario Kart 7 builds, or cook up your own custom formula!">
+  <meta name="keywords" content="mario, kart, 7, 3ds, combo, build, character, vehicle, best, stats, meta">
 
   <link rel="canonical" href="https://mariokart.info/mk7">
 
@@ -67,8 +67,8 @@
           <button id="share-combo" class="big-type square" title="Copy combo link to clipboard."><jd-icon icon="link"></jd-icon></button>
         </div>
         <div id="combo-tabs" class="button-group radio">
-          <button id="combo-a" value="a" title="Change to A slot" class="big-type square selected" accesskey="a">A</button>
-          <button id="combo-b" value="b" title="Change to B slot" class="big-type square" accesskey="b">B</button>
+          <button id="combo-a" value="a" title="Change to A slot." class="big-type square selected" accesskey="a">A</button>
+          <button id="combo-b" value="b" title="Change to B slot." class="big-type square" accesskey="b">B</button>
         </div>
       </div>
 
@@ -194,7 +194,7 @@
 
   <footer>
     <p><a id="credits-open" href="#">Credits &&nbsp;Info</a></p>
-    <p>Updated 2 Apr 2025 / <a id="changelog-open" title="Changelog" href="#">v0.9</a> / MK7&nbsp;v1.2</p>
+    <p>Updated 2 Apr 2025 / <a id="changelog-open" title="Changelog" href="#">v0.9</a> / <span class="case">MK7</span>&nbsp;v1.2</p>
   </footer>
 
   <dialog id="driver-picker" inert>
@@ -586,7 +586,7 @@
       <p>A positive coefficient <em>maximizes</em> the stat, a&nbsp;negative one <em>minimizes</em> it, and zero means the stat is&nbsp;ignored.</p>
 
       <h3>Speed and Handling</h3>
-      <p>The Speed and Handling stats are <em>unified</em> versions of their four&nbsp;component stats.</p>
+      <p>The Speed and Handling stats are <em>unified</em> versions of their three&nbsp;component stats.</p>
       <p>Internally, the coefficient you set for these is split into the component stats as follows: 85%&nbsp;to <em class="ground">ground</em>, 10% to <em class="air">air</em> and 5%&nbsp;to&nbsp;<em class="underwater">underwater</em>.</p>
 
       <h3>Filters and Locks</h3>
@@ -618,10 +618,10 @@
       <p>You can lock a part to limit which combos appear in the Dominant, Similar and Custom Search tabs. This can help you find interesting combos according to your style preferences.</p>
 
       <h3>Random Combo</h3>
-      <p>Tap the Random Combo button to replace your currently active combo with random parts. <em>Lock</em> individual parts to keep them.</p>
+      <p>Tap the Random button to replace your currently active combo with random parts. <em>Lock</em> individual parts to keep them.</p>
 
       <h3>Mini-Turbo (<abbr class="stat-code">MTB</abbr>)</h3>
-      <p>The hidden Mini-Turbo stat determines the length and speed of drift boosts, and the length of jump boosts.</p>
+      <p>The hidden Mini-Turbo stat determines the length drift&nbsp;boosts.</p>
 
       <h3>Speed (<abbr class="stat-code">SPD</abbr>)</h3>
       <p>Speed has 3 stats, only the first of which is displayed in-game. They are <em class="ground">Ground (<abbr class="stat-code">SPDGR</abbr>)</em>, <em class="underwater">Water&nbsp;(<abbr class="stat-code">SPDWT</abbr>)</em> and <em class="air">Air (<abbr class="stat-code">SPDAR</abbr>)</em>. They&nbsp;determine your top speed in each medium.</p>
@@ -636,13 +636,13 @@
       <p>Handling has 3 stats, only the first of which is displayed in-game. They are <em class="ground">Ground (<abbr class="stat-code">HNDGR</abbr>)</em>, <em class="underwater">Water&nbsp;(<abbr class="stat-code">HNDWT</abbr>)</em> and <em class="air">Air (<abbr class="stat-code">HNDAR</abbr>)</em>. They&nbsp;determine how sharp and wide you can drift and steer in each medium.</p>
 
       <h3>Off-Road (<abbr class="stat-code">OFF</abbr>)</h3>
-      <p>Traction determines how much you slip on terrain like  sand, snow, ice and wet asphalt.</p>
+      <p>Off-Road determines how much you slip and slow down on terrain like sand, snow, ice and wet asphalt.</p>
 
       <h3>Stability (<abbr class="stat-code">STB</abbr>)</h3>
-      <p>Traction determines how much you slip on terrain like  sand, snow, ice and wet asphalt.</p>
+      <p>Stability determines how much the tires stick to the ground.</p>
 
       <h3>Drift (<abbr class="stat-code">DFT</abbr>)</h3>
-      <p>Traction determines how much you slip on terrain like  sand, snow, ice and wet asphalt.</p>
+      <p>Drift determines how much you slip outwards when drifting.</p>
 
       <h3>Frame Size</h3>
       <p>The driver determines the combo’s frame size between small, medium, and large. This affects your in-game hitbox.</p>

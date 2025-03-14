@@ -180,8 +180,6 @@
   }
 }
 
-.keep-all { display: inline-block; }
-
 .formula {
   display: inline-block;
   @include type("code-1");
@@ -195,7 +193,6 @@
     &.subdued { color: var(--color-subdued); }
   }
 }
-.invalid { color: var(--color-red); }
 
 #custom-formula-dialog {
   .formula-factors, .formula-factors>.collapse-container>div {
@@ -291,55 +288,6 @@
 }
 abbr.stat-code { margin-left: .1em; }
 
-.changelog {
-  hgroup {
-    display: flex;
-    width: 100%;
-    justify-items: space-between;
-    gap: 1em;
-    span {
-      font-weight: normal;
-      color: var(--color-subdued);
-    }
-  }
-  hgroup:not(:first-child) {
-    padding-top: 1.25em;
-    border-top: 1px solid var(--color-interactive);
-  }
-  ul {
-    padding-left: 1em;
-    li {
-      position: relative;
-      margin-top: .25em;
-      &::before {
-        position: absolute;
-        translate: calc(-100% - .25em);
-        content: "• ";
-        color: var(--color-subdued);
-      }
-    }
-  }
-}
-
-code {
-  font-family: var(--font-family-mono);
-  letter-spacing: -.025em;
-  background-color: var(--color-interactive);
-  border: .25em solid var(--color-interactive);
-  border-radius: var(--border-radius-0);
-}
-
-.arrow-list {
-  position: relative;
-  padding-left: 1.125em;
-  li::before {
-    position: absolute;
-    left: 0;
-    content: "→ ";
-  }
-  li + li { margin-top: .25em; }
-}
-
 #favorites-dialog {
   ol {
     display: flex;
@@ -378,6 +326,7 @@ code {
     & > :first-child {
       display: flex;
       gap: 1rem;
+      justify-content: space-between;
       &>.button-group { gap: .75rem; }
     }
 
