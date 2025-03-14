@@ -34,6 +34,56 @@ hgroup + p { margin-top: .5em; }
 
 abbr[title] { cursor: help; }
 
+code {
+  font-family: var(--font-family-mono);
+  letter-spacing: -.025em;
+  background-color: var(--color-interactive);
+  border: .25em solid var(--color-interactive);
+  border-radius: var(--border-radius-0);
+}
+
+.changelog {
+  hgroup {
+    display: flex;
+    width: 100%;
+    justify-items: space-between;
+    gap: 1em;
+    span {
+      font-weight: normal;
+      color: var(--color-subdued);
+    }
+  }
+  hgroup:not(:first-child) {
+    padding-top: 1.25em;
+    border-top: 1px solid var(--color-interactive);
+  }
+  ul {
+    padding-left: 1em;
+    li {
+      position: relative;
+      margin-top: .25em;
+      &::before {
+        position: absolute;
+        translate: calc(-100% - .25em);
+        content: "• ";
+        color: var(--color-subdued);
+        font-feature-settings: "case" on;
+      }
+    }
+  }
+}
+
+.arrow-list {
+  position: relative;
+  padding-left: 1.125em;
+  li::before {
+    position: absolute;
+    left: 0;
+    content: "→ ";
+  }
+  li + li { margin-top: .25em; }
+}
+
 ::selection {
   color: var(--color-light1);
   background-color: var(--color-accent);

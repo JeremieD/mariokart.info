@@ -182,7 +182,7 @@ function getDominantCombos(combo) {
 
 function getSimilarCombos(combo) {
   const opts = {
-    mustDiffer: true, maxAbsDiff: 8, minDiff: -3,
+    mustDiffer: true, maxAbsDiff: 16, minDiff: -8,
     refCombo: combo, sortBy: "similar",
     driverLock: state.locks.driver, bodyLock: state.locks.body,
     tireLock: state.locks.tire, gliderLock: state.locks.glider

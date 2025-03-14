@@ -58,6 +58,7 @@
 
 .positive { color: var(--color-positive) !important; }
 .negative { color: var(--color-negative) !important; }
+.invalid { color: var(--color-red); }
 
 @include darkmode {
   :root {

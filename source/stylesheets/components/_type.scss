@@ -61,6 +61,9 @@
 
 h1, h2, h3, em { font-weight: bold; }
 
+.keep-all { display: inline-block; }
+.case { font-feature-settings: "case" on; }
+
 @media (min-width: 820px) {
   :root { font-size: 14px; }
 }
