@@ -2,6 +2,7 @@
 
 const graphicsRoot = "/resources/graphics/mk7/";
 const V = {
+  menu: {},
   combo: {},
   dominant: {},
   similar: {},
@@ -19,6 +20,9 @@ const V = {
 }; // View object
 
 whenDOMReady(() => {
+  V.menu.dialog = document.getElementById("menu");
+  V.menu.open = document.getElementById("menu-open");
+
   V.combo.favorite = document.getElementById("favorite");
   V.combo.random = document.getElementById("random-combo");
   V.combo.share = document.getElementById("share-combo");
@@ -184,6 +188,18 @@ whenDOMReady(() => {
 
 
   /******** View OUT ********/
+
+  addEventListener("click", e => {
+    if (!isOutside(V.menu.dialog, e)) return;
+    if (isOutside(V.menu.open, e)) {
+      closeMenu();
+    } else {
+      toggleMenu();
+    }
+  }, { passive: true });
+  addEventListener("focusin", () => {
+    if (!V.menu.open.contains(document.activeElement)) closeMenu();
+  }, { passive: true });
 
   V.combo.favorite.addEventListener("click", () => {
     if (!state.settings.allowCookies) return openFavoritesDialog();
@@ -484,6 +500,11 @@ function initView() {
 function drawPageTitle() {
   const combo = state.selectedSlot.combo;
   document.title = (getCustomName(combo) ?? combo.name) + " | MK7 Combo Builder";
+}
+
+function drawMenu() {
+  V.menu.dialog.inert = !state.menuOpened;
+  V.menu.open.classList.toggle("open", state.menuOpened);
 }
 
 function drawCurrentCombo() {

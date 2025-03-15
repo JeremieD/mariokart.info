@@ -74,6 +74,7 @@ const state = {
   formulaDialogScrollTop: 0,
   openedDialog: "",
   inspectorTimeout: 0,
+  menuOpened: false,
   lastState: {
     aCode: "",
     bCode: ""
@@ -100,6 +101,19 @@ Stats.post = (...args) => {
 };
 
 initController();
+
+function openMenu() {
+  state.menuOpened = true;
+  drawMenu();
+}
+function closeMenu() {
+  state.menuOpened = false;
+  drawMenu();
+}
+function toggleMenu() {
+  state.menuOpened = !state.menuOpened;
+  drawMenu();
+}
 
 function setDriver(driver) {
   Stats.post("getCombo", driver, state.body, state.tire, state.glider)
