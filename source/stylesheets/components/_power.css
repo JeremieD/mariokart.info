@@ -37,7 +37,7 @@ nav, section, aside, article,
 h1, h2, h3, h4, h5, h6,
 div, p, hr,
 ul, ol, li,
-img, picture, video, svg
+img, picture, video,
 figure, figcaption {
   display: block;
 }

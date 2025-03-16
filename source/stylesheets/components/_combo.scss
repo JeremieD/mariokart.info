@@ -1,4 +1,5 @@
 @use "button" as *;
+@use "type" as *;
 
 .combo {
   display: flex;
@@ -10,26 +11,35 @@
   &>* {
     position: relative;
     height: auto;
-    flex-grow: 1;
 
     &:is(button) { padding: .25rem; }
     &:not(button) {
       height: 100%;
       padding: .125rem;
-      img {
-        width: auto;
-        height: 100%;
-        object-fit: contain;
-      }
     }
 
     img {
       width: 100%;
-      aspect-ratio: 25 / 16; // 200 / 128
+      height: 100%;
+      object-fit: contain;
     }
-    &:nth-child(1) {
-      flex-grow: .64; // 128÷200
-      img { aspect-ratio: 1 / 1; }
-    }
+  }
+}
+
+#combo-details {
+  display: flex;
+  gap: 1em;
+  justify-content: space-between;
+  margin-top: .625rem;
+  @include type("body-1");
+  line-height: 1;
+  color: var(--color-subdued);
+
+  >span:last-child {
+    display: flex;
+    gap: .25em;
+    height: 1em;
+    jd-icon { height: 1em; }
+    cursor: help;
   }
 }

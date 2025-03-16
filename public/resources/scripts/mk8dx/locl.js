@@ -242,7 +242,7 @@ const strings = {
       coupe: "Sports Coupé",
       gold: "Gold Kart",
       scooty: "Mr Scooty",
-      atv: "Standard Quad",
+      atv: "Standard Quad"
     },
     tires: {
       std: "Normal",
@@ -452,7 +452,6 @@ const strings = {
       rosalina: "Rosalina",
       marioTan: "Mario tanuki",
       peachCat: "Peach felina",
-      rosalina: "Rosalina",
         birdo1: "Birdo (celeste)",
         birdo2: "Birdo (negra)",
         birdo3: "Birdo (roja)",
@@ -563,7 +562,7 @@ const strings = {
       petey: "Floro Piraña",
       rosalinaBb: "Bebé Estela",
       marioGold: "Mario Dorado",
-      bowserJr: "Bowsy",
+      bowserJr: "Bowsy"
     },
     bodies: {
       std: "Kart estándar",
@@ -1975,5 +1974,5 @@ const strings = {
       paper: "紙飛機",
       paraglider: "滑翔傘"
     }
-  },
+  }
 };

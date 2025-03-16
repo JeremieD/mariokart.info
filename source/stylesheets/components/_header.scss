@@ -1,24 +1,68 @@
+@use "responsive" as *;
 @use "colors" as *;
 @use "type" as *;
 @use "prefix" as *;
 
 body>header {
   display: flex;
+  gap: .5rem;
   justify-content: space-between;
   align-items: center;
   width: var(--width-page);
   margin: 0 auto;
   padding: 1.5rem 0;
-
   @include user-select(none);
 
-  a {
-    font-weight: bold;
-    @include text-decoration-color(transparent);
+  .button-group:first-child { flex-grow: 1; }
+}
+
+#logo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 2.666rem;
+  font-size: 1.375rem;
+  line-height: 1.1;
+  letter-spacing: -.01em;
+  font-feature-settings: "case" on;
+  font-weight: bold;
+
+  img {
+    height: 100%;
+    margin-right: .25em;
   }
 
-  h1 {
-    @include type("head-1");
-    font-feature-settings: "case" on;
+  &::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    border-radius: var(--border-radius-1);
+    background: var(--color-interactive);
+    mask-image: linear-gradient(to right, #000, #666 75%, #FFF), url(../graphics/checkermask.svg);
+    mask-mode: luminance;
+    mask-composite: intersect;
+    mask-size: auto 40%;
+    mask-position: 100% 0;
+    z-index: -1;
   }
+
+  span {
+    display: block;
+    font-size: var(--font-size-2);
+    font-weight: normal;
+    line-height: 1;
+  }
+
+  sup {
+    font-size: .75em;
+    font-weight: normal;
+    color: var(--color-subdued);
+    translate: .25em -1em;
+  }
+}
+
+@include min-2 {
+  #logo::before { mask-image: linear-gradient(to right, #000, #666 50%, #FFF), url(../graphics/checkermask.svg);; }
 }
