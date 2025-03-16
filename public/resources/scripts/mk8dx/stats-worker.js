@@ -65,13 +65,13 @@ class Combo {
     driver: undefined,
     body: undefined,
     tire: undefined,
-    glider: undefined,
+    glider: undefined
   };
   classes = {
     driver: undefined,
     body: undefined,
     tire: undefined,
-    glider: undefined,
+    glider: undefined
   };
   code = "";
   lvl = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
@@ -159,10 +159,10 @@ class Combo {
   }
 
   // Data from Dospe [docs.google.com/spreadsheets/d/1Z41bvL2DTH6neOD41w6L0_eZwTxZMA3w4KJNzBEKzs8]
-  static PERCENT_GR = .75; // Best estimate for percent of time on ground.
-  static PERCENT_AG = .17; // Best estimate for percent of time in anti-gravity.
-  static PERCENT_WT = .03; // Best estimate for percent of time underwater.
-  static PERCENT_AR = .05; // Best estimate for percent of time airborne.
+  static PERCENT_GR = .75; // Estimated percent of time on ground.
+  static PERCENT_AG = .17; // Estimated percent of time in anti-gravity.
+  static PERCENT_WT = .03; // Estimated percent of time underwater.
+  static PERCENT_AR = .05; // Estimated percent of time airborne.
 }
 
 function getCombo(...args) {
@@ -2153,7 +2153,7 @@ const bodyVariants = {
       inklingM1: "inklingM1",
       inklingM2: "inklingM2"
   }
-}
+};
 function getBodyVariant(body, driver) {
   const variant = bodyVariants[body]?.[driver];
   if (variant != undefined) return "-" + variant;
@@ -2245,7 +2245,7 @@ const gliderVariants = {
     rosalina: "rosalina",
     rosalinaBb: "rosalina",
     kamek: "rosalina",
-    fk: "rosalina",
+    fk: "rosalina"
   }
 };
 function getGliderVariant(glider, driver) {
@@ -2388,7 +2388,7 @@ function getComboName(driver, body, tire, glider) {
     if (driverMorphs.pre) return fuse(driverMorphs.pre, bodyMorphs.full);
     if (driverMorphs.or) return fuse(driverMorphs.or, bodyMorphs.full);
   }
-  if ((!driverMorphs.pre || !driverMorphs.post)) {
+  if (!driverMorphs.pre || !driverMorphs.post) {
     for (const form of Object.keys(driverMorphs)) {
       switch (form) {
         case "pre":

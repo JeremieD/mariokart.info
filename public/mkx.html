@@ -7,24 +7,15 @@
 
   <title>Mario Kart X Combo Builder</title>
   <meta name="description" content="Find, compare, and optimize Mario Kart X builds, or cook up your own custom formula!">
-  <meta name="keywords" content="mario, kart, X, combo, build, character, vehicle, best, stats, meta">
+  <meta name="keywords" content="mario, kart, x, switch 2, combo, build, character, vehicle, best, stats, meta">
 
   <link rel="canonical" href="https://mariokart.info/mkx">
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/resources/graphics/favicon/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/resources/graphics/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/resources/graphics/favicon/favicon-16x16.png">
-  <link rel="manifest" href="/resources/graphics/favicon/site.webmanifest">
-  <link rel="mask-icon" href="/resources/graphics/favicon/safari-pinned-tab.svg" color="#8833ff">
-  <link rel="shortcut icon" href="/resources/graphics/favicon/favicon.ico">
-  <meta name="msapplication-TileColor" content="#603cba">
-  <meta name="msapplication-config" content="/resources/graphics/favicon/browserconfig.xml">
-  <meta name="theme-color" content="#eee">
+  <link rel="icon" type="image/png" href="/resources/graphics/mkx.svg">
 
   <!-- Preloads -->
   <link rel="preload" href="/resources/fonts/akkurat/Akkurat-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/resources/fonts/akkurat/Akkurat-Bold.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/resources/fonts/akkurat-mono/AkkuratMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
   <!-- Styling -->
   <link rel="stylesheet" href="/resources/stylesheets/mkx.css">
@@ -32,27 +23,32 @@
   <!-- Scripts -->
   <script src="/resources/scripts/utilities.js"></script>
   <script src="/resources/scripts/icon.js"></script>
+  <script src="/resources/scripts/mkx/controller.js"></script>
+  <script src="/resources/scripts/mkx/view.js"></script>
 </head>
 
 <body>
   <header>
     <div class="button-group">
       <button class="big-type square" id="menu-open" title="Switch Game"><jd-icon icon="menu"></jd-icon>
-        <nav id="menu">
+        <nav id="menu" inert>
           <ol>
-            <li><a href="#"><img src="/resources/graphics/mkx.png" width="76" height="76" />Mario Kart X Combo Builder</a></li>
-            <li><a href="/mk8dx"><img src="/resources/graphics/mk8dx.png" width="76" height="76" />Mario Kart 8 Deluxe Combo Builder</a></li>
+            <li><a href="#"><img src="/resources/graphics/mkx.svg" loading="lazy" width="76" height="76" alt="Mario Kart X Logo" />Mario Kart X Combo Builder</a></li>
+            <li><a href="/mk8dx"><img src="/resources/graphics/mk8dx.webp" loading="lazy" width="76" height="76" alt="Mario Kart 8 Deluxe Logo"/>Mario Kart 8 Deluxe Combo Builder</a></li>
+            <li><a href="/mk8"><img src="/resources/graphics/mk8.webp" loading="lazy" width="76" height="76" alt="Mario Kart 8 Logo" />Mario Kart 8 Combo Builder</a></li>
+            <li><a href="/mk7"><img src="/resources/graphics/mk7.webp" loading="lazy" width="76" height="76" alt="Mario Kart 7 Logo" />Mario Kart 7 Combo Builder</a></li>
           </ol>
         </nav>
       </button>
-      <a href="/mk8dx" id="logo">
-        <h1>MKX Combo Builder</h1>
-      </a>
+      <div id="logo"><img src="/resources/graphics/mkx.svg" loading="lazy" width="76" height="76" alt="Mario Kart X Logo" /><h1>Mario Kart X <span>Combo Builder</span></h1></div>
     </div>
   </header>
 
   <main>
-    <p id="wip">The combo builder for Mario&nbsp;Kart&nbsp;X is coming&nbsp;soon.</p>
+    <p id="wip">
+      <img src="/resources/graphics/sg.gif" loading="lazy" width="320" height="178" alt="Shy Guy waits sadly." />
+      The combo builder for Mario&nbsp;Kart&nbsp;X is coming&nbsp;soon.
+    </p>
   </main>
 
   <footer></footer>

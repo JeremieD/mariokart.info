@@ -15,7 +15,7 @@ const blankFormula = {
   max:     [20,20,20,20,20,20,20,20,20,20,20,20,20,2,20,20],
   unified: { spd: true, hnd: true },
   excludeKarts: false, excludeATVs: false,
-  excludeBikes: false, excludeSportBikes: false,
+  excludeBikes: false, excludeSportBikes: false
 };
 const defaultFormula = {
   factors: [16,0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0,15, 1],
@@ -87,9 +87,11 @@ const state = {
   formulaDialogScrollTop: 0,
   openedDialog: "",
   inspectorTimeout: 0,
+  menuOpened: false,
   lastState: {
     aCode: "",
-    bCode: "", }
+    bCode: ""
+  }
 };
 
 const Stats = new Worker("/resources/scripts/mk8dx/stats-worker.js");
@@ -112,6 +114,19 @@ Stats.post = (...args) => {
 };
 
 initController();
+
+function openMenu() {
+  state.menuOpened = true;
+  drawMenu();
+}
+function closeMenu() {
+  state.menuOpened = false;
+  drawMenu();
+}
+function toggleMenu() {
+  state.menuOpened = !state.menuOpened;
+  drawMenu();
+}
 
 function setDriver(driver) {
   Stats.post("getCombo", driver, state.body, state.tire, state.glider)
@@ -603,13 +618,11 @@ function readURLParams() {
 
   state.selectedSlotID = BCode == undefined ? "A" : "B";
 
-  const aCombo = Stats.post("getCombo", aCode ?? "MAAA")
-  .then(combo => {
+  Stats.post("getCombo", aCode ?? "MAAA").then(combo => {
     whenViewReady(() => { setCombo(combo, "A", true); });
   });
 
-  const bCombo = Stats.post("getCombo", bCode ?? BCode ?? "LMSA")
-  .then(combo => {
+  Stats.post("getCombo", bCode ?? BCode ?? "LMSA") .then(combo => {
     whenViewReady(() => { setCombo(combo, "B", true); });
   });
 }

@@ -28,7 +28,7 @@ Tooltip.attach = el => {
   el.addEventListener("blur", () => {
     hideTooltip();
   }, { passive: true });
-}
+};
 
 Tooltip.draw = (content, opts = {}) => {
   clearTimeout(Tooltip.timeout);
@@ -90,8 +90,8 @@ Tooltip.draw = (content, opts = {}) => {
   tt.classList.add("shown");
 
   Tooltip.timeout = setTimeout(Tooltip.hide, opts.time);
-}
+};
 
 Tooltip.hide = () => {
   Tooltip.tt.classList.remove("shown");
-}
+};

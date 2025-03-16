@@ -16,7 +16,7 @@ whenDOMReady(() => {
 
     for (let i = 0; i < handles.length; i++) {
       const handle = handles[i];
-      handle.addEventListener("click", e => {
+      handle.addEventListener("click", () => {
         selectTab(handle.dataset.tabId);
       }, { passive: true });
       handle.addEventListener("keydown", e => {
