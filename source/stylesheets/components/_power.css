@@ -17,8 +17,12 @@
   /* Slightly opinionated things. */
   box-sizing: border-box;
 
+  /* Accelerate taps on touch screens. */
   touch-action: manipulation;
 }
+
+/* Clip raster media. */
+img, video, canvas { overflow: clip; }
 
 /* Accessible by default. */
 /* :focus {
