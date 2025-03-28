@@ -41,12 +41,16 @@ body>header {
     height: 100%;
     border-radius: var(--border-radius-1);
     background: var(--color-interactive);
-    mask-image: linear-gradient(to right, #000, #666 75%, #FFF), url(../graphics/checkermask.svg);
+    mask-image: linear-gradient(to left, #000, #666 75%, #FFF), url(../graphics/checkermask.svg);
     mask-mode: luminance;
     mask-composite: intersect;
     mask-size: auto 40%;
-    mask-position: 100% 0;
     z-index: -1;
+    // This element is flipped so that it is right-aligned in all browsers.
+    // `scale` is used instead of `mask-position` because of an issue in WebKit
+    // where coordinates are rounded to whole pixels *before* transformations
+    // are applied, so the pattern cuts off on the right even with `mask-position: 100%`.
+    scale: -1 1;
   }
 
   span {
@@ -65,5 +69,5 @@ body>header {
 }
 
 @include min-2 {
-  #logo::before { mask-image: linear-gradient(to right, #000, #666 50%, #FFF), url(../graphics/checkermask.svg);; }
+  #logo::before { mask-image: linear-gradient(to left, #000, #666 50%, #FFF), url(../graphics/checkermask.svg);; }
 }
