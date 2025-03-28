@@ -722,8 +722,8 @@ function formatFormula(formula) {
     if (i == 9  &&  formula.unified.hnd) continue;
     if (i == 10 &&  formula.unified.hnd) continue;
     let factor = formula.factors[i];
-    let isMinSet = scaleStat(formula.min[i], i) !== 0;
-    let isMaxSet = scaleStat(formula.max[i], i) !== getScaledMax(i);
+    let isMinSet = formula.min[i] > 0;
+    let isMaxSet = formula.max[i] < getMax(i);
     if (factor == 0 && !isMinSet && !isMaxSet) continue;
     const sign = factor < 0 ? "−" : "";
     let term = "<span";
@@ -1304,12 +1304,15 @@ function drawFormulaDialog() {
   const formula = state.workingFormula;
   for (const stat of stats) {
     const i = statIndex[stat];
+    const scaledMin = getScaledMin(i);
     const scaledMax = getScaledMax(i);
     const scaledStep = getScaledStep(i);
     const scaledPlaceholder = getScaledPlaceholder(i);
 
+    V.formula[stat].min.min = scaledMin;
     V.formula[stat].min.max = scaledMax;
     V.formula[stat].min.step = scaledStep;
+    V.formula[stat].max.min = scaledMin;
     V.formula[stat].max.max = scaledMax;
     V.formula[stat].max.step = scaledStep;
     V.formula[stat].max.placeholder = scaledPlaceholder;
@@ -1478,7 +1481,7 @@ function parseValue(v, defaultV = 0) {
 }
 
 function scaleStat(x, stat) {
-  if (x <= 0) return 0;
+  if (x < 0) return 0;
   if (x >= 20) return state.settings.statScale === "internal" ? 20 : 5.75;
   if (state.settings.statScale === "internal" || stat === 12) return x;
   return toLvl(x);
@@ -1487,6 +1490,12 @@ function scaleStatAbs(x) {
   if (state.settings.statScale === "internal") return x;
   return x/4;
 }
+const getMin = () => 0;
+const getScaledMin = stat => {
+ if (stat === 12) return 0;
+ return state.settings.statScale === "internal" ? 0 : .75;
+}
+const getMax = stat => stat === 12 ? 2 : 20;
 const getScaledMax = stat => {
   if (stat === 12) return 2;
   return state.settings.statScale === "internal" ? 20 : 5.75;
