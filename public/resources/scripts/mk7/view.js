@@ -113,7 +113,6 @@ whenDOMReady(() => {
   V.drivers.grid = document.getElementById("driver-grid");
 
   V.bodies.dialog = document.getElementById("body-picker");
-  V.bodies.icon = document.getElementById("body-icon");
   V.bodies.title = document.getElementById("body-title");
   V.bodies.lock = document.getElementById("body-lock");
   V.bodies.lockLabel = document.getElementById("body-lock-label");
@@ -851,16 +850,16 @@ function initBodyDialog() {
       const button = newPartButton("bodies", id, "body-" + id);
       button.addEventListener("click", () => { setBody(id); }, { passive: true });
       button.addEventListener("mouseenter", () => {
-        drawBodyTitle(id, bodies.id);
+        drawBodyTitle(id);
       }, { passive: true });
       button.addEventListener("mouseleave", () => {
-        delay(() => drawBodyTitle(state.body, state.selectedSlot.combo.parts.body.type));
+        delay(() => drawBodyTitle(state.body));
       }, { passive: true });
       button.addEventListener("focus", () => {
-        drawBodyTitle(id, bodies.id);
+        drawBodyTitle(id);
       }, { passive: true });
       button.addEventListener("blur", () => {
-        drawBodyTitle(state.body, state.selectedSlot.combo.parts.body.type);
+        drawBodyTitle(state.body);
       }, { passive: true });
       V.bodies.grid.append(button);
     }
@@ -890,7 +889,6 @@ function drawBodyDialog() {
       button.classList.toggle("highlight", body.group == state.selectedSlot.combo.parts.body.group);
     } }
   });
-  V.bodies.icon.setAttribute("icon", state.selectedSlot.combo.parts.body.type);
   V.bodies.title.innerText = S("bodies", state.body);
   drawBodyLock();
   disableScroll(document.documentElement);
@@ -982,10 +980,9 @@ function drawDriverTitle(id) {
   V.drivers.title.innerText = S("drivers", id);
   V.drivers.icon.dataset.emblem = id;
 }
-function drawBodyTitle(id, type) {
+function drawBodyTitle(id) {
   clearTimeout(state.inspectorTimeout);
   V.bodies.title.innerText = S("bodies", id);
-  V.bodies.icon.setAttribute("icon", type);
 }
 function drawTireTitle(id) {
   clearTimeout(state.inspectorTimeout);
