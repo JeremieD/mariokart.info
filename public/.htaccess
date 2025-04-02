@@ -9,5 +9,13 @@ RewriteRule "^mk8\.html$" "/mk8" [R=permanent,END]
 RewriteRule "^mk8$" "/mk8.html" [END]
 RewriteRule "^mk8dx\.html$" "/mk8dx" [R=permanent,END]
 RewriteRule "^mk8dx$" "/mk8dx.html" [END]
-RewriteRule "^mkx\.html$" "/mkx" [R=permanent,END]
-RewriteRule "^mkx$" "/mkx.html" [END]
+RewriteRule "^mkw\.html$" "/mkw" [R=permanent,END]
+RewriteRule "^mkw$" "/mkw.html" [END]
+
+<Limit GET POST>
+    Order Deny,Allow
+    Allow from 66.249.64.0/19
+    Allow from 64.233.160.0/19
+    Allow from 216.239.32.0/19
+    Allow from googlebot.com
+</Limit>
