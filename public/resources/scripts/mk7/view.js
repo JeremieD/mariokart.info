@@ -495,6 +495,9 @@ function initView() {
 }
 
 function drawPageTitle() {
+  // Don't update if user has not interacted with the page.
+  if (!navigator.userActivation.hasBeenActive) return;
+
   const combo = state.selectedSlot.combo;
   document.title = (getCustomName(combo) ?? combo.name) + " | MK7 Combo Builder";
 }
