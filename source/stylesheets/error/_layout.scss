@@ -1,0 +1,28 @@
+#error {
+  grid-column-end: span 2;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  height: 100%;
+  justify-content: center;
+
+  font-size: var(--font-size-3);
+  font-weight: bold;
+  text-align: center;
+  text-wrap: balance;
+
+  h1 {
+    font-size: 8rem;
+    line-height: 1;
+    span {
+      display: block;
+      font-size: 3rem;
+    }
+  }
+
+  video {
+    margin: 0 auto 6rem;
+    border-radius: var(--border-radius-1);
+  }
+}
