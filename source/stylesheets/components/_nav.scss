@@ -2,7 +2,11 @@
 
 #menu-open {
   position: relative;
-  path { transition: .2s ease d; }
+  svg * { vector-effect: non-scaling-stroke; }
+  path { transition: .2s ease transform; }
+  path:nth-child(1) { transform-origin: 50% 2px; }
+  path:nth-child(2) { transform-origin: center; }
+  path:nth-child(3) { transform-origin: 50% 14px; }
 }
 
 #menu {
@@ -41,8 +45,8 @@
   pointer-events: none;
 }
 
-#menu-open.open svg {
-  path:nth-child(1) { d: path("M0 0 L16 16"); }
-  path:nth-child(2) { d: path("M8 8 L8 8"); }
-  path:nth-child(3) { d: path("M0 16 L16 0"); }
+#menu-open.open {
+  path:nth-child(1) { transform: translateY(6px) rotate(45deg) scale(1.237); }
+  path:nth-child(2) { transform: scale(0, 1); }
+  path:nth-child(3) { transform: translateY(-6px) rotate(-45deg) scale(1.237); }
 }

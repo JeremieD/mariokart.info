@@ -2153,7 +2153,7 @@ const bodyVariants = {
       inklingM1: "inklingM1",
       inklingM2: "inklingM2"
   }
-}
+};
 function getBodyVariant(body, driver) {
   const variant = bodyVariants[body]?.[driver];
   if (variant != undefined) return "-" + variant;

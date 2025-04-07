@@ -113,7 +113,6 @@ whenDOMReady(() => {
   V.drivers.grid = document.getElementById("driver-grid");
 
   V.bodies.dialog = document.getElementById("body-picker");
-  V.bodies.icon = document.getElementById("body-icon");
   V.bodies.title = document.getElementById("body-title");
   V.bodies.lock = document.getElementById("body-lock");
   V.bodies.lockLabel = document.getElementById("body-lock-label");
@@ -189,13 +188,11 @@ whenDOMReady(() => {
 
   /******** View OUT ********/
 
-  addEventListener("click", e => {
-    if (!isOutside(V.menu.dialog, e)) return;
-    if (isOutside(V.menu.open, e)) {
-      closeMenu();
-    } else {
-      toggleMenu();
-    }
+  V.menu.open.addEventListener("click", e => {
+    if (isOutside(V.menu.dialog, e)) toggleMenu();
+  }, { passive: true });
+  addEventListener("pointerdown", e => {
+    if (isOutside(V.menu.open, e) && isOutside(V.menu.dialog, e)) closeMenu();
   }, { passive: true });
   addEventListener("focusin", () => {
     if (!V.menu.open.contains(document.activeElement)) closeMenu();
@@ -277,25 +274,25 @@ whenDOMReady(() => {
   V.custom.customize.addEventListener("click", openFormulaDialog, { passive: true });
 
   V.drivers.dialog.addEventListener("click", e => {
-    if (!state.openedDialog === "drivers") return;
+    if (state.openedDialog !== "driver") return;
     if (isOutside(V.drivers.dialog, e)) closeDriverDialog();
   }, { passive: true });
   V.drivers.lock.addEventListener("click", toggleDriverLock, { passive: true });
 
   V.bodies.dialog.addEventListener("click", e => {
-    if (!state.openedDialog === "bodies") return;
+    if (state.openedDialog !== "body") return;
     if (isOutside(V.bodies.dialog, e)) closeBodyDialog();
   }, { passive: true });
   V.bodies.lock.addEventListener("click", toggleBodyLock, { passive: true });
 
   V.tires.dialog.addEventListener("click", e => {
-    if (!state.openedDialog === "tires") return;
+    if (state.openedDialog !== "tire") return;
     if (isOutside(V.tires.dialog, e)) closeTireDialog();
   }, { passive: true });
   V.tires.lock.addEventListener("click", toggleTireLock, { passive: true });
 
   V.gliders.dialog.addEventListener("click", e => {
-    if (!state.openedDialog === "gliders") return;
+    if (state.openedDialog !== "glider") return;
     if (isOutside(V.gliders.dialog, e)) closeGliderDialog();
   }, { passive: true });
   V.gliders.lock.addEventListener("click", toggleGliderLock, { passive: true });
@@ -306,7 +303,7 @@ whenDOMReady(() => {
   });
   V.favorites.close.addEventListener("click", closeFavoritesDialog, { passive: true });
   V.favorites.dialog.addEventListener("click", e => {
-    if (!state.openedDialog === "favorites") return;
+    if (state.openedDialog !== "favorites") return;
     if (isOutside(V.favorites.dialog, e)) closeFavoritesDialog();
   }, { passive: true });
 
@@ -387,7 +384,7 @@ whenDOMReady(() => {
   V.formula.helpOpen.addEventListener("click", openFormulaHelpDialog, { passive: true });
   V.formula.helpClose.addEventListener("click", closeFormulaHelpDialog, { passive: true });
   V.formula.helpDialog.addEventListener("click", e => {
-    if (!state.openedDialog === "formula-help") return;
+    if (state.openedDialog !== "formula-help") return;
     if (isOutside(V.formula.helpDialog, e)) closeFormulaHelpDialog();
   }, { passive: true });
 
@@ -397,7 +394,7 @@ whenDOMReady(() => {
   });
   V.help.close.addEventListener("click", closeHelpDialog, { passive: true });
   V.help.dialog.addEventListener("click", e => {
-    if (!state.openedDialog === "help") return;
+    if (state.openedDialog !== "help") return;
     if (isOutside(V.help.dialog, e)) closeHelpDialog();
   }, { passive: true });
 
@@ -407,7 +404,7 @@ whenDOMReady(() => {
   });
   V.settings.close.addEventListener("click", closeSettingsDialog, { passive: true });
   V.settings.dialog.addEventListener("click", e => {
-    if (!state.openedDialog === "settings") return;
+    if (state.openedDialog !== "settings") return;
     if (isOutside(V.settings.dialog, e)) closeSettingsDialog();
   }, { passive: true });
   V.settings.cookiesToggle.addEventListener("click", toggleCookies, { passive: true });
@@ -431,7 +428,7 @@ whenDOMReady(() => {
   });
   V.changelog.close.addEventListener("click", closeChangelogDialog, { passive: true });
   V.changelog.dialog.addEventListener("click", e => {
-    if (!state.openedDialog === "changelog") return;
+    if (state.openedDialog !== "changelog") return;
     if (isOutside(V.changelog.dialog, e)) closeChangelogDialog();
   }, { passive: true });
 
@@ -442,7 +439,7 @@ whenDOMReady(() => {
   });
   V.credits.close.addEventListener("click", closeCreditsDialog, { passive: true });
   V.credits.dialog.addEventListener("click", e => {
-    if (!state.openedDialog === "credits") return;
+    if (state.openedDialog !== "credits") return;
     if (isOutside(V.credits.dialog, e)) closeCreditsDialog();
   }, { passive: true });
 
@@ -498,6 +495,9 @@ function initView() {
 }
 
 function drawPageTitle() {
+  // Don't update if user has not interacted with the page.
+  if (!navigator.userActivation.hasBeenActive) return;
+
   const combo = state.selectedSlot.combo;
   document.title = (getCustomName(combo) ?? combo.name) + " | MK7 Combo Builder";
 }
@@ -575,7 +575,7 @@ function drawCurrentCombo() {
 
   // Favorite
   V.combo.favorite.classList.toggle("selected", state.selectedSlot.isFavorite);
-  V.combo.favorite.title = state.selectedSlot.isFavorite ? "Remove this combo from your favorites." : "Save this combo to your favorites."
+  V.combo.favorite.title = state.selectedSlot.isFavorite ? "Remove this combo from your favourites." : "Save this combo to your favourites.";
 
   drawPageTitle();
 }
@@ -700,15 +700,15 @@ function formatFormula(formula) {
     if (i == 7  &&  formula.unified.hnd) continue;
     if (i == 8  &&  formula.unified.hnd) continue;
     let factor = formula.factors[i];
-    let isMinSet = scaleStat(formula.min[i], i) !== 0;
-    let isMaxSet = scaleStat(formula.max[i], i) !== getScaledMax(i);
+    let isMinSet = formula.min[i] > 0;
+    let isMaxSet = formula.max[i] < getMax(i);
     if (factor == 0 && !isMinSet && !isMaxSet) continue;
     const sign = factor < 0 ? "−" : "";
     let term = "<span";
     if (factor < 0) term += " class='negative'";
     if (factor > 0) term += " class='positive'";
     term += " title='" + S("stats", stat) + "'";
-    term += ">"
+    term += ">";
     factor = Math.abs(factor).toString();
     if (factor[0] == "0") factor = factor.substr(1);
     term += sign;
@@ -757,8 +757,8 @@ function initDriverDialog() {
         folder = document.createElement("div");
         folder.setAttribute("inert", "");
         folder.classList.add("parts-grid", "square");
-        if (driver.folder.length == 2) folder.classList.add("two");
-        if (driver.folder.length >= 3) folder.classList.add("three");
+        if (driver.folder.length == 2) folder.classList.add("two");
+        if (driver.folder.length >= 3) folder.classList.add("three");
         eventHandler = e => {
           if (!folder.contains(e.target)) drawPopover(folder);
         };
@@ -853,16 +853,16 @@ function initBodyDialog() {
       const button = newPartButton("bodies", id, "body-" + id);
       button.addEventListener("click", () => { setBody(id); }, { passive: true });
       button.addEventListener("mouseenter", () => {
-        drawBodyTitle(id, bodies.id);
+        drawBodyTitle(id);
       }, { passive: true });
       button.addEventListener("mouseleave", () => {
-        delay(() => drawBodyTitle(state.body, state.selectedSlot.combo.parts.body.type));
+        delay(() => drawBodyTitle(state.body));
       }, { passive: true });
       button.addEventListener("focus", () => {
-        drawBodyTitle(id, bodies.id);
+        drawBodyTitle(id);
       }, { passive: true });
       button.addEventListener("blur", () => {
-        drawBodyTitle(state.body, state.selectedSlot.combo.parts.body.type);
+        drawBodyTitle(state.body);
       }, { passive: true });
       V.bodies.grid.append(button);
     }
@@ -892,7 +892,6 @@ function drawBodyDialog() {
       button.classList.toggle("highlight", body.group == state.selectedSlot.combo.parts.body.group);
     } }
   });
-  V.bodies.icon.setAttribute("icon", state.selectedSlot.combo.parts.body.type);
   V.bodies.title.innerText = S("bodies", state.body);
   drawBodyLock();
   disableScroll(document.documentElement);
@@ -984,10 +983,9 @@ function drawDriverTitle(id) {
   V.drivers.title.innerText = S("drivers", id);
   V.drivers.icon.dataset.emblem = id;
 }
-function drawBodyTitle(id, type) {
+function drawBodyTitle(id) {
   clearTimeout(state.inspectorTimeout);
   V.bodies.title.innerText = S("bodies", id);
-  V.bodies.icon.setAttribute("icon", type);
 }
 function drawTireTitle(id) {
   clearTimeout(state.inspectorTimeout);
@@ -995,7 +993,7 @@ function drawTireTitle(id) {
 }
 function drawGliderTitle(id) {
   clearTimeout(state.inspectorTimeout);
-  V.gliders.title.innerText = S("gliders", id);;
+  V.gliders.title.innerText = S("gliders", id);
 }
 
 function delay(fn) { state.inspectorTimeout = setTimeout(fn, 500); }
@@ -1108,7 +1106,7 @@ function drawFavoritesDialog() {
     if (state.favorites.length == 0) {
       V.favorites.list.classList.add("empty");
       const para = document.createElement("p");
-      para.innerText = "No favorite combos.";
+      para.innerText = "No favourite combos.";
       V.favorites.list.append(para);
     } else {
       V.favorites.list.classList.remove("empty");
@@ -1140,7 +1138,7 @@ function drawFavoritesDialog() {
       buttonsDisplay.classList.add("button-group");
 
       const remove = document.createElement("button");
-      remove.title = "Remove this combo from your favorites.";
+      remove.title = "Remove this combo from your favourites.";
       remove.append(new JDIcon("heart-slash"));
       remove.classList.add("square", "danger", "selected");
       remove.addEventListener("click", () => { unfavorite(combo); }, { passive: true });
@@ -1174,7 +1172,7 @@ function drawFavoritesDialog() {
     }
   } else {
     const para = document.createElement("p");
-    para.innerHTML = "Enable <em>cookies</em> in settings to use the favorites feature.<br>";
+    para.innerHTML = "Enable <em>cookies</em> in settings to use the favourites feature.<br>";
     const link = document.createElement("a");
     link.innerText = "Take me there!";
     link.tabIndex = "0";
@@ -1207,7 +1205,7 @@ function drawUnfavoriteConfirmDialog(combo) {
   V.favorites.unfavoriteDialog.inert = false;
   V.favorites.unfavoriteMessage.innerHTML = "Are you sure you want to remove <em>"
                                           + getCustomName(combo)
-                                          + "</em> from your favorites?";
+                                          + "</em> from your favourites?";
 
   const previousDialog = state.openedDialog;
   state.openedDialog = "unfavorite-confirm";
@@ -1247,12 +1245,15 @@ function drawFormulaDialog() {
   const formula = state.workingFormula;
   for (const stat of stats) {
     const i = statIndex[stat];
+    const scaledMin = getScaledMin(i);
     const scaledMax = getScaledMax(i);
     const scaledStep = getScaledStep(i);
     const scaledPlaceholder = getScaledPlaceholder(i);
 
+    V.formula[stat].min.min = scaledMin;
     V.formula[stat].min.max = scaledMax;
     V.formula[stat].min.step = scaledStep;
+    V.formula[stat].max.min = scaledMin;
     V.formula[stat].max.max = scaledMax;
     V.formula[stat].max.step = scaledStep;
     V.formula[stat].max.placeholder = scaledPlaceholder;
@@ -1392,8 +1393,8 @@ function drawChangelogDialog() {
   V.changelog.dialog.showModal();
 }
 
-function disableScroll(el) { el.classList.add("no-scroll"); };
-function enableScroll(el)  { el.classList.remove("no-scroll"); };
+function disableScroll(el) { el.classList.add("no-scroll"); }
+function enableScroll(el)  { el.classList.remove("no-scroll"); }
 
 // Returns whether the click event *e* is inside element *el*.
 function isOutside(el, e) {
@@ -1416,7 +1417,7 @@ function parseValue(v, defaultV = 0) {
 }
 
 function scaleStat(x, stat) {
-  if (x <= 0) return 0;
+  if (x < 0) return 0;
   if (x >= 20) return state.settings.statScale === "internal" ? 20 : 5.5;
   if (state.settings.statScale === "internal" || stat === 12) return x;
   return toLvl(x);
@@ -1425,14 +1426,20 @@ function scaleStatAbs(x) {
   if (state.settings.statScale === "internal") return x;
   return x/4;
 }
+const getMin = () => 0;
+const getScaledMin = stat => {
+ if (stat === 12) return 0;
+ return state.settings.statScale === "internal" ? 0 : .5;
+}
+const getMax = stat => stat === 12 ? 2 : 20;
 const getScaledMax = stat => {
   if (stat === 12) return 2;
   return state.settings.statScale === "internal" ? 20 : 5.5;
-}
+};
 const getScaledStep = stat => {
   if (stat === 12) return 1;
   return state.settings.statScale === "internal" ? 1 : .25;
-}
+};
 const getScaledPlaceholder = stat => {
   if (stat === 12) return 2;
   return state.settings.statScale === "internal" ? 20 : 6;
@@ -1441,8 +1448,8 @@ function unscaleStat(x, stat) {
   if (state.settings.statScale === "internal" || stat === 12) return x;
   return fromLvl(x);
 }
-const toLvl = n => (n+2) / 4;
-const fromLvl = n => Math.max(n*4 - 2, 0);
+const toLvl = n => (n+2) / 4;
+const fromLvl = n => Math.max(n*4 - 2, 0);
 function getStatLocaleOptions() {
   return state.settings.statScale === "internal" ? { minimumIntegerDigits: 1 } : { minimumFractionDigits: 2 };
 }

@@ -17,16 +17,16 @@ onmessage = e => {
       response[1] = getRandomCombo(...args);
       break;
     case "getRandomDriver":
-     response[1] = getRandomDriver(...args);
+     response[1] = getRandomDriver();
      break;
     case "getRandomBody":
-      response[1] = getRandomBody(...args);
+      response[1] = getRandomBody();
       break;
     case "getRandomTire":
-      response[1] = getRandomTire(...args);
+      response[1] = getRandomTire();
       break;
     case "getRandomGlider":
-      response[1] = getRandomGlider(...args);
+      response[1] = getRandomGlider();
       break;
     case "listCombos":
       response[1] = listCombos(...args);
@@ -2153,7 +2153,7 @@ const bodyVariants = {
       inklingM1: "inklingM1",
       inklingM2: "inklingM2"
   }
-}
+};
 function getBodyVariant(body, driver) {
   const variant = bodyVariants[body]?.[driver];
   if (variant != undefined) return "-" + variant;
@@ -2388,7 +2388,7 @@ function getComboName(driver, body, tire, glider) {
     if (driverMorphs.pre) return fuse(driverMorphs.pre, bodyMorphs.full);
     if (driverMorphs.or) return fuse(driverMorphs.or, bodyMorphs.full);
   }
-  if ((!driverMorphs.pre || !driverMorphs.post)) {
+  if (!driverMorphs.pre || !driverMorphs.post) {
     for (const form of Object.keys(driverMorphs)) {
       switch (form) {
         case "pre":

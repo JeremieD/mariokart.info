@@ -396,7 +396,6 @@ const strings = {
       rosalina: "Rosalina",
       marioTan: "Mario tanuki",
       peachCat: "Peach felina",
-      rosalina: "Rosalina",
         yoshi1: "Yoshi azul claro",
         yoshi2: "Yoshi negro",
         yoshi3: "Yoshi rojo",

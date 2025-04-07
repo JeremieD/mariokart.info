@@ -1,4 +1,6 @@
 @use "prefix" as *;
+@use "responsive" as *;
+@use "colors" as *;
 @use "type" as *;
 
 .meter {
@@ -26,3 +28,55 @@
     background-color: currentColor;
   }
 }
+
+#combo-stats {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  margin-top: 1rem;
+
+  &>div {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: .375rem;
+    align-items: center;
+
+    label:not(:first-of-type) {
+      text-align: right;
+      opacity: 0;
+      @include high-contrast { opacity: 1; }
+    }
+    &.show label:not(:first-of-type) { animation: show 5s; }
+    @keyframes show {
+      0% { opacity: 0; }
+      5% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+  }
+
+  output {
+    font-size: calc(.875*var(--font-size-1));
+    letter-spacing: .025em;
+    line-height: 1;
+    color: var(--color-yellow);
+    font-feature-settings: "tnum" on;
+    width: 3.5ch;
+  }
+
+  &.internal output {
+    width: 2ch;
+    text-align: right;
+  }
+
+  &.values-hidden>div {
+    grid-template-columns: auto 1fr;
+    output { display: none; }
+  }
+}
+
+@include lightmode { #combo-stats output { color: var(--color-yellow-dark); } }
+@include lightmode {
+@include high-contrast {
+  #combo-stats output { color: inherit !important; }
+} }

@@ -585,7 +585,6 @@ function closeChangelogDialog() {
   drawChangelogDialog();
 }
 
-
 function openCreditsDialog() {
   state.openedDialog = "credits";
   drawCreditsDialog();
@@ -614,13 +613,11 @@ function readURLParams() {
 
   state.selectedSlotID = BCode == undefined ? "A" : "B";
 
-  const aCombo = Stats.post("getCombo", aCode ?? "MAAA")
-  .then(combo => {
+  Stats.post("getCombo", aCode ?? "MAAA").then(combo => {
     whenViewReady(() => { setCombo(combo, "A", true); });
   });
 
-  const bCombo = Stats.post("getCombo", bCode ?? BCode ?? "LMSA")
-  .then(combo => {
+  Stats.post("getCombo", bCode ?? BCode ?? "LMSA").then(combo => {
     whenViewReady(() => { setCombo(combo, "B", true); });
   });
 }

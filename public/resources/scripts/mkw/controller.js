@@ -91,10 +91,11 @@ const state = {
   menuOpened: false,
   lastState: {
     aCode: "",
-    bCode: "" }
+    bCode: ""
+  }
 };
 
-const Stats = new Worker("/resources/scripts/mkx/stats-worker.js");
+const Stats = new Worker("/resources/scripts/mkw/stats-worker.js");
 Stats.exchanges = 0;
 Stats.post = (...args) => {
   return new Promise((resolve, reject) => {
@@ -617,13 +618,11 @@ function readURLParams() {
 
   state.selectedSlotID = BCode == undefined ? "A" : "B";
 
-  const aCombo = Stats.post("getCombo", aCode ?? "MAAA")
-  .then(combo => {
+  Stats.post("getCombo", aCode ?? "MAAA").then(combo => {
     whenViewReady(() => { setCombo(combo, "A", true); });
   });
 
-  const bCombo = Stats.post("getCombo", bCode ?? BCode ?? "LMSA")
-  .then(combo => {
+  Stats.post("getCombo", bCode ?? BCode ?? "LMSA").then(combo => {
     whenViewReady(() => { setCombo(combo, "B", true); });
   });
 }
@@ -696,14 +695,14 @@ function toggleCookies() {
     commitState();
 
   } else { // Delete cookies
-    localStorage.removeItem("mkx");
+    localStorage.removeItem("mkw");
   }
 
   drawSettingsDialog();
 }
 
 function readState() {
-  const data = JSON.parse(localStorage.getItem("mkx"));
+  const data = JSON.parse(localStorage.getItem("mkw"));
   if (!data?.settings?.allowCookies) return;
 
   for (const prop of Object.keys(data.settings)) {
@@ -737,5 +736,5 @@ function commitState() {
     favorites: serializeFavorites(state.favorites),
     formula: structuredClone(state.formula)
   };
-  localStorage.setItem("mkx", JSON.stringify(data));
+  localStorage.setItem("mkw", JSON.stringify(data));
 }

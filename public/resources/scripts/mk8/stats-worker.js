@@ -1676,7 +1676,7 @@ const bodyVariants = {
     miiM: "blue",
     miiL: "purple"
   }
-}
+};
 function getBodyVariant(body, driver) {
   const variant = bodyVariants[body]?.[driver];
   if (variant != undefined) return "-" + variant;

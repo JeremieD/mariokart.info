@@ -11,7 +11,7 @@
 
   <link rel="canonical" href="https://mariokart.info/mk7">
 
-  <link rel="icon" type="image/png" href="/resources/graphics/mk7.png">
+  <link rel="icon" type="image/png" href="/resources/graphics/mk7.webp">
 
   <!-- Preloads -->
   <link rel="preload" href="/resources/fonts/akkurat/Akkurat-Regular.woff2" as="font" type="font/woff2" crossorigin>
@@ -40,14 +40,14 @@
       <button class="big-type square" id="menu-open" title="Switch Game"><jd-icon icon="menu"></jd-icon>
         <nav id="menu" inert>
           <ol>
-            <li><a href="/mkx"><img src="/resources/graphics/mkx.png" loading="lazy" width="76" height="76" />Mario Kart X Combo Builder</a></li>
-            <li><a href="/mk8dx"><img src="/resources/graphics/mk8dx.png" loading="lazy" width="76" height="76" />Mario Kart 8 Deluxe Combo Builder</a></li>
-            <li><a href="/mk8"><img src="/resources/graphics/mk8.png" loading="lazy" width="76" height="76" />Mario Kart 8 Combo Builder</a></li>
-            <li><a href="#"><img src="/resources/graphics/mk7.png" loading="lazy" width="76" height="76" />Mario Kart 7 Combo Builder</a></li>
+            <li><a href="/mkw"><img src="/resources/graphics/mkw.svg" loading="lazy" width="76" height="76" alt="Mario Kart World Logo" />Mario Kart World Combo Builder</a></li>
+            <li><a href="/mk8dx"><img src="/resources/graphics/mk8dx.webp" loading="lazy" width="76" height="76" alt="Mario Kart 8 Deluxe Logo" />Mario Kart 8 Deluxe Combo Builder</a></li>
+            <li><a href="/mk8"><img src="/resources/graphics/mk8.webp" loading="lazy" width="76" height="76" alt="Mario Kart 8 Logo" />Mario Kart 8 Combo Builder</a></li>
+            <li><a href="#"><img src="/resources/graphics/mk7.webp" loading="lazy" width="76" height="76" alt="Mario Kart 7 Logo" />Mario Kart 7 Combo Builder</a></li>
           </ol>
         </nav>
       </button>
-      <div id="logo"><img src="/resources/graphics/mk7.png" loading="lazy" width="76" height="76" /><h1>Mario Kart 7 <span>Combo Builder</span></h1><sup title="In beta.">β</sup></div>
+      <div id="logo"><img src="/resources/graphics/mk7.webp" loading="lazy" width="76" height="76" alt="Mario Kart 7 Logo" /><h1>Mario Kart 7 <span>Combo Builder</span></h1><sup title="In beta.">β</sup></div>
     </div>
     <div class="button-group">
       <button class="big-type square" id="help-open" title="Help"><jd-icon icon="help"></jd-icon></button>
@@ -59,9 +59,9 @@
     <section id="builder">
       <div id="combo-topbar">
         <div class="button-group">
-          <div class="button-group radio favourites">
-            <button id="favorite" class="square" title="Save this combo to your favorites."><jd-icon icon="heart"></jd-icon></button>
-            <button id="favorites-open" title="Open the favorites menu."><jd-icon icon="chevron-down"></jd-icon></button>
+          <div class="button-group radio favorites">
+            <button id="favorite" class="square" title="Save this combo to your favourites."><jd-icon icon="heart"></jd-icon></button>
+            <button id="favorites-open" title="Open the favourites menu."><jd-icon icon="chevron-down"></jd-icon></button>
           </div>
           <button id="random-combo" title="Randomize combo parts.">Random</button>
           <button id="share-combo" class="big-type square" title="Copy combo link to clipboard."><jd-icon icon="link"></jd-icon></button>
@@ -80,15 +80,15 @@
               <jd-icon id="driver-lock-display" icon="lock"></jd-icon>
             </button>
             <button id="body" name="Change body...">
-              <img id="body-img" width="128" height="64"/>
+              <img id="body-img" width="100" height="64"/>
               <jd-icon id="body-lock-display" icon="lock"></jd-icon>
             </button>
             <button id="tire" name="Change tire...">
-              <img id="tire-img" width="128" height="64"/>
+              <img id="tire-img" width="100" height="64"/>
               <jd-icon id="tire-lock-display" icon="lock"></jd-icon>
             </button>
             <button id="glider" name="Change glider...">
-              <img id="glider-img" width="128" height="64"/>
+              <img id="glider-img" width="100" height="64"/>
               <jd-icon id="glider-lock-display" icon="lock"></jd-icon>
             </button>
           </div>
@@ -232,8 +232,8 @@
   <dialog id="favorites-dialog" inert class="overflow full-size">
     <header class="sticky">
       <hgroup>
-        <h2>Favorites</h2>
-        <button id="favorites-close" class="icon inline" title="Close Favorites."><jd-icon icon="x"></jd-icon></button>
+        <h2>Favourites</h2>
+        <button id="favorites-close" class="icon inline" title="Close Favourites."><jd-icon icon="x"></jd-icon></button>
       </hgroup>
     </header>
     <div><ol id="favorites-list"></ol></div>
@@ -582,12 +582,12 @@
     </header>
     <div>
       <h3>Formula Coefficients</h3>
-      <p>Every combo is scored by multiplying each stat’s value by&nbsp;its <em>coefficient</em> and summing them all.</p>
+      <p>Every combo is scored by multiplying each stat’s value by&nbsp;its&nbsp;<em>coefficient</em> and summing them all.</p>
       <p>A positive coefficient <em>maximizes</em> the stat, a&nbsp;negative one <em>minimizes</em> it, and zero means the stat is&nbsp;ignored.</p>
 
       <h3>Speed and Handling</h3>
       <p>The Speed and Handling stats are <em>unified</em> versions of their three&nbsp;component stats.</p>
-      <p>Internally, the coefficient you set for these is split into the component stats as follows: 85%&nbsp;to <em class="ground">ground</em>, 10% to <em class="air">air</em> and 5%&nbsp;to&nbsp;<em class="underwater">underwater</em>.</p>
+      <p>Internally, the coefficient you set for these is split into component stats as follows: 85%&nbsp;to <em class="ground">ground</em>, 10%&nbsp;to&nbsp;<em class="air">air</em>, and&nbsp;5%&nbsp;to&nbsp;<em class="underwater">underwater</em>.</p>
 
       <h3>Filters and Locks</h3>
       <p>You can set <em>minimum</em> and <em>maximum</em> values for each stat. Combos&nbsp;outside this range will be excluded.</p>
@@ -607,49 +607,51 @@
     </header>
     <div>
       <h3>Combo Parts</h3>
-      <p>A combo is comprised of a <em>driver</em>, a <em>body</em>, <em>wheels</em>, and a <em>glider</em>.</p>
-      <p>Tap any combo part to change it.</p>
+      <p>A combo consists of a <em>driver</em>, a <em>body</em>, <em>wheels</em>, and&nbsp;a&nbsp;<em>glider</em>. Tap&nbsp;any combo part to change it.</p>
 
       <h3>Part Classes</h3>
       <p>Parts that have the same stats as your current combo have a&nbsp;dashed outline in the part picker.</p>
-      <p>Note that frame size can change between drivers of the same&nbsp;class.</p>
+      <p>Note that frame size can differ between drivers of&nbsp;the same&nbsp;class.</p>
 
       <h3>Locks</h3>
-      <p>You can lock a part to limit which combos appear in the Dominant, Similar and Custom Search tabs. This can help you find interesting combos according to your style preferences.</p>
+      <p>You can lock a part to limit which combos appear in the Dominant, Similar, and Custom Search tabs. This&nbsp;can help you find interesting combos according to&nbsp;your style preferences.</p>
 
       <h3>Random Combo</h3>
-      <p>Tap the Random button to replace your currently active combo with random parts. <em>Lock</em> individual parts to keep them.</p>
+      <p>Tap the Random button to replace your currently active combo with random parts.</p>
+      <p><em>Lock</em> individual parts to keep them.</p>
 
       <h3>Mini-Turbo (<abbr class="stat-code">MTB</abbr>)</h3>
-      <p>The hidden Mini-Turbo stat determines the length drift&nbsp;boosts.</p>
+      <p>This hidden stat determines the length of drift&nbsp;boosts.</p>
 
       <h3>Speed (<abbr class="stat-code">SPD</abbr>)</h3>
-      <p>Speed has 3 stats, only the first of which is displayed in-game. They are <em class="ground">Ground (<abbr class="stat-code">SPDGR</abbr>)</em>, <em class="underwater">Water&nbsp;(<abbr class="stat-code">SPDWT</abbr>)</em> and <em class="air">Air (<abbr class="stat-code">SPDAR</abbr>)</em>. They&nbsp;determine your top speed in each medium.</p>
+      <p>Speed has 3 stats, only the first of which is displayed in-game. They are <em class="ground">Ground (<abbr class="stat-code">SPDGR</abbr>)</em>, <em class="underwater">Water&nbsp;(<abbr class="stat-code">SPDWT</abbr>)</em>, and&nbsp;<em class="air">Air (<abbr class="stat-code">SPDAR</abbr>)</em>. They&nbsp;determine your top speed in each medium.</p>
 
       <h3>Acceleration (<abbr class="stat-code">ACC</abbr>)</h3>
-      <p>Acceleration determines how fast you can reach top speed.</p>
+      <p>Determines how fast you can reach top speed.</p>
 
       <h3>Weight (<abbr class="stat-code">WGT</abbr>)</h3>
-      <p>Weight determines the physics of collisions with other vehicles. Higher weights push lower weights.</p>
+      <p>Determines the physics of collisions with other vehicles. Higher&nbsp;weights push lower weights.</p>
 
       <h3>Handling (<abbr class="stat-code">HND</abbr>)</h3>
-      <p>Handling has 3 stats, only the first of which is displayed in-game. They are <em class="ground">Ground (<abbr class="stat-code">HNDGR</abbr>)</em>, <em class="underwater">Water&nbsp;(<abbr class="stat-code">HNDWT</abbr>)</em> and <em class="air">Air (<abbr class="stat-code">HNDAR</abbr>)</em>. They&nbsp;determine how sharp and wide you can drift and steer in each medium.</p>
+      <p>Handling has 3 stats, only the first of which is displayed in-game. They are <em class="ground">Ground (<abbr class="stat-code">HNDGR</abbr>)</em>, <em class="underwater">Water&nbsp;(<abbr class="stat-code">HNDWT</abbr>)</em>, and&nbsp;<em class="air">Air (<abbr class="stat-code">HNDAR</abbr>)</em>. They&nbsp;determine how sharp and wide you can drift and steer in each medium.</p>
 
       <h3>Off-Road (<abbr class="stat-code">OFF</abbr>)</h3>
-      <p>Off-Road determines how much you slip and slow down on terrain like sand, snow, ice and wet asphalt.</p>
+      <p>Determines how much you slip and slow down on terrain like sand, snow, and ice.</p>
 
       <h3>Stability (<abbr class="stat-code">STB</abbr>)</h3>
-      <p>Stability determines how much the tires stick to the ground.</p>
+      <p>Determines how much the tires stick to the&nbsp;ground.</p>
 
       <h3>Drift (<abbr class="stat-code">DFT</abbr>)</h3>
-      <p>Drift determines how much you slip outwards when drifting.</p>
+      <p>Determines how much you slip outward when&nbsp;drifting.</p>
 
       <h3>Frame Size</h3>
-      <p>The driver determines the combo’s frame size between small, medium, and large. This affects your in-game hitbox.</p>
+      <p>The driver determines the combo’s frame size between small, medium, and large. This affects your in&#8209;game hitbox.</p>
 
       <br/>
 
-      <p>Visit the <a href="https://www.mariowiki.com/Mario_Kart_8_Deluxe" target="_blank">Mario Wiki</a> for more info about the game.</p>
+      <ul class="arrow-list">
+        <li>Visit the <a href="https://www.mariowiki.com/Mario_Kart_7" target="_blank">Mario Wiki</a> for more info about the game.</li>
+      </ul>
     </div>
   </dialog>
 
