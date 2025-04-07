@@ -22,7 +22,10 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
+      aspect-ratio: 25 / 16;
     }
+    &:not(button) img { width: auto; }
+    &:first-child img { aspect-ratio: 1 / 1; }
   }
 }
 

@@ -12,7 +12,7 @@ const fallbacks = {
   "nl": [ "en-US" ],
   "it": [ "en-US" ],
   "ko": [ "en-US" ],
-  "pt": [ , "en-US" ],
+  "pt": [ "en-US" ],
   "es-MX": [ "es-ES", "en-US" ],
   "es-ES": [ "es-MX", "en-US" ]
 };

@@ -1,4 +1,5 @@
 @use "prefix" as *;
+@use "colors" as *;
 
 jd-slider {
   --size: 1.625rem;
@@ -39,6 +40,9 @@ jd-slider {
   }
   &.held .knob { transition: none; }
 }
-jd-slider+input {
-  flex-basis: 33%;
+jd-slider+input { flex-basis: 33%; }
+
+@include lightmode {
+  jd-slider.positive .knob { background-color: var(--color-positive); }
+  jd-slider.negative .knob { background-color: var(--color-negative); }
 }

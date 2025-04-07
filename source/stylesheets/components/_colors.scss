@@ -1,3 +1,5 @@
+@use "responsive" as *;
+
 @mixin darkmode {
   @media (prefers-color-scheme: dark) { @content; }
 }
@@ -7,7 +9,7 @@
 }
 
 :root {
-  // Colours
+  // Colors
   --color-dark1: #111;
   --color-dark2: #161616;
   --color-dark3: #1C1C1C;
@@ -31,7 +33,11 @@
   --color-pink: #E4A;
   --color-brown: #663D0A;
 
-  // Semantic Colours
+  --color-yellow-dark: #B90;
+  --color-green-dark: #090;
+  --color-orange-dark: #D71;
+
+  // Semantic Colors
   --color-background: var(--color-light1);
   --color-foreground: var(--color-light3);
   --color-foreground-sudbued: var(--color-light2);
@@ -45,6 +51,8 @@
   --color-accent: var(--color-purple);
   --color-positive: var(--color-green);
   --color-negative: var(--color-orange);
+  --color-positive-text: var(--color-green-dark);
+  --color-negative-text: var(--color-orange-dark);
 
   // Default Theme
   color: var(--color-text);
@@ -56,8 +64,8 @@
 .underwater { color: var(--color-blue) !important; }
 .air { color: var(--color-cyan) !important; }
 
-.positive { color: var(--color-positive) !important; }
-.negative { color: var(--color-negative) !important; }
+.positive { color: var(--color-positive-text) !important; }
+.negative { color: var(--color-negative-text) !important; }
 .invalid { color: var(--color-red); }
 
 @include darkmode {
@@ -71,5 +79,7 @@
     --color-overlay: var(--color-dark5);
     --color-inverse: var(--color-light5);
     --color-text: var(--color-light1);
+    --color-positive-text: var(--color-green);
+    --color-negative-text: var(--color-orange);
   }
 }

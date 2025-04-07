@@ -452,7 +452,6 @@ const strings = {
       rosalina: "Rosalina",
       marioTan: "Mario tanuki",
       peachCat: "Peach felina",
-      rosalina: "Rosalina",
         birdo1: "Birdo (celeste)",
         birdo2: "Birdo (negra)",
         birdo3: "Birdo (roja)",
