@@ -11,6 +11,7 @@ RewriteRule "^mk8dx\.html$" "/mk8dx" [R=permanent,END]
 RewriteRule "^mk8dx$" "/mk8dx.html" [END]
 RewriteRule "^mkw\.html$" "/mkw" [R=permanent,END]
 RewriteRule "^mkw$" "/mkw.html" [END]
+ErrorDocument 404 /404.html
 
 <Limit GET POST>
     Order Deny,Allow
