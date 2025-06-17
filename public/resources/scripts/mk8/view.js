@@ -580,7 +580,7 @@ function drawCurrentCombo() {
     default: throw "Error: Unknown size: “" + combo.classes.driver[statIndex.size] + "”";
   }
   detailStr += combo.parts.body.type == "sport" ? ", Inside Drift" : "";
-  V.combo.details.innerText = detailStr;
+  V.combo.details.children[0].innerText = detailStr;
 
   // Meters
   V.combo.meters.classList.toggle("values-hidden", !state.settings.showMeterValues);
