@@ -43,6 +43,6 @@
     gap: .25em;
     height: 1em;
     jd-icon { height: 1em; }
-    cursor: help;
+    &[title] { cursor: help; }
   }
 }
