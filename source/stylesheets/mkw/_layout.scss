@@ -1,4 +1,5 @@
 @use "../components/responsive" as *;
+@use "../components/prefix" as *;
 @use "../components/type" as *;
 @use "../components/meter" as *;
 @use "../components/button" as *;
@@ -69,6 +70,26 @@
     }
   }
 }
+
+.combo {
+  justify-content: center;
+  height: 6rem;
+  & > * {
+    height: 100%;
+    width: auto;
+  }
+}
+
+
+.meter {
+  @include mask(url(/resources/graphics/metermask-4.svg));
+  @include mask-size(100% 100%);
+  &::after {
+    width: calc(var(--value) / 4 * 100%);
+  }
+}
+
+#combo-stats output { width: 2.5ch; }
 
 @keyframes pulse {
   25%  { scale: .5; }

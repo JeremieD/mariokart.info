@@ -4,12 +4,8 @@
 state.parts.then(parts => {
   let driverCount = 0;
   let bodyCount = 0;
-  let tireCount = 0;
-  let gliderCount = 0;
   const driverCodes = [];
   const bodyCodes = [];
-  const tireCodes = [];
-  const gliderCodes = [];
 
   for (const driver of parts.drivers) {
     if (driver.folder) {
@@ -40,80 +36,53 @@ state.parts.then(parts => {
       bodyCodes.push(body.code);
     }
   }
-  for (const tire of parts.tires) {
-    tireCount++;
-    if (tireCodes.includes(tire.code)) {
-      console.error("Duplicate tire code: " + tire.code);
-      continue;
-    }
-    tireCodes.push(tire.code);
-  }
-  for (const glider of parts.gliders) {
-    gliderCount++;
-    if (gliderCodes.includes(glider.code)) {
-      console.error("Duplicate glider code: " + glider.code);
-      continue;
-    }
-    gliderCodes.push(glider.code);
-  }
 
-  const codeSpace =  ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",
+  const codeSpace = [ "A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",
                       "a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",
-                      "0","1","2","3","4","5","6","7","8","9"];
+                      "0","1","2","3","4","5","6","7","8","9" ];
   const availableDriverCodes = [];
   const availableBodyCodes = [];
-  const availableTireCodes = [];
-  const availableGliderCodes = [];
   for (const symbol of codeSpace) {
     if (!driverCodes.includes(symbol)) availableDriverCodes.push(symbol);
     if (!bodyCodes.includes(symbol))   availableBodyCodes.push(symbol);
-    if (!tireCodes.includes(symbol))   availableTireCodes.push(symbol);
-    if (!gliderCodes.includes(symbol)) availableGliderCodes.push(symbol);
   }
   console.log("Available driver codes: " + availableDriverCodes);
   console.log("Available body codes: " + availableBodyCodes);
-  console.log("Available tire codes: " + availableTireCodes);
-  console.log("Available glider codes: " + availableGliderCodes);
 });
 
 // Test important combos' stats
-testStats("mario", "std", "std", "super", [4, 3.5, 3.5, 3.5, 3.5, 1]); // Mario Std
-testStats("luigi", "mach", "slim", "super", [4.25, 2.75, 3.75, 3.75, 2.5, 1]); // Luigi Mach
-testStats("yoshi", "teddy", "roller", "cloud", [2.75, 4.75, 2.25, 4.25, 3.5, 1]); // Yoshi Meta
-testStats("waluigi", "wiggler", "roller", "paper", [3.5, 4.25, 3, 3.5, 3.25, 2]); // Old Meta
-testStats("shyguy4", "biddy", "roller", "cloud", [1.75, 5.5, 1.5, 5, 4, 0]); // Jej
-testStats("marioGold", "gold", "gold", "gold", [5, 1.75, 5.25, 3, 1.5, 1]); // All Gold
-testStats("wario", "wagon", "offroad", "wario", [5.5, 1.75, 5.25, 1.5, 3.75, 2]); // Wario
-testStats("bowser", "koopa", "monsterHot", "bowser", [4.75, 2.25, 5.25, 2, 4.25, 2]); // Bowser
-testStats("lemmy", "landship", "button", "plane", [2, 5, 1.25, 5, 3.75, 0]);
-testStats("wendy", "gla", "roller", "bowser", [2.75, 4, 2.5, 3.75, 3.5, 0]);
-testStats("kingboo", "pwing", "offroad", "gold", [5, 2.25, 4.5, 2.25, 3.25, 2]);
-testStats("villagerM", "city", "leaf", "paper", [3, 4.75, 2.25, 4.25, 3, 1]); // AC
-testStats("inklingF2", "splat", "rollerBlue", "super", [3.25, 4.25, 1.75, 4, 3.5, 1]);
-testStats("inklingM1", "atvStd", "slickPurple", "cloud", [4.5, 2.25, 3.75, 2.75, 2.5, 1]);
-testStats("link", "master", "triforce", "hylian", [4.75, 2.5, 4, 2.75, 3.25, 2]); // Zelda
-testStats("link1", "masterZero", "ancient", "paraglider", [4.5, 2.25, 4.75, 2.75, 5, 2]); // BOTW
-testStats("isabelle", "master", "monster", "cloud", [3.25, 3.5, 2.75, 3.5, 3.25, 0]);
-testStats("toadette", "sneeker", "ancient", "parachute", [3.25, 3.5, 2.75, 3.5, 3.25, 0]);
-testStats("marioBb", "biddy", "roller", "cloud", [1.25, 5.75, 1, 5.25, 4, 0]);
-testStats("wario", "circuit", "slickPurple", "super", [5.75, 1.5, 4.75, 2, 1.5, 2]);
-testStats("petey", "steel", "monster", "gold", [4.75, 2, 5.75, 2, 3.5, 2]);
-testStats("peachBb", "pipe", "roller", "super", [1.75, 5, 1.25, 5.75, 4.25, 0]);
-testStats("koopa", "tanooki", "monster", "super", [3.25, 3, 3.25, 4, 5.75, 0]);
-testStats("petey", "wagon", "monster", "super", [5, 1.75, 5.5, 1.75, 4.25, 2]);
+testStats("mario", "std", [2, 2.2, 1.8, 2, 1]); // Mario Std
+testStats("mario", "dorrie", [2.2, 2.2, 2.2, 1.4, 1]); // Mario Std
+testStats("peach", "plush", [1.8, 2.4, 1.6, 2.2, 1]);
+testStats("yoshi", "frog", [2, 2.2, 1.8, 2, 1]);
+testStats("bowser", "bruiser", [3.2, .8, 3, 1, 2]);
+testStats("bowser", "std", [2.6, 1.6, 2.4, 1.4, 2]);
+testStats("bowser", "dorrie", [2.6, 1.6, 2.8, 1, 2]);
+testStats("bowserJr", "trike", [2.4, 1.6, 2.2, 1.8, 1]);
+testStats("toad", "dump", [2.2, 1.8, 2, 2, 0]);
+testStats("lakitu", "cloud", [1.8, 2.4, 1.6, 2.2, 0]);
+testStats("kingboo", "reel", [2.8, 1.4, 2.2, 1.6, 2]);
+testStats("shyguy", "carpet", [1.8, 2.4, 1.6, 2.2, 0]);
+testStats("wario", "chopper", [2.8, 1.4, 2.2, 1.6, 2]);
+testStats("wario", "chopper", [2.8, 1.4, 2.2, 1.6, 2]);
+testStats("rosalina", "starSled", [3, 1, 2.6, 1.4, 2]);
+testStats("biddy", "biddy", [1, 3.4, .8, 2.8, 0]);
+testStats("daisyBb", "zoom", [1.4, 2.8, 1.2, 2.6, 0]);  // Lightest adjust
+testStats("bowser", "dasher", [2.6, 1.4, 2.6, 1.4, 2]); // Heaviest adjust
+testStats("stingby", "bee", [1.8, 2.4, 1.6, 2.2, 0]);
+// testStats("dolphin", "dolphin", [2, 2.2, 1.8, 2, 1]);
 
 testRandomDistribution();
 
-// In-game stats: spdGr [1], acc[5], wgt[6], hndGr[7], trn[11], (size[13])
-function testStats(driver, body, tire, glider, expectedStats) {
-  Stats.post("getCombo", driver, body, tire, glider)
+// In-game stats: spd [0], acc[1], wgt[2], hnd[3], (size[4])
+function testStats(driver, body, expectedStats) {
+  Stats.post("getCombo", driver, body)
   .then(combo => {
-    if (toLvl(combo.lvl[1])  !== expectedStats[0]) throw new Error("spdGr does not match for combo " + combo.code);
-    if (toLvl(combo.lvl[5])  !== expectedStats[1]) throw new Error("acc does not match for combo " + combo.code);
-    if (toLvl(combo.lvl[6])  !== expectedStats[2]) throw new Error("wgt does not match for combo " + combo.code);
-    if (toLvl(combo.lvl[7])  !== expectedStats[3]) throw new Error("hndGr does not match for combo " + combo.code);
-    if (toLvl(combo.lvl[11]) !== expectedStats[4]) throw new Error("trn does not match for combo " + combo.code);
-    if (combo.size !== expectedStats[5]) throw new Error("size does not match for combo " + combo.code);
+    if (toLvl(combo.lvl[0])  !== expectedStats[0]) throw new Error("spd does not match for combo " + combo.code);
+    if (toLvl(combo.lvl[1])  !== expectedStats[1]) throw new Error("acc does not match for combo " + combo.code);
+    if (toLvl(combo.lvl[2])  !== expectedStats[2]) throw new Error("wgt does not match for combo " + combo.code);
+    if (toLvl(combo.lvl[3])  !== expectedStats[3]) throw new Error("hnd does not match for combo " + combo.code);
+    if (combo.size !== expectedStats[4]) throw new Error("size does not match for combo " + combo.code);
   });
 }
 
@@ -126,8 +95,6 @@ function testRandomDistribution() {
   Promise.all(combos).then(combos => {
     const drivers = {};
     const bodies = {};
-    const tires = {};
-    const gliders = {};
 
     for (const combo of combos) {
       if (drivers[combo.driverID] == undefined) {
@@ -141,20 +108,8 @@ function testRandomDistribution() {
       } else {
         bodies[combo.bodyID]++;
       }
-
-      if (tires[combo.tireID] == undefined) {
-        tires[combo.tireID] = 1;
-      } else {
-        tires[combo.tireID]++;
-      }
-
-      if (gliders[combo.gliderID] == undefined) {
-        gliders[combo.gliderID] = 1;
-      } else {
-        gliders[combo.gliderID]++;
-      }
     }
 
-    console.log(drivers, bodies, tires, gliders);
+    console.log(drivers, bodies);
   });
 }

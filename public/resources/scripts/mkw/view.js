@@ -9,8 +9,6 @@ const V = {
   custom: {},
   drivers: {},
   bodies: {},
-  tires: {},
-  gliders: {},
   favorites: {},
   formula: {},
   help: {},
@@ -35,34 +33,12 @@ whenDOMReady(() => {
   V.combo.body       = document.getElementById("body");
   V.combo.bodyImg    = document.getElementById("body-img");
   V.combo.bodyLock   = document.getElementById("body-lock-display");
-  V.combo.tire       = document.getElementById("tire");
-  V.combo.tireImg    = document.getElementById("tire-img");
-  V.combo.tireLock   = document.getElementById("tire-lock-display");
-  V.combo.glider     = document.getElementById("glider");
-  V.combo.gliderImg  = document.getElementById("glider-img");
-  V.combo.gliderLock = document.getElementById("glider-lock-display");
   V.combo.details    = document.getElementById("combo-details");
   V.combo.meters     = document.getElementById("combo-stats");
 
-  V.combo.mtb = {
-    meter: document.getElementById("mtb-meter"),
-    value: document.getElementById("mtb-value")
-  };
-  V.combo.spdGr = {
-    meter: document.getElementById("spdGr-meter"),
-    value: document.getElementById("spdGr-value")
-  };
-  V.combo.spdAg = {
-    meter: document.getElementById("spdAg-meter"),
-    value: document.getElementById("spdAg-value")
-  };
-  V.combo.spdWt = {
-    meter: document.getElementById("spdWt-meter"),
-    value: document.getElementById("spdWt-value")
-  };
-  V.combo.spdAr = {
-    meter: document.getElementById("spdAr-meter"),
-    value: document.getElementById("spdAr-value")
+  V.combo.spd = {
+    meter: document.getElementById("spd-meter"),
+    value: document.getElementById("spd-value")
   };
   V.combo.acc = {
     meter: document.getElementById("acc-meter"),
@@ -72,33 +48,10 @@ whenDOMReady(() => {
     meter: document.getElementById("wgt-meter"),
     value: document.getElementById("wgt-value")
   };
-  V.combo.hndGr = {
-    meter: document.getElementById("hndGr-meter"),
-    value: document.getElementById("hndGr-value")
+  V.combo.hnd = {
+    meter: document.getElementById("hnd-meter"),
+    value: document.getElementById("hnd-value")
   };
-  V.combo.hndAg = {
-    meter: document.getElementById("hndAg-meter"),
-    value: document.getElementById("hndAg-value")
-  };
-  V.combo.hndWt = {
-    meter: document.getElementById("hndWt-meter"),
-    value: document.getElementById("hndWt-value")
-  };
-  V.combo.hndAr = {
-    meter: document.getElementById("hndAr-meter"),
-    value: document.getElementById("hndAr-value")
-  };
-  V.combo.trn = {
-    meter: document.getElementById("trn-meter"),
-    value: document.getElementById("trn-value")
-  };
-  V.combo.inv = {
-    meter: document.getElementById("inv-meter"),
-    value: document.getElementById("inv-value")
-  };
-
-  V.combo.spdMultimeter = document.getElementById("spd-multimeter");
-  V.combo.hndMultimeter = document.getElementById("hnd-multimeter");
 
   V.dominant.rows    = document.getElementById("dominant-combos-rows");
   V.dominant.count   = document.getElementById("dominant-combos-count");
@@ -123,18 +76,6 @@ whenDOMReady(() => {
   V.bodies.lockLabel = document.getElementById("body-lock-label");
   V.bodies.grid= document.getElementById("body-grid");
 
-  V.tires.dialog = document.getElementById("tire-picker");
-  V.tires.title = document.getElementById("tire-title");
-  V.tires.lock = document.getElementById("tire-lock");
-  V.tires.lockLabel = document.getElementById("tire-lock-label");
-  V.tires.grid = document.getElementById("tire-grid");
-
-  V.gliders.dialog = document.getElementById("glider-picker");
-  V.gliders.title = document.getElementById("glider-title");
-  V.gliders.lock = document.getElementById("glider-lock");
-  V.gliders.lockLabel = document.getElementById("glider-lock-label");
-  V.gliders.grid = document.getElementById("glider-grid");
-
   V.favorites.open = document.getElementById("favorites-open");
   V.favorites.close = document.getElementById("favorites-close");
   V.favorites.dialog = document.getElementById("favorites-dialog");
@@ -153,19 +94,10 @@ whenDOMReady(() => {
     V.formula[stat].min    = document.getElementById(`formula-${stat}-min`);
     V.formula[stat].max    = document.getElementById(`formula-${stat}-max`);
   }
-  V.formula.spd.use = document.getElementById("formula-use-spd");
-  V.formula.spd.collapse = document.getElementById("formula-spd-collapse");
-  V.formula.spd.title = document.getElementById("formula-spd-title");
-  V.formula.spdGr.title = document.getElementById("formula-spdGr-title");
-  V.formula.hnd.use = document.getElementById("formula-use-hnd");
-  V.formula.hnd.collapse = document.getElementById("formula-hnd-collapse");
-  V.formula.hnd.title = document.getElementById("formula-hnd-title");
-  V.formula.hndGr.title = document.getElementById("formula-hndGr-title");
 
   V.formula.includeKarts = document.getElementById("formula-include-karts");
   V.formula.includeATVs  = document.getElementById("formula-include-atvs");
   V.formula.includeBikes = document.getElementById("formula-include-bikes");
-  V.formula.includeSportBikes = document.getElementById("formula-include-sport");
 
   V.formula.reset  = document.getElementById("formula-reset");
   V.formula.cancel = document.getElementById("formula-cancel");
@@ -252,35 +184,6 @@ whenDOMReady(() => {
       openBodyDialog();
     }
   }, { passive: true });
-  V.combo.tire.addEventListener("click", e => {
-    if (e.altKey) {
-      toggleTireLock(true);
-    } else {
-      openTireDialog();
-    }
-  }, { passive: true });
-  V.combo.glider.addEventListener("click", e => {
-    if (e.altKey) {
-      toggleGliderLock(true);
-    } else {
-      openGliderDialog();
-    }
-  }, { passive: true });
-
-  V.combo.spdMultimeter.addEventListener("click", () => {
-    if (V.combo.spdMultimeter.classList.contains("show")) return;
-    V.combo.spdMultimeter.classList.add("show");
-    V.combo.spdMultimeter.addEventListener("animationend", () => {
-      V.combo.spdMultimeter.classList.remove("show");
-    }, { passive: true });
-  }, { passive: true });
-  V.combo.hndMultimeter.addEventListener("click", () => {
-    if (V.combo.hndMultimeter.classList.contains("show")) return;
-    V.combo.hndMultimeter.classList.add("show");
-    V.combo.hndMultimeter.addEventListener("animationend", () => {
-      V.combo.hndMultimeter.classList.remove("show");
-    }, { passive: true });
-  }, { passive: true });
 
   V.custom.customize.addEventListener("click", openFormulaDialog, { passive: true });
 
@@ -295,18 +198,6 @@ whenDOMReady(() => {
     if (isOutside(V.bodies.dialog, e)) closeBodyDialog();
   }, { passive: true });
   V.bodies.lock.addEventListener("click", toggleBodyLock, { passive: true });
-
-  V.tires.dialog.addEventListener("click", e => {
-    if (state.openedDialog !== "tire") return;
-    if (isOutside(V.tires.dialog, e)) closeTireDialog();
-  }, { passive: true });
-  V.tires.lock.addEventListener("click", toggleTireLock, { passive: true });
-
-  V.gliders.dialog.addEventListener("click", e => {
-    if (state.openedDialog !== "glider") return;
-    if (isOutside(V.gliders.dialog, e)) closeGliderDialog();
-  }, { passive: true });
-  V.gliders.lock.addEventListener("click", toggleGliderLock, { passive: true });
 
   V.favorites.open.addEventListener("click", e => {
     openFavoritesDialog();
@@ -334,7 +225,7 @@ whenDOMReady(() => {
   V.formula.cancel.addEventListener("click", revertFormula, { passive: true });
   V.formula.save.addEventListener("click", commitFormula, { passive: true });
 
-  for (let i = 0; i < 16; i++) {
+  for (let i = 0; i < 5; i++) {
     const stat = stats[i];
     const factor = V.formula[stat].factor;
     const slider = V.formula[stat].slider;
@@ -360,7 +251,7 @@ whenDOMReady(() => {
     }, { passive: true });
     mode.addEventListener("click", e => {
       if (e.altKey) {
-        for (let j = 0; j < 16; j++) {
+        for (let j = 0; j < 5; j++) {
           toggleFactorSign(j, true);
         }
       } else {
@@ -369,28 +260,6 @@ whenDOMReady(() => {
     }, { passive: true });
     mode.addEventListener("dblclick", () => { resetFactor(i); }, { passive: true });
   }
-
-  V.formula.spd.use.addEventListener("click", toggleSpdMode, { passive: true });
-  V.formula.spd.title.addEventListener("click", toggleSpdMode, { passive: true });
-  V.formula.spdGr.title.addEventListener("click", toggleSpdMode, { passive: true });
-  V.formula.hnd.use.addEventListener("click", toggleHndMode, { passive: true });
-  V.formula.hnd.title.addEventListener("click", toggleHndMode, { passive: true });
-  V.formula.hndGr.title.addEventListener("click", toggleHndMode, { passive: true });
-
-  V.formula.spd.collapse.addEventListener("transitionstart", e => {
-    if (e.target != V.formula.spd.collapse) return;
-    V.formula.spd.collapse.classList.add("transitioning");
-  }, { passive: true });
-  V.formula.spd.collapse.addEventListener("transitionend", () => {
-    V.formula.spd.collapse.classList.remove("transitioning");
-  }, { passive: true });
-  V.formula.hnd.collapse.addEventListener("transitionstart", e => {
-    if (e.target != V.formula.hnd.collapse) return;
-    V.formula.hnd.collapse.classList.add("transitioning");
-  }, { passive: true });
-  V.formula.hnd.collapse.addEventListener("transitionend", () => {
-    V.formula.hnd.collapse.classList.remove("transitioning");
-  }, { passive: true });
 
   V.formula.includeKarts.addEventListener("click", e => {
     if (e.altKey) return invertIncludes();
@@ -403,10 +272,6 @@ whenDOMReady(() => {
   V.formula.includeBikes.addEventListener("click", e => {
     if (e.altKey) return invertIncludes();
     toggleIncludeBikes();
-  }, { passive: true });
-  V.formula.includeSportBikes.addEventListener("click", e => {
-    if (e.altKey) return invertIncludes();
-    toggleIncludeSportBikes();
   }, { passive: true });
 
   V.formula.helpOpen.addEventListener("click", openFormulaHelpDialog, { passive: true });
@@ -492,8 +357,6 @@ whenDOMReady(() => {
       switch (state.openedDialog) {
         case "driver": return closeDriverDialog();
         case "body": return closeBodyDialog();
-        case "tire": return closeTireDialog();
-        case "glider": return closeGliderDialog();
         case "favorites": return closeFavoritesDialog();
         case "formula": return revertFormula();
         case "formula-help": return closeFormulaHelpDialog();
@@ -524,8 +387,6 @@ whenDOMReady(() => {
 function initView() {
   initDriverDialog();
   initBodyDialog();
-  initTireDialog();
-  initGliderDialog();
   viewLoaded = true;
   dispatchEvent(new Event("viewLoaded"));
 }
@@ -551,36 +412,22 @@ function drawCurrentCombo() {
   const combo = state.selectedSlot.combo;
   const driverImg = combo.driverID;
   const bodyImg = combo.bodyID + combo.bodyVariant;
-  const tireImg = combo.tireID;
-  const gliderImg = combo.gliderID + combo.gliderVariant;
   const driverName = S("drivers", combo.driverID);
   const bodyName = S("bodies", combo.bodyID);
-  const tireName = S("tires", combo.tireID);
-  const gliderName = S("gliders", combo.gliderID);
   V.combo.driverImg.src = graphicsRoot + "drivers/" + driverImg + ".webp";
   V.combo.bodyImg.src = graphicsRoot + "bodies/" + bodyImg + ".webp";
-  V.combo.tireImg.src = graphicsRoot + "tires/" + tireImg + ".webp";
-  V.combo.gliderImg.src = graphicsRoot + "gliders/" + gliderImg + ".webp";
   V.combo.driverImg.alt = driverName;
   V.combo.bodyImg.alt = bodyName;
-  V.combo.tireImg.alt = tireName;
-  V.combo.gliderImg.alt = gliderName;
   V.combo.driver.title = driverName + ". Click to change.";
   V.combo.body.title = bodyName + ". Click to change.";
-  V.combo.tire.title = tireName + ". Click to change.";
-  V.combo.glider.title = gliderName + ". Click to change.";
   V.combo.driverLock.classList.toggle("selected", state.locks.driver);
   V.combo.bodyLock.classList.toggle("selected", state.locks.body);
-  V.combo.tireLock.classList.toggle("selected", state.locks.tire);
-  V.combo.gliderLock.classList.toggle("selected", state.locks.glider);
   V.combo.driverLock.title = "Driver is " + (state.locks.driver ? "" : "un") + "locked. ⌥+Click to toggle.";
   V.combo.bodyLock.title = "Body is " + (state.locks.body ? "" : "un") + "locked. ⌥+Click to toggle.";
-  V.combo.tireLock.title = "Tire is " + (state.locks.tire ? "" : "un") + "locked. ⌥+Click to toggle.";
-  V.combo.gliderLock.title = "Glider is " + (state.locks.glider ? "" : "un") + "locked. ⌥+Click to toggle.";
 
   // Combo Details
   let detailStr;
-  switch (combo.classes.driver[13]) {
+  switch (combo.classes.driver[4]) {
     case 0:
       detailStr = "Small Frame";
       break;
@@ -590,21 +437,20 @@ function drawCurrentCombo() {
     case 2:
       detailStr = "Large Frame";
       break;
-    default: throw "Error: Unknown size: “" + combo.classes.driver[13] + "”";
+    default: throw "Error: Unknown size: “" + combo.classes.driver[4] + "”";
   }
-  detailStr += combo.parts.body.type == "sport" ? ", Inside Drift" : "";
   V.combo.details.children[0].innerText = detailStr;
 
-  V.combo.details.children[1].innerHTML = "";
-  V.combo.details.children[1].title = "";
-  if (state.settings.gameVersion !== "latest") {
-    V.combo.details.children[1].title = "Showing stats for game version " + state.settings.gameVersion + ".";
-    V.combo.details.children[1].append(new JDIcon("warning"), state.settings.gameVersion);
-  }
+  // V.combo.details.children[1].innerHTML = "";
+  // V.combo.details.children[1].title = "";
+  // if (state.settings.gameVersion !== "latest") {
+  //   V.combo.details.children[1].title = "Showing stats for game version " + state.settings.gameVersion + ".";
+  //   V.combo.details.children[1].append(new JDIcon("warning"), state.settings.gameVersion);
+  // }
 
   // Meters
   V.combo.meters.classList.toggle("values-hidden", !state.settings.showMeterValues);
-  for (let i = 0; i < 13; i++) {
+  for (let i = 0; i < 4; i++) {
     const stat = stats[i];
     V.combo[stat].meter.style.setProperty("--value", toLvl(combo.lvl[i]));
     V.combo[stat].meter.title = S("stats", stat) + ": " + toLvl(combo.lvl[i], stat);
@@ -682,7 +528,7 @@ function drawComboTable(container, combos, limit = 50) {
 
     const statsDisplay = document.createElement("div");
     statsDisplay.classList.add("stat-diffs");
-    for (let i = 0; i < 13; i++) {
+    for (let i = 0; i < 4; i++) {
       const stat = stats[i];
       const diff = combo.diffs[i];
       if (diff == 0) continue;
@@ -729,19 +575,8 @@ function formatFormula(formula) {
   const combo = state.selectedSlot.combo;
 
   const terms = [];
-  for (let stat of ["mtb", "spd", "spdGr", "spdAg", "spdWt", "spdAr", "acc",
-                    "wgt", "hnd", "hndGr", "hndAg", "hndWt", "hndAr", "trn", "inv", "size"]) {
+  for (let stat of ["spd", "acc", "wgt", "hnd", "size"]) {
     const i = statIndex[stat];
-    if (i == 14 && !formula.unified.spd) continue;
-    if (i == 1  &&  formula.unified.spd) continue;
-    if (i == 2  &&  formula.unified.spd) continue;
-    if (i == 3  &&  formula.unified.spd) continue;
-    if (i == 4  &&  formula.unified.spd) continue;
-    if (i == 15 && !formula.unified.hnd) continue;
-    if (i == 7  &&  formula.unified.hnd) continue;
-    if (i == 8  &&  formula.unified.hnd) continue;
-    if (i == 9  &&  formula.unified.hnd) continue;
-    if (i == 10 &&  formula.unified.hnd) continue;
     let factor = formula.factors[i];
     let isMinSet = formula.min[i] > 0;
     let isMaxSet = formula.max[i] < getMax(i);
@@ -770,33 +605,22 @@ function formatFormula(formula) {
   const locks = [];
   if (state.locks.driver) locks.push(S("drivers", combo.driverID));
   if (state.locks.body) locks.push(S("bodies", combo.bodyID));
-  if (state.locks.tire) locks.push(S("tires", combo.tireID));
-  if (state.locks.glider) locks.push(S("gliders", combo.gliderID));
 
   let exclusionsString = "";
   const bodyConflict = state.locks.body && (
       (combo.parts.body.type == "kart"  && formula.excludeKarts) ||
       (combo.parts.body.type == "atv"   && formula.excludeATVs)  ||
-      (combo.parts.body.type == "bike"  && formula.excludeBikes) ||
-      (combo.parts.body.type == "sport" && formula.excludeSportBikes));
+      (combo.parts.body.type == "bike"  && formula.excludeBikes));
   if (!state.locks.body || bodyConflict) {
     const exclusions = [];
     if (formula.excludeKarts) exclusions.push("karts");
     if (formula.excludeATVs) exclusions.push("ATVs");
-    if (formula.excludeBikes) exclusions.push("outside drifting bikes");
-    if (formula.excludeSportBikes) exclusions.push("inside drifting bikes");
+    if (formula.excludeBikes) exclusions.push("bikes");
 
-    if (exclusions.length == 3) {
+    if (exclusions.length == 2) {
       if (!formula.excludeKarts) exclusionsString = "Karts only";
       else if (!formula.excludeATVs) exclusionsString = "ATVs only";
-      else if (!formula.excludeBikes) exclusionsString = "Outside drifting bikes only";
-      else if (!formula.excludeSportBikes) exclusionsString = "Inside drifting bikes only";
-    } else if (!formula.excludeKarts && !formula.excludeATVs &&
-                formula.excludeBikes && formula.excludeSportBikes) {
-      exclusionsString = "No bikes";
-    } else if (formula.excludeKarts && formula.excludeATVs &&
-              !formula.excludeBikes && !formula.excludeSportBikes) {
-      exclusionsString = "Bikes only";
+      else if (!formula.excludeBikes) exclusionsString = "Bikes only";
     } else if (exclusions.length > 0) {
       exclusionsString = "No ";
       exclusionsString += exclusions.slice(0, -1).join(", ");
@@ -978,85 +802,6 @@ function drawBodyDialog() {
   if (!V.bodies.dialog.open) V.bodies.dialog.showModal();
 }
 
-function initTireDialog() {
-  state.parts.then(({tires}) => {
-    for (const tire of tires) {
-      const id = tire.id;
-      const button = newPartButton("tires", id, "tire-" + id);
-      button.addEventListener("click", () => { setTire(id); }, { passive: true });
-      button.addEventListener("mouseenter", () => { drawTireTitle(id); }, { passive: true });
-      button.addEventListener("mouseleave", () => { delay(() => drawTireTitle(state.tire)) }, { passive: true });
-      button.addEventListener("focus", () => { drawTireTitle(id); }, { passive: true });
-      button.addEventListener("blur", () => { drawTireTitle(state.tire); }, { passive: true });
-      V.tires.grid.append(button);
-    }
-  });
-}
-function drawTireDialog() {
-  if (state.openedDialog !== "tire") {
-    V.tires.dialog.inert = true;
-    V.tires.dialog.close();
-    enableScroll(document.documentElement);
-    return;
-  }
-  state.parts.then(({tires}) => {
-    for (const tire of tires) {
-      const id = tire.id;
-      const button = document.getElementById("tire-" + id);
-      const name = S("tires", id);
-      button.querySelector("img").alt = name;
-      button.title = name;
-      button.classList.toggle("selected", id == state.tire);
-      button.classList.toggle("highlight", tire.group == state.selectedSlot.combo.parts.tire.group);
-    }
-  });
-  V.tires.title.innerText = S("tires", state.tire);
-  drawTireLock();
-  disableScroll(document.documentElement);
-  V.tires.dialog.inert = false;
-  if (!V.tires.dialog.open) V.tires.dialog.showModal();
-}
-
-function initGliderDialog() {
-  state.parts.then(({gliders}) => {
-    for (const glider of gliders) {
-      const id = glider.id;
-      const button = newPartButton("gliders", id, "glider-" + id);
-      button.addEventListener("click", () => { setGlider(id); }, { passive: true });
-      button.addEventListener("mouseenter", () => { drawGliderTitle(id); }, { passive: true });
-      button.addEventListener("mouseleave", () => { delay(() => drawGliderTitle(state.glider)) }, { passive: true });
-      button.addEventListener("focus", () => { drawGliderTitle(id); }, { passive: true });
-      button.addEventListener("blur", () => { drawGliderTitle(state.glider); }, { passive: true });
-      V.gliders.grid.append(button);
-    }
-  });
-}
-function drawGliderDialog() {
-  if (state.openedDialog !== "glider") {
-    V.gliders.dialog.inert = true;
-    V.gliders.dialog.close();
-    enableScroll(document.documentElement);
-    return;
-  }
-  state.parts.then(data => {
-    const gliders = data.gliders;
-    for (const glider of gliders) {
-      const id = glider.id;
-      const button = document.getElementById("glider-" + id);
-      const name = S("gliders", id);
-      button.querySelector("img").alt = name;
-      button.title = name;
-      button.classList.toggle("selected", id == state.glider);
-      button.classList.toggle("highlight", glider.group == state.selectedSlot.combo.parts.glider.group);
-    }
-  });
-  V.gliders.title.innerText = S("gliders", state.glider);
-  drawGliderLock();
-  disableScroll(document.documentElement);
-  V.gliders.dialog.inert = false;
-  if (!V.gliders.dialog.open) V.gliders.dialog.showModal();
-}
-
 function drawDriverTitle(id) {
   clearTimeout(state.inspectorTimeout);
   V.drivers.title.innerText = S("drivers", id);
@@ -1066,14 +811,6 @@ function drawBodyTitle(id, type) {
   clearTimeout(state.inspectorTimeout);
   V.bodies.title.innerText = S("bodies", id);
   V.bodies.icon.setAttribute("icon", type);
-}
-function drawTireTitle(id) {
-  clearTimeout(state.inspectorTimeout);
-  V.tires.title.innerText = S("tires", id);
-}
-function drawGliderTitle(id) {
-  clearTimeout(state.inspectorTimeout);
-  V.gliders.title.innerText = S("gliders", id);
 }
 
 function delay(fn) { state.inspectorTimeout = setTimeout(fn, 500); }
@@ -1085,14 +822,6 @@ function drawDriverLock() {
 function drawBodyLock() {
   V.bodies.lock.classList.toggle("selected", state.locks.body);
   V.bodies.lockLabel.innerText = state.locks.body ? "Unlock Body" : "Lock Body";
-}
-function drawTireLock() {
-  V.tires.lock.classList.toggle("selected", state.locks.tire);
-  V.tires.lockLabel.innerText = state.locks.tire ? "Unlock Tire" : "Lock Tire";
-}
-function drawGliderLock() {
-  V.gliders.lock.classList.toggle("selected", state.locks.glider);
-  V.gliders.lockLabel.innerText = state.locks.glider ? "Unlock Glider" : "Lock Glider";
 }
 
 function newPartButton(ns, partID, id) {
@@ -1115,46 +844,30 @@ function newComboDisplay(combo) {
 
   const driverBox = document.createElement("div");
   const bodyBox   = document.createElement("div");
-  const tireBox   = document.createElement("div");
-  const gliderBox = document.createElement("div");
 
   const driverImg = document.createElement("img");
   const bodyImg   = document.createElement("img");
-  const tireImg   = document.createElement("img");
-  const gliderImg = document.createElement("img");
 
   const driverName = S("drivers", combo.driverID);
   const bodyName = S("bodies", combo.bodyID);
-  const tireName = S("tires", combo.tireID);
-  const gliderName = S("gliders", combo.gliderID);
 
   const driverImgPath = combo.driverID;
   const bodyImgPath = combo.bodyID + combo.bodyVariant;
-  const tireImgPath = combo.tireID;
-  const gliderImgPath = combo.gliderID + combo.gliderVariant;
 
   driverImg.src = graphicsRoot + "drivers/" + driverImgPath + ".webp";
   bodyImg.src = graphicsRoot + "bodies/" + bodyImgPath + ".webp";
-  tireImg.src = graphicsRoot + "tires/" + tireImgPath + ".webp";
-  gliderImg.src = graphicsRoot + "gliders/" + gliderImgPath + ".webp";
 
   driverImg.alt = driverName; bodyImg.alt = bodyName;
-  tireImg.alt = tireName; gliderImg.alt = gliderName;
 
   driverImg.width = "128"; driverImg.height = "128";
   bodyImg.width = "200"; bodyImg.height = "128";
-  tireImg.width = "200"; tireImg.height = "128";
-  gliderImg.width = "200"; gliderImg.height = "128";
 
   driverImg.loading = "lazy"; bodyImg.loading = "lazy";
-  tireImg.loading = "lazy"; gliderImg.loading = "lazy";
 
   driverBox.title = driverName; bodyBox.title = bodyName;
-  tireBox.title = tireName; gliderBox.title = gliderName;
 
   driverBox.append(driverImg); bodyBox.append(bodyImg);
-  tireBox.append(tireImg); gliderBox.append(gliderImg);
-  comboDisplay.append(driverBox, bodyBox, tireBox, gliderBox);
+  comboDisplay.append(driverBox, bodyBox);
   return comboDisplay;
 }
 
@@ -1358,7 +1071,6 @@ function drawFormulaDialog() {
   V.formula.includeKarts.classList.toggle("selected", !state.workingFormula.excludeKarts);
   V.formula.includeATVs.classList.toggle("selected", !state.workingFormula.excludeATVs);
   V.formula.includeBikes.classList.toggle("selected", !state.workingFormula.excludeBikes);
-  V.formula.includeSportBikes.classList.toggle("selected", !state.workingFormula.excludeSportBikes);
 
   drawCollapses();
 
@@ -1400,21 +1112,21 @@ function validateBounds(stat) {
 }
 
 function drawCollapses() {
-  const formula = state.workingFormula;
-  for (const stat of [ "spd", "hnd" ]) {
-    const container = V.formula[stat].collapse;
-    const chevron = container.children[0];
-    const tabOn = container.children[1];
-    const tabOff = container.children[2];
-    const isOn = formula.unified[stat];
-    chevron.classList.toggle("rotated", !isOn);
-    tabOn.classList.toggle("selected", isOn);
-    tabOn.toggleAttribute("inert", !isOn);
-    tabOff.toggleAttribute("inert", isOn);
-    tabOff.classList.toggle("selected", !isOn);
-    const height = (isOn ? tabOn : tabOff).getBoundingClientRect().height;
-    container.style.height = height + "px";
-  }
+  // const formula = state.workingFormula;
+  // for (const stat of [ "spd", "hnd" ]) {
+  //   const container = V.formula[stat].collapse;
+  //   const chevron = container.children[0];
+  //   const tabOn = container.children[1];
+  //   const tabOff = container.children[2];
+  //   const isOn = formula.unified[stat];
+  //   chevron.classList.toggle("rotated", !isOn);
+  //   tabOn.classList.toggle("selected", isOn);
+  //   tabOn.toggleAttribute("inert", !isOn);
+  //   tabOff.toggleAttribute("inert", isOn);
+  //   tabOff.classList.toggle("selected", !isOn);
+  //   const height = (isOn ? tabOn : tabOff).getBoundingClientRect().height;
+  //   container.style.height = height + "px";
+  // }
 }
 
 function drawFormulaHelpDialog() {
@@ -1503,38 +1215,38 @@ function parseValue(v, defaultV = 0) {
 
 function scaleStat(x, stat) {
   if (x < 0) return 0;
-  if (x >= 20) return state.settings.statScale === "internal" ? 20 : 5.75;
-  if (state.settings.statScale === "internal" || stat === 13) return x;
+  if (x >= 20) return state.settings.statScale === "internal" ? 20 : 4;
+  if (state.settings.statScale === "internal" || stat === 4) return x;
   return toLvl(x);
 }
 function scaleStatAbs(x) {
   if (state.settings.statScale === "internal") return x;
-  return x/4;
+  return x/5;
 }
 const getMin = () => 0;
 const getScaledMin = stat => {
- if (stat === 13) return 0;
- return state.settings.statScale === "internal" ? 0 : .75;
+ if (stat === 4) return 0;
+ return state.settings.statScale === "internal" ? 0 : 0;
 }
-const getMax = stat => stat === 13 ? 2 : 20;
+const getMax = stat => stat === 4 ? 2 : 20;
 const getScaledMax = stat => {
-  if (stat === 13) return 2;
-  return state.settings.statScale === "internal" ? 20 : 5.75;
+  if (stat === 4) return 2;
+  return state.settings.statScale === "internal" ? 20 : 4;
 };
 const getScaledStep = stat => {
-  if (stat === 13) return 1;
-  return state.settings.statScale === "internal" ? 1 : .25;
+  if (stat === 4) return 1;
+  return state.settings.statScale === "internal" ? 1 : .2;
 };
 const getScaledPlaceholder = stat => {
-  if (stat === 13) return 2;
-  return state.settings.statScale === "internal" ? 20 : 6;
+  if (stat === 4) return 2;
+  return state.settings.statScale === "internal" ? 20 : 4;
 };
 function unscaleStat(x, stat) {
-  if (state.settings.statScale === "internal" || stat === 13) return x;
+  if (state.settings.statScale === "internal" || stat === 4) return x;
   return fromLvl(x);
 }
-const toLvl = n => (n+3) / 4;
-const fromLvl = n => Math.max(n*4 - 3, 0);
+const toLvl = n => (n) / 5;
+const fromLvl = n => Math.max(n*5, 0);
 function getStatLocaleOptions() {
-  return state.settings.statScale === "internal" ? { minimumIntegerDigits: 1 } : { minimumFractionDigits: 2 };
+  return state.settings.statScale === "internal" ? { minimumIntegerDigits: 1 } : { minimumFractionDigits: 1 };
 }
