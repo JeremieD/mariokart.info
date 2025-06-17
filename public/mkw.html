@@ -7,7 +7,7 @@
 
   <title>Mario Kart World Combo Builder</title>
   <meta name="description" content="Find, compare, and optimize Mario Kart World builds, or cook up your own custom formula!">
-  <meta name="keywords" content="mario, kart, world, switch 2, combo, build, character, vehicle, best, stats, meta">
+  <meta name="keywords" content="mario, kart, world, switch 2, combo, build, character, vehicle, best, stats, meta, jej">
 
   <link rel="canonical" href="https://mariokart.info/mkw">
 
@@ -47,16 +47,16 @@
           </ol>
         </nav>
       </button>
-      <div id="logo"><img src="/resources/graphics/mkw.svg" loading="lazy" width="76" height="76" alt="Mario Kart World Logo" /><h1>Mario Kart World <span>Combo Builder</span></h1><sup title="In beta.">β</sup></div>
+      <div id="logo"><img src="/resources/graphics/mkw.svg" loading="lazy" width="76" height="76" alt="Mario Kart World Logo" /><h1>Mario Kart World <span>Combo Builder</span></h1><sup title="In alpha.">α</sup></div>
     </div>
     <div class="button-group">
-      <button class="big-type square" id="help-open" title="Help"><jd-icon icon="help"></jd-icon></button>
+      <button class="big-type square" id="help-open" title="Help"><jd-icon icon="warning"></jd-icon></button>
       <button class="big-type square" id="settings-open" title="Settings"><jd-icon icon="cog"></jd-icon></button>
     </div>
   </header>
 
   <main>
-    <section id="builder">
+    <section>
       <div id="combo-topbar">
         <div class="button-group">
           <div class="button-group radio favorites">
@@ -83,80 +83,36 @@
               <img id="body-img" width="200" height="128"/>
               <jd-icon id="body-lock-display" icon="lock"></jd-icon>
             </button>
-            <button id="tire" name="Change tire...">
-              <img id="tire-img" width="200" height="128"/>
-              <jd-icon id="tire-lock-display" icon="lock"></jd-icon>
-            </button>
-            <button id="glider" name="Change glider...">
-              <img id="glider-img" width="200" height="128"/>
-              <jd-icon id="glider-lock-display" icon="lock"></jd-icon>
-            </button>
           </div>
           <div id="combo-details">
             <span></span>
-            <span></span>
+            <span><jd-icon icon="warning"></jd-icon>Stats may be wrong during early alpha</span>
           </div>
         </div>
 
         <div id="combo-stats" class="values-hidden">
           <div>
-            <label class="stat-code" id="mtb-label" title="Mini-Turbo">MTB</label>
-            <div class="meter" id="mtb-meter"></div>
-            <output id="mtb-value"></output>
-          </div>
-
-          <div id="spd-multimeter">
             <label class="stat-code" id="spd-label" title="Speed">SPD</label>
-            <div class="meter ground" id="spdGr-meter"></div>
-            <output class="ground" id="spdGr-value"></output>
-            <label class="stat-code anti-gravity" title="Anti-Gravity">AG</label>
-            <div class="meter anti-gravity" id="spdAg-meter"></div>
-            <output class="anti-gravity" id="spdAg-value"></output>
-            <label class="stat-code underwater" title="Underwater">WT</label>
-            <div class="meter underwater" id="spdWt-meter"></div>
-            <output class="underwater" id="spdWt-value"></output>
-            <label class="stat-code air" title="Air">AR</label>
-            <div class="meter air" id="spdAr-meter"></div>
-            <output class="air" id="spdAr-value"></output>
+            <div class="meter mkw" id="spd-meter"></div>
+            <output id="spd-value"></output>
           </div>
 
           <div>
             <label class="stat-code" id="acc-label" title="Acceleration">ACC</label>
-            <div class="meter" id="acc-meter"></div>
+            <div class="meter mkw" id="acc-meter"></div>
             <output id="acc-value"></output>
           </div>
 
           <div>
             <label class="stat-code" id="wgt-label" title="Weight">WGT</label>
-            <div class="meter" id="wgt-meter"></div>
+            <div class="meter mkw" id="wgt-meter"></div>
             <output id="wgt-value"></output>
           </div>
 
-          <div id="hnd-multimeter">
+          <div>
             <label class="stat-code" id="hnd-label" title="Handling">HND</label>
-            <div class="meter ground" id="hndGr-meter"></div>
-            <output class="ground" id="hndGr-value"></output>
-            <label class="stat-code anti-gravity" title="Anti-Gravity">AG</label>
-            <div class="meter anti-gravity" id="hndAg-meter"></div>
-            <output class="anti-gravity" id="hndAg-value"></output>
-            <label class="stat-code underwater" title="Underwater">WT</label>
-            <div class="meter underwater" id="hndWt-meter"></div>
-            <output class="underwater" id="hndWt-value"></output>
-            <label class="stat-code air" title="Air">AR</label>
-            <div class="meter air" id="hndAr-meter"></div>
-            <output class="air" id="hndAr-value"></output>
-          </div>
-
-          <div>
-            <label class="stat-code" id="trn-label" title="Traction">TRN</label>
-            <div class="meter" id="trn-meter"></div>
-            <output id="trn-value"></output>
-          </div>
-
-          <div>
-            <label class="stat-code" id="inv-label" title="Invincibility">INV</label>
-            <div class="meter" id="inv-meter"></div>
-            <output id="inv-value"></output>
+            <div class="meter mkw" id="hnd-meter"></div>
+            <output id="hnd-value"></output>
           </div>
         </div>
       </div>
@@ -197,7 +153,7 @@
 
   <footer>
     <p><a id="credits-open" href="#">Credits &&nbsp;Info</a></p>
-    <p>Updated 11 Jun 2025 / <a id="changelog-open" title="Changelog" href="#">v0.9</a></p>
+    <p>Updated 18 Jun 2025 / <a id="changelog-open" title="Changelog" href="#">v0.5</a></p>
   </footer>
 
   <dialog id="driver-picker" inert>
@@ -214,22 +170,6 @@
       <button id="body-lock" class="inline"><label id="body-lock-label">Lock Body</label><jd-icon icon="lock"></jd-icon></button>
     </hgroup></header>
     <div id="body-grid" class="parts-grid"></div>
-  </dialog>
-
-  <dialog id="tire-picker" inert>
-    <header><hgroup>
-      <h2><jd-icon icon="tire"></jd-icon><span id="tire-title">Tires</span></h2>
-      <button id="tire-lock" class="inline"><label id="tire-lock-label">Lock Tire</label><jd-icon icon="lock"></jd-icon></button>
-    </hgroup></header>
-    <div id="tire-grid" class="parts-grid"></div>
-  </dialog>
-
-  <dialog id="glider-picker" inert>
-    <header><hgroup>
-      <h2><jd-icon icon="glider"></jd-icon><span id="glider-title">Gliders</span></h2>
-      <button id="glider-lock" class="inline"><label id="glider-lock-label">Lock Glider</label><jd-icon icon="lock"></jd-icon></button>
-    </hgroup></header>
-    <div id="glider-grid" class="parts-grid"></div>
   </dialog>
 
   <dialog id="favorites-dialog" inert class="overflow full-size">
@@ -256,7 +196,7 @@
     <header>
       <hgroup>
         <h2>Custom Formula</h2>
-        <button id="formula-help-open" class="icon inline" title="Custom Formula Help"><jd-icon icon="help"></jd-icon></button>
+        <button id="formula-help-open" class="icon inline" style="display: none;" title="Custom Formula Help"><jd-icon icon="help"></jd-icon></button>
       </hgroup>
       <p>Cook up your own formula to find the exact combo you need. Positive&nbsp;coefficients will maximize the stat, negative coefficients will minimize&nbsp;it.</p>
       <div class="factor-widget">
@@ -273,119 +213,21 @@
     </header>
 
     <div class="formula-factors">
-      <div class="factor-widget">
+          <div class="factor-widget">
         <hgroup>
-          <h3>Mini-Turbo</h3>
-          <button id="formula-mtb-mode" class="inline">Ignore</button>
+          <h3 id="formula-spd-title">Speed</h3>
+          <button id="formula-spd-mode" class="inline">Ignore</button>
         </hgroup>
         <div>
-          <jd-slider id="formula-mtb-slider" value="16" min="-16" max="16" step="1" stops="8"></jd-slider>
-          <input aria-label="Mini-Turbo Factor" id="formula-mtb-factor" type="number" inputmode="decimal" min="-16" max="16" step="1" placeholder="0"/>
+          <jd-slider id="formula-spd-slider" value="15" min="-16" max="16" step="1" stops="8"></jd-slider>
+          <input aria-label="Speed Factor" id="formula-spd-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
         </div>
         <div>
           <div class="field-group">
-            <label>Min</label><input aria-label="Minimum Mini-Turbo" id="formula-mtb-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
+            <label>Min</label><input aria-label="Minimum Speed" id="formula-spd-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
           </div>
           <div class="field-group">
-            <label>Max</label><input aria-label="Maximum Mini-Turbo" id="formula-mtb-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
-          </div>
-        </div>
-      </div>
-
-      <div id="formula-spd-collapse" class="collapse-container">
-        <button id="formula-use-spd" class="icon inline" title="Toggle Unified Speed."><jd-icon icon="chevron-right"></jd-icon></button>
-        <div class="selected">
-          <div class="factor-widget">
-            <hgroup>
-              <h3 id="formula-spd-title">Speed</h3>
-              <button id="formula-spd-mode" class="inline">Ignore</button>
-            </hgroup>
-            <div>
-              <jd-slider id="formula-spd-slider" value="15" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input aria-label="Speed Factor" id="formula-spd-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
-            </div>
-            <div>
-              <div class="field-group">
-                <label>Min</label><input aria-label="Minimum Speed" id="formula-spd-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
-              </div>
-              <div class="field-group">
-                <label>Max</label><input aria-label="Maximum Speed" id="formula-spd-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="factor-widget">
-            <hgroup>
-              <h3 id="formula-spdGr-title">Ground Speed</h3>
-              <button id="formula-spdGr-mode" class="inline">Ignore</button>
-            </hgroup>
-            <div>
-              <jd-slider id="formula-spdGr-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input aria-label="Ground Speed Factor" id="formula-spdGr-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
-            </div>
-            <div>
-              <div class="field-group">
-                <label>Min</label><input aria-label="Minimum Ground Speed" id="formula-spdGr-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
-              </div>
-              <div class="field-group">
-                <label>Max</label><input aria-label="Maximum Ground Speed" id="formula-spdGr-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
-              </div>
-            </div>
-          </div>
-          <div class="factor-widget">
-            <hgroup>
-              <h3>Anti-Gravity Speed</h3>
-              <button id="formula-spdAg-mode" class="inline">Ignore</button>
-            </hgroup>
-            <div>
-              <jd-slider id="formula-spdAg-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input aria-label="Anti-Gravity Speed Factor" id="formula-spdAg-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
-            </div>
-            <div>
-              <div class="field-group">
-                <label>Min</label><input aria-label="Minimum Anti-Gravity Speed" id="formula-spdAg-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
-              </div>
-              <div class="field-group">
-                <label>Max</label><input aria-label="Maximum Anti-Gravity Speed" id="formula-spdAg-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
-              </div>
-            </div>
-          </div>
-          <div class="factor-widget">
-            <hgroup>
-              <h3>Underwater Speed</h3>
-              <button id="formula-spdWt-mode" class="inline">Ignore</button>
-            </hgroup>
-            <div>
-              <jd-slider id="formula-spdWt-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input aria-label="Underwater Speed Factor" id="formula-spdWt-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
-            </div>
-            <div>
-              <div class="field-group">
-                <label>Min</label><input aria-label="Minimum Underwater Speed" id="formula-spdWt-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
-              </div>
-              <div class="field-group">
-                <label>Max</label><input aria-label="Maximum Underwater Speed" id="formula-spdWt-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
-              </div>
-            </div>
-          </div>
-          <div class="factor-widget">
-            <hgroup>
-              <h3>Air Speed</h3>
-              <button id="formula-spdAr-mode" class="inline">Ignore</button>
-            </hgroup>
-            <div>
-              <jd-slider id="formula-spdAr-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input aria-label="Air Speed Factor" id="formula-spdAr-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
-            </div>
-            <div>
-              <div class="field-group">
-                <label>Min</label><input aria-label="Minimum Air Speed" id="formula-spdAr-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
-              </div>
-              <div class="field-group">
-                <label>Max</label><input aria-label="Maximum Air Speed" id="formula-spdAr-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
-              </div>
-            </div>
+            <label>Max</label><input aria-label="Maximum Speed" id="formula-spd-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
           </div>
         </div>
       </div>
@@ -428,138 +270,21 @@
         </div>
       </div>
 
-      <div id="formula-hnd-collapse" class="collapse-container">
-        <button id="formula-use-hnd" class="icon inline" title="Toggle Unified Handling."><jd-icon icon="chevron-right"></jd-icon></button>
-        <div class="selected">
-          <div class="factor-widget">
-            <hgroup>
-              <h3 id="formula-hnd-title">Handling</h3>
-              <button id="formula-hnd-mode" class="inline">Ignore</button>
-            </hgroup>
-            <div>
-              <jd-slider id="formula-hnd-slider" value=".5" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input aria-label="Handling Factor" id="formula-hnd-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
-            </div>
-            <div>
-              <div class="field-group">
-                <label>Min</label><input aria-label="Minimum Handling" id="formula-hnd-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
-              </div>
-              <div class="field-group">
-                <label>Max</label><input aria-label="Maximum Handling" id="formula-hnd-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="factor-widget">
-            <hgroup>
-              <h3 id="formula-hndGr-title">Ground Handling</h3>
-              <button id="formula-hndGr-mode" class="inline">Ignore</button>
-            </hgroup>
-            <div>
-              <jd-slider id="formula-hndGr-slider" value=".5" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input aria-label="Ground Handling Factor" id="formula-hndGr-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
-            </div>
-            <div>
-              <div class="field-group">
-                <label>Min</label><input aria-label="Minimum Ground Handling" id="formula-hndGr-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
-              </div>
-              <div class="field-group">
-                <label>Max</label><input aria-label="Maximum Ground Handling" id="formula-hndGr-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
-              </div>
-            </div>
-          </div>
-          <div class="factor-widget">
-            <hgroup>
-              <h3>Anti-Gravity Handling</h3>
-              <button id="formula-hndAg-mode" class="inline">Ignore</button>
-            </hgroup>
-            <div>
-              <jd-slider id="formula-hndAg-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input aria-label="Anti-Gravity Handling Factor" id="formula-hndAg-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
-            </div>
-            <div>
-              <div class="field-group">
-                <label>Min</label><input aria-label="Minimum Anti-Gravity Handling" id="formula-hndAg-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
-              </div>
-              <div class="field-group">
-                <label>Max</label><input aria-label="Maximum Anti-Gravity Handling" id="formula-hndAg-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
-              </div>
-            </div>
-          </div>
-          <div class="factor-widget">
-            <hgroup>
-              <h3>Underwater Handling</h3>
-              <button id="formula-hndWt-mode" class="inline">Ignore</button>
-            </hgroup>
-            <div>
-              <jd-slider id="formula-hndWt-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input aria-label="Underwater Handling Factor" id="formula-hndWt-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
-            </div>
-            <div>
-              <div class="field-group">
-                <label>Min</label><input aria-label="Minimum Underwater Handling" id="formula-hndWt-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
-              </div>
-              <div class="field-group">
-                <label>Max</label><input aria-label="Maximum Underwater Handling" id="formula-hndWt-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
-              </div>
-            </div>
-          </div>
-          <div class="factor-widget">
-            <hgroup>
-              <h3>Air Handling</h3>
-              <button id="formula-hndAr-mode" class="inline">Ignore</button>
-            </hgroup>
-            <div>
-              <jd-slider id="formula-hndAr-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input aria-label="Air Handling Factor" id="formula-hndAr-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
-            </div>
-            <div>
-              <div class="field-group">
-                <label>Min</label><input aria-label="Minimum Air Handling" id="formula-hndAr-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
-              </div>
-              <div class="field-group">
-                <label>Max</label><input aria-label="Maximum Air Handling" id="formula-hndAr-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div class="factor-widget">
         <hgroup>
-          <h3>Traction</h3>
-          <button id="formula-trn-mode" class="inline">Ignore</button>
+          <h3 id="formula-hnd-title">Handling</h3>
+          <button id="formula-hnd-mode" class="inline">Ignore</button>
         </hgroup>
         <div>
-          <jd-slider id="formula-trn-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-          <input aria-label="Traction Factor" id="formula-trn-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
+          <jd-slider id="formula-hnd-slider" value=".5" min="-16" max="16" step="1" stops="8"></jd-slider>
+          <input aria-label="Handling Factor" id="formula-hnd-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
         </div>
         <div>
           <div class="field-group">
-            <label>Min</label><input aria-label="Minimum Traction" id="formula-trn-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
+            <label>Min</label><input aria-label="Minimum Handling" id="formula-hnd-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
           </div>
           <div class="field-group">
-            <label>Max</label><input aria-label="Maximum Traction" id="formula-trn-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
-          </div>
-        </div>
-      </div>
-
-      <div class="factor-widget">
-        <hgroup>
-          <h3>Invincibility</h3>
-          <button id="formula-inv-mode" class="inline">Ignore</button>
-        </hgroup>
-        <div>
-          <jd-slider id="formula-inv-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-          <input aria-label="Invincibility Factor" id="formula-inv-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
-        </div>
-        <div>
-          <div class="field-group">
-            <label>Min</label><input aria-label="Minimum Invincibility" id="formula-inv-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
-          </div>
-          <div class="field-group">
-            <label>Max</label><input aria-label="Maximum Invincibility" id="formula-inv-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
+            <label>Max</label><input aria-label="Maximum Handling" id="formula-hnd-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
           </div>
         </div>
       </div>
@@ -595,11 +320,7 @@
       </button>
       <button id="formula-include-bikes" class="inline selected">
         <jd-icon class="checkbox" icon="checkmark"></jd-icon>
-        <label>Outside Drifting Bikes</label>
-      </button>
-      <button id="formula-include-sport" class="inline">
-        <jd-icon class="checkbox" icon="checkmark"></jd-icon>
-        <label>Inside Drifting Bikes</label>
+        <label>Bikes</label>
       </button>
     </div>
 
@@ -641,57 +362,14 @@
   <dialog id="help-dialog" inert class="overflow">
     <header class="sticky">
       <hgroup>
-        <h2>Help</h2>
+        <h2>Notice</h2>
         <button id="help-close" class="icon inline" title="Close Help."><jd-icon icon="x"></jd-icon></button>
       </hgroup>
     </header>
     <div>
-      <h3>Combo Parts</h3>
-      <p>A combo consists of a <em>driver</em>, a <em>body</em>, <em>wheels</em>, and&nbsp;a&nbsp;<em>glider</em>. Tap&nbsp;any combo part to change it.</p>
-
-      <h3>Part Classes</h3>
-      <p>Parts that have the same stats as your current combo have a&nbsp;dashed outline in the part picker.</p>
-      <p>Note that <abbr class="stat-code" title="Invincibility">INV</abbr> and frame size can differ between parts of the same class.</p>
-
-      <h3>Locks</h3>
-      <p>You can lock a part to limit which combos appear in the Dominant, Similar, and Custom Search tabs. This&nbsp;can help you find interesting combos according to&nbsp;your style preferences.</p>
-
-      <h3>Random Combo</h3>
-      <p>Tap the Random button to replace your currently active combo with random parts.</p>
-      <p><em>Lock</em> individual parts to keep them.</p>
-
-      <h3>Inside & Outside Drift</h3>
-      <p>There are 2 types of bikes: <em class="keep-all"><jd-icon icon="bike" class="inline"></jd-icon>Standard&nbsp;Bikes</em> and <em class="keep-all"><jd-icon icon="sport" class="inline"></jd-icon>Sport&nbsp;Bikes</em>. All bodies except Sport Bikes have outside&nbsp;drift.</p>
-
-      <h3>Mini-Turbo (<abbr class="stat-code">MTB</abbr>)</h3>
-      <p>This hidden stat determines the length and speed of drift boosts, and the length of jump boosts.</p>
-
-      <h3>Speed (<abbr class="stat-code">SPD</abbr>)</h3>
-      <p>Speed has 4 stats, only the first of which is displayed in-game. They are <em class="ground">Ground (<abbr class="stat-code">SPDGR</abbr>)</em>, <em class="anti-gravity">Anti-Gravity (<abbr class="stat-code">SPDAG</abbr>)</em>, <em class="underwater">Water&nbsp;(<abbr class="stat-code">SPDWT</abbr>)</em>, and <em class="air">Air (<abbr class="stat-code">SPDAR</abbr>)</em>. They determine your top speed in each medium.</p>
-
-      <h3>Acceleration (<abbr class="stat-code">ACC</abbr>)</h3>
-      <p>Determines how fast you can reach top speed.</p>
-
-      <h3>Weight (<abbr class="stat-code">WGT</abbr>)</h3>
-      <p>Determines the physics of collisions with other vehicles. Higher&nbsp;weights push lower weights.</p>
-
-      <h3>Handling (<abbr class="stat-code">HND</abbr>)</h3>
-      <p>Handling has 4 stats, only the first of which is displayed in-game. They are <em class="ground">Ground (<abbr class="stat-code">HNDGR</abbr>)</em>, <em class="anti-gravity">Anti-Gravity (<abbr class="stat-code">HNDAG</abbr>)</em>, <em class="underwater">Water&nbsp;(<abbr class="stat-code">HNDWT</abbr>)</em>, and <em class="air">Air (<abbr class="stat-code">HNDAR</abbr>)</em>. They determine how sharp and wide you can drift and steer in each medium.</p>
-
-      <h3>Traction (<abbr class="stat-code">TRN</abbr>)</h3>
-      <p>Determines how much you slip on terrain like sand, snow, ice, and wet asphalt.</p>
-
-      <h3>Invincibility (<abbr class="stat-code">INV</abbr>)</h3>
-      <p>This hidden stat determines how long you stay invulnerable after being hit.</p>
-
-      <h3>Frame Size</h3>
-      <p>The driver determines the combo’s frame size between small, medium, and large. This affects your in&#8209;game hitbox.</p>
-
-      <br/>
-
-      <ul class="arrow-list">
-        <li>Visit the <a href="https://www.mariowiki.com/Mario_Kart_8_Deluxe" target="_blank">Mario Wiki</a> for more info about the game.</li>
-      </ul>
+      <p>This builder is a work in progress.</p>
+      <p>While we figure out how stats work in this game, this early alpha builder is here to provide a convenient way to&nbsp;compare combos as displayed in-game.</p>
+      <p>Please share any stat discrepancy you find via <a href="https://discord.com/users/198249043141328897" target="_blank">Discord</a>.</p>
     </div>
   </dialog>
 
@@ -712,14 +390,14 @@
       <div class="input-group">
         <label>Game Version</label>
         <jd-select id="settings-game-version">
-          <option value="latest" selected>Latest (v1.0)</option>
+          <option value="latest" selected>Latest (v1.1.0)</option>
         </jd-select>
       </div>
       <div class="input-group">
         <label>Game Language</label>
         <jd-select id="settings-locale">
           <option value="en-US" selected>English (NOA)</option>
-          <option value="en-GB">English (NOE)</option>
+          <!-- <option value="en-GB">English (NOE)</option>
           <option value="fr-CA">Français (NOA)</option>
           <option value="fr-FR">Français (NOE)</option>
           <option value="de">Deutsch</option>
@@ -733,10 +411,10 @@
           <option value="ja">日本語</option>
           <option value="zh-TW">繁體中文</option>
           <option value="zh-CN">简体中文</option>
-          <option value="ko">한국어</option>
+          <option value="ko">한국어</option> -->
         </jd-select>
       </div>
-      <div class="input-group">
+      <div class="input-group" style="display: none;">
         <label>Numerical Stat Scale</label>
         <jd-select id="settings-stat-scale">
           <option value="display" selected>Display Values (0-6)</option>
@@ -759,11 +437,11 @@
     </header>
     <div class="changelog">
       <hgroup>
-        <h3>v0.9</h3>
-        <span>11 Jun 2025</span>
+        <h3>v0.5</h3>
+        <span>18 Jun 2025</span>
       </hgroup>
       <ul>
-        <li>Beta Release!</li>
+        <li>Alpha Release! For now, the builder just emulates the stat bars you see in-game.</li>
       </ul>
     </div>
   </dialog>
@@ -777,9 +455,9 @@
     </header>
     <div>
       <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/">This app is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0" target="_blank" rel="license noopener noreferrer">CC BY&#8209;NC&#8209;SA 4.0</a>.</p>
-      <p>Design & Code by 🏳️‍🌈 <a href="https://jeremiedupuis.com" target="_blank">Jérémie Dupuis</a>.</p>
+      <p>Design & Code by 🏳️‍🌈 <a href="https://jeremiedupuis.com" target="_blank">Jérémie Dupuis</a> aka Jej.</p>
       <p>Stat data from <a href="https://www.mariowiki.com/Mario_Kart_8_Deluxe_in-game_statistics" target="_blank">Mario Wiki</a>, licensed&nbsp;under&nbsp;<a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank">CC&#8209;BY&#8209;SA</a>.</p>
-      <p>Images of in-game characters and parts were taken from <a href="https://www.spriters-resource.com/" target="_blank">The&nbsp;Spriters Resource</a> and are copyrighted by the&nbsp;developer of&nbsp;the&nbsp;game.</p>
+      <!-- <p>Images of in-game characters and parts were taken from <a href="https://www.spriters-resource.com/" target="_blank">The&nbsp;Spriters Resource</a> and are copyrighted by the&nbsp;developer of&nbsp;the&nbsp;game.</p> -->
       <br>
       <ul class="arrow-list">
         <li>Send bugs and suggestions on Discord @<a href="https://discord.com/users/198249043141328897" target="_blank">jeremied</a></li>

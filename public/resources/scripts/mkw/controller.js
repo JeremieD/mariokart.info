@@ -1,29 +1,19 @@
 "use strict";
 // Controller
 
-const statIndex = {
-  mtb: 0, spdGr: 1, spdAg: 2, spdWt: 3, spdAr: 4,  acc: 5,
-  wgt: 6, hndGr: 7, hndAg: 8, hndWt: 9, hndAr: 10, trn: 11, inv: 12,
-  size: 13, spd: 14, hnd: 15
-};
-const stats = [ "mtb", "spdGr", "spdAg", "spdWt", "spdAr", "acc",
-                "wgt", "hndGr", "hndAg", "hndWt", "hndAr", "trn", "inv",
-                "size", "spd", "hnd" ];
+const statIndex = { spd: 0, acc: 1, wgt: 2, hnd: 3, size: 4 };
+const stats = [ "spd", "acc", "wgt", "hnd", "size" ];
 const blankFormula = {
-  factors: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  min:     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  max:     [20,20,20,20,20,20,20,20,20,20,20,20,20,2,20,20],
-  unified: { spd: true, hnd: true },
-  excludeKarts: false, excludeATVs: false,
-  excludeBikes: false, excludeSportBikes: false
+  factors: [0, 0, 0, 0, 0],
+  min:     [0, 0, 0, 0, 0],
+  max:     [20,20,20,20,2],
+  excludeKarts: false, excludeATVs: false, excludeBikes: false
 };
 const defaultFormula = {
-  factors: [16,0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0,15, 1],
-  min:     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  max:     [20,20,20,20,20,20,20,20,20,20,20,20,20,2,20,20],
-  unified: { spd: true, hnd: true },
-  excludeKarts: false, excludeATVs: false,
-  excludeBikes: false, excludeSportBikes: true
+  factors: [1, 1, 0, 0, 0],
+  min:     [0, 0, 0, 0, 0],
+  max:     [20,20,20,20,2],
+  excludeKarts: false, excludeATVs: false, excludeBikes: false
 };
 const state = {
   settings: {
@@ -61,27 +51,37 @@ const state = {
   } },
   get driver() { return state.selectedSlot.combo.driverID; },
   get body() { return state.selectedSlot.combo.bodyID; },
-  get tire() { return state.selectedSlot.combo.tireID; },
-  get glider() { return state.selectedSlot.combo.gliderID; },
   locks: {
     driver: false,
-    body: false,
-    tire: false,
-    glider: false },
+    body: false },
   parts: {
     drivers: {},
-    bodies: {},
-    tires: {},
-    gliders: {} },
+    bodies: {} },
   driverPrefs: {
-    birdo: "birdo",
+    mario: "mario",
+    luigi: "luigi",
+    peach: "peach",
+    daisy: "daisy",
     yoshi: "yoshi",
+    dk: "dk",
+    bowser: "bowser",
+    bowserJr: "bowserJr",
+    koopa: "koopa",
+    toad: "toad",
+    toadette: "toadette",
+    lakitu: "lakitu",
+    kingboo: "kingboo",
     shyguy: "shyguy",
-    marioGold: "marioGold",
-    inkling: "inklingF",
-    villager: "villagerM",
-    link: "link1",
-    mii: "miiM" },
+    wario: "wario",
+    waluigi: "waluigi",
+    birdo: "birdo",
+    pauline: "pauline",
+    rosalina: "rosalina",
+    marioBb: "marioBb",
+    luigiBb: "luigiBb",
+    peachBb: "peachBb",
+    daisyBb: "daisyBb",
+    rosalinaBb: "rosalinaBb" },
   favorites: [],
   formula: structuredClone(defaultFormula),
   workingFormula: structuredClone(defaultFormula),
@@ -130,24 +130,12 @@ function toggleMenu() {
 }
 
 function setDriver(driver) {
-  Stats.post("getCombo", driver, state.body, state.tire, state.glider)
-  .then(setCombo);
+  Stats.post("getCombo", driver, state.body).then(setCombo);
   closeDriverDialog();
 }
 function setBody(body) {
-  Stats.post("getCombo", state.driver, body, state.tire, state.glider)
-  .then(setCombo);
+  Stats.post("getCombo", state.driver, body).then(setCombo);
   closeBodyDialog();
-}
-function setTire(tire) {
-  Stats.post("getCombo", state.driver, state.body, tire, state.glider)
-  .then(setCombo);
-  closeTireDialog();
-}
-function setGlider(glider) {
-  Stats.post("getCombo", state.driver, state.body, state.tire, glider)
-  .then(setCombo);
-  closeGliderDialog();
 }
 
 function setCombo(combo, slot, replaceURL = false) {
@@ -196,19 +184,10 @@ function getDominantCombos(combo) {
       combo.lvl[1],
       combo.lvl[2],
       combo.lvl[3],
-      combo.lvl[4],
-      combo.lvl[5],
-      combo.lvl[6],
-      combo.lvl[7],
-      combo.lvl[8],
-      combo.lvl[9],
-      combo.lvl[10],
-      combo.lvl[11],
-      combo.lvl[12]
+      combo.lvl[4]
     ],
     refCombo: combo,
-    driverLock: state.locks.driver, bodyLock: state.locks.body,
-    tireLock: state.locks.tire, gliderLock: state.locks.glider
+    driverLock: state.locks.driver, bodyLock: state.locks.body
   };
   return Stats.post("listCombos", opts);
 }
@@ -217,8 +196,7 @@ function getSimilarCombos(combo) {
   const opts = {
     mustDiffer: true, maxAbsDiff: 8, minDiff: -3,
     refCombo: combo, sortBy: "similar",
-    driverLock: state.locks.driver, bodyLock: state.locks.body,
-    tireLock: state.locks.tire, gliderLock: state.locks.glider
+    driverLock: state.locks.driver, bodyLock: state.locks.body
   };
   return Stats.post("listCombos", opts);
 }
@@ -229,25 +207,6 @@ function getCustomCombos(combo) {
   opts.sortBy = "score";
   opts.driverLock = state.locks.driver;
   opts.bodyLock = state.locks.body;
-  opts.tireLock = state.locks.tire;
-  opts.gliderLock = state.locks.glider;
-
-  if (state.formula.unified.spd) {
-    opts.factors[1] = 0; opts.max[1] = 20; opts.min[1] = 0;
-    opts.factors[2] = 0; opts.max[2] = 20; opts.min[2] = 0;
-    opts.factors[3] = 0; opts.max[3] = 20; opts.min[3] = 0;
-    opts.factors[4] = 0; opts.max[4] = 20; opts.min[4] = 0;
-  } else {
-    opts.factors[14] = 0; opts.max[14] = 20; opts.min[14] = 0;
-  }
-  if (state.formula.unified.hnd) {
-    opts.factors[7]  = 0; opts.max[7]  = 20; opts.min[7]  = 0;
-    opts.factors[8]  = 0; opts.max[8]  = 20; opts.min[8]  = 0;
-    opts.factors[9]  = 0; opts.max[9]  = 20; opts.min[9]  = 0;
-    opts.factors[10] = 0; opts.max[10] = 20; opts.min[10] = 0;
-  } else {
-    opts.factors[15] = 0; opts.max[15] = 20; opts.min[15] = 0;
-  }
 
   return Stats.post("listCombos", opts);
 }
@@ -255,9 +214,7 @@ function getCustomCombos(combo) {
 function randomCombo() {
   const locks = [
     state.locks.driver ? state.driver : undefined,
-    state.locks.body   ? state.body : undefined,
-    state.locks.tire   ? state.tire : undefined,
-    state.locks.glider ? state.glider : undefined
+    state.locks.body   ? state.body : undefined
   ];
   Stats.post("getRandomCombo", ...locks).then(setCombo);
 }
@@ -319,32 +276,6 @@ function toggleBodyLock(draw = false) {
   }
   commitState();
 }
-function toggleTireLock(draw = false) {
-  state.locks.tire = !state.locks.tire;
-  updateRelatedCombos("A");
-  updateRelatedCombos("B");
-  drawTireLock();
-  if (draw === true) {
-    drawCurrentCombo();
-    drawDominantCombos();
-    drawSimilarCombos();
-    drawCustomCombos();
-  }
-  commitState();
-}
-function toggleGliderLock(draw = false) {
-  state.locks.glider = !state.locks.glider;
-  updateRelatedCombos("A");
-  updateRelatedCombos("B");
-  drawGliderLock();
-  if (draw === true) {
-    drawCurrentCombo();
-    drawDominantCombos();
-    drawSimilarCombos();
-    drawCustomCombos();
-  }
-  commitState();
-}
 
 function openDriverDialog() {
   state.openedDialog = "driver";
@@ -366,32 +297,6 @@ function openBodyDialog() {
 function closeBodyDialog() {
   state.openedDialog = "";
   drawBodyDialog();
-  drawCurrentCombo();
-  drawDominantCombos();
-  drawSimilarCombos();
-  drawCustomCombos();
-}
-
-function openTireDialog() {
-  state.openedDialog = "tire";
-  drawTireDialog();
-}
-function closeTireDialog() {
-  state.openedDialog = "";
-  drawTireDialog();
-  drawCurrentCombo();
-  drawDominantCombos();
-  drawSimilarCombos();
-  drawCustomCombos();
-}
-
-function openGliderDialog() {
-  state.openedDialog = "glider";
-  drawGliderDialog();
-}
-function closeGliderDialog() {
-  state.openedDialog = "";
-  drawGliderDialog();
   drawCurrentCombo();
   drawDominantCombos();
   drawSimilarCombos();
@@ -508,15 +413,6 @@ function setBlankFormula() {
   drawFormulaDialog();
 }
 
-function toggleSpdMode() {
-  state.workingFormula.unified.spd = !state.workingFormula.unified.spd;
-  drawCollapses();
-}
-function toggleHndMode() {
-  state.workingFormula.unified.hnd = !state.workingFormula.unified.hnd;
-  drawCollapses();
-}
-
 function toggleFactorSign(statIndex, strict = false) {
   if (state.workingFormula.factors[statIndex] == 0 && !strict) {
     state.workingFormula.factors[statIndex] = 1;
@@ -542,15 +438,10 @@ function toggleIncludeBikes() {
   state.workingFormula.excludeBikes = !state.workingFormula.excludeBikes;
   drawFormulaDialog();
 }
-function toggleIncludeSportBikes() {
-  state.workingFormula.excludeSportBikes = !state.workingFormula.excludeSportBikes;
-  drawFormulaDialog();
-}
 function invertIncludes() {
   state.workingFormula.excludeKarts = !state.workingFormula.excludeKarts;
   state.workingFormula.excludeATVs = !state.workingFormula.excludeATVs;
   state.workingFormula.excludeBikes = !state.workingFormula.excludeBikes;
-  state.workingFormula.excludeSportBikes = !state.workingFormula.excludeSportBikes;
   drawFormulaDialog();
 }
 
@@ -618,11 +509,11 @@ function readURLParams() {
 
   state.selectedSlotID = BCode == undefined ? "A" : "B";
 
-  Stats.post("getCombo", aCode ?? "MAAA").then(combo => {
+  Stats.post("getCombo", aCode ?? "MA").then(combo => {
     whenViewReady(() => { setCombo(combo, "A", true); });
   });
 
-  Stats.post("getCombo", bCode ?? BCode ?? "LMSA").then(combo => {
+  Stats.post("getCombo", bCode ?? BCode ?? "LR").then(combo => {
     whenViewReady(() => { setCombo(combo, "B", true); });
   });
 }
