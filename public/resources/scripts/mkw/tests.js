@@ -74,15 +74,15 @@ testStats("stingby", "bee", [1.8, 2.4, 1.6, 2.2, 0]);
 
 testRandomDistribution();
 
-// In-game stats: spd [0], acc[1], wgt[2], hnd[3], (size[4])
+// In-game stats: spd [9], acc[3], wgt[4], hnd[10], (size[8])
 function testStats(driver, body, expectedStats) {
   Stats.post("getCombo", driver, body)
   .then(combo => {
-    if (toLvl(combo.lvl[0])  !== expectedStats[0]) throw new Error("spd does not match for combo " + combo.code);
-    if (toLvl(combo.lvl[1])  !== expectedStats[1]) throw new Error("acc does not match for combo " + combo.code);
-    if (toLvl(combo.lvl[2])  !== expectedStats[2]) throw new Error("wgt does not match for combo " + combo.code);
-    if (toLvl(combo.lvl[3])  !== expectedStats[3]) throw new Error("hnd does not match for combo " + combo.code);
-    if (combo.size !== expectedStats[4]) throw new Error("size does not match for combo " + combo.code);
+    if (toLvl(combo.lvl[9])  !== expectedStats[0]) throw new Error("spd does not match for combo " + combo.code);
+    if (toLvl(combo.lvl[3])  !== expectedStats[1]) throw new Error("acc does not match for combo " + combo.code);
+    if (toLvl(combo.lvl[4])  !== expectedStats[2]) throw new Error("wgt does not match for combo " + combo.code);
+    if (toLvl(combo.lvl[10])  !== expectedStats[3]) throw new Error("hnd does not match for combo " + combo.code);
+    if (combo.size !== expectedStats[8]) throw new Error("size does not match for combo " + combo.code);
   });
 }
 

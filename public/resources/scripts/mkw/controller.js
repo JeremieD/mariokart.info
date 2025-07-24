@@ -1,20 +1,22 @@
 "use strict";
 // Controller
 
-const statIndex = { spd: 0, acc: 1, wgt: 2, hnd: 3, size: 4 };
-const stats = [ "spd", "acc", "wgt", "hnd", "size" ];
+const stats = [
+    ...["str-spd", "pth-spd", "wtr-spd"],
+    "acc", "wgt",
+    ...["str-hnd", "pth-hnd", "wtr-hnd"],
+    "size" ];
+const statIndex = Object.fromEntries(stats.map((k, idx) => [k, idx]));
 const blankFormula = {
-  factors: [0, 0, 0, 0, 0],
-  min:     [0, 0, 0, 0, 0],
-  max:     [20,20,20,20,2],
+  factors: [...stats.map(k=> 0)],
+  min:     [...stats.map(k=> 0)],
+  max:     [...stats.map(k=> k === "size" ? 2 : 20)],
   excludeKarts: false, excludeATVs: false, excludeBikes: false
 };
-const defaultFormula = {
-  factors: [1, 1, 0, 0, 0],
-  min:     [0, 0, 0, 0, 0],
-  max:     [20,20,20,20,2],
-  excludeKarts: false, excludeATVs: false, excludeBikes: false
-};
+const defaultFormula = structuredClone(blankFormula);
+defaultFormula[statIndex["str-spd"]] = 1;
+defaultFormula[statIndex["acc"]] = 1;
+
 const state = {
   settings: {
     allowCookies: false,
@@ -95,7 +97,7 @@ const state = {
   }
 };
 
-const Stats = new Worker("/resources/scripts/mkw/stats-worker.js");
+const Stats = new Worker("/resources/scripts/mkw/stats-worker.js", {type: "module"});
 Stats.exchanges = 0;
 Stats.post = (...args) => {
   return new Promise((resolve, reject) => {
@@ -179,14 +181,9 @@ function updateRelatedCombos(slot) {
 function getDominantCombos(combo) {
   const opts = {
     mustDiffer: true, sortBy: "diff",
-    min: [
-      combo.lvl[0],
-      combo.lvl[1],
-      combo.lvl[2],
-      combo.lvl[3],
-      combo.lvl[4]
-    ],
+    min: [...combo.lvl],
     refCombo: combo,
+    mins: combo.statisticals,
     driverLock: state.locks.driver, bodyLock: state.locks.body
   };
   return Stats.post("listCombos", opts);

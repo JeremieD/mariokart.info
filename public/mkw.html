@@ -1,5 +1,5 @@
 <!doctype html>
-<html dir="ltr" lang="en-CA">
+<html dir="ltr" lang="en-CA" xmlns="http://www.w3.org/1999/html">
 
 <head>
   <meta charset="utf-8">
@@ -90,29 +90,41 @@
           </div>
         </div>
 
-        <div id="combo-stats" class="values-hidden">
+        <div id="combo-stats" class="mkw values-hidden">
           <div>
-            <label class="stat-code" id="spd-label" title="Speed">SPD</label>
-            <div class="meter mkw" id="spd-meter"></div>
-            <output id="spd-value"></output>
-          </div>
+            <label class="stat-class" title="Speed">SPD</label>
+            <label class="stat-code road" title="Asphalt/Wood Street">STR</label>
+            <div class="meter road" id="road-speed-meter"></div>
+            <output class="road" id="road-speed-value"></output>
 
-          <div>
-            <label class="stat-code" id="acc-label" title="Acceleration">ACC</label>
-            <div class="meter mkw" id="acc-meter"></div>
-            <output id="acc-value"></output>
-          </div>
+            <label class="stat-code terrain" title="Sand/Dirt/Snow Path">PTH</label>
+            <div class="meter terrain" id="terrain-speed-meter"></div>
+            <output class="terrain" id="terrain-speed-value"></output>
 
-          <div>
-            <label class="stat-code" id="wgt-label" title="Weight">WGT</label>
-            <div class="meter mkw" id="wgt-meter"></div>
-            <output id="wgt-value"></output>
-          </div>
+            <label class="stat-code water" title="Water/Chocolate/Lava">WTR</label>
+            <div class="meter water" id="water-speed-meter"></div>
+            <output class="water" id="water-speed-value"></output>
 
-          <div>
-            <label class="stat-code" id="hnd-label" title="Handling">HND</label>
-            <div class="meter mkw" id="hnd-meter"></div>
-            <output id="hnd-value"></output>
+            <label class="stat-class" title="Acceleration">ACC</label>
+            <div class="meter mkw" id="acceleration-meter"></div>
+            <output id="acceleration-value"></output>
+
+            <label class="stat-class" title="Weight">WGT</label>
+            <div class="meter mkw" id="weight-meter"></div>
+            <output id="weight-value"></output>
+
+            <label class="stat-class" title="Handling">HND</label>
+            <label class="stat-code road" title="Asphalt/Wood Street">STR</label>
+            <div class="meter road" id="road-handling-meter"></div>
+            <output class="road" id="road-handling-value"></output>
+
+            <label class="stat-code terrain" title="Sand/Dirt/Snow Path">PTH</label>
+            <div class="meter terrain" id="terrain-handling-meter"></div>
+            <output class="terrain" id="terrain-handling-value"></output>
+
+            <label class="stat-code water" title="Water/Chocolate/Lava">WTR</label>
+            <div class="meter water" id="water-handling-meter"></div>
+            <output class="water" id="water-handling-value"></output>
           </div>
         </div>
       </div>
@@ -213,21 +225,59 @@
     </header>
 
     <div class="formula-factors">
-          <div class="factor-widget">
+      <div class="factor-widget">
         <hgroup>
-          <h3 id="formula-spd-title">Speed</h3>
-          <button id="formula-spd-mode" class="inline">Ignore</button>
+          <h3 id="formula-str-spd-title">Street Speed</h3>
+          <button id="formula-str-spd-mode" class="inline">Ignore</button>
         </hgroup>
         <div>
-          <jd-slider id="formula-spd-slider" value="15" min="-16" max="16" step="1" stops="8"></jd-slider>
-          <input aria-label="Speed Factor" id="formula-spd-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
+          <jd-slider id="formula-str-spd-slider" value="15" min="-16" max="16" step="1" stops="8"></jd-slider>
+          <input aria-label="Speed Factor" id="formula-str-spd-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
         </div>
         <div>
           <div class="field-group">
-            <label>Min</label><input aria-label="Minimum Speed" id="formula-spd-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
+            <label>Min</label><input aria-label="Minimum Speed" id="formula-str-spd-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
           </div>
           <div class="field-group">
-            <label>Max</label><input aria-label="Maximum Speed" id="formula-spd-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
+            <label>Max</label><input aria-label="Maximum Speed" id="formula-str-spd-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="factor-widget">
+        <hgroup>
+          <h3 id="formula-pth-spd-title">Path Speed</h3>
+          <button id="formula-pth-spd-mode" class="inline">Ignore</button>
+        </hgroup>
+        <div>
+          <jd-slider id="formula-pth-spd-slider" value="15" min="-16" max="16" step="1" stops="8"></jd-slider>
+          <input aria-label="Speed Factor" id="formula-pth-spd-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
+        </div>
+        <div>
+          <div class="field-group">
+            <label>Min</label><input aria-label="Minimum Speed" id="formula-pth-spd-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
+          </div>
+          <div class="field-group">
+            <label>Max</label><input aria-label="Maximum Speed" id="formula-pth-spd-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="factor-widget">
+        <hgroup>
+          <h3 id="formula-wtr-spd-title">Water Speed</h3>
+          <button id="formula-wtr-spd-mode" class="inline">Ignore</button>
+        </hgroup>
+        <div>
+          <jd-slider id="formula-wtr-spd-slider" value="15" min="-16" max="16" step="1" stops="8"></jd-slider>
+          <input aria-label="Speed Factor" id="formula-wtr-spd-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
+        </div>
+        <div>
+          <div class="field-group">
+            <label>Min</label><input aria-label="Minimum Speed" id="formula-wtr-spd-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
+          </div>
+          <div class="field-group">
+            <label>Max</label><input aria-label="Maximum Speed" id="formula-wtr-spd-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
           </div>
         </div>
       </div>
@@ -272,19 +322,57 @@
 
       <div class="factor-widget">
         <hgroup>
-          <h3 id="formula-hnd-title">Handling</h3>
-          <button id="formula-hnd-mode" class="inline">Ignore</button>
+          <h3 id="formula-str-hnd-title">Street Handling</h3>
+          <button id="formula-str-hnd-mode" class="inline">Ignore</button>
         </hgroup>
         <div>
-          <jd-slider id="formula-hnd-slider" value=".5" min="-16" max="16" step="1" stops="8"></jd-slider>
-          <input aria-label="Handling Factor" id="formula-hnd-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
+          <jd-slider id="formula-str-hnd-slider" value=".5" min="-16" max="16" step="1" stops="8"></jd-slider>
+          <input aria-label="Handling Factor" id="formula-str-hnd-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
         </div>
         <div>
           <div class="field-group">
-            <label>Min</label><input aria-label="Minimum Handling" id="formula-hnd-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
+            <label>Min</label><input aria-label="Minimum Handling" id="formula-str-hnd-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
           </div>
           <div class="field-group">
-            <label>Max</label><input aria-label="Maximum Handling" id="formula-hnd-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
+            <label>Max</label><input aria-label="Maximum Handling" id="formula-str-hnd-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="factor-widget">
+        <hgroup>
+          <h3 id="formula-pth-hnd-title">Path Handling</h3>
+          <button id="formula-pth-hnd-mode" class="inline">Ignore</button>
+        </hgroup>
+        <div>
+          <jd-slider id="formula-pth-hnd-slider" value=".5" min="-16" max="16" step="1" stops="8"></jd-slider>
+          <input aria-label="Handling Factor" id="formula-pth-hnd-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
+        </div>
+        <div>
+          <div class="field-group">
+            <label>Min</label><input aria-label="Minimum Handling" id="formula-pth-hnd-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
+          </div>
+          <div class="field-group">
+            <label>Max</label><input aria-label="Maximum Handling" id="formula-pth-hnd-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="factor-widget">
+        <hgroup>
+          <h3 id="formula-wtr-hnd-title">Water Handling</h3>
+          <button id="formula-wtr-hnd-mode" class="inline">Ignore</button>
+        </hgroup>
+        <div>
+          <jd-slider id="formula-wtr-hnd-slider" value=".5" min="-16" max="16" step="1" stops="8"></jd-slider>
+          <input aria-label="Handling Factor" id="formula-wtr-hnd-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
+        </div>
+        <div>
+          <div class="field-group">
+            <label>Min</label><input aria-label="Minimum Handling" id="formula-wtr-hnd-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
+          </div>
+          <div class="field-group">
+            <label>Max</label><input aria-label="Maximum Handling" id="formula-wtr-hnd-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
           </div>
         </div>
       </div>

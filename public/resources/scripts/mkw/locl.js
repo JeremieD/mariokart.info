@@ -1,4 +1,7 @@
 "use strict";
+
+// FIXME state.settings.locale is used here
+
 const fallbacks = {
   "en-US": [ "en-GB" ],
   "en-GB": [ "en-US" ],
@@ -18,13 +21,14 @@ const fallbacks = {
   "es-ES": [ "es-MX", "en-US" ]
 };
 
-function S(ns, id, locale) {
+function S(ns, id, locale = null) {
   locale ??= state?.settings?.locale ?? "en-US";
+
   for (const locl of [locale, ...fallbacks[locale]]) {
     const str = strings[locl]?.[ns]?.[id];
-    if (str == undefined) continue;
-    return str;
+    if (str) return str;
   }
+
   throw "Error: Couldn't find string with ID “" + id + "” in namespace “" + ns + "”";
 }
 
@@ -230,37 +234,29 @@ const strings = {
     stats: {
       mtb:   "Mini-Turbo",
       spd:   "Speed (Unified)",
-      spdGr: "Ground Speed",
-      spdAg: "Anti-Gravity Speed",
-      spdWt: "Underwater Speed",
-      spdAr: "Air Speed",
+      "str-spd": "Road Speed",
+      "pth-spd": "Sand/Snow/Dirt Speed",
+      "wtr-spd": "Water/Chocolate/Lava Speed",
       acc:   "Acceleration",
       wgt:   "Weight",
       hnd:   "Handling (Unified)",
-      hndGr: "Ground Handling",
-      hndAg: "Anti-Gravity Handling",
-      hndWt: "Underwater Handling",
-      hndAr: "Air Handling",
-      trn:   "Traction",
-      inv:   "Invincibility",
+      "str-hnd": "Road Handling",
+      "pth-hnd": "Sand/Snow/Dirt Handling",
+      "wtr-hnd": "Water/Chocolate/Lava Handling",
       size:  "Size"
     },
     statsAbbr: {
       mtb:   "MTB",
       spd:   "SPD",
-      spdGr: "SPDGR",
-      spdAg: "SPDAG",
-      spdWt: "SPDWT",
-      spdAr: "SPDAR",
+      "str-spd": "SPD.STR",
+      "pth-spd": "SPD.PTH",
+      "wtr-spd": "SPD.WTR",
       acc:   "ACC",
       wgt:   "WGT",
       hnd:   "HND",
-      hndGr: "HNDGR",
-      hndAg: "HNDAG",
-      hndWt: "HNDWT",
-      hndAr: "HNDAR",
-      trn:   "TRN",
-      inv:   "INV",
+      "str-hnd": "HND.STR",
+      "pth-hnd": "HND.PTH",
+      "wtr-hnd": "HND.WTR",
       size:  "SIZE"
     }
   },
