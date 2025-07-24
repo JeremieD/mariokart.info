@@ -36,22 +36,44 @@ whenDOMReady(() => {
   V.combo.details    = document.getElementById("combo-details");
   V.combo.meters     = document.getElementById("combo-stats");
 
-  V.combo.spd = {
-    meter: document.getElementById("spd-meter"),
-    value: document.getElementById("spd-value")
+  V.combo.speed = {
+    road: {
+      meter: document.getElementById("road-speed-meter"),
+      value: document.getElementById("road-speed-value")
+    },
+    terrain: {
+      meter: document.getElementById("terrain-speed-meter"),
+      value: document.getElementById("terrain-speed-value")
+    },
+    water: {
+      meter: document.getElementById("water-speed-meter"),
+      value: document.getElementById("water-speed-value")
+    },
   };
-  V.combo.acc = {
-    meter: document.getElementById("acc-meter"),
-    value: document.getElementById("acc-value")
+
+  V.combo.acceleration = {
+    meter: document.getElementById("acceleration-meter"),
+    value: document.getElementById("acceleration-value")
   };
-  V.combo.wgt = {
-    meter: document.getElementById("wgt-meter"),
-    value: document.getElementById("wgt-value")
+  V.combo.weight = {
+    meter: document.getElementById("weight-meter"),
+    value: document.getElementById("weight-value")
   };
-  V.combo.hnd = {
-    meter: document.getElementById("hnd-meter"),
-    value: document.getElementById("hnd-value")
+  V.combo.handling = {
+    road: {
+      meter: document.getElementById("road-handling-meter"),
+      value: document.getElementById("road-handling-value")
+    },
+    terrain: {
+      meter: document.getElementById("terrain-handling-meter"),
+      value: document.getElementById("terrain-handling-value")
+    },
+    water: {
+      meter: document.getElementById("water-handling-meter"),
+      value: document.getElementById("water-handling-value")
+    },
   };
+  V.combo.missingStatsWarning = document.getElementById("missing-stats-warning");
 
   V.dominant.rows    = document.getElementById("dominant-combos-rows");
   V.dominant.count   = document.getElementById("dominant-combos-count");
@@ -225,7 +247,7 @@ whenDOMReady(() => {
   V.formula.cancel.addEventListener("click", revertFormula, { passive: true });
   V.formula.save.addEventListener("click", commitFormula, { passive: true });
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0, end = stats.length; i < end; i++) {
     const stat = stats[i];
     const factor = V.formula[stat].factor;
     const slider = V.formula[stat].slider;
@@ -427,7 +449,7 @@ function drawCurrentCombo() {
 
   // Combo Details
   let detailStr;
-  switch (combo.classes.driver[4]) {
+  switch (combo.statisticals.driver.levels.size) {
     case 0:
       detailStr = "Small Frame";
       break;
@@ -437,7 +459,7 @@ function drawCurrentCombo() {
     case 2:
       detailStr = "Large Frame";
       break;
-    default: throw "Error: Unknown size: “" + combo.classes.driver[4] + "”";
+    default: throw "Error: Unknown size: “" + combo.statisticals.driver.levels.size + "”";
   }
   V.combo.details.children[0].innerText = detailStr;
 
@@ -450,15 +472,29 @@ function drawCurrentCombo() {
 
   // Meters
   V.combo.meters.classList.toggle("values-hidden", !state.settings.showMeterValues);
-  for (let i = 0; i < 4; i++) {
-    const stat = stats[i];
-    V.combo[stat].meter.style.setProperty("--value", toLvl(combo.lvl[i]));
-    V.combo[stat].meter.title = S("stats", stat) + ": " + toLvl(combo.lvl[i], stat);
-    V.combo.meters.classList.toggle("internal", state.settings.statScale == "internal");
-    if (state.settings.showMeterValues) {
-      V.combo[stat].value.innerText = scaleStat(combo.lvl[i]).toLocaleString("en", getStatLocaleOptions());
-    } else {
-      V.combo[stat].value.innerText = "";
+  V.combo.meters.classList.toggle("internal", state.settings.statScale == "internal");
+
+  function updateMeter(view, abbr, level, additions) {
+    const displayLevel = toLvl(level)
+    const displayAdditions = toLvl(additions);
+
+    view.meter.style.setProperty("--value", displayLevel);
+    view.meter.style.setProperty("--additions", displayAdditions);
+    view.meter.title = `${S("stats", abbr)}: ${displayLevel}`;
+    view.value.innerText = state.settings.showMeterValues
+        ? scaleStat(level).toLocaleString("en", getStatLocaleOptions()) : "";
+  }
+
+  const comboStats = combo.statisticals.combined;
+  for (const [stat, alias] of [["acceleration","acc"], ["weight","wgt"]]) {
+    updateMeter(V.combo[stat], alias, comboStats[stat], 0);
+  }
+
+  for (const [statGroup, groupAbbr] of [["speed","spd"], ["handling","hnd"]]) {
+    for (const [stat, statAbbr] of [["road","str"], ["terrain","pth"], ["water","wtr"]]) {
+      let view = V.combo[statGroup][stat];
+      let level = comboStats[statGroup][stat];
+      updateMeter(view, `${statAbbr}-${groupAbbr}`, level, 0);
     }
   }
 
@@ -495,7 +531,7 @@ function drawCustomCombos() {
 function drawComboTable(container, combos, limit = 50) {
   container.innerHTML = "";
 
-  if (combos.length == 0) {
+  if (combos.length === 0) {
     container.classList.add("empty");
     const para = document.createElement("p");
     para.innerText = "No combos found.";
@@ -518,8 +554,8 @@ function drawComboTable(container, combos, limit = 50) {
     loadInB.innerText = "→B";
     loadInA.title = "Load this combo into slot A.";
     loadInB.title = "Load this combo into slot B.";
-    loadInA.classList.toggle("primary", state.selectedSlotID == "A");
-    loadInB.classList.toggle("primary", state.selectedSlotID == "B");
+    loadInA.classList.toggle("primary", state.selectedSlotID === "A");
+    loadInB.classList.toggle("primary", state.selectedSlotID === "B");
     loadInA.addEventListener("click", () => { setCombo(combo, "A"); }, { passive: true });
     loadInB.addEventListener("click", () => { setCombo(combo, "B"); }, { passive: true });
     buttonsDisplay.append(loadInA, loadInB);
@@ -528,10 +564,10 @@ function drawComboTable(container, combos, limit = 50) {
 
     const statsDisplay = document.createElement("div");
     statsDisplay.classList.add("stat-diffs");
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0, end = stats.length; i < end; i++) {
       const stat = stats[i];
       const diff = combo.diffs[i];
-      if (diff == 0) continue;
+      if (diff === 0) continue;
       const statDiff = document.createElement("div");
       const label = document.createElement("label");
       label.innerText = S("statsAbbr", stat);
@@ -575,7 +611,7 @@ function formatFormula(formula) {
   const combo = state.selectedSlot.combo;
 
   const terms = [];
-  for (let stat of ["spd", "acc", "wgt", "hnd", "size"]) {
+  for (let stat of stats) {
     const i = statIndex[stat];
     let factor = formula.factors[i];
     let isMinSet = formula.min[i] > 0;
@@ -1053,7 +1089,7 @@ function drawFormulaDialog() {
 
     let factor = formula.factors[i];
     V.formula[stat].slider.value = factor;
-    if (factor == 0) factor = "";
+    if (factor === 0) factor = "";
     V.formula[stat].factor.value = factor;
     drawFactorWidget(stat);
 
