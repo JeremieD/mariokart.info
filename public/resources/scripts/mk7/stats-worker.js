@@ -122,12 +122,12 @@ class Combo {
     }
     this.size = this.classes.driver[statIndex.size];
     this.lvl[statIndex.size] = this.size * 10;
-    this.lvl[statIndex.spd] = round(this.lvl[statIndex.spdGr]  * Combo.PERCENT_GR +
-                                    this.lvl[statIndex.spdWt]  * Combo.PERCENT_WT +
-                                    this.lvl[statIndex.spdAr]  * Combo.PERCENT_AR, 3);
-    this.lvl[statIndex.hnd] = round(this.lvl[statIndex.hndGr]  * Combo.PERCENT_GR +
-                                    this.lvl[statIndex.hndWt]  * Combo.PERCENT_WT +
-                                    this.lvl[statIndex.hndAr]  * Combo.PERCENT_AR, 3);
+    this.lvl[statIndex.spd] = round(this.lvl[statIndex.spdGr] * Combo.PERCENT_GR
+                                  + this.lvl[statIndex.spdWt] * Combo.PERCENT_WT
+                                  + this.lvl[statIndex.spdAr] * Combo.PERCENT_AR, 3);
+    this.lvl[statIndex.hnd] = round(this.lvl[statIndex.hndGr] * Combo.PERCENT_GR
+                                  + this.lvl[statIndex.hndWt] * Combo.PERCENT_WT
+                                  + this.lvl[statIndex.hndAr] * Combo.PERCENT_AR, 3);
 
     this.name = getComboName(driver, body, tire, glider);
   }
@@ -135,12 +135,12 @@ class Combo {
   static fromCode(code) {
     // TODO: check code
     let driverCode, bodyCode, tireCode, gliderCode;
-    if (code.length == 4) {
+    if (code.length === 4) {
       driverCode = code.substring(0, 1);
       bodyCode   = code.substring(1, 2);
       tireCode   = code.substring(2, 3);
       gliderCode = code.substring(3, 4);
-    } else if (code.length == 5) {
+    } else if (code.length === 5) {
       driverCode = code.substring(0, 2);
       bodyCode   = code.substring(2, 3);
       tireCode   = code.substring(3, 4);
@@ -163,9 +163,9 @@ class Combo {
 }
 
 function getCombo(...args) {
-  if (args.length == 1) { // From code
+  if (args.length === 1) { // From code
     return Combo.fromCode(args[0]);
-  } else if (args.length == 4) { // From part IDs
+  } else if (args.length === 4) { // From part IDs
     return new Combo(...args);
   }
   return "Error: Invalid arguments for getCombo: “" + args + "”";
@@ -217,6 +217,7 @@ function listCombos(opts = {}) {
   const list = [];
   for (let driver of driverClasses) {
     if (driverLock && driver !== refCombo.parts.driver.class) continue;
+    if (classes.drivers[driver][statIndex.size] < sizeMin || classes.drivers[driver][statIndex.size] > sizeMax) continue;
   for (let body of bodyClasses) {
     if (bodyLock && body !== refCombo.parts.body.class) continue;
   for (let tire of tireClasses) {
@@ -225,10 +226,10 @@ function listCombos(opts = {}) {
     if (gliderLock && glider !== refCombo.parts.glider.class) continue;
 
     // Auto variants
-    if (refCombo.parts.driver.class == driver) driver = refCombo.driverID;
-    if (refCombo.parts.body.class   == body)     body = refCombo.bodyID;
-    if (refCombo.parts.tire.class   == tire)     tire = refCombo.tireID;
-    if (refCombo.parts.glider.class == glider) glider = refCombo.gliderID;
+    if (refCombo.parts.driver.class === driver) driver = refCombo.driverID;
+    if (refCombo.parts.body.class   === body)     body = refCombo.bodyID;
+    if (refCombo.parts.tire.class   === tire)     tire = refCombo.tireID;
+    if (refCombo.parts.glider.class === glider) glider = refCombo.gliderID;
     const combo = new Combo(driver, body, tire, glider);
 
     // Stat Checks
@@ -244,7 +245,6 @@ function listCombos(opts = {}) {
     if (combo.lvl[9]  < offMin   || combo.lvl[9]  > offMax) continue;
     if (combo.lvl[10] < stbMin   || combo.lvl[10] > stbMax) continue;
     if (combo.lvl[11] < dftMin   || combo.lvl[11] > dftMax) continue;
-    if (combo.size    < sizeMin  || combo.size    > sizeMax) continue;
     if (combo.lvl[13] < spdMin   || combo.lvl[13] > spdMax) continue;
     if (combo.lvl[14] < hndMin   || combo.lvl[14] > hndMax) continue;
 
@@ -261,7 +261,7 @@ function listCombos(opts = {}) {
       combo.lvl[8]  - refCombo.lvl[8],  // hndAr
       combo.lvl[9]  - refCombo.lvl[9],  // off
       combo.lvl[10] - refCombo.lvl[10], // stb
-      combo.lvl[11] - refCombo.lvl[11], // dft
+      combo.lvl[11] - refCombo.lvl[11]  // dft
     ];
 
     const diffSum = diffs.reduce((s, a) => s + a, 0); // sum
@@ -275,7 +275,7 @@ function listCombos(opts = {}) {
                      + Math.abs(diffs[9]) + Math.abs(diffs[10])
                      + Math.abs(diffs[11]);
     if (diffSumAbs > maxAbsDiff) continue;
-    if (mustDiffer && diffSumAbs == 0) continue;
+    if (mustDiffer && diffSumAbs === 0) continue;
 
     combo.diffs = diffs;
     combo.diffSum = diffSum;
@@ -705,7 +705,7 @@ const bodyVariants = {
   bd: {
     daisy: "daisy",
     rosalina: "rosalina",
-    bee: "bee",
+    bee: "bee"
   },
   pipe: {
     luigi: "luigi",
@@ -728,7 +728,7 @@ const bodyVariants = {
 };
 function getBodyVariant(body, driver) {
   const variant = bodyVariants[body]?.[driver];
-  if (variant != undefined) return "-" + variant;
+  if (variant !== undefined) return "-" + variant;
   return "";
 }
 
@@ -759,7 +759,7 @@ const gliderVariants = {
 };
 function getGliderVariant(glider, driver) {
   const variant = gliderVariants[glider]?.[driver];
-  if (variant != undefined) return "-" + variant;
+  if (variant !== undefined) return "-" + variant;
   return "";
 }
 
@@ -809,18 +809,18 @@ function getComboName(driver, body, tire, glider) {
   const bodyMorphs = partMorphemes.bodies[body];
 
   // Special Cases
-  if (driver == "mario" && body == "std" &&
-      tire == "std" && glider == "super") return "The Standard";
-  if (body == "gold" && tire == "gold" && glider == "gold") return "24 Carat Gold";
-  if (driver == "bee" && body == "bee") return "Bumble Bee";
-  if (driver == "lakitu" && body == "cloud") return "Camera Koopa";
-  if (driver == "dk" && body == "train") return "Bodacious Jumbo Barrel";
-  if (driver == "koopa" && body == "tug") return "Koopa Thug";
-  if (driver == "bowser" && body == "koopa") return "King Koopa";
-  if (driver.isAny("peach", "daisy", "rosalina", "bee") && body == "bd" && glider == "parasol") return "Birthday Princess";
+  if (driver === "mario" && body === "std" &&
+      tire === "std" && glider === "super") return "The Standard";
+  if (body === "gold" && tire === "gold" && glider === "gold") return "24 Carat Gold";
+  if (driver === "bee" && body === "bee") return "Bumble Bee";
+  if (driver === "lakitu" && body === "cloud") return "Camera Koopa";
+  if (driver === "dk" && body === "train") return "Bodacious Jumbo Barrel";
+  if (driver === "koopa" && body === "tug") return "Koopa Thug";
+  if (driver === "bowser" && body === "koopa") return "King Koopa";
+  if (driver.isAny("peach", "daisy", "rosalina", "bee") && body === "bd" && glider === "parasol") return "Birthday Princess";
 
   // Generative
-  if (Object.keys(bodyMorphs)[0] == "full") {
+  if (Object.keys(bodyMorphs)[0] === "full") {
     if (driverMorphs.full) return fuse(driverMorphs.full, bodyMorphs.full);
     if (driverMorphs.pre) return fuse(driverMorphs.pre, bodyMorphs.full);
     if (driverMorphs.or) return fuse(driverMorphs.or, bodyMorphs.full);
@@ -858,19 +858,19 @@ function getComboName(driver, body, tire, glider) {
 function fuse(fst, snd) {
   const fstDashed = fst.endsWith("-");
   const sndDashed = snd.startsWith("-");
-  if (fstDashed != sndDashed) return fst + snd; // XOR
+  if (fstDashed !== sndDashed) return fst + snd; // XOR
   if (fstDashed && sndDashed) return fst + snd.substring(1);
   return fst + " " + snd;
 }
 String.prototype.isAny = function(...patterns) {
   for (const pattern of patterns) {
-    if (this == pattern) return true;
+    if (this === pattern) return true;
   }
   return false;
 };
 
 function randomInt(a, b) {
-  if (b == undefined) {
+  if (b === undefined) {
     b = a;
     a = 0;
   }
@@ -878,4 +878,4 @@ function randomInt(a, b) {
 }
 
 // Round n to p decimal digits.
-const round = (n, p) => Math.round(n * 10**p) / 10**p;
+const round = (n, p = 3) => Math.round(n * 10**p) / 10**p;

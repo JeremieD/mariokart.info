@@ -311,14 +311,14 @@ whenDOMReady(() => {
   V.formula.hndGr.title.addEventListener("click", toggleHndMode, { passive: true });
 
   V.formula.spd.collapse.addEventListener("transitionstart", e => {
-    if (e.target != V.formula.spd.collapse) return;
+    if (e.target !== V.formula.spd.collapse) return;
     V.formula.spd.collapse.classList.add("transitioning");
   }, { passive: true });
   V.formula.spd.collapse.addEventListener("transitionend", () => {
     V.formula.spd.collapse.classList.remove("transitioning");
   }, { passive: true });
   V.formula.hnd.collapse.addEventListener("transitionstart", e => {
-    if (e.target != V.formula.hnd.collapse) return;
+    if (e.target !== V.formula.hnd.collapse) return;
     V.formula.hnd.collapse.classList.add("transitioning");
   }, { passive: true });
   V.formula.hnd.collapse.addEventListener("transitionend", () => {
@@ -412,11 +412,11 @@ whenDOMReady(() => {
   addEventListener("keydown", e => {
     document.body.classList.toggle("opt-down", e.altKey);
     if (e.shiftKey || e.ctrlKey || e.altKey || e.metaKey) return;
-    if (e.key == "a" || e.key == "A") {
+    if (e.key === "a" || e.key === "A") {
       selectA();
-    } else if (e.key == "b" || e.key == "B") {
+    } else if (e.key === "b" || e.key === "B") {
       selectB();
-    } else if (e.key == "Escape") {
+    } else if (e.key === "Escape") {
       if (state.openedDialog !== "") e.preventDefault();
       switch (state.openedDialog) {
         case "driver": return closeDriverDialog();
@@ -429,8 +429,8 @@ whenDOMReady(() => {
         case "changelog": return closeChangelogDialog();
         case "credits": return closeCreditsDialog();
       }
-    } else if (e.key == "Enter") {
-      if (state.openedDialog != "formula") return;
+    } else if (e.key === "Enter") {
+      if (state.openedDialog !== "formula") return;
       commitFormula();
       e.preventDefault();
     }
@@ -470,8 +470,8 @@ function drawMenu() {
 
 function drawCurrentCombo() {
   // A-B Tabs
-  V.combo.a.classList.toggle("selected", state.selectedSlotID == "A");
-  V.combo.b.classList.toggle("selected", state.selectedSlotID == "B");
+  V.combo.a.classList.toggle("selected", state.selectedSlotID === "A");
+  V.combo.b.classList.toggle("selected", state.selectedSlotID === "B");
 
   const combo = state.selectedSlot.combo;
   const driverImg = combo.driverID;
@@ -491,7 +491,7 @@ function drawCurrentCombo() {
 
   // Combo Details
   let detailStr;
-  switch (combo.classes.driver[statIndex["size"]]) {
+  switch (combo.classes.driver[statIndex.size]) {
     case 0:
       detailStr = "Small Frame";
       break;
@@ -518,7 +518,7 @@ function drawCurrentCombo() {
     const stat = stats[i];
     V.combo[stat].meter.style.setProperty("--value", toLvl(combo.lvl[i]));
     V.combo[stat].meter.title = S("stats", stat) + ": " + toLvl(combo.lvl[i], stat);
-    V.combo.meters.classList.toggle("internal", state.settings.statScale == "internal");
+    V.combo.meters.classList.toggle("internal", state.settings.statScale === "internal");
     if (state.settings.showMeterValues) {
       V.combo[stat].value.innerText = scaleStat(combo.lvl[i]).toLocaleString("en", getStatLocaleOptions());
     } else {
@@ -607,7 +607,7 @@ function drawComboTable(container, combos, limit = 50) {
       statDiff.append(label, value);
       statsDisplay.append(statDiff);
     }
-    if (statsDisplay.children.length == 0) {
+    if (statsDisplay.children.length === 0) {
       const statDiff = document.createElement("div");
       const label = document.createElement("label");
       label.innerText = "No change";
@@ -628,7 +628,7 @@ function drawComboTable(container, combos, limit = 50) {
 
 function formatStatDiff(x) {
   let s = Math.abs(x).toString();
-  if (x != 0 && s[0] == "0") s = s.substring(1);
+  if (x !== 0 && s[0] === "0") s = s.substring(1);
   if (x >= 0) { s = "+" + s; }
   else { s = "−" + s; }
   return s;
@@ -653,7 +653,7 @@ function formatFormula(formula) {
     let factor = formula.factors[i];
     let isMinSet = formula.min[i] > 0;
     let isMaxSet = formula.max[i] < getMax(i);
-    if (factor == 0 && !isMinSet && !isMaxSet) continue;
+    if (factor === 0 && !isMinSet && !isMaxSet) continue;
     const sign = factor < 0 ? "−" : "";
     let term = "<span";
     if (factor < 0) term += " class='negative'";
@@ -681,16 +681,16 @@ function formatFormula(formula) {
 
   let exclusionsString = "";
   const bodyConflict = state.locks.body && (
-      (combo.parts.body.type == "kart"  && formula.excludeKarts) ||
-      (combo.parts.body.type == "atv"   && formula.excludeATVs)  ||
-      (combo.parts.body.type == "bike"  && formula.excludeBikes));
+     (combo.parts.body.type === "kart"  && formula.excludeKarts) ||
+     (combo.parts.body.type === "atv"   && formula.excludeATVs)  ||
+     (combo.parts.body.type === "bike"  && formula.excludeBikes));
   if (!state.locks.body || bodyConflict) {
     const exclusions = [];
     if (formula.excludeKarts) exclusions.push("karts");
     if (formula.excludeATVs) exclusions.push("ATVs");
     if (formula.excludeBikes) exclusions.push("bikes");
 
-    if (exclusions.length == 2) {
+    if (exclusions.length === 2) {
       if (!formula.excludeKarts) exclusionsString = "Karts only";
       else if (!formula.excludeATVs) exclusionsString = "ATVs only";
       else if (!formula.excludeBikes) exclusionsString = "Bikes only";
@@ -726,13 +726,13 @@ function initDriverDialog() {
     for (const driver of drivers) {
       let eventHandler, folder;
       const id = driver.id;
-      if (driver.folder == undefined) {
+      if (driver.folder === undefined) {
         eventHandler = () => { setDriver(id); };
       } else {
         folder = document.createElement("div");
         folder.setAttribute("inert", "");
         folder.classList.add("parts-grid", "square");
-        if (driver.folder.length == 2) folder.classList.add("two");
+        if (driver.folder.length === 2) folder.classList.add("two");
         if (driver.folder.length >= 3) folder.classList.add("three");
         eventHandler = e => {
           if (!folder.contains(e.target)) drawPopover(folder);
@@ -757,8 +757,8 @@ function initDriverDialog() {
           folder.append(button);
         }
       }
-      const buttonID = (folder == undefined ? "driver-" : "folder-") + id;
-      const button = newPartButton("drivers", folder == undefined ? id : undefined, buttonID);
+      const buttonID = (folder === undefined ? "driver-" : "folder-") + id;
+      const button = newPartButton("drivers", folder === undefined ? id : undefined, buttonID);
       button.dataset.value = id;
       button.addEventListener("click", eventHandler, { passive: true });
       if (folder !== undefined) { button.append(folder); }
@@ -780,13 +780,13 @@ function drawDriverDialog() {
   state.parts.then(({drivers}) => {
     for (const driver of drivers) {
       const id = driver.id;
-      if (driver.folder == undefined) {
+      if (driver.folder === undefined) {
         const button = document.getElementById("driver-" + id);
         const name = S("drivers", id);
         button.querySelector("img").alt = name;
         button.title = name;
-        button.classList.toggle("selected", id == state.driver);
-        button.classList.toggle("highlight", driver.group == state.selectedSlot.combo.parts.driver.group);
+        button.classList.toggle("selected", id === state.driver);
+        button.classList.toggle("highlight", driver.group === state.selectedSlot.combo.parts.driver.group);
       } else {
         const button = document.getElementById("folder-" + id);
         const driverPref = state.driverPrefs[id];
@@ -803,9 +803,9 @@ function drawDriverDialog() {
           const variantName = S("drivers", variantID);
           variantButton.querySelector("img").alt = variantName;
           variantButton.title = variantName;
-          const selected = variantID == state.driver;
+          const selected = variantID === state.driver;
           variantButton.classList.toggle("selected", selected);
-          const highlight = driverVariant.group == state.selectedSlot.combo.parts.driver.group;
+          const highlight = driverVariant.group === state.selectedSlot.combo.parts.driver.group;
           variantButton.classList.toggle("highlight", highlight);
           if (selected) button.classList.add("selected");
           if (highlight) button.classList.add("highlight");
@@ -863,8 +863,8 @@ function drawBodyDialog() {
       const name = S("bodies", id);
       button.querySelector("img").alt = name;
       button.title = name;
-      button.classList.toggle("selected", id == state.body);
-      button.classList.toggle("highlight", body.group == state.selectedSlot.combo.parts.body.group);
+      button.classList.toggle("selected", id === state.body);
+      button.classList.toggle("highlight", body.group === state.selectedSlot.combo.parts.body.group);
     } }
   });
   V.bodies.icon.setAttribute("icon", state.selectedSlot.combo.parts.body.type);
@@ -905,7 +905,7 @@ function newPartButton(ns, partID, id) {
     img.src = graphicsRoot + ns + "/" + partID + ".webp";
     img.alt = S(ns, partID);
   }
-  img.width = ns == "drivers" ? "128" : "200";
+  img.width = ns === "drivers" ? "128" : "200";
   img.height = "128";
   img.loading = "lazy";
   button.append(img);
@@ -969,7 +969,7 @@ function drawFavoritesDialog() {
   V.favorites.list.innerHTML = "";
 
   if (state.settings.allowCookies) {
-    if (state.favorites.length == 0) {
+    if (state.favorites.length === 0) {
       V.favorites.list.classList.add("empty");
       const para = document.createElement("p");
       para.innerText = "No favourite combos.";
@@ -1017,8 +1017,8 @@ function drawFavoritesDialog() {
       loadInB.innerText = "→B";
       loadInA.title = "Load this combo into slot A.";
       loadInB.title = "Load this combo into slot B.";
-      loadInA.classList.toggle("primary", state.selectedSlotID == "A");
-      loadInB.classList.toggle("primary", state.selectedSlotID == "B");
+      loadInA.classList.toggle("primary", state.selectedSlotID === "A");
+      loadInB.classList.toggle("primary", state.selectedSlotID === "B");
       loadInA.addEventListener("click", () => {
         setCombo(combo, "A");
         Tooltip.draw("Loaded into slot A.", { el: loadInA, pos: "bottom", align: "right", dialog: V.favorites.dialog });
@@ -1056,7 +1056,7 @@ function drawFavoritesDialog() {
 }
 function removeFavorite(combo) {
   const li = document.getElementById(combo.code);
-  if (li == undefined) return;
+  if (li === undefined) return;
   li.style.height = li.offsetHeight + "px";
   li.getClientRects(); // Force recalculation of layout.
   li.classList.add("remove");
@@ -1270,7 +1270,7 @@ function enableScroll(el)  { el.classList.remove("no-scroll"); }
 function isOutside(el, e) {
   const rect = el.getBoundingClientRect();
   // If the click event was fired with a keyboard press, e.detail will be 0.
-  if (e.detail == 0) {
+  if (e.detail === 0) {
     // In that case, clientX and Y will be 0, so we use the target element's position instead.
     const target = e.target.getBoundingClientRect();
     return target.top < rect.top   || target.bottom > rect.bottom
