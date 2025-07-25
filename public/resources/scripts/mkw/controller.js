@@ -1,22 +1,24 @@
 "use strict";
 // Controller
 
-const stats = [
-    ...["str-spd", "pth-spd", "wtr-spd"],
-    "acc", "wgt",
-    ...["str-hnd", "pth-hnd", "wtr-hnd"],
-    "size" ];
-const statIndex = Object.fromEntries(stats.map((k, idx) => [k, idx]));
+const statIndex = { spdGr: 0, spdRr: 1, spdWt: 2, acc: 3, wgt: 4,
+                    hndGr: 5, hndRr: 6, hndWt: 7, size: 8, spd: 9, hnd: 10 };
+const stats = [ "spdGr", "spdRr", "spdWt", "acc", "wgt",
+                "hndGr", "hndRr", "hndWt", "size", "spd", "hnd" ];
 const blankFormula = {
-  factors: [...stats.map(k=> 0)],
-  min:     [...stats.map(k=> 0)],
-  max:     [...stats.map(k=> k === "size" ? 2 : 20)],
+  factors: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  min:     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  max:     [20,20,20,20,20,20,20,20,2,20,20],
+  unified: { spd: true, hnd: true },
   excludeKarts: false, excludeATVs: false, excludeBikes: false
 };
-const defaultFormula = structuredClone(blankFormula);
-defaultFormula[statIndex["str-spd"]] = 1;
-defaultFormula[statIndex["acc"]] = 1;
-
+const defaultFormula = {
+  factors: [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+  min:     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  max:     [20,20,20,20,20,20,20,20,2,20,20],
+  unified: { spd: true, hnd: true },
+  excludeKarts: false, excludeATVs: false, excludeBikes: false
+};
 const state = {
   settings: {
     allowCookies: false,
@@ -97,7 +99,7 @@ const state = {
   }
 };
 
-const Stats = new Worker("/resources/scripts/mkw/stats-worker.js", {type: "module"});
+const Stats = new Worker("/resources/scripts/mkw/stats-worker.js");
 Stats.exchanges = 0;
 Stats.post = (...args) => {
   return new Promise((resolve, reject) => {
@@ -181,9 +183,17 @@ function updateRelatedCombos(slot) {
 function getDominantCombos(combo) {
   const opts = {
     mustDiffer: true, sortBy: "diff",
-    min: [...combo.lvl],
+    min: [
+      combo.lvl[0],
+      combo.lvl[1],
+      combo.lvl[2],
+      combo.lvl[3],
+      combo.lvl[4],
+      combo.lvl[5],
+      combo.lvl[6],
+      combo.lvl[7]
+    ],
     refCombo: combo,
-    mins: combo.statisticals,
     driverLock: state.locks.driver, bodyLock: state.locks.body
   };
   return Stats.post("listCombos", opts);
@@ -408,6 +418,15 @@ function setDefaultFormula() {
 function setBlankFormula() {
   state.workingFormula = structuredClone(blankFormula);
   drawFormulaDialog();
+}
+
+function toggleSpdMode() {
+  state.workingFormula.unified.spd = !state.workingFormula.unified.spd;
+  drawCollapses();
+}
+function toggleHndMode() {
+  state.workingFormula.unified.hnd = !state.workingFormula.unified.hnd;
+  drawCollapses();
 }
 
 function toggleFactorSign(statIndex, strict = false) {

@@ -59,9 +59,9 @@
   background: var(--color-background);
 }
 
-.road { color: var(--color-yellow) !important; }
-.terrain { color: var(--color-orange) !important; }
 .ground { color: var(--color-orange) !important; }
+.smooth { color: var(--color-yellow) !important; }
+.rough { color: var(--color-orange) !important; }
 .anti-gravity { color: var(--color-purple) !important; }
 .underwater, .water { color: var(--color-blue) !important; }
 .air { color: var(--color-cyan) !important; }
