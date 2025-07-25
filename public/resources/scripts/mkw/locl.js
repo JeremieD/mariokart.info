@@ -21,12 +21,10 @@ const fallbacks = {
 
 function S(ns, id, locale) {
   locale ??= state?.settings?.locale ?? "en-US";
-
   for (const locl of [locale, ...fallbacks[locale]]) {
     const str = strings[locl]?.[ns]?.[id];
     if (str) return str;
   }
-
   throw "Error: Couldn't find string with ID “" + id + "” in namespace “" + ns + "”";
 }
 

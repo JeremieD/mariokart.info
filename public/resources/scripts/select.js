@@ -56,9 +56,9 @@ class JDSelect extends HTMLElement {
     this.dispatchEvent(new Event("open"));
     this.classList.add("open");
     this.#dropdownEl.inert = false;
-    if (e.type == "click") {
+    if (e.type === "click") {
       e.stopPropagation();
-    } else if (e.type == "keydown") {
+    } else if (e.type === "keydown") {
       for (const optionEl of this.#optionEls) {
         if (optionEl.getAttribute("value") == this.#value) {
           optionEl.focus();

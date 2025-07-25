@@ -1,4 +1,5 @@
 "use strict";
+
 const fallbacks = {
   "en-US": [ "en-GB" ],
   "en-GB": [ "en-US" ],
@@ -21,8 +22,7 @@ function S(ns, id, locale) {
   locale ??= state?.settings?.locale ?? "en-US";
   for (const locl of [locale, ...fallbacks[locale]]) {
     const str = strings[locl]?.[ns]?.[id];
-    if (str == undefined) continue;
-    return str;
+    if (str) return str;
   }
   throw "Error: Couldn't find string with ID “" + id + "” in namespace “" + ns + "”";
 }

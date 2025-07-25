@@ -20,13 +20,13 @@ whenDOMReady(() => {
         selectTab(handle.dataset.tabId);
       }, { passive: true });
       handle.addEventListener("keydown", e => {
-        if (e.key == "Enter") clickHandler(e);
-        if (e.key == "ArrowLeft") {
-          const prevId = i == 0 ? handles.length - 1 : i - 1;
+        if (e.key === "Enter") clickHandler(e);
+        if (e.key === "ArrowLeft") {
+          const prevId = i === 0 ? handles.length - 1 : i - 1;
           selectTab(handles[prevId].dataset.tabId);
         }
-        if (e.key == "ArrowRight") {
-          const nextId = i == handles.length - 1 ? 0 : i + 1;
+        if (e.key === "ArrowRight") {
+          const nextId = i === handles.length - 1 ? 0 : i + 1;
           selectTab(handles[nextId].dataset.tabId);
         }
       }, { passive: true });

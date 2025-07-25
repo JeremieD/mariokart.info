@@ -96,9 +96,9 @@ Stats.post = (...args) => {
   return new Promise((resolve, reject) => {
     const exchangeID = Stats.exchanges++;
     Stats.addEventListener("message", e => {
-      if (e.data[0] == exchangeID) {
+      if (e.data[0] === exchangeID) {
         const data = e.data[1];
-        if (typeof data == "string" && data.startsWith("Error: ")) {
+        if (typeof data === "string" && data.startsWith("Error: ")) {
           console.error(data);
           reject(data);
         } else {
@@ -146,8 +146,8 @@ function setGlider(glider) {
 }
 
 function setCombo(combo, slot, replaceURL = false) {
-  if (slot == "A" && state.selectedSlotID == "B"
-   || slot == "B" && state.selectedSlotID == "A") {
+  if (slot === "A" && state.selectedSlotID === "B"
+   || slot === "B" && state.selectedSlotID === "A") {
     state.offSlot.combo = combo;
     state.offSlot.isFavorite = isFavorite(combo);
     state.offSlot.dominant = getDominantCombos(combo);
@@ -171,8 +171,8 @@ function setCombo(combo, slot, replaceURL = false) {
 }
 
 function updateRelatedCombos(slot) {
-  if (slot == "A" && state.selectedSlotID == "B"
-   || slot == "B" && state.selectedSlotID == "A") {
+  if (slot === "A" && state.selectedSlotID === "B"
+   || slot === "B" && state.selectedSlotID === "A") {
     state.offSlot.dominant = getDominantCombos(state.offSlot.combo);
     state.offSlot.similar = getSimilarCombos(state.offSlot.combo);
     state.offSlot.custom = getCustomCombos(state.offSlot.combo);
@@ -402,7 +402,7 @@ function isFavorite(combo) {
 function favoriteCombo() {
   if (state.selectedSlot.isFavorite) return;
   state.selectedSlot.isFavorite = true;
-  if (state.offSlot.combo.code == state.selectedSlot.combo.code) {
+  if (state.offSlot.combo.code === state.selectedSlot.combo.code) {
     state.offSlot.isFavorite = true;
   }
   const newFav = {
@@ -463,7 +463,7 @@ function serializeFavorites(obj) {
   return serial;
 }
 function deserializeFavorites(serial) {
-  if (serial == undefined) { return []; }
+  if (serial === undefined) { return []; }
   const obj = [];
   for (const fav of serial) {
     Stats.post("getCombo", fav.combo).then(combo => {
@@ -513,7 +513,7 @@ function toggleHndMode() {
 }
 
 function toggleFactorSign(statIndex, strict = false) {
-  if (state.workingFormula.factors[statIndex] == 0 && !strict) {
+  if (state.workingFormula.factors[statIndex] === 0 && !strict) {
     state.workingFormula.factors[statIndex] = 1;
   } else {
     state.workingFormula.factors[statIndex] *= -1;
@@ -611,7 +611,7 @@ function readURLParams() {
   const bCode = url.searchParams.get("b");
   const BCode = url.searchParams.get("B");
 
-  state.selectedSlotID = BCode == undefined ? "A" : "B";
+  state.selectedSlotID = BCode === undefined ? "A" : "B";
 
   Stats.post("getCombo", aCode ?? "MAAA").then(combo => {
     whenViewReady(() => { setCombo(combo, "A", true); });
@@ -631,15 +631,15 @@ function updateURLParams(forceReplace = false) {
   url.searchParams.delete("B");
   url.searchParams.delete("b");
 
-  if (state.selectedSlotID == "B") {
+  if (state.selectedSlotID === "B") {
     url.searchParams.set("a", aCode);
     url.searchParams.set("B", bCode);
   } else {
     url.searchParams.set("A", aCode);
     url.searchParams.set("b", bCode);
   }
-  if (!forceReplace && (aCode != state.lastState.aCode
-                     || bCode != state.lastState.bCode)) {
+  if (!forceReplace && (aCode !== state.lastState.aCode
+                     || bCode !== state.lastState.bCode)) {
     history.pushState({}, "", url.toString());
   } else {
     history.replaceState({}, "", url.toString());
@@ -692,11 +692,11 @@ function readState() {
   if (!data?.settings?.allowCookies) return;
 
   for (const prop of Object.keys(data.settings)) {
-    if (data.settings[prop] == undefined) continue;
+    if (data.settings[prop] === undefined) continue;
     state.settings[prop] = data.settings[prop];
   }
 
-  if (data.locks != undefined) {
+  if (data.locks !== undefined) {
     state.locks = structuredClone(data.locks);
   }
 
@@ -704,11 +704,11 @@ function readState() {
     state.driverPrefs[prop] = data.driverPrefs[prop];
   }
 
-  if (data.favorites != undefined) {
+  if (data.favorites !== undefined) {
     state.favorites = deserializeFavorites(data.favorites);
   }
 
-  if (data.formula != undefined) {
+  if (data.formula !== undefined) {
     state.formula = structuredClone(data.formula);
     state.workingFormula = structuredClone(state.formula);
   }

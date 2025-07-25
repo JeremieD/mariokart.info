@@ -121,25 +121,25 @@ function testRandomDistribution() {
     const gliders = {};
 
     for (const combo of combos) {
-      if (drivers[combo.driverID] == undefined) {
+      if (drivers[combo.driverID] === undefined) {
         drivers[combo.driverID] = 1;
       } else {
         drivers[combo.driverID]++;
       }
 
-      if (bodies[combo.bodyID] == undefined) {
+      if (bodies[combo.bodyID] === undefined) {
         bodies[combo.bodyID] = 1;
       } else {
         bodies[combo.bodyID]++;
       }
 
-      if (tires[combo.tireID] == undefined) {
+      if (tires[combo.tireID] === undefined) {
         tires[combo.tireID] = 1;
       } else {
         tires[combo.tireID]++;
       }
 
-      if (gliders[combo.gliderID] == undefined) {
+      if (gliders[combo.gliderID] === undefined) {
         gliders[combo.gliderID] = 1;
       } else {
         gliders[combo.gliderID]++;

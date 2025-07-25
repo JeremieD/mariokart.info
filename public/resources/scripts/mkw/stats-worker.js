@@ -92,12 +92,12 @@ class Combo {
     }
     this.size = this.classes.driver[statIndex.size];
     this.lvl[statIndex.size] = this.size * 10;
-    this.lvl[statIndex.spd] = round(this.lvl[0] * Combo.PERCENT_GR +
-                                    this.lvl[1] * Combo.PERCENT_RR +
-                                    this.lvl[2] * Combo.PERCENT_WT, 3);
-    this.lvl[statIndex.hnd] = round(this.lvl[5] * Combo.PERCENT_GR +
-                                    this.lvl[6] * Combo.PERCENT_RR +
-                                    this.lvl[7] * Combo.PERCENT_WT, 3);
+    this.lvl[statIndex.spd] = round(this.lvl[statIndex.spdGr] * Combo.PERCENT_GR
+                                  + this.lvl[statIndex.spdRr] * Combo.PERCENT_RR
+                                  + this.lvl[statIndex.spdWt] * Combo.PERCENT_WT, 3);
+    this.lvl[statIndex.hnd] = round(this.lvl[statIndex.hndGr] * Combo.PERCENT_GR
+                                  + this.lvl[statIndex.hndRr] * Combo.PERCENT_RR
+                                  + this.lvl[statIndex.hndWt] * Combo.PERCENT_WT, 3);
 
     this.name = getComboName(driver, body);
   }
@@ -105,10 +105,10 @@ class Combo {
   static fromCode(code) {
     // TODO: check code
     let driverCode, bodyCode;
-    if (code.length == 2) {
+    if (code.length === 2) {
       driverCode = code[0];
       bodyCode   = code[1];
-    } else if (code.length == 3) {
+    } else if (code.length === 3) {
       driverCode = code.substring(0, 2);
       bodyCode   = code.substring(2, 3);
     } else {
@@ -127,9 +127,9 @@ class Combo {
 }
 
 function getCombo(...args) {
-  if (args.length == 1) { // From code
+  if (args.length === 1) { // From code
     return Combo.fromCode(args[0]);
-  } else if (args.length == 2) { // From part IDs
+  } else if (args.length === 2) { // From part IDs
     return new Combo(...args);
   }
   return "Error: Invalid arguments for getCombo: “" + args + "”";
@@ -261,17 +261,17 @@ function listCombos(opts = {}) {
   const maxDiff = opts.maxDiff ?? Infinity;
   const driverLock = opts.driverLock ?? false;
   const bodyLock   = opts.bodyLock   ?? false;
-  const spdGrMin  = opts.min?.[0]  ?? 0; const spdGrMax  = opts.max?.[0]  ?? 20;
-  const spdRrMin  = opts.min?.[1]  ?? 0; const spdRrMax  = opts.max?.[1]  ?? 20;
-  const spdWtMin  = opts.min?.[2]  ?? 0; const spdWtMax  = opts.max?.[2]  ?? 20;
-  const accMin    = opts.min?.[3]  ?? 0; const accMax    = opts.max?.[3]  ?? 20;
-  const wgtMin    = opts.min?.[4]  ?? 0; const wgtMax    = opts.max?.[4]  ?? 20;
-  const hndGrMin  = opts.min?.[5]  ?? 0; const hndGrMax  = opts.max?.[5]  ?? 20;
-  const hndRrMin  = opts.min?.[6]  ?? 0; const hndRrMax  = opts.max?.[6]  ?? 20;
-  const hndWtMin  = opts.min?.[7]  ?? 0; const hndWtMax  = opts.max?.[7]  ?? 20;
-  const sizeMin   = opts.min?.[8]  ?? 0; const sizeMax   = opts.max?.[8]  ?? 2;
-  const spdMin    = opts.min?.[9]  ?? 0; const spdMax    = opts.max?.[9]  ?? 20;
-  const hndMin    = opts.min?.[10] ?? 0; const hndMax    = opts.max?.[10] ?? 20;
+  const spdGrMin = opts.min?.[0]  ?? 0; const spdGrMax = opts.max?.[0]  ?? 20;
+  const spdRrMin = opts.min?.[1]  ?? 0; const spdRrMax = opts.max?.[1]  ?? 20;
+  const spdWtMin = opts.min?.[2]  ?? 0; const spdWtMax = opts.max?.[2]  ?? 20;
+  const accMin   = opts.min?.[3]  ?? 0; const accMax   = opts.max?.[3]  ?? 20;
+  const wgtMin   = opts.min?.[4]  ?? 0; const wgtMax   = opts.max?.[4]  ?? 20;
+  const hndGrMin = opts.min?.[5]  ?? 0; const hndGrMax = opts.max?.[5]  ?? 20;
+  const hndRrMin = opts.min?.[6]  ?? 0; const hndRrMax = opts.max?.[6]  ?? 20;
+  const hndWtMin = opts.min?.[7]  ?? 0; const hndWtMax = opts.max?.[7]  ?? 20;
+  const sizeMin  = opts.min?.[8]  ?? 0; const sizeMax  = opts.max?.[8]  ?? 2;
+  const spdMin   = opts.min?.[9]  ?? 0; const spdMax   = opts.max?.[9]  ?? 20;
+  const hndMin   = opts.min?.[10] ?? 0; const hndMax   = opts.max?.[10] ?? 20;
   const excludeKarts = opts.excludeKarts ?? false;
   const excludeATVs  = opts.excludeATVs  ?? false;
   const excludeBikes = opts.excludeBikes ?? false;
@@ -285,15 +285,16 @@ function listCombos(opts = {}) {
   const list = [];
   for (let driver of driverClasses) {
     if (driverLock && driver !== refCombo.parts.driver.class) continue;
+    if (classes.drivers[driver][statIndex.size] < sizeMin || classes.drivers[driver][statIndex.size] > sizeMax) continue;
   for (let body of bodyClasses) {
     if (bodyLock && body !== refCombo.parts.body.class) continue;
-    if (excludeKarts && parts.bodies[body].type == "kart") continue;
-    if (excludeATVs  && parts.bodies[body].type == "atv")  continue;
-    if (excludeBikes && parts.bodies[body].type == "bike") continue;
+    if (excludeKarts && parts.bodies[body].type === "kart") continue;
+    if (excludeATVs  && parts.bodies[body].type === "atv")  continue;
+    if (excludeBikes && parts.bodies[body].type === "bike") continue;
 
     // Auto variants
-    if (refCombo.parts.driver.class == driver) driver = refCombo.driverID;
-    if (refCombo.parts.body.class   == body)     body = refCombo.bodyID;
+    if (refCombo.parts.driver.class === driver) driver = refCombo.driverID;
+    if (refCombo.parts.body.class   === body)     body = refCombo.bodyID;
     const combo = new Combo(driver, body);
 
     // Stat Checks
@@ -305,7 +306,6 @@ function listCombos(opts = {}) {
     if (combo.lvl[5]  < hndGrMin || combo.lvl[5]  > hndGrMax) continue;
     if (combo.lvl[6]  < hndRrMin || combo.lvl[6]  > hndRrMax) continue;
     if (combo.lvl[7]  < hndWtMin || combo.lvl[7]  > hndWtMax) continue;
-    if (combo.size    < sizeMin  || combo.size    > sizeMax) continue;
     if (combo.lvl[9]  < spdMin   || combo.lvl[9]  > spdMax) continue;
     if (combo.lvl[10] < hndMin   || combo.lvl[10] > hndMax) continue;
 
@@ -318,7 +318,7 @@ function listCombos(opts = {}) {
       combo.lvl[4] - refCombo.lvl[4], // wgt
       combo.lvl[5] - refCombo.lvl[5], // hndGr
       combo.lvl[6] - refCombo.lvl[6], // hndRr
-      combo.lvl[7] - refCombo.lvl[7], // hndWt
+      combo.lvl[7] - refCombo.lvl[7] // hndWt
     ];
 
     const diffSum = diffs.reduce((s, a) => s + a, 0); // sum
@@ -2036,7 +2036,7 @@ const bodyVariants = {
 };
 function getBodyVariant(body, driver) {
   // const variant = bodyVariants[body]?.[driver];
-  // if (variant != undefined) return "-" + variant;
+  // if (variant !== undefined) return "-" + variant;
   return "";
 }
 
@@ -2142,10 +2142,10 @@ function getComboName(driver, body) {
   const bodyMorphs = partMorphemes.bodies[body];
 
   // Special Cases
-  if (driver == "mario" && body == "std") return "The Standard";
+  if (driver === "mario" && body === "std") return "The Standard";
 
   // Generative
-  if (Object.keys(bodyMorphs)[0] == "full") {
+  if (Object.keys(bodyMorphs)[0] === "full") {
     if (driverMorphs.full) return fuse(driverMorphs.full, bodyMorphs.full);
     if (driverMorphs.pre) return fuse(driverMorphs.pre, bodyMorphs.full);
     if (driverMorphs.or) return fuse(driverMorphs.or, bodyMorphs.full);
@@ -2183,19 +2183,19 @@ function getComboName(driver, body) {
 function fuse(fst, snd) {
   const fstDashed = fst.endsWith("-");
   const sndDashed = snd.startsWith("-");
-  if (fstDashed != sndDashed) return fst + snd; // XOR
+  if (fstDashed !== sndDashed) return fst + snd; // XOR
   if (fstDashed && sndDashed) return fst + snd.substring(1);
   return fst + " " + snd;
 }
 String.prototype.isAny = function(...patterns) {
   for (const pattern of patterns) {
-    if (this == pattern) return true;
+    if (this === pattern) return true;
   }
   return false;
 };
 
 function randomInt(a, b) {
-  if (b == undefined) {
+  if (b === undefined) {
     b = a;
     a = 0;
   }

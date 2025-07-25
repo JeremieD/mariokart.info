@@ -97,13 +97,13 @@ function testRandomDistribution() {
     const bodies = {};
 
     for (const combo of combos) {
-      if (drivers[combo.driverID] == undefined) {
+      if (drivers[combo.driverID] === undefined) {
         drivers[combo.driverID] = 1;
       } else {
         drivers[combo.driverID]++;
       }
 
-      if (bodies[combo.bodyID] == undefined) {
+      if (bodies[combo.bodyID] === undefined) {
         bodies[combo.bodyID] = 1;
       } else {
         bodies[combo.bodyID]++;
