@@ -36,44 +36,41 @@ whenDOMReady(() => {
   V.combo.details    = document.getElementById("combo-details");
   V.combo.meters     = document.getElementById("combo-stats");
 
-  V.combo.speed = {
-    road: {
-      meter: document.getElementById("road-speed-meter"),
-      value: document.getElementById("road-speed-value")
-    },
-    terrain: {
-      meter: document.getElementById("terrain-speed-meter"),
-      value: document.getElementById("terrain-speed-value")
-    },
-    water: {
-      meter: document.getElementById("water-speed-meter"),
-      value: document.getElementById("water-speed-value")
-    },
+  V.combo.spdGr = {
+    meter: document.getElementById("spdGr-meter"),
+    value: document.getElementById("spdGr-value")
+  };
+  V.combo.spdRr = {
+    meter: document.getElementById("spdRr-meter"),
+    value: document.getElementById("spdRr-value")
+  };
+  V.combo.spdWt = {
+    meter: document.getElementById("spdWt-meter"),
+    value: document.getElementById("spdWt-value")
+  };
+  V.combo.acc = {
+    meter: document.getElementById("acc-meter"),
+    value: document.getElementById("acc-value")
+  };
+  V.combo.wgt = {
+    meter: document.getElementById("wgt-meter"),
+    value: document.getElementById("wgt-value")
+  };
+  V.combo.hndGr = {
+    meter: document.getElementById("hndGr-meter"),
+    value: document.getElementById("hndGr-value")
+  };
+  V.combo.hndRr = {
+    meter: document.getElementById("hndRr-meter"),
+    value: document.getElementById("hndRr-value")
+  };
+  V.combo.hndWt = {
+    meter: document.getElementById("hndWt-meter"),
+    value: document.getElementById("hndWt-value")
   };
 
-  V.combo.acceleration = {
-    meter: document.getElementById("acceleration-meter"),
-    value: document.getElementById("acceleration-value")
-  };
-  V.combo.weight = {
-    meter: document.getElementById("weight-meter"),
-    value: document.getElementById("weight-value")
-  };
-  V.combo.handling = {
-    road: {
-      meter: document.getElementById("road-handling-meter"),
-      value: document.getElementById("road-handling-value")
-    },
-    terrain: {
-      meter: document.getElementById("terrain-handling-meter"),
-      value: document.getElementById("terrain-handling-value")
-    },
-    water: {
-      meter: document.getElementById("water-handling-meter"),
-      value: document.getElementById("water-handling-value")
-    },
-  };
-  V.combo.missingStatsWarning = document.getElementById("missing-stats-warning");
+  V.combo.spdMultimeter = document.getElementById("spd-multimeter");
+  V.combo.hndMultimeter = document.getElementById("hnd-multimeter");
 
   V.dominant.rows    = document.getElementById("dominant-combos-rows");
   V.dominant.count   = document.getElementById("dominant-combos-count");
@@ -116,6 +113,14 @@ whenDOMReady(() => {
     V.formula[stat].min    = document.getElementById(`formula-${stat}-min`);
     V.formula[stat].max    = document.getElementById(`formula-${stat}-max`);
   }
+  V.formula.spd.use = document.getElementById("formula-use-spd");
+  V.formula.spd.collapse = document.getElementById("formula-spd-collapse");
+  V.formula.spd.title = document.getElementById("formula-spd-title");
+  V.formula.spdGr.title = document.getElementById("formula-spdGr-title");
+  V.formula.hnd.use = document.getElementById("formula-use-hnd");
+  V.formula.hnd.collapse = document.getElementById("formula-hnd-collapse");
+  V.formula.hnd.title = document.getElementById("formula-hnd-title");
+  V.formula.hndGr.title = document.getElementById("formula-hndGr-title");
 
   V.formula.includeKarts = document.getElementById("formula-include-karts");
   V.formula.includeATVs  = document.getElementById("formula-include-atvs");
@@ -207,6 +212,21 @@ whenDOMReady(() => {
     }
   }, { passive: true });
 
+  V.combo.spdMultimeter.addEventListener("click", () => {
+    if (V.combo.spdMultimeter.classList.contains("show")) return;
+    V.combo.spdMultimeter.classList.add("show");
+    V.combo.spdMultimeter.addEventListener("animationend", () => {
+      V.combo.spdMultimeter.classList.remove("show");
+    }, { passive: true });
+  }, { passive: true });
+  V.combo.hndMultimeter.addEventListener("click", () => {
+    if (V.combo.hndMultimeter.classList.contains("show")) return;
+    V.combo.hndMultimeter.classList.add("show");
+    V.combo.hndMultimeter.addEventListener("animationend", () => {
+      V.combo.hndMultimeter.classList.remove("show");
+    }, { passive: true });
+  }, { passive: true });
+
   V.custom.customize.addEventListener("click", openFormulaDialog, { passive: true });
 
   V.drivers.dialog.addEventListener("click", e => {
@@ -247,7 +267,7 @@ whenDOMReady(() => {
   V.formula.cancel.addEventListener("click", revertFormula, { passive: true });
   V.formula.save.addEventListener("click", commitFormula, { passive: true });
 
-  for (let i = 0, end = stats.length; i < end; i++) {
+  for (let i = 0; i < 11; i++) {
     const stat = stats[i];
     const factor = V.formula[stat].factor;
     const slider = V.formula[stat].slider;
@@ -282,6 +302,28 @@ whenDOMReady(() => {
     }, { passive: true });
     mode.addEventListener("dblclick", () => { resetFactor(i); }, { passive: true });
   }
+
+  V.formula.spd.use.addEventListener("click", toggleSpdMode, { passive: true });
+  V.formula.spd.title.addEventListener("click", toggleSpdMode, { passive: true });
+  V.formula.spdGr.title.addEventListener("click", toggleSpdMode, { passive: true });
+  V.formula.hnd.use.addEventListener("click", toggleHndMode, { passive: true });
+  V.formula.hnd.title.addEventListener("click", toggleHndMode, { passive: true });
+  V.formula.hndGr.title.addEventListener("click", toggleHndMode, { passive: true });
+
+  V.formula.spd.collapse.addEventListener("transitionstart", e => {
+    if (e.target != V.formula.spd.collapse) return;
+    V.formula.spd.collapse.classList.add("transitioning");
+  }, { passive: true });
+  V.formula.spd.collapse.addEventListener("transitionend", () => {
+    V.formula.spd.collapse.classList.remove("transitioning");
+  }, { passive: true });
+  V.formula.hnd.collapse.addEventListener("transitionstart", e => {
+    if (e.target != V.formula.hnd.collapse) return;
+    V.formula.hnd.collapse.classList.add("transitioning");
+  }, { passive: true });
+  V.formula.hnd.collapse.addEventListener("transitionend", () => {
+    V.formula.hnd.collapse.classList.remove("transitioning");
+  }, { passive: true });
 
   V.formula.includeKarts.addEventListener("click", e => {
     if (e.altKey) return invertIncludes();
@@ -449,7 +491,7 @@ function drawCurrentCombo() {
 
   // Combo Details
   let detailStr;
-  switch (combo.statisticals.driver.levels.size) {
+  switch (combo.classes.driver[statIndex["size"]]) {
     case 0:
       detailStr = "Small Frame";
       break;
@@ -459,7 +501,7 @@ function drawCurrentCombo() {
     case 2:
       detailStr = "Large Frame";
       break;
-    default: throw "Error: Unknown size: “" + combo.statisticals.driver.levels.size + "”";
+    default: throw "Error: Unknown size: “" + combo.classes.driver[4] + "”";
   }
   V.combo.details.children[0].innerText = detailStr;
 
@@ -472,29 +514,15 @@ function drawCurrentCombo() {
 
   // Meters
   V.combo.meters.classList.toggle("values-hidden", !state.settings.showMeterValues);
-  V.combo.meters.classList.toggle("internal", state.settings.statScale == "internal");
-
-  function updateMeter(view, abbr, level, additions) {
-    const displayLevel = toLvl(level)
-    const displayAdditions = toLvl(additions);
-
-    view.meter.style.setProperty("--value", displayLevel);
-    view.meter.style.setProperty("--additions", displayAdditions);
-    view.meter.title = `${S("stats", abbr)}: ${displayLevel}`;
-    view.value.innerText = state.settings.showMeterValues
-        ? scaleStat(level).toLocaleString("en", getStatLocaleOptions()) : "";
-  }
-
-  const comboStats = combo.statisticals.combined;
-  for (const [stat, alias] of [["acceleration","acc"], ["weight","wgt"]]) {
-    updateMeter(V.combo[stat], alias, comboStats[stat], 0);
-  }
-
-  for (const [statGroup, groupAbbr] of [["speed","spd"], ["handling","hnd"]]) {
-    for (const [stat, statAbbr] of [["road","str"], ["terrain","pth"], ["water","wtr"]]) {
-      let view = V.combo[statGroup][stat];
-      let level = comboStats[statGroup][stat];
-      updateMeter(view, `${statAbbr}-${groupAbbr}`, level, 0);
+  for (let i = 0; i < 8; i++) {
+    const stat = stats[i];
+    V.combo[stat].meter.style.setProperty("--value", toLvl(combo.lvl[i]));
+    V.combo[stat].meter.title = S("stats", stat) + ": " + toLvl(combo.lvl[i], stat);
+    V.combo.meters.classList.toggle("internal", state.settings.statScale == "internal");
+    if (state.settings.showMeterValues) {
+      V.combo[stat].value.innerText = scaleStat(combo.lvl[i]).toLocaleString("en", getStatLocaleOptions());
+    } else {
+      V.combo[stat].value.innerText = "";
     }
   }
 
@@ -564,7 +592,7 @@ function drawComboTable(container, combos, limit = 50) {
 
     const statsDisplay = document.createElement("div");
     statsDisplay.classList.add("stat-diffs");
-    for (let i = 0, end = stats.length; i < end; i++) {
+    for (let i = 0; i < 8; i++) {
       const stat = stats[i];
       const diff = combo.diffs[i];
       if (diff === 0) continue;
@@ -611,7 +639,16 @@ function formatFormula(formula) {
   const combo = state.selectedSlot.combo;
 
   const terms = [];
-  for (let stat of stats) {
+  for (let stat of ["spd", "spdGr", "spdRr", "spdWt", "acc", "wgt",
+                    "hnd", "hndGr", "hndRr", "hndWt", "size"]) {
+    if (stat === "spd"   && !formula.unified.spd) continue;
+    if (stat === "spdGr" &&  formula.unified.spd) continue;
+    if (stat === "spdRr" &&  formula.unified.spd) continue;
+    if (stat === "spdWt" &&  formula.unified.spd) continue;
+    if (stat === "hnd"   && !formula.unified.hnd) continue;
+    if (stat === "hndGr" &&  formula.unified.hnd) continue;
+    if (stat === "hndRr" &&  formula.unified.hnd) continue;
+    if (stat === "hndWt" &&  formula.unified.hnd) continue;
     const i = statIndex[stat];
     let factor = formula.factors[i];
     let isMinSet = formula.min[i] > 0;
@@ -624,7 +661,7 @@ function formatFormula(formula) {
     term += " title='" + S("stats", stat) + "'";
     term += ">";
     factor = Math.abs(factor).toString();
-    if (factor[0] == "0") factor = factor.substr(1);
+    if (factor[0] === "0") factor = factor.substr(1);
     term += sign;
     if (factor !== "") term += factor + "<span class='multiply'>×</span>";
     term += S("statsAbbr", stat);
@@ -636,7 +673,7 @@ function formatFormula(formula) {
     term += "</span>";
     terms.push(term);
   }
-  s += '<span class="formula">' + terms.join(" + ") + "</span>";
+  s += '<span class="formula">' + terms.join(" + ") + "</span>";
 
   const locks = [];
   if (state.locks.driver) locks.push(S("drivers", combo.driverID));
@@ -1148,21 +1185,21 @@ function validateBounds(stat) {
 }
 
 function drawCollapses() {
-  // const formula = state.workingFormula;
-  // for (const stat of [ "spd", "hnd" ]) {
-  //   const container = V.formula[stat].collapse;
-  //   const chevron = container.children[0];
-  //   const tabOn = container.children[1];
-  //   const tabOff = container.children[2];
-  //   const isOn = formula.unified[stat];
-  //   chevron.classList.toggle("rotated", !isOn);
-  //   tabOn.classList.toggle("selected", isOn);
-  //   tabOn.toggleAttribute("inert", !isOn);
-  //   tabOff.toggleAttribute("inert", isOn);
-  //   tabOff.classList.toggle("selected", !isOn);
-  //   const height = (isOn ? tabOn : tabOff).getBoundingClientRect().height;
-  //   container.style.height = height + "px";
-  // }
+  const formula = state.workingFormula;
+  for (const stat of [ "spd", "hnd" ]) {
+    const container = V.formula[stat].collapse;
+    const chevron = container.children[0];
+    const tabOn = container.children[1];
+    const tabOff = container.children[2];
+    const isOn = formula.unified[stat];
+    chevron.classList.toggle("rotated", !isOn);
+    tabOn.classList.toggle("selected", isOn);
+    tabOn.toggleAttribute("inert", !isOn);
+    tabOff.toggleAttribute("inert", isOn);
+    tabOff.classList.toggle("selected", !isOn);
+    const height = (isOn ? tabOn : tabOff).getBoundingClientRect().height;
+    container.style.height = height + "px";
+  }
 }
 
 function drawFormulaHelpDialog() {
@@ -1252,7 +1289,7 @@ function parseValue(v, defaultV = 0) {
 function scaleStat(x, stat) {
   if (x < 0) return 0;
   if (x >= 20) return state.settings.statScale === "internal" ? 20 : 4;
-  if (state.settings.statScale === "internal" || stat === 4) return x;
+  if (state.settings.statScale === "internal" || stat === statIndex.size) return x;
   return toLvl(x);
 }
 function scaleStatAbs(x) {
@@ -1261,28 +1298,28 @@ function scaleStatAbs(x) {
 }
 const getMin = () => 0;
 const getScaledMin = stat => {
- if (stat === 4) return 0;
- return state.settings.statScale === "internal" ? 0 : 0;
+ if (stat === statIndex.size) return 0;
+ return state.settings.statScale === "internal" ? 0 : .6;
 }
-const getMax = stat => stat === 4 ? 2 : 20;
+const getMax = stat => stat === statIndex.size ? 2 : 20;
 const getScaledMax = stat => {
-  if (stat === 4) return 2;
+  if (stat === statIndex.size) return 2;
   return state.settings.statScale === "internal" ? 20 : 4;
 };
 const getScaledStep = stat => {
-  if (stat === 4) return 1;
+  if (stat === statIndex.size) return 1;
   return state.settings.statScale === "internal" ? 1 : .2;
 };
 const getScaledPlaceholder = stat => {
-  if (stat === 4) return 2;
+  if (stat === statIndex.size) return 2;
   return state.settings.statScale === "internal" ? 20 : 4;
 };
 function unscaleStat(x, stat) {
-  if (state.settings.statScale === "internal" || stat === 4) return x;
+  if (state.settings.statScale === "internal" || stat === statIndex.size) return x;
   return fromLvl(x);
 }
-const toLvl = n => (n) / 5;
-const fromLvl = n => Math.max(n*5, 0);
+const toLvl = n => (n+3) / 5;
+const fromLvl = n => Math.max(n*5 - 3, 0);
 function getStatLocaleOptions() {
   return state.settings.statScale === "internal" ? { minimumIntegerDigits: 1 } : { minimumFractionDigits: 1 };
 }

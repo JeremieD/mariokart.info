@@ -17,9 +17,8 @@
   color: var(--color-yellow);
 
   // --value: 5;
-  // --additions: 0;
 
-  &::before {
+  &::after {
     content: "";
     position: absolute;
     height: 100%;
@@ -28,19 +27,6 @@
     transition: .2s ease width;
     background-color: currentColor;
   }
-
-  &::after {
-    content: "";
-    position: absolute;
-    height: 100%;
-    border-radius: .1666rem;
-    left: calc((var(--value) / 6 * 100%));
-    width: calc(var(--additions) / 6 * 100%);
-    transition: .2s ease width;
-    background-color: currentColor;
-    opacity: 50%;
-  }
-
 }
 
 #combo-stats {
@@ -54,8 +40,7 @@
     grid-template-columns: auto 1fr auto;
     gap: .375rem;
     align-items: center;
-  }
-  &:not(.mkw)>div {
+
     label:not(:first-of-type) {
       text-align: right;
       opacity: 0;

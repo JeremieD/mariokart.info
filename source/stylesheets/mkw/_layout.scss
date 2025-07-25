@@ -6,21 +6,6 @@
 
 #combo-card {
   border-radius: var(--border-radius-1) var(--border-radius-1) var(--border-radius-2) var(--border-radius-2);
-
-  #missing-stats-warning {
-    display: flex;
-    gap: .25em;
-    justify-content: right;
-    @include type("body-1");
-    line-height: 1;
-    color: var(--color-subdued);
-    jd-icon { height: 1em; }
-    &[title] { cursor: help; }
-
-    &.hidden {
-      display: none;
-    }
-  }
 }
 
 #combo-display {
@@ -100,50 +85,12 @@
 .meter {
   @include mask(url(/resources/graphics/metermask-4.svg));
   @include mask-size(100% 100%);
-
-  // main bar
-  &::before {
-    left: 0;
+  &::after {
     width: calc(var(--value) / 4 * 100%);
   }
-
-  // additions to the bar
-  &::after {
-    left: 0;
-    width: calc((var(--value) + var(--additions)) / 4 * 100%);
-  }
-
-  &.missing-stats::after {
-    opacity: 80%;
-
-    left: calc(var(--value) / 4 * 100%);
-    width: calc(var(--additions) / 4 * 100%);
-
-    background-image: repeating-linear-gradient(
-      -55deg,
-      var(--color-interactive), var(--color-interactive) 4px,
-      var(--color-red) 4px, var(--color-red) 8px,
-    );
-  }
 }
 
-#combo-stats {
-  output { width: 2.5ch; }
-  &>div {
-    grid-template-columns: auto auto 1fr auto;
-    .stat-class {
-      grid-column: 1;
-      text-align: left;
-    }
-    .stat-code {
-      grid-column: 2;
-      text-align: right;
-      @include high-contrast { opacity: 1; }
-    }
-    .meter { grid-column: 3; }
-    output { grid-column: 4; }
-  }
-}
+#combo-stats output { width: 2.5ch; }
 
 @keyframes pulse {
   25%  { scale: .5; }
@@ -310,12 +257,12 @@
   }
 }
 
-.stat-code,.stat-class {
+.stat-code {
   @include type("code-1");
   line-height: 1;
   text-transform: uppercase;
 }
-abbr.stat-code,abbr.stat-class { margin-left: .1em; }
+abbr.stat-code { margin-left: .1em; }
 
 #favorites-dialog {
   ol {

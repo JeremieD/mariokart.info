@@ -1,7 +1,5 @@
 "use strict";
 
-// FIXME state.settings.locale is used here
-
 const fallbacks = {
   "en-US": [ "en-GB" ],
   "en-GB": [ "en-US" ],
@@ -21,7 +19,7 @@ const fallbacks = {
   "es-ES": [ "es-MX", "en-US" ]
 };
 
-function S(ns, id, locale = null) {
+function S(ns, id, locale) {
   locale ??= state?.settings?.locale ?? "en-US";
 
   for (const locl of [locale, ...fallbacks[locale]]) {
@@ -216,7 +214,7 @@ const strings = {
       starSled: "Stellar Sled",
       reel: "Reel Racer",
       bee: "Bumble V",
-      fish: "Fin Twin",
+      fin: "Fin Twin",
       rob: "R.O.B. H.O.G.",
       carpet: "Carpet Flyer",
       cloud: "Cloud 9",
@@ -232,31 +230,29 @@ const strings = {
       bruiser: "Bowser Bruiser"
     },
     stats: {
-      mtb:   "Mini-Turbo",
       spd:   "Speed (Unified)",
-      "str-spd": "Road Speed",
-      "pth-spd": "Sand/Snow/Dirt Speed",
-      "wtr-spd": "Water/Chocolate/Lava Speed",
+      spdGr: "Smooth Road Speed",
+      spdRr: "Rough Road Speed",
+      spdWt: "Water Speed",
       acc:   "Acceleration",
       wgt:   "Weight",
       hnd:   "Handling (Unified)",
-      "str-hnd": "Road Handling",
-      "pth-hnd": "Sand/Snow/Dirt Handling",
-      "wtr-hnd": "Water/Chocolate/Lava Handling",
+      hndGr: "Smooth Road Handling",
+      hndRr: "Rough Road Handling",
+      hndWt: "Water Handling",
       size:  "Size"
     },
     statsAbbr: {
-      mtb:   "MTB",
       spd:   "SPD",
-      "str-spd": "SPD.STR",
-      "pth-spd": "SPD.PTH",
-      "wtr-spd": "SPD.WTR",
+      spdGr: "SPDGR",
+      spdRr: "SPDRR",
+      spdWt: "SPDWT",
       acc:   "ACC",
       wgt:   "WGT",
       hnd:   "HND",
-      "str-hnd": "HND.STR",
-      "pth-hnd": "HND.PTH",
-      "wtr-hnd": "HND.WTR",
+      hndGr: "HNDGR",
+      hndRr: "HNDRR",
+      hndWt: "HNDWT",
       size:  "SIZE"
     }
   },
