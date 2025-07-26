@@ -500,7 +500,7 @@ whenDOMReady(() => {
   });
 
   // Redraw on back
-  addEventListener("popstate", readURLParams, { passive: true });
+  addEventListener("popstate", readState, { passive: true });
 
   initView();
 });

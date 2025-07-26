@@ -235,6 +235,7 @@ function selectA() {
   if (state.openedDialog !== "") return;
   state.selectedSlotID = "A";
   updateURLParams();
+  commitState();
   drawCurrentCombo();
   drawDominantCombos();
   drawSimilarCombos();
@@ -244,6 +245,7 @@ function selectB() {
   if (state.openedDialog !== "") return;
   state.selectedSlotID = "B";
   updateURLParams();
+  commitState();
   drawCurrentCombo();
   drawDominantCombos();
   drawSimilarCombos();
@@ -508,7 +510,6 @@ function closeCreditsDialog() {
 
 function initController() {
   readState();
-  readURLParams();
   getAvailableParts();
 }
 
@@ -516,25 +517,8 @@ function getAvailableParts() {
   state.parts = Stats.post("getAvailableParts", state.settings.availableParts);
 }
 
-function readURLParams() {
-  // TODO: More robust code correction. (like it was before)
-  const url = new URL(window.location.href);
-  const aCode = url.searchParams.get("A") ?? url.searchParams.get("a");
-  const bCode = url.searchParams.get("b");
-  const BCode = url.searchParams.get("B");
-
-  state.selectedSlotID = BCode === undefined ? "A" : "B";
-
-  Stats.post("getCombo", aCode ?? "MA").then(combo => {
-    whenViewReady(() => { setCombo(combo, "A", true); });
-  });
-
-  Stats.post("getCombo", bCode ?? BCode ?? "LR").then(combo => {
-    whenViewReady(() => { setCombo(combo, "B", true); });
-  });
-}
-
 function updateURLParams(forceReplace = false) {
+  if (state.slot.A.combo.code === undefined || state.slot.B.combo.code === undefined) return;
   const aCode = state.slot.A.combo.code;
   const bCode = state.slot.B.combo.code;
   const url = new URL(location.href);
@@ -609,30 +593,58 @@ function toggleCookies() {
 }
 
 function readState() {
+  // Read from URL
+  const url = new URL(location.href);
+  let aCode = url.searchParams.get("A") ?? url.searchParams.get("a");
+  const BCode = url.searchParams.get("B");
+  let bCode = url.searchParams.get("b") ?? BCode;
+
+  let slot;
+  if (aCode !== null) slot = BCode === null ? "A" : "B"
+
+  // Read from storage
   const data = JSON.parse(localStorage.getItem("mkw"));
-  if (!data?.settings?.allowCookies) return;
+  if (data?.settings?.allowCookies) {
+    for (const prop of Object.keys(data.settings)) {
+      if (data.settings[prop] === undefined) continue;
+      state.settings[prop] = data.settings[prop];
+    }
 
-  for (const prop of Object.keys(data.settings)) {
-    if (data.settings[prop] === undefined) continue;
-    state.settings[prop] = data.settings[prop];
+    slot ??= data.lastState?.selectedSlot;
+    aCode ??= data.lastState?.A;
+    bCode ??= data.lastState?.B;
+
+    if (data.locks !== undefined) {
+      state.locks = structuredClone(data.locks);
+    }
+
+    for (const prop of Object.keys(data.driverPrefs)) {
+      state.driverPrefs[prop] = data.driverPrefs[prop];
+    }
+
+    if (data.favorites !== undefined) {
+      state.favorites = deserializeFavorites(data.favorites);
+    }
+
+    if (data.formula !== undefined) {
+      state.formula = structuredClone(data.formula);
+      state.workingFormula = structuredClone(state.formula);
+    }
   }
 
-  if (data.locks !== undefined) {
-    state.locks = structuredClone(data.locks);
-  }
+  // Fallback
+  slot  ??= "A";
+  aCode ??= "MA";
+  bCode ??= "LR";
 
-  for (const prop of Object.keys(data.driverPrefs)) {
-    state.driverPrefs[prop] = data.driverPrefs[prop];
-  }
-
-  if (data.favorites !== undefined) {
-    state.favorites = deserializeFavorites(data.favorites);
-  }
-
-  if (data.formula !== undefined) {
-    state.formula = structuredClone(data.formula);
-    state.workingFormula = structuredClone(state.formula);
-  }
+  // Set combos
+  state.selectedSlotID = slot;
+  Stats.post("getCombo", aCode).then(combo => {
+    whenViewReady(() => { setCombo(combo, "A", true); });
+  });
+  Stats.post("getCombo", bCode).then(combo => {
+    whenViewReady(() => { setCombo(combo, "B", true); });
+  });
 }
 function commitState() {
   if (!state.settings.allowCookies) return;
@@ -641,7 +653,12 @@ function commitState() {
     locks: structuredClone(state.locks),
     driverPrefs: structuredClone(state.driverPrefs),
     favorites: serializeFavorites(state.favorites),
-    formula: structuredClone(state.formula)
+    formula: structuredClone(state.formula),
+    lastState: {
+      A: state.slot.A.combo.code,
+      B: state.slot.B.combo.code,
+      selectedSlot: state.selectedSlotID
+    }
   };
   localStorage.setItem("mkw", JSON.stringify(data));
 }
