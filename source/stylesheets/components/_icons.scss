@@ -16,4 +16,6 @@ jd-icon {
     transition: .2s ease color;
     will-change: translate; // fixes jank with movement animations in WebKit
   }
+
+  &.no-animation svg { animation: none !important; }
 }
