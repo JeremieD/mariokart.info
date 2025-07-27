@@ -517,7 +517,7 @@ function drawCurrentCombo() {
   for (let i = 0; i < 8; i++) {
     const stat = stats[i];
     V.combo[stat].meter.style.setProperty("--value", toLvl(combo.lvl[i]));
-    V.combo[stat].meter.title = S("stats", stat) + ": " + toLvl(combo.lvl[i], stat);
+    V.combo[stat].meter.title = S("stats", stat) + ": " + toLvl(combo.lvl[i], stat) + " / 4";
     V.combo.meters.classList.toggle("internal", state.settings.statScale === "internal");
     if (state.settings.showMeterValues) {
       V.combo[stat].value.innerText = scaleStat(combo.lvl[i]).toLocaleString("en", getStatLocaleOptions());
