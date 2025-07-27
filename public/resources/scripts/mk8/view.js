@@ -355,7 +355,7 @@ whenDOMReady(() => {
     }, { passive: true });
     mode.addEventListener("click", e => {
       if (e.altKey) {
-        for (let j = 0; j < 16; j++) {
+        for (let j = 0; j < 15; j++) {
           toggleFactorSign(j, true);
         }
       } else {

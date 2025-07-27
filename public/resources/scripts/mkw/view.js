@@ -293,7 +293,7 @@ whenDOMReady(() => {
     }, { passive: true });
     mode.addEventListener("click", e => {
       if (e.altKey) {
-        for (let j = 0; j < 5; j++) {
+        for (let j = 0; j < 11; j++) {
           toggleFactorSign(j, true);
         }
       } else {
@@ -501,7 +501,7 @@ function drawCurrentCombo() {
     case 2:
       detailStr = "Large Frame";
       break;
-    default: throw "Error: Unknown size: “" + combo.classes.driver[4] + "”";
+    default: throw "Error: Unknown size: “" + combo.classes.driver[statIndex.size] + "”";
   }
   V.combo.details.children[0].innerText = detailStr;
 
