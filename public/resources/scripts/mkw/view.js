@@ -1057,7 +1057,7 @@ function drawFavoritesDialog() {
 }
 function removeFavorite(combo) {
   const li = document.getElementById(combo.code);
-  if (li === undefined) return;
+  if (li === null) return;
   li.style.height = li.offsetHeight + "px";
   li.getClientRects(); // Force recalculation of layout.
   li.classList.add("remove");
