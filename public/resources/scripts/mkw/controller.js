@@ -421,6 +421,20 @@ function setBlankFormula() {
   state.workingFormula = structuredClone(blankFormula);
   drawFormulaDialog();
 }
+function deserializeFormula(serial) {
+  const obj = structuredClone(blankFormula);
+  for (let i = 0; i < obj.factors.length; i++) {
+    if (serial.factors?.[i] !== undefined) obj.factors[i] = serial.factors[i];
+    if (serial.min?.[i]     !== undefined) obj.min[i]     = serial.min[i];
+    if (serial.max?.[i]     !== undefined) obj.max[i]     = serial.max[i];
+  }
+  if (serial.unified?.spd !== undefined) obj.unified.spd  = serial.unified.spd;
+  if (serial.unified?.hnd !== undefined) obj.unified.hnd  = serial.unified.hnd;
+  if (serial.excludeKarts !== undefined) obj.excludeKarts = serial.excludeKarts;
+  if (serial.excludeATVs  !== undefined) obj.excludeATVs  = serial.excludeATVs;
+  if (serial.excludeBikes !== undefined) obj.excludeBikes = serial.excludeBikes;
+  return obj;
+}
 
 function toggleSpdMode() {
   state.workingFormula.unified.spd = !state.workingFormula.unified.spd;
@@ -630,7 +644,7 @@ function readState() {
     }
 
     if (data.formula !== undefined) {
-      state.formula = structuredClone(data.formula);
+      state.formula = deserializeFormula(data.formula);
       state.workingFormula = structuredClone(state.formula);
     }
   }
