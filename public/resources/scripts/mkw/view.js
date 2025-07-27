@@ -487,7 +487,7 @@ function drawCurrentCombo() {
   V.combo.driverLock.classList.toggle("selected", state.locks.driver);
   V.combo.bodyLock.classList.toggle("selected", state.locks.body);
   V.combo.driverLock.title = "Driver is " + (state.locks.driver ? "" : "un") + "locked. ⌥+Click to toggle.";
-  V.combo.bodyLock.title = "Body is " + (state.locks.body ? "" : "un") + "locked. ⌥+Click to toggle.";
+  V.combo.bodyLock.title = "Vehicle is " + (state.locks.body ? "" : "un") + "locked. ⌥+Click to toggle.";
 
   // Combo Details
   let detailStr;
@@ -895,7 +895,7 @@ function drawDriverLock() {
 }
 function drawBodyLock() {
   V.bodies.lock.classList.toggle("selected", state.locks.body);
-  V.bodies.lockLabel.innerText = state.locks.body ? "Unlock Body" : "Lock Body";
+  V.bodies.lockLabel.innerText = state.locks.body ? "Unlock Vehicle" : "Lock Vehicle";
 }
 
 function newPartButton(ns, partID, id) {
