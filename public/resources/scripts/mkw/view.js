@@ -36,9 +36,9 @@ whenDOMReady(() => {
   V.combo.details    = document.getElementById("combo-details");
   V.combo.meters     = document.getElementById("combo-stats");
 
-  V.combo.spdGr = {
-    meter: document.getElementById("spdGr-meter"),
-    value: document.getElementById("spdGr-value")
+  V.combo.spdSr = {
+    meter: document.getElementById("spdSr-meter"),
+    value: document.getElementById("spdSr-value")
   };
   V.combo.spdRr = {
     meter: document.getElementById("spdRr-meter"),
@@ -56,9 +56,9 @@ whenDOMReady(() => {
     meter: document.getElementById("wgt-meter"),
     value: document.getElementById("wgt-value")
   };
-  V.combo.hndGr = {
-    meter: document.getElementById("hndGr-meter"),
-    value: document.getElementById("hndGr-value")
+  V.combo.hndSr = {
+    meter: document.getElementById("hndSr-meter"),
+    value: document.getElementById("hndSr-value")
   };
   V.combo.hndRr = {
     meter: document.getElementById("hndRr-meter"),
@@ -116,11 +116,11 @@ whenDOMReady(() => {
   V.formula.spd.use = document.getElementById("formula-use-spd");
   V.formula.spd.collapse = document.getElementById("formula-spd-collapse");
   V.formula.spd.title = document.getElementById("formula-spd-title");
-  V.formula.spdGr.title = document.getElementById("formula-spdGr-title");
+  V.formula.spdSr.title = document.getElementById("formula-spdSr-title");
   V.formula.hnd.use = document.getElementById("formula-use-hnd");
   V.formula.hnd.collapse = document.getElementById("formula-hnd-collapse");
   V.formula.hnd.title = document.getElementById("formula-hnd-title");
-  V.formula.hndGr.title = document.getElementById("formula-hndGr-title");
+  V.formula.hndSr.title = document.getElementById("formula-hndSr-title");
 
   V.formula.includeKarts = document.getElementById("formula-include-karts");
   V.formula.includeATVs  = document.getElementById("formula-include-atvs");
@@ -305,10 +305,10 @@ whenDOMReady(() => {
 
   V.formula.spd.use.addEventListener("click", toggleSpdMode, { passive: true });
   V.formula.spd.title.addEventListener("click", toggleSpdMode, { passive: true });
-  V.formula.spdGr.title.addEventListener("click", toggleSpdMode, { passive: true });
+  V.formula.spdSr.title.addEventListener("click", toggleSpdMode, { passive: true });
   V.formula.hnd.use.addEventListener("click", toggleHndMode, { passive: true });
   V.formula.hnd.title.addEventListener("click", toggleHndMode, { passive: true });
-  V.formula.hndGr.title.addEventListener("click", toggleHndMode, { passive: true });
+  V.formula.hndSr.title.addEventListener("click", toggleHndMode, { passive: true });
 
   V.formula.spd.collapse.addEventListener("transitionstart", e => {
     if (e.target !== V.formula.spd.collapse) return;
@@ -639,14 +639,14 @@ function formatFormula(formula) {
   const combo = state.selectedSlot.combo;
 
   const terms = [];
-  for (let stat of ["spd", "spdGr", "spdRr", "spdWt", "acc", "wgt",
-                    "hnd", "hndGr", "hndRr", "hndWt", "size"]) {
+  for (let stat of ["spd", "spdSr", "spdRr", "spdWt", "acc", "wgt",
+                    "hnd", "hndSr", "hndRr", "hndWt", "size"]) {
     if (stat === "spd"   && !formula.unified.spd) continue;
-    if (stat === "spdGr" &&  formula.unified.spd) continue;
+    if (stat === "spdSr" &&  formula.unified.spd) continue;
     if (stat === "spdRr" &&  formula.unified.spd) continue;
     if (stat === "spdWt" &&  formula.unified.spd) continue;
     if (stat === "hnd"   && !formula.unified.hnd) continue;
-    if (stat === "hndGr" &&  formula.unified.hnd) continue;
+    if (stat === "hndSr" &&  formula.unified.hnd) continue;
     if (stat === "hndRr" &&  formula.unified.hnd) continue;
     if (stat === "hndWt" &&  formula.unified.hnd) continue;
     const i = statIndex[stat];

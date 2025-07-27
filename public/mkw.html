@@ -93,8 +93,8 @@
         <div id="combo-stats" class="values-hidden">
           <div id="spd-multimeter">
             <label class="stat-code" id="spd-label" title="Speed">SPD</label>
-            <div class="meter smooth" id="spdGr-meter"></div>
-            <output class="smooth-text" id="spdGr-value"></output>
+            <div class="meter smooth" id="spdSr-meter"></div>
+            <output class="smooth-text" id="spdSr-value"></output>
             <label class="stat-code rough" title="Rough Road">RR</label>
             <div class="meter rough" id="spdRr-meter"></div>
             <output class="rough" id="spdRr-value"></output>
@@ -117,8 +117,8 @@
 
           <div id="hnd-multimeter">
             <label class="stat-code" id="hnd-label" title="Handling">HND</label>
-            <div class="meter smooth" id="hndGr-meter"></div>
-            <output class="smooth-text" id="hndGr-value"></output>
+            <div class="meter smooth" id="hndSr-meter"></div>
+            <output class="smooth-text" id="hndSr-value"></output>
             <label class="stat-code rough" title="Rough Road">RR</label>
             <div class="meter rough" id="hndRr-meter"></div>
             <output class="rough" id="hndRr-value"></output>
@@ -250,19 +250,19 @@
         <div>
           <div class="factor-widget">
             <hgroup>
-              <h3 id="formula-spdGr-title">Smooth Road Speed</h3>
-              <button id="formula-spdGr-mode" class="inline">Ignore</button>
+              <h3 id="formula-spdSr-title">Smooth Road Speed</h3>
+              <button id="formula-spdSr-mode" class="inline">Ignore</button>
             </hgroup>
             <div>
-              <jd-slider id="formula-spdGr-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input aria-label="Smooth Road Speed Factor" id="formula-spdGr-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
+              <jd-slider id="formula-spdSr-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
+              <input aria-label="Smooth Road Speed Factor" id="formula-spdSr-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
             </div>
             <div>
               <div class="field-group">
-                <label>Min</label><input aria-label="Minimum Smooth Road Speed" id="formula-spdGr-min" type="number" inputmode="decimal" min="0" max="4" step=".2" placeholder="0"/>
+                <label>Min</label><input aria-label="Minimum Smooth Road Speed" id="formula-spdSr-min" type="number" inputmode="decimal" min="0" max="4" step=".2" placeholder="0"/>
               </div>
               <div class="field-group">
-                <label>Max</label><input aria-label="Maximum Smooth Road Speed" id="formula-spdGr-max" type="number" inputmode="decimal" min="0" max="4" step=".2" placeholder="4"/>
+                <label>Max</label><input aria-label="Maximum Smooth Road Speed" id="formula-spdSr-max" type="number" inputmode="decimal" min="0" max="4" step=".2" placeholder="4"/>
               </div>
             </div>
           </div>
@@ -368,19 +368,19 @@
         <div>
           <div class="factor-widget">
             <hgroup>
-              <h3 id="formula-hndGr-title">Ground Handling</h3>
-              <button id="formula-hndGr-mode" class="inline">Ignore</button>
+              <h3 id="formula-hndSr-title">Ground Handling</h3>
+              <button id="formula-hndSr-mode" class="inline">Ignore</button>
             </hgroup>
             <div>
-              <jd-slider id="formula-hndGr-slider" value=".5" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input aria-label="Smooth Road Handling Factor" id="formula-hndGr-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
+              <jd-slider id="formula-hndSr-slider" value=".5" min="-16" max="16" step="1" stops="8"></jd-slider>
+              <input aria-label="Smooth Road Handling Factor" id="formula-hndSr-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
             </div>
             <div>
               <div class="field-group">
-                <label>Min</label><input aria-label="Minimum Smooth Road Handling" id="formula-hndGr-min" type="number" inputmode="decimal" min="0" max="4" step=".2" placeholder="0"/>
+                <label>Min</label><input aria-label="Minimum Smooth Road Handling" id="formula-hndSr-min" type="number" inputmode="decimal" min="0" max="4" step=".2" placeholder="0"/>
               </div>
               <div class="field-group">
-                <label>Max</label><input aria-label="Maximum Smooth Road Handling" id="formula-hndGr-max" type="number" inputmode="decimal" min="0" max="4" step=".2" placeholder="4"/>
+                <label>Max</label><input aria-label="Maximum Smooth Road Handling" id="formula-hndSr-max" type="number" inputmode="decimal" min="0" max="4" step=".2" placeholder="4"/>
               </div>
             </div>
           </div>
@@ -516,7 +516,7 @@
       <p><em>Lock</em> individual parts to keep them.</p>
 
       <h3>Speed (<abbr class="stat-code">SPD</abbr>)</h3>
-      <p>Speed has 3 stats: <em class="smooth-text">Smooth Road (<abbr class="stat-code">SPDGR</abbr>)</em>, <em class="rough">Rough Road (<abbr class="stat-code">SPDRR</abbr>)</em>, and <em class="water">Water&nbsp;(<abbr class="stat-code">SPDWT</abbr>)</em>. They determine your top speed on each surface.</p>
+      <p>Speed has 3 stats: <em class="smooth-text">Smooth Road (<abbr class="stat-code">SPDSR</abbr>)</em>, <em class="rough">Rough Road (<abbr class="stat-code">SPDRR</abbr>)</em>, and <em class="water">Water&nbsp;(<abbr class="stat-code">SPDWT</abbr>)</em>. They determine your top speed on each surface.</p>
       <p>In-game Speed is an offset average of the component stats. It’s&nbsp;not displayed here due to its&nbsp;strange&nbsp;quirks.</p>
 
       <h3>Acceleration (<abbr class="stat-code">ACC</abbr>)</h3>
@@ -526,7 +526,7 @@
       <p>Determines the physics of collisions with other vehicles. Higher&nbsp;weights push lower weights.</p>
 
       <h3>Handling (<abbr class="stat-code">HND</abbr>)</h3>
-      <p>Handling has 3 stats: <em class="smooth-text">Smooth Road (<abbr class="stat-code">HNDGR</abbr>)</em>, <em class="rough">Rough Road (<abbr class="stat-code">HNDRR</abbr>)</em>, and <em class="water">Water&nbsp;(<abbr class="stat-code">HNDWT</abbr>)</em>. They determine how&nbsp;fast you turn when steering and drifting on each surface.</p>
+      <p>Handling has 3 stats: <em class="smooth-text">Smooth Road (<abbr class="stat-code">HNDSR</abbr>)</em>, <em class="rough">Rough Road (<abbr class="stat-code">HNDRR</abbr>)</em>, and <em class="water">Water&nbsp;(<abbr class="stat-code">HNDWT</abbr>)</em>. They determine how&nbsp;fast you turn when steering and drifting on each surface.</p>
       <p>In-game Handling is an offset average of the component stats. It’s&nbsp;not displayed here due to its&nbsp;strange&nbsp;quirks.</p>
 
       <h3>Frame Size</h3>

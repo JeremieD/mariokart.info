@@ -38,10 +38,10 @@ onmessage = e => {
   postMessage(response);
 };
 
-const statIndex = { spdGr: 0, spdRr: 1, spdWt: 2, acc: 3, wgt: 4,
-                    hndGr: 5, hndRr: 6, hndWt: 7, size: 8, spd: 9, hnd: 10 };
-const stats = [ "spdGr", "spdRr", "spdWt", "acc", "wgt",
-                "hndGr", "hndRr", "hndWt", "size", "spd", "hnd" ];
+const statIndex = { spdSr: 0, spdRr: 1, spdWt: 2, acc: 3, wgt: 4,
+                    hndSr: 5, hndRr: 6, hndWt: 7, size: 8, spd: 9, hnd: 10 };
+const stats = [ "spdSr", "spdRr", "spdWt", "acc", "wgt",
+                "hndSr", "hndRr", "hndWt", "size", "spd", "hnd" ];
 
 class Combo {
   // TODO: Clean up a bit. Rename some stuff.
@@ -92,10 +92,10 @@ class Combo {
     }
     this.size = this.classes.driver[statIndex.size];
     this.lvl[statIndex.size] = this.size * 10;
-    this.lvl[statIndex.spd] = round(this.lvl[statIndex.spdGr] * Combo.PERCENT_GR
+    this.lvl[statIndex.spd] = round(this.lvl[statIndex.spdSr] * Combo.PERCENT_GR
                                   + this.lvl[statIndex.spdRr] * Combo.PERCENT_RR
                                   + this.lvl[statIndex.spdWt] * Combo.PERCENT_WT, 3);
-    this.lvl[statIndex.hnd] = round(this.lvl[statIndex.hndGr] * Combo.PERCENT_GR
+    this.lvl[statIndex.hnd] = round(this.lvl[statIndex.hndSr] * Combo.PERCENT_GR
                                   + this.lvl[statIndex.hndRr] * Combo.PERCENT_RR
                                   + this.lvl[statIndex.hndWt] * Combo.PERCENT_WT, 3);
 
@@ -261,12 +261,12 @@ function listCombos(opts = {}) {
   const maxDiff = opts.maxDiff ?? Infinity;
   const driverLock = opts.driverLock ?? false;
   const bodyLock   = opts.bodyLock   ?? false;
-  const spdGrMin = opts.min?.[0]  ?? 0; const spdGrMax = opts.max?.[0]  ?? 20;
+  const spdSrMin = opts.min?.[0]  ?? 0; const spdSrMax = opts.max?.[0]  ?? 20;
   const spdRrMin = opts.min?.[1]  ?? 0; const spdRrMax = opts.max?.[1]  ?? 20;
   const spdWtMin = opts.min?.[2]  ?? 0; const spdWtMax = opts.max?.[2]  ?? 20;
   const accMin   = opts.min?.[3]  ?? 0; const accMax   = opts.max?.[3]  ?? 20;
   const wgtMin   = opts.min?.[4]  ?? 0; const wgtMax   = opts.max?.[4]  ?? 20;
-  const hndGrMin = opts.min?.[5]  ?? 0; const hndGrMax = opts.max?.[5]  ?? 20;
+  const hndSrMin = opts.min?.[5]  ?? 0; const hndSrMax = opts.max?.[5]  ?? 20;
   const hndRrMin = opts.min?.[6]  ?? 0; const hndRrMax = opts.max?.[6]  ?? 20;
   const hndWtMin = opts.min?.[7]  ?? 0; const hndWtMax = opts.max?.[7]  ?? 20;
   const sizeMin  = opts.min?.[8]  ?? 0; const sizeMax  = opts.max?.[8]  ?? 2;
@@ -298,12 +298,12 @@ function listCombos(opts = {}) {
     const combo = new Combo(driver, body);
 
     // Stat Checks
-    if (combo.lvl[0]  < spdGrMin || combo.lvl[0]  > spdGrMax) continue;
+    if (combo.lvl[0]  < spdSrMin || combo.lvl[0]  > spdSrMax) continue;
     if (combo.lvl[1]  < spdRrMin || combo.lvl[1]  > spdRrMax) continue;
     if (combo.lvl[2]  < spdWtMin || combo.lvl[2]  > spdWtMax) continue;
     if (combo.lvl[3]  < accMin   || combo.lvl[3]  > accMax) continue;
     if (combo.lvl[4]  < wgtMin   || combo.lvl[4]  > wgtMax) continue;
-    if (combo.lvl[5]  < hndGrMin || combo.lvl[5]  > hndGrMax) continue;
+    if (combo.lvl[5]  < hndSrMin || combo.lvl[5]  > hndSrMax) continue;
     if (combo.lvl[6]  < hndRrMin || combo.lvl[6]  > hndRrMax) continue;
     if (combo.lvl[7]  < hndWtMin || combo.lvl[7]  > hndWtMax) continue;
     if (combo.lvl[9]  < spdMin   || combo.lvl[9]  > spdMax) continue;
@@ -311,12 +311,12 @@ function listCombos(opts = {}) {
 
     // Difference Checks
     const diffs = [
-      combo.lvl[0] - refCombo.lvl[0], // spdGr
+      combo.lvl[0] - refCombo.lvl[0], // spdSr
       combo.lvl[1] - refCombo.lvl[1], // spdRr
       combo.lvl[2] - refCombo.lvl[2], // spdWt
       combo.lvl[3] - refCombo.lvl[3], // acc
       combo.lvl[4] - refCombo.lvl[4], // wgt
-      combo.lvl[5] - refCombo.lvl[5], // hndGr
+      combo.lvl[5] - refCombo.lvl[5], // hndSr
       combo.lvl[6] - refCombo.lvl[6], // hndRr
       combo.lvl[7] - refCombo.lvl[7] // hndWt
     ];
@@ -791,7 +791,7 @@ function setTerrainRatios(gr, rr, wt) {
   Combo.PERCENT_WT = wt;
 }
 
-const classes = { // [spdGr, spdRr, spdWt, acc, wgt, hndGr, hndRr, hndWt, size]
+const classes = { // [spdSr, spdRr, spdWt, acc, wgt, hndSr, hndRr, hndWt, size]
   drivers: {
     peachBb:    [0,0,0,7,0,6,6,6,0],
     marioBb:    [1,0,0,6,1,7,5,5,0],
