@@ -50,7 +50,7 @@
       <div id="logo"><img src="/resources/graphics/mkw.svg" loading="lazy" width="76" height="76" alt="Mario Kart World Logo" /><h1>Mario Kart World <span>Combo Builder</span></h1><sup title="In alpha.">α</sup></div>
     </div>
     <div class="button-group">
-      <button class="big-type square" id="help-open" title="Help"><jd-icon icon="warning"></jd-icon></button>
+      <button class="big-type square" id="help-open" title="Help"><jd-icon icon="help"></jd-icon></button>
       <button class="big-type square" id="settings-open" title="Settings"><jd-icon icon="cog"></jd-icon></button>
     </div>
   </header>
@@ -496,14 +496,47 @@
   <dialog id="help-dialog" inert class="overflow">
     <header class="sticky">
       <hgroup>
-        <h2>Notice</h2>
+        <h2>Help</h2>
         <button id="help-close" class="icon inline" title="Close Help."><jd-icon icon="x"></jd-icon></button>
       </hgroup>
     </header>
     <div>
-      <p>This builder is a work in progress.</p>
-      <p>While we figure out how stats work in this game, this early alpha builder is here to provide a convenient way to&nbsp;compare combos as displayed in-game.</p>
-      <p>Please share any stat discrepancy you find via <a href="https://discord.com/users/198249043141328897" target="_blank">Discord</a>.</p>
+      <h3>Combo Parts</h3>
+      <p>A combo consists of a <em>driver</em> and a <em>vehicle</em>. Tap&nbsp;any combo part to change it.</p>
+
+      <h3>Part Classes</h3>
+      <p>Parts that have the same stats as your current combo have a&nbsp;dashed outline in the part picker.</p>
+      <!-- <p>Note that TODO can differ between parts of the same class.</p> -->
+
+      <h3>Locks</h3>
+      <p>You can lock a part to limit which combos appear in the Dominant, Similar, and Custom Search tabs. This&nbsp;can help you find interesting combos according to&nbsp;your style preferences.</p>
+
+      <h3>Random Combo</h3>
+      <p>Tap the Random button to replace your currently active combo with random parts.</p>
+      <p><em>Lock</em> individual parts to keep them.</p>
+
+      <h3>Speed (<abbr class="stat-code">SPD</abbr>)</h3>
+      <p>Speed has 3 stats: <em class="smooth">Smooth Road (<abbr class="stat-code">SPDGR</abbr>)</em>, <em class="rough">Rough Road (<abbr class="stat-code">SPDRR</abbr>)</em>, and <em class="water">Water&nbsp;(<abbr class="stat-code">SPDWT</abbr>)</em>. They determine your top speed on each surface.</p>
+      <p>In-game Speed is an offset average of the component stats. It’s&nbsp;not displayed here due to its&nbsp;strange&nbsp;quirks.</p>
+
+      <h3>Acceleration (<abbr class="stat-code">ACC</abbr>)</h3>
+      <p>Determines how fast you can reach top speed, and the&nbsp;duration of mini-turbos.</p>
+
+      <h3>Weight (<abbr class="stat-code">WGT</abbr>)</h3>
+      <p>Determines the physics of collisions with other vehicles. Higher&nbsp;weights push lower weights.</p>
+
+      <h3>Handling (<abbr class="stat-code">HND</abbr>)</h3>
+      <p>Handling has 3 stats: <em class="smooth">Smooth Road (<abbr class="stat-code">HNDGR</abbr>)</em>, <em class="rough">Rough Road (<abbr class="stat-code">HNDRR</abbr>)</em>, and <em class="water">Water&nbsp;(<abbr class="stat-code">HNDWT</abbr>)</em>. They determine how&nbsp;fast you turn when steering and drifting on each surface.</p>
+      <p>In-game Handling is an offset average of the component stats. It’s&nbsp;not displayed here due to its&nbsp;strange&nbsp;quirks.</p>
+
+      <h3>Frame Size</h3>
+      <p>The driver determines the combo’s frame size between small, medium, and large. This affects your in&#8209;game hitbox.</p>
+
+      <br/>
+
+      <ul class="arrow-list">
+        <li>Visit the <a href="https://www.mariowiki.com/Mario_Kart_World" target="_blank">Mario Wiki</a> for more info about the game.</li>
+      </ul>
     </div>
   </dialog>
 
