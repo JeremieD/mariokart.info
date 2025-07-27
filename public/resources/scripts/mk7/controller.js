@@ -214,18 +214,18 @@ function getCustomCombos(combo) {
   opts.gliderLock = state.locks.glider;
 
   if (state.formula.unified.spd) {
-    opts.factors[1] = 0; opts.max[1] = 20; opts.min[1] = 0;
-    opts.factors[2] = 0; opts.max[2] = 20; opts.min[2] = 0;
-    opts.factors[3] = 0; opts.max[3] = 20; opts.min[3] = 0;
+    opts.factors[statIndex.spdGr] = 0; opts.max[statIndex.spdGr] = 20; opts.min[statIndex.spdGr] = 0;
+    opts.factors[statIndex.spdWt] = 0; opts.max[statIndex.spdWt] = 20; opts.min[statIndex.spdWt] = 0;
+    opts.factors[statIndex.spdAr] = 0; opts.max[statIndex.spdAr] = 20; opts.min[statIndex.spdAr] = 0;
   } else {
-    opts.factors[13] = 0; opts.max[13] = 20; opts.min[13] = 0;
+    opts.factors[statIndex.spd] = 0; opts.max[statIndex.spd] = 20; opts.min[statIndex.spd] = 0;
   }
   if (state.formula.unified.hnd) {
-    opts.factors[6]  = 0; opts.max[6]  = 20; opts.min[6]  = 0;
-    opts.factors[7]  = 0; opts.max[7]  = 20; opts.min[7]  = 0;
-    opts.factors[8]  = 0; opts.max[8]  = 20; opts.min[8]  = 0;
+    opts.factors[statIndex.hndGr] = 0; opts.max[statIndex.hndGr] = 20; opts.min[statIndex.hndGr] = 0;
+    opts.factors[statIndex.hndWt] = 0; opts.max[statIndex.hndWt] = 20; opts.min[statIndex.hndWt] = 0;
+    opts.factors[statIndex.hndAr] = 0; opts.max[statIndex.hndAr] = 20; opts.min[statIndex.hndAr] = 0;
   } else {
-    opts.factors[14] = 0; opts.max[14] = 20; opts.min[14] = 0;
+    opts.factors[statIndex.hnd] = 0; opts.max[statIndex.hnd] = 20; opts.min[statIndex.hnd] = 0;
   }
 
   return Stats.post("listCombos", opts);
