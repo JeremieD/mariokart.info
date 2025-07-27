@@ -1289,7 +1289,7 @@ function parseValue(v, defaultV = 0) {
 
 function scaleStat(x, stat) {
   if (x < 0) return 0;
-  if (x >= 20) return state.settings.statScale === "internal" ? 20 : 4;
+  if (x >= 17) return state.settings.statScale === "internal" ? 17 : 4;
   if (state.settings.statScale === "internal" || stat === statIndex.size) return x;
   return toLvl(x);
 }
@@ -1302,10 +1302,10 @@ const getScaledMin = stat => {
  if (stat === statIndex.size) return 0;
  return state.settings.statScale === "internal" ? 0 : .6;
 }
-const getMax = stat => stat === statIndex.size ? 2 : 20;
+const getMax = stat => stat === statIndex.size ? 2 : 17;
 const getScaledMax = stat => {
   if (stat === statIndex.size) return 2;
-  return state.settings.statScale === "internal" ? 20 : 4;
+  return state.settings.statScale === "internal" ? 17 : 4;
 };
 const getScaledStep = stat => {
   if (stat === statIndex.size) return 1;
@@ -1313,7 +1313,7 @@ const getScaledStep = stat => {
 };
 const getScaledPlaceholder = stat => {
   if (stat === statIndex.size) return 2;
-  return state.settings.statScale === "internal" ? 20 : 4;
+  return state.settings.statScale === "internal" ? 17 : 4;
 };
 function unscaleStat(x, stat) {
   if (state.settings.statScale === "internal" || stat === statIndex.size) return x;
