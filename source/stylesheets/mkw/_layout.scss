@@ -198,10 +198,7 @@
   }
 
   .toggles {
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-template-rows: auto auto;
-    grid-auto-flow: column;
+    display: flex;
     justify-content: start;
     gap: .75rem 2rem;
     button {
@@ -252,8 +249,6 @@
       input { width: 6rem; }
       .field-group label { display: none; }
     }
-
-    .toggles { display: flex; }
   }
 }
 

@@ -61,6 +61,7 @@
 
 .ground { color: var(--color-orange) !important; }
 .smooth { color: var(--color-yellow) !important; }
+.smooth-text { color: var(--color-yellow-dark) !important; }
 .rough { color: var(--color-orange) !important; }
 .anti-gravity { color: var(--color-purple) !important; }
 .underwater, .water { color: var(--color-blue) !important; }
@@ -84,4 +85,5 @@
     --color-positive-text: var(--color-green);
     --color-negative-text: var(--color-orange);
   }
+  .smooth-text { color: var(--color-yellow) !important; }
 }

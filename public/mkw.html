@@ -94,7 +94,7 @@
           <div id="spd-multimeter">
             <label class="stat-code" id="spd-label" title="Speed">SPD</label>
             <div class="meter smooth" id="spdGr-meter"></div>
-            <output class="smooth" id="spdGr-value"></output>
+            <output class="smooth-text" id="spdGr-value"></output>
             <label class="stat-code rough" title="Rough Road">RR</label>
             <div class="meter rough" id="spdRr-meter"></div>
             <output class="rough" id="spdRr-value"></output>
@@ -118,7 +118,7 @@
           <div id="hnd-multimeter">
             <label class="stat-code" id="hnd-label" title="Handling">HND</label>
             <div class="meter smooth" id="hndGr-meter"></div>
-            <output class="smooth" id="hndGr-value"></output>
+            <output class="smooth-text" id="hndGr-value"></output>
             <label class="stat-code rough" title="Rough Road">RR</label>
             <div class="meter rough" id="hndRr-meter"></div>
             <output class="rough" id="hndRr-value"></output>
@@ -481,7 +481,7 @@
 
       <h3>Speed and Handling</h3>
       <p>The Speed and Handling stats are <em>unified</em> versions of their three&nbsp;component stats.</p>
-      <p>Internally, the coefficient you set for these is split into component stats as follows: 65%&nbsp;to <em class="smooth">smooth&nbsp;road</em>, 25%&nbsp;to&nbsp;<em class="rough">rough&nbsp;road</em>, and 10% to&nbsp;<em class="water">water</em>.</p>
+      <p>Internally, the coefficient you set for these is split into component stats as follows: 65%&nbsp;to <em class="smooth-text">smooth&nbsp;road</em>, 25%&nbsp;to&nbsp;<em class="rough">rough&nbsp;road</em>, and 10% to&nbsp;<em class="water">water</em>.</p>
 
       <h3>Filters and Locks</h3>
       <p>You can set <em>minimum</em> and <em>maximum</em> values for each stat. Combos&nbsp;outside this range will be excluded.</p>
@@ -516,7 +516,7 @@
       <p><em>Lock</em> individual parts to keep them.</p>
 
       <h3>Speed (<abbr class="stat-code">SPD</abbr>)</h3>
-      <p>Speed has 3 stats: <em class="smooth">Smooth Road (<abbr class="stat-code">SPDGR</abbr>)</em>, <em class="rough">Rough Road (<abbr class="stat-code">SPDRR</abbr>)</em>, and <em class="water">Water&nbsp;(<abbr class="stat-code">SPDWT</abbr>)</em>. They determine your top speed on each surface.</p>
+      <p>Speed has 3 stats: <em class="smooth-text">Smooth Road (<abbr class="stat-code">SPDGR</abbr>)</em>, <em class="rough">Rough Road (<abbr class="stat-code">SPDRR</abbr>)</em>, and <em class="water">Water&nbsp;(<abbr class="stat-code">SPDWT</abbr>)</em>. They determine your top speed on each surface.</p>
       <p>In-game Speed is an offset average of the component stats. It’s&nbsp;not displayed here due to its&nbsp;strange&nbsp;quirks.</p>
 
       <h3>Acceleration (<abbr class="stat-code">ACC</abbr>)</h3>
@@ -526,7 +526,7 @@
       <p>Determines the physics of collisions with other vehicles. Higher&nbsp;weights push lower weights.</p>
 
       <h3>Handling (<abbr class="stat-code">HND</abbr>)</h3>
-      <p>Handling has 3 stats: <em class="smooth">Smooth Road (<abbr class="stat-code">HNDGR</abbr>)</em>, <em class="rough">Rough Road (<abbr class="stat-code">HNDRR</abbr>)</em>, and <em class="water">Water&nbsp;(<abbr class="stat-code">HNDWT</abbr>)</em>. They determine how&nbsp;fast you turn when steering and drifting on each surface.</p>
+      <p>Handling has 3 stats: <em class="smooth-text">Smooth Road (<abbr class="stat-code">HNDGR</abbr>)</em>, <em class="rough">Rough Road (<abbr class="stat-code">HNDRR</abbr>)</em>, and <em class="water">Water&nbsp;(<abbr class="stat-code">HNDWT</abbr>)</em>. They determine how&nbsp;fast you turn when steering and drifting on each surface.</p>
       <p>In-game Handling is an offset average of the component stats. It’s&nbsp;not displayed here due to its&nbsp;strange&nbsp;quirks.</p>
 
       <h3>Frame Size</h3>
