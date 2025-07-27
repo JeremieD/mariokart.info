@@ -788,9 +788,9 @@ function formatFormula(formula) {
   }
 
   if (locks.length > 0 || exclusionsString.length > 0) s += "<br>";
-  if (locks.length > 0) s += "<jd-icon class='inline no-animation' icon='lock'></jd-icon>";
   if (!bodyConflict) { s += "<span>"; }
   else { s += "<span class=\"invalid\">"; }
+  if (locks.length > 0) s += "<jd-icon class='inline no-animation' icon='lock'></jd-icon>";
   const listFormatter = new Intl.ListFormat(state.settings.locale, {
     style: "short",
     type: "unit"

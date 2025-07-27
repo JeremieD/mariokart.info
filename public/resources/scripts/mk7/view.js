@@ -730,8 +730,9 @@ function formatFormula(formula) {
   if (state.locks.tire) locks.push(S("tires", combo.tireID));
   if (state.locks.glider) locks.push(S("gliders", combo.gliderID));
 
-  if (locks.length > 0) s += "<br><jd-icon class='inline no-animation' icon='lock'></jd-icon>";
+  if (locks.length > 0) s += "<br>";
   s += "<span>";
+  if (locks.length > 0) s += "<jd-icon class='inline no-animation' icon='lock'></jd-icon>";
   const listFormatter = new Intl.ListFormat(state.settings.locale, {
     style: "short",
     type: "unit"
