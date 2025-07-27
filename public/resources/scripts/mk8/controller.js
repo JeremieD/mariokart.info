@@ -679,7 +679,10 @@ function readState() {
   let bCode = url.searchParams.get("b") ?? BCode;
 
   let slot;
-  if (aCode !== null) slot = BCode === null ? "A" : "B"
+  if (BCode !== null) slot = "B";
+
+  if (aCode === "") aCode = undefined;
+  if (bCode === "") bCode = undefined;
 
   // Read from storage
   const data = JSON.parse(localStorage.getItem("mk8"));
