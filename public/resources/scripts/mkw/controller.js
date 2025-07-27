@@ -609,12 +609,14 @@ function toggleCookies() {
 function readState() {
   // Read from URL
   const url = new URL(location.href);
-  let aCode = url.searchParams.get("A") ?? url.searchParams.get("a");
+  const ACode = url.searchParams.get("A");
+  let   aCode = url.searchParams.get("a") ?? ACode;
   const BCode = url.searchParams.get("B");
-  let bCode = url.searchParams.get("b") ?? BCode;
+  let   bCode = url.searchParams.get("b") ?? BCode;
 
   let slot;
-  if (BCode !== null) slot = "B";
+  if (ACode !== null) slot = "A";
+  if (BCode !== null) slot ??= "B";
 
   if (aCode === "") aCode = undefined;
   if (bCode === "") bCode = undefined;
