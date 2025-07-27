@@ -1,10 +1,10 @@
 "use strict";
 // Controller
 
-const statIndex = { spdGr: 0, spdRr: 1, spdWt: 2, acc: 3, wgt: 4,
-                    hndGr: 5, hndRr: 6, hndWt: 7, size: 8, spd: 9, hnd: 10 };
-const stats = [ "spdGr", "spdRr", "spdWt", "acc", "wgt",
-                "hndGr", "hndRr", "hndWt", "size", "spd", "hnd" ];
+const statIndex = { spdSr: 0, spdRr: 1, spdWt: 2, acc: 3, wgt: 4,
+                    hndSr: 5, hndRr: 6, hndWt: 7, size: 8, spd: 9, hnd: 10 };
+const stats = [ "spdSr", "spdRr", "spdWt", "acc", "wgt",
+                "hndSr", "hndRr", "hndWt", "size", "spd", "hnd" ];
 const blankFormula = {
   factors: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   min:     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -216,14 +216,14 @@ function getCustomCombos(combo) {
   opts.bodyLock = state.locks.body;
 
   if (state.formula.unified.spd) {
-    opts.factors[statIndex.spdGr] = 0; opts.max[statIndex.spdGr] = 20; opts.min[statIndex.spdGr] = 0;
+    opts.factors[statIndex.spdSr] = 0; opts.max[statIndex.spdSr] = 20; opts.min[statIndex.spdSr] = 0;
     opts.factors[statIndex.spdRr] = 0; opts.max[statIndex.spdRr] = 20; opts.min[statIndex.spdRr] = 0;
     opts.factors[statIndex.spdWt] = 0; opts.max[statIndex.spdWt] = 20; opts.min[statIndex.spdWt] = 0;
   } else {
     opts.factors[statIndex.spd] = 0; opts.max[statIndex.spd] = 20; opts.min[statIndex.spd] = 0;
   }
   if (state.formula.unified.hnd) {
-    opts.factors[statIndex.hndGr] = 0; opts.max[statIndex.hndGr] = 20; opts.min[statIndex.hndGr] = 0;
+    opts.factors[statIndex.hndSr] = 0; opts.max[statIndex.hndSr] = 20; opts.min[statIndex.hndSr] = 0;
     opts.factors[statIndex.hndRr] = 0; opts.max[statIndex.hndRr] = 20; opts.min[statIndex.hndRr] = 0;
     opts.factors[statIndex.hndWt] = 0; opts.max[statIndex.hndWt] = 20; opts.min[statIndex.hndWt] = 0;
   } else {
