@@ -318,16 +318,13 @@ function listCombos(opts = {}) {
       combo.lvl[4] - refCombo.lvl[4], // wgt
       combo.lvl[5] - refCombo.lvl[5], // hndSr
       combo.lvl[6] - refCombo.lvl[6], // hndRr
-      combo.lvl[7] - refCombo.lvl[7] // hndWt
+      combo.lvl[7] - refCombo.lvl[7]  // hndWt
     ];
 
     const diffSum = diffs.reduce((s, a) => s + a, 0); // sum
     if (diffSum > maxDiff || diffSum < minDiff) continue;
 
-    const diffSumAbs = Math.abs(diffs[0]) + Math.abs(diffs[1])
-                     + Math.abs(diffs[2]) + Math.abs(diffs[3])
-                     + Math.abs(diffs[4]) + Math.abs(diffs[5])
-                     + Math.abs(diffs[6]) + Math.abs(diffs[7]);
+    const diffSumAbs = diffs.reduce((s, a) => s + Math.abs(a), 0);
     if (diffSumAbs > maxAbsDiff) continue;
     if (mustDiffer && diffSumAbs === 0) continue;
 
@@ -345,7 +342,11 @@ function listCombos(opts = {}) {
       compare = (a, b) => b.diffSum - a.diffSum;
       break;
     case "similar":
-      compare = (a, b) => a.diffSumAbs - b.diffSumAbs;
+      compare = (a, b) => {
+        const s = a.diffSumAbs - b.diffSumAbs;
+        if (s === 0) return b.diffSum - a.diffSum;
+        return s;
+      };
       break;
     case "score":
       compare = (a, b) => getScore(b.lvl, factors) - getScore(a.lvl, factors);
