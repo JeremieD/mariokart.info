@@ -621,7 +621,7 @@ function drawComboTable(container, combos, limit = 50) {
     const li = document.createElement("li");
     const top = document.createElement("div");
 
-    const comboDisplay = newComboDisplay(combo);
+    const comboDisplay = newComboDisplay(combo, false);
 
     const buttonsDisplay = document.createElement("div");
     buttonsDisplay.classList.add("button-group", "radio");
@@ -1030,7 +1030,7 @@ function newPartButton(ns, partID, id) {
   button.append(img);
   return button;
 }
-function newComboDisplay(combo) {
+function newComboDisplay(combo, lazy = true) {
   const comboDisplay = document.createElement("div");
   comboDisplay.classList.add("combo", "button-group", "radio");
 
@@ -1067,8 +1067,10 @@ function newComboDisplay(combo) {
   tireImg.width = "128"; tireImg.height = "64";
   gliderImg.width = "128"; gliderImg.height = "64";
 
-  driverImg.loading = "lazy"; bodyImg.loading = "lazy";
-  tireImg.loading = "lazy"; gliderImg.loading = "lazy";
+  if (lazy) {
+    driverImg.loading = "lazy"; bodyImg.loading = "lazy";
+    tireImg.loading = "lazy"; gliderImg.loading = "lazy";
+  }
 
   driverBox.title = driverName; bodyBox.title = bodyName;
   tireBox.title = tireName; gliderBox.title = gliderName;
