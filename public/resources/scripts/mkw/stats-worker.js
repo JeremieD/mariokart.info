@@ -1,6 +1,8 @@
 "use strict";
 // Stats Worker
 
+let version = "latest";
+
 onmessage = e => {
   const exchangeID = e.data[0];
   const data = e.data[1];
@@ -30,6 +32,9 @@ onmessage = e => {
       break;
     case "setTerrainRatios":
       response[1] = setTerrainRatios(...args);
+      break;
+    case "setVersion":
+      response[1] = setVersion(...args);
       break;
     default:
       response[1] = "Error: Unknown command: “" + cmd + "”";
@@ -792,6 +797,17 @@ function setTerrainRatios(gr, rr, wt) {
   Combo.PERCENT_WT = wt;
 }
 
+function setVersion(version) {
+  switch (version) {
+    case "1.1.2":
+      classes.bodies.rallyBike[statIndex.spdSr] = 0
+      break;
+    default:
+      classes.bodies.rallyBike[statIndex.spdSr] = 6
+  }
+  return;
+}
+
 const classes = { // [spdSr, spdRr, spdWt, acc, wgt, hndSr, hndRr, hndWt, size]
   drivers: {
     mario:      [4,3,3,3,4,4,2,2,1],
@@ -819,7 +835,7 @@ const classes = { // [spdSr, spdRr, spdWt, acc, wgt, hndSr, hndRr, hndWt, size]
     std:       [5,5,5,5,2,5,5,5],
     rally:     [4,8,4,4,3,3,8,3],
     stdBike:   [1,1,1,9,0,7,7,7],
-    rallyBike: [0,5,0,8,0,0,10,6],
+    rallyBike: [0,5,0,8,0,6,10,6],
     bloop:     [7,2,2,6,1,9,5,5],
     machBike:  [6,1,1,7,0,10,6,6],
     truck:     [7,10,7,1,5,1,7,1],

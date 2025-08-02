@@ -576,12 +576,12 @@ function updateURLParams(forceReplace = false) {
 }
 
 function changeGameVersion(version) {
-  state.settings.gameVersion = version;
-  drawCurrentCombo();
-  drawDominantCombos();
-  drawSimilarCombos();
-  drawCustomCombos();
-  commitState();
+  return Stats.post("setVersion", version).then(() => {
+    Stats.post("getCombo", state.slot.A.combo.code).then(combo => { setCombo(combo, "A"); });
+    Stats.post("getCombo", state.slot.B.combo.code).then(combo => { setCombo(combo, "B"); });
+    state.settings.gameVersion = version;
+    commitState();
+  });
 }
 
 function changeLocale(locl) {
@@ -672,14 +672,10 @@ function readState() {
   aCode ??= "MA";
   bCode ??= "LR";
 
-  // Set combos
   state.selectedSlotID = slot;
-  Stats.post("getCombo", aCode).then(combo => {
-    whenViewReady(() => { setCombo(combo, "A", true); });
-  });
-  Stats.post("getCombo", bCode).then(combo => {
-    whenViewReady(() => { setCombo(combo, "B", true); });
-  });
+  state.slot.A.combo.code = aCode;
+  state.slot.B.combo.code = bCode;
+  changeGameVersion(state.settings.gameVersion);
 }
 function commitState() {
   if (!state.settings.allowCookies) return;
