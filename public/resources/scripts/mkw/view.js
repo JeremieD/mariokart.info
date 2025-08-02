@@ -505,12 +505,12 @@ function drawCurrentCombo() {
   }
   V.combo.details.children[0].innerText = detailStr;
 
-  // V.combo.details.children[1].innerHTML = "";
-  // V.combo.details.children[1].title = "";
-  // if (state.settings.gameVersion !== "latest") {
-  //   V.combo.details.children[1].title = "Showing stats for game version " + state.settings.gameVersion + ".";
-  //   V.combo.details.children[1].append(new JDIcon("warning"), state.settings.gameVersion);
-  // }
+  V.combo.details.children[1].innerHTML = "";
+  V.combo.details.children[1].title = "";
+  if (state.settings.gameVersion !== "latest") {
+    V.combo.details.children[1].title = "Showing stats for game version " + state.settings.gameVersion + ".";
+    V.combo.details.children[1].append(new JDIcon("warning"), "v" + state.settings.gameVersion);
+  }
 
   // Meters
   V.combo.meters.classList.toggle("values-hidden", !state.settings.showMeterValues);
@@ -1236,6 +1236,7 @@ function drawSettingsDialog() {
   }
 
   V.settings.cookiesToggle.classList.toggle("selected", state.settings.allowCookies);
+  V.settings.gameVersionSelect.value = state.settings.gameVersion;
   V.settings.localeSelect.value = state.settings.locale;
   V.settings.statScaleSelect.value = state.settings.statScale;
   V.settings.meterValuesToggle.classList.toggle("selected", state.settings.showMeterValues);
