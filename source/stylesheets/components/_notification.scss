@@ -1,0 +1,15 @@
+#notification-dialog {
+  top: 2rem;
+  width: calc(var(--width-column) * .75);
+  background-color: var(--color-inverse);
+  color: var(--color-background);
+
+  &>header {
+    padding: 1.5rem 1.5rem .75rem 1.5rem;
+    border: none;
+  }
+
+  &>div {
+    padding: 0 1.5rem 1.5rem 1.5rem;
+  }
+}

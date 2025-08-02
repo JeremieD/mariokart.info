@@ -14,7 +14,8 @@ const V = {
   help: {},
   settings: {},
   changelog: {},
-  credits: {}
+  credits: {},
+  notification: {}
 }; // View object
 
 whenDOMReady(() => {
@@ -154,6 +155,10 @@ whenDOMReady(() => {
   V.credits.open   = document.getElementById("credits-open");
   V.credits.close  = document.getElementById("credits-close");
   V.credits.dialog = document.getElementById("credits-dialog");
+
+  V.notification.dismiss = document.getElementById("notification-dismiss");
+  V.notification.dialog  = document.getElementById("notification-dialog");
+  V.notification.body    = document.getElementById("notification-body");
 
 
   /******** View OUT ********/
@@ -407,6 +412,12 @@ whenDOMReady(() => {
     if (state.openedDialog !== "credits") return;
     if (isOutside(V.credits.dialog, e)) closeCreditsDialog();
   }, { passive: true });
+
+  V.notification.dismiss.addEventListener("click", dismissNotification);
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) return;
+    checkForUpdate();
+  });
 
   // Keyboard Shortcuts
   addEventListener("keydown", e => {
@@ -1266,6 +1277,17 @@ function drawChangelogDialog() {
   V.changelog.dialog.inert = false;
   if (V.changelog.dialog.open) return;
   V.changelog.dialog.showModal();
+}
+
+function drawNotification() {
+  if (!state.update.open) {
+    V.notification.dialog.inert = true;
+    V.notification.dialog.close();
+    return;
+  }
+  V.notification.dialog.inert = false;
+  V.notification.body.innerHTML = state.update.message;
+  V.notification.dialog.show();
 }
 
 function disableScroll(el) { el.classList.add("no-scroll"); }

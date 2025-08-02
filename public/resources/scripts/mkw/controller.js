@@ -93,6 +93,12 @@ const state = {
   openedDialog: "",
   inspectorTimeout: 0,
   menuOpened: false,
+  update: {
+    version: "0.6.1",
+    message: "",
+    open: false,
+    dismissed: false
+  },
   lastState: {
     aCode: "",
     bCode: ""
@@ -607,6 +613,22 @@ function toggleMeterValues() {
   drawSettingsDialog();
   drawCurrentCombo();
   commitState();
+}
+
+function dismissNotification() {
+  state.update.dismissed = true;
+  state.update.open = false;
+  drawNotification();
+}
+
+function checkForUpdate() {
+  // httpGet caches result for 1 day.
+  httpGet("/api/version/mkw.json").then(JSON.parse).then(data => {
+    if (data.v === state.update.version) return;
+    state.update.message = data.m;
+    if (!state.update.dismissed) state.update.open = true;
+    drawNotification();
+  });
 }
 
 function toggleCookies() {
