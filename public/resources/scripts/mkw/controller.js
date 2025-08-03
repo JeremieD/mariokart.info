@@ -583,8 +583,12 @@ function updateURLParams(forceReplace = false) {
 
 function changeGameVersion(version) {
   return Stats.post("setVersion", version).then(() => {
-    Stats.post("getCombo", state.slot.A.combo.code).then(combo => { setCombo(combo, "A"); });
-    Stats.post("getCombo", state.slot.B.combo.code).then(combo => { setCombo(combo, "B"); });
+    Stats.post("getCombo", state.slot.A.combo.code).then(combo => {
+      whenViewReady(() => { setCombo(combo, "A"); });
+    });
+    Stats.post("getCombo", state.slot.B.combo.code).then(combo => {
+      whenViewReady(() => { setCombo(combo, "B"); });
+    });
     state.settings.gameVersion = version;
     commitState();
   });
