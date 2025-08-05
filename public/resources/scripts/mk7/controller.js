@@ -662,10 +662,6 @@ function readState() {
       state.locks = structuredClone(data.locks);
     }
 
-    for (const prop of Object.keys(data.driverPrefs)) {
-      state.driverPrefs[prop] = data.driverPrefs[prop];
-    }
-
     if (data.favorites !== undefined) {
       state.favorites = deserializeFavorites(data.favorites);
     }
