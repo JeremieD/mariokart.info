@@ -800,10 +800,10 @@ function setTerrainRatios(gr, rr, wt) {
 function setVersion(version) {
   switch (version) {
     case "1.1.2":
-      classes.bodies.rallyBike[statIndex.spdSr] = 0
+      classes.bodies.rallyBike[statIndex.hndSr] = 0
       break;
     default:
-      classes.bodies.rallyBike[statIndex.spdSr] = 6
+      classes.bodies.rallyBike[statIndex.hndSr] = 6
   }
   return;
 }
