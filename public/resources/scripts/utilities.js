@@ -41,7 +41,6 @@ async function httpGet(url) {
             };
             resolve(httpRequest.responseText);
           } catch (e) {
-            console.error(e);
             reject(e);
           }
         } else {
