@@ -87,8 +87,6 @@ class Combo {
     this.classes.driver = classes.drivers[driverClassID];
     this.classes.body   = classes.bodies[bodyClassID];
 
-    if (this.classes.body === undefined) console.log(body, bodyClassID)
-
     for (let stat = 0; stat < 8; stat++) {
       let lvl = 0;
       lvl += this.classes.driver[stat];

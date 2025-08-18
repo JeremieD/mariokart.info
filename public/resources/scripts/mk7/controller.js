@@ -90,14 +90,13 @@ Stats.post = (...args) => {
       if (e.data[0] === exchangeID) {
         const data = e.data[1];
         if (typeof data === "string" && data.startsWith("Error: ")) {
-          console.error(data);
           reject(data);
         } else {
           resolve(data);
       } }
     }, { passive: true });
     Stats.postMessage([exchangeID, args]);
-  }).catch(console.error);
+  });
 };
 
 initController();
