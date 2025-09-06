@@ -1351,6 +1351,7 @@ function drawFormulaDialog() {
   V.formula.dialog.inert = false;
   disableScroll(document.documentElement);
   if (V.formula.dialog.open) return;
+  blockAnimation(V.formula.dialog);
   V.formula.dialog.showModal();
   V.formula.dialog.scrollTop = state.formulaDialogScrollTop;
 }
@@ -1439,6 +1440,7 @@ function drawSettingsDialog() {
 
   V.settings.dialog.inert = false;
   if (V.settings.dialog.open) return;
+  blockAnimation(V.settings.dialog);
   V.settings.dialog.showModal();
 }
 

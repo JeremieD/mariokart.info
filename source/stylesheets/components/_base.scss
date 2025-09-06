@@ -91,6 +91,10 @@ code {
 
 .no-scroll { overflow: hidden !important; }
 
+.no-animation *, .no-animation *::before, .no-animation *::after {
+  transition: none !important;
+}
+
 :focus-visible:not([tabindex="-1"]) {
   box-shadow: 0 0 0 .2rem var(--color-background),
               0 0 0 .4rem var(--color-accent),
