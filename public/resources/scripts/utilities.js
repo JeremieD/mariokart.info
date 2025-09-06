@@ -58,3 +58,8 @@ const httpGetCache = {};
 window.structuredClone ??= obj => {
   return JSON.parse(JSON.stringify(obj));
 };
+
+function blockAnimation(el) {
+  el.classList.add("no-animation");
+  setTimeout(() => { el.classList.remove("no-animation"); }, 500);
+}
