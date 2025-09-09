@@ -161,3 +161,8 @@ Allow from 66.249.79.96/27
 Allow from googlebot.com
 Allow from 142.251.42.110
 </Limit>
+
+<IfModule mod_headers.c>
+  Header set Cache-Control "no-cache, public" "expr=%{CONTENT_TYPE} =~ m#text/javascript#i"
+  Header set Cache-Control "no-cache, public" "expr=%{CONTENT_TYPE} =~ m#application/json#i"
+</IfModule>
