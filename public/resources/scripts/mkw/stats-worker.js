@@ -194,10 +194,10 @@ function getRandomDriver() {
     "chuck"
   ];
   // const drivers = [
-  //   [ "mario", "mario-touring", "mario-pro", "mario-mech", "mario-dune", "mario-cowboy", "mario-sight", "mario-aviator", "mario-festival", "mario-at" ],
-  //   [ "luigi", "luigi-touring", "luigi-pro", "luigi-mech", "luigi-oasis", "luigi-farmer", "luigi-festival", "luigi-at", "luigi-gondolier" ],
+  //   [ "mario", "mario-touring", "mario-pro", "mario-mech", "mario-desert", "mario-cowboy", "mario-sight", "mario-aviator", "mario-festival", "mario-at" ],
+  //   [ "luigi", "luigi-touring", "luigi-pro", "luigi-mech", "luigi-desert", "luigi-farmer", "luigi-festival", "luigi-at", "luigi-gondolier" ],
   //   [ "peach", "peach-touring", "peach-pro", "peach-farmer", "peach-sight", "peach-aviator", "peach-festival", "peach-aero", "peach-vacation" ],
-  //   [ "daisy", "daisy-touring", "daisy-pro", "daisy-oasis", "daisy-swim", "daisy-aero", "daisy-vacation" ],
+  //   [ "daisy", "daisy-touring", "daisy-pro", "daisy-desert", "daisy-swim", "daisy-aero", "daisy-vacation" ],
   //   [ "yoshi", "yoshi-touring", "yoshi-pro", "yoshi-aristocrat", "yoshi-ice", "yoshi-biker", "yoshi-swim", "yoshi-festival", "yoshi-food" ],
   //   [ "dk", "dk-at" ],
   //   [ "bowser", "bowser-pro", "bowser-charged", "bowser-biker", "bowser-at" ],
@@ -208,7 +208,7 @@ function getRandomDriver() {
   //   [ "lakitu", "lakitu-pit", "lakitu-fish" ],
   //   [ "kingboo", "kingboo-pro", "kingboo-aristocrat", "kingboo-pirate" ],
   //   [ "shyguy", "shyguy-pit", "shyguy-ski" ],
-  //   [ "wario", "wario-pro", "wario-oasis", "wario-bee", "wario-biker", "wario-pirate", "wario-ruffian", "wario-work" ],
+  //   [ "wario", "wario-pro", "wario-desert", "wario-bee", "wario-biker", "wario-pirate", "wario-ruffian", "wario-work" ],
   //   [ "waluigi", "waluigi-pro", "waluigi-vampire", "waluigi-mariachi", "waluigi-biker", "waluigi-ruffian" ],
   //   [ "birdo", "birdo-pro", "birdo-vacation" ],
   //   [ "pauline", "pauline-aero" ],
@@ -489,7 +489,7 @@ function getAvailableParts(set) {
   //         parts.drivers["mario-touring"],
   //         parts.drivers["mario-pro"],
   //         parts.drivers["mario-mech"],
-  //         parts.drivers["mario-dune"],
+  //         parts.drivers["mario-desert"],
   //         parts.drivers["mario-cowboy"],
   //         parts.drivers["mario-sight"],
   //         parts.drivers["mario-aviator"],
@@ -503,7 +503,7 @@ function getAvailableParts(set) {
   //         parts.drivers["luigi-touring"],
   //         parts.drivers["luigi-pro"],
   //         parts.drivers["luigi-mech"],
-  //         parts.drivers["luigi-oasis"],
+  //         parts.drivers["luigi-desert"],
   //         parts.drivers["luigi-farmer"],
   //         parts.drivers["luigi-festival"],
   //         parts.drivers["luigi-at"],
@@ -528,7 +528,7 @@ function getAvailableParts(set) {
   //         parts.drivers.daisy,
   //         parts.drivers["daisy-touring"],
   //         parts.drivers["daisy-pro"],
-  //         parts.drivers["daisy-oasis"],
+  //         parts.drivers["daisy-desert"],
   //         parts.drivers["daisy-swim"],
   //         parts.drivers["daisy-aero"],
   //         parts.drivers["daisy-vacation"] ]
@@ -625,7 +625,7 @@ function getAvailableParts(set) {
   //       folder: [
   //         parts.drivers.wario,
   //         parts.drivers["wario-pro"],
-  //         parts.drivers["wario-oasis"],
+  //         parts.drivers["wario-desert"],
   //         parts.drivers["wario-bee"],
   //         parts.drivers["wario-biker"],
   //         parts.drivers["wario-pirate"],
@@ -885,7 +885,7 @@ const parts = {
         group: "mario",
         code: "Mm"
       },
-      "mario-dune": {
+      "mario-desert": {
         class: "mario",
         group: "mario",
         code: "Md"
@@ -935,10 +935,10 @@ const parts = {
         group: "luigi",
         code: "Lm"
       },
-      "luigi-oasis": {
+      "luigi-desert": {
         class: "luigi",
         group: "luigi",
-        code: "Lo"
+        code: "Ld"
       },
       "luigi-farmer": {
         class: "luigi",
@@ -1020,10 +1020,10 @@ const parts = {
         group: "peach",
         code: "Jp"
       },
-      "daisy-oasis": {
+      "daisy-desert": {
         class: "peach",
         group: "peach",
-        code: "Jo"
+        code: "Jd"
       },
       "daisy-swim": {
         class: "peach",
@@ -1280,10 +1280,10 @@ const parts = {
         group: "wario",
         code: "Wp"
       },
-      "wario-oasis": {
+      "wario-desert": {
         class: "wario",
         group: "wario",
-        code: "Wo"
+        code: "Wd"
       },
       "wario-bee": {
         class: "wario",
