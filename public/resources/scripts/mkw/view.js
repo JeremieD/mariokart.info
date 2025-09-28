@@ -37,6 +37,10 @@ whenDOMReady(() => {
   V.combo.details    = document.getElementById("combo-details");
   V.combo.meters     = document.getElementById("combo-stats");
 
+  V.combo.mtb = {
+    meter: document.getElementById("mtb-meter"),
+    value: document.getElementById("mtb-value")
+  };
   V.combo.spdSr = {
     meter: document.getElementById("spdSr-meter"),
     value: document.getElementById("spdSr-value")
@@ -272,7 +276,7 @@ whenDOMReady(() => {
   V.formula.cancel.addEventListener("click", revertFormula, { passive: true });
   V.formula.save.addEventListener("click", commitFormula, { passive: true });
 
-  for (let i = 0; i < 11; i++) {
+  for (let i = 0; i < 12; i++) {
     const stat = stats[i];
     const factor = V.formula[stat].factor;
     const slider = V.formula[stat].slider;
@@ -525,7 +529,7 @@ function drawCurrentCombo() {
 
   // Meters
   V.combo.meters.classList.toggle("values-hidden", !state.settings.showMeterValues);
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < 9; i++) {
     const stat = stats[i];
     V.combo[stat].meter.style.setProperty("--value", toLvl(combo.lvl[i]));
     V.combo[stat].meter.title = S("stats", stat) + ": " + toLvl(combo.lvl[i], stat) + " / 4";
@@ -603,7 +607,7 @@ function drawComboTable(container, combos, limit = 50) {
 
     const statsDisplay = document.createElement("div");
     statsDisplay.classList.add("stat-diffs");
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 9; i++) {
       const stat = stats[i];
       const diff = combo.diffs[i];
       if (diff === 0) continue;
@@ -650,8 +654,8 @@ function formatFormula(formula) {
   const combo = state.selectedSlot.combo;
 
   const terms = [];
-  for (let stat of ["spd", "spdSr", "spdRr", "spdWt", "acc", "wgt",
-                    "hnd", "hndSr", "hndRr", "hndWt", "size"]) {
+  for (let stat of ["mtb", "spd", "spdSr", "spdRr", "spdWt", "acc",
+                    "wgt", "hnd", "hndSr", "hndRr", "hndWt", "size"]) {
     if (stat === "spd"   && !formula.unified.spd) continue;
     if (stat === "spdSr" &&  formula.unified.spd) continue;
     if (stat === "spdRr" &&  formula.unified.spd) continue;
