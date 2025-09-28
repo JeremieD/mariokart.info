@@ -97,7 +97,7 @@ class Combo {
       this.lvl[stat] = lvl;
     }
     this.size = this.classes.driver[statIndex.size];
-    this.lvl[statIndex.size] = this.size * 10;
+    this.lvl[statIndex.size] = this.size * 8.5;
     this.lvl[statIndex.spd] = round(this.lvl[statIndex.spdSr] * Combo.PERCENT_GR
                                   + this.lvl[statIndex.spdRr] * Combo.PERCENT_RR
                                   + this.lvl[statIndex.spdWt] * Combo.PERCENT_WT, 3);
