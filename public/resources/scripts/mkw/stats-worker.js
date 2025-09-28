@@ -43,10 +43,11 @@ onmessage = e => {
   postMessage(response);
 };
 
-const statIndex = { spdSr: 0, spdRr: 1, spdWt: 2, acc: 3, wgt: 4,
-                    hndSr: 5, hndRr: 6, hndWt: 7, size: 8, spd: 9, hnd: 10 };
-const stats = [ "spdSr", "spdRr", "spdWt", "acc", "wgt",
-                "hndSr", "hndRr", "hndWt", "size", "spd", "hnd" ];
+const statIndex = { mtb: 0, spdSr: 1, spdRr: 2, spdWt: 3, acc: 4,
+                    wgt: 5, hndSr: 6, hndRr: 7, hndWt: 8, size: 9,
+                    spd: 10, hnd: 11 };
+const stats = [ "mtb", "spdSr", "spdRr", "spdWt", "acc",
+                "wgt", "hndSr", "hndRr", "hndWt", "size", "spd", "hnd" ];
 
 class Combo {
   // TODO: Clean up a bit. Rename some stuff.
@@ -62,7 +63,7 @@ class Combo {
     body: undefined
   };
   code = "";
-  lvl = [0,0,0,0,0,0,0,0];
+  lvl = [0,0,0,0,0,0,0,0,0];
   size = -1;
 
   constructor(driver = "mario", body = "std") {
@@ -89,7 +90,7 @@ class Combo {
 
     if (this.classes.body === undefined) console.log(body, bodyClassID)
 
-    for (let stat = 0; stat < 8; stat++) {
+    for (let stat = 0; stat < 9; stat++) {
       let lvl = 0;
       lvl += this.classes.driver[stat];
       lvl += this.classes.body[stat];
@@ -266,17 +267,18 @@ function listCombos(opts = {}) {
   const maxDiff = opts.maxDiff ?? Infinity;
   const driverLock = opts.driverLock ?? false;
   const bodyLock   = opts.bodyLock   ?? false;
-  const spdSrMin = opts.min?.[0]  ?? 0; const spdSrMax = opts.max?.[0]  ?? 20;
-  const spdRrMin = opts.min?.[1]  ?? 0; const spdRrMax = opts.max?.[1]  ?? 20;
-  const spdWtMin = opts.min?.[2]  ?? 0; const spdWtMax = opts.max?.[2]  ?? 20;
-  const accMin   = opts.min?.[3]  ?? 0; const accMax   = opts.max?.[3]  ?? 20;
-  const wgtMin   = opts.min?.[4]  ?? 0; const wgtMax   = opts.max?.[4]  ?? 20;
-  const hndSrMin = opts.min?.[5]  ?? 0; const hndSrMax = opts.max?.[5]  ?? 20;
-  const hndRrMin = opts.min?.[6]  ?? 0; const hndRrMax = opts.max?.[6]  ?? 20;
-  const hndWtMin = opts.min?.[7]  ?? 0; const hndWtMax = opts.max?.[7]  ?? 20;
-  const sizeMin  = opts.min?.[8]  ?? 0; const sizeMax  = opts.max?.[8]  ?? 2;
-  const spdMin   = opts.min?.[9]  ?? 0; const spdMax   = opts.max?.[9]  ?? 20;
-  const hndMin   = opts.min?.[10] ?? 0; const hndMax   = opts.max?.[10] ?? 20;
+  const mtbMin   = opts.min?.[statIndex.mtb]   ?? 0; const mtbMax = opts.max?.[statIndex.mtb]     ?? 20;
+  const spdSrMin = opts.min?.[statIndex.spdSr] ?? 0; const spdSrMax = opts.max?.[statIndex.spdSr] ?? 20;
+  const spdRrMin = opts.min?.[statIndex.spdRr] ?? 0; const spdRrMax = opts.max?.[statIndex.spdRr] ?? 20;
+  const spdWtMin = opts.min?.[statIndex.spdWt] ?? 0; const spdWtMax = opts.max?.[statIndex.spdWt] ?? 20;
+  const accMin   = opts.min?.[statIndex.acc]   ?? 0; const accMax   = opts.max?.[statIndex.acc]   ?? 20;
+  const wgtMin   = opts.min?.[statIndex.wgt]   ?? 0; const wgtMax   = opts.max?.[statIndex.wgt]   ?? 20;
+  const hndSrMin = opts.min?.[statIndex.hndSr] ?? 0; const hndSrMax = opts.max?.[statIndex.hndSr] ?? 20;
+  const hndRrMin = opts.min?.[statIndex.hndRr] ?? 0; const hndRrMax = opts.max?.[statIndex.hndRr] ?? 20;
+  const hndWtMin = opts.min?.[statIndex.hndWt] ?? 0; const hndWtMax = opts.max?.[statIndex.hndWt] ?? 20;
+  const sizeMin  = opts.min?.[statIndex.size]  ?? 0; const sizeMax  = opts.max?.[statIndex.size]  ?? 2;
+  const spdMin   = opts.min?.[statIndex.spd]   ?? 0; const spdMax   = opts.max?.[statIndex.spd]   ?? 20;
+  const hndMin   = opts.min?.[statIndex.hnd]   ?? 0; const hndMax   = opts.max?.[statIndex.hnd]   ?? 20;
   const excludeKarts = opts.excludeKarts ?? false;
   const excludeATVs  = opts.excludeATVs  ?? false;
   const excludeBikes = opts.excludeBikes ?? false;
@@ -303,27 +305,29 @@ function listCombos(opts = {}) {
     const combo = new Combo(driver, body);
 
     // Stat Checks
-    if (combo.lvl[0]  < spdSrMin || combo.lvl[0]  > spdSrMax) continue;
-    if (combo.lvl[1]  < spdRrMin || combo.lvl[1]  > spdRrMax) continue;
-    if (combo.lvl[2]  < spdWtMin || combo.lvl[2]  > spdWtMax) continue;
-    if (combo.lvl[3]  < accMin   || combo.lvl[3]  > accMax) continue;
-    if (combo.lvl[4]  < wgtMin   || combo.lvl[4]  > wgtMax) continue;
-    if (combo.lvl[5]  < hndSrMin || combo.lvl[5]  > hndSrMax) continue;
-    if (combo.lvl[6]  < hndRrMin || combo.lvl[6]  > hndRrMax) continue;
-    if (combo.lvl[7]  < hndWtMin || combo.lvl[7]  > hndWtMax) continue;
-    if (combo.lvl[9]  < spdMin   || combo.lvl[9]  > spdMax) continue;
-    if (combo.lvl[10] < hndMin   || combo.lvl[10] > hndMax) continue;
+    if (combo.lvl[statIndex.mtb]   < mtbMin   || combo.lvl[statIndex.mtb]   > mtbMax)   continue;
+    if (combo.lvl[statIndex.spdSr] < spdSrMin || combo.lvl[statIndex.spdSr] > spdSrMax) continue;
+    if (combo.lvl[statIndex.spdRr] < spdRrMin || combo.lvl[statIndex.spdRr] > spdRrMax) continue;
+    if (combo.lvl[statIndex.spdWt] < spdWtMin || combo.lvl[statIndex.spdWt] > spdWtMax) continue;
+    if (combo.lvl[statIndex.acc]   < accMin   || combo.lvl[statIndex.acc]   > accMax)   continue;
+    if (combo.lvl[statIndex.wgt]   < wgtMin   || combo.lvl[statIndex.wgt]   > wgtMax)   continue;
+    if (combo.lvl[statIndex.hndSr] < hndSrMin || combo.lvl[statIndex.hndSr] > hndSrMax) continue;
+    if (combo.lvl[statIndex.hndRr] < hndRrMin || combo.lvl[statIndex.hndRr] > hndRrMax) continue;
+    if (combo.lvl[statIndex.hndWt] < hndWtMin || combo.lvl[statIndex.hndWt] > hndWtMax) continue;
+    if (combo.lvl[statIndex.spd]   < spdMin   || combo.lvl[statIndex.spd]   > spdMax)   continue;
+    if (combo.lvl[statIndex.hnd]   < hndMin   || combo.lvl[statIndex.hnd]   > hndMax)   continue;
 
     // Difference Checks
     const diffs = [
-      combo.lvl[0] - refCombo.lvl[0], // spdSr
-      combo.lvl[1] - refCombo.lvl[1], // spdRr
-      combo.lvl[2] - refCombo.lvl[2], // spdWt
-      combo.lvl[3] - refCombo.lvl[3], // acc
-      combo.lvl[4] - refCombo.lvl[4], // wgt
-      combo.lvl[5] - refCombo.lvl[5], // hndSr
-      combo.lvl[6] - refCombo.lvl[6], // hndRr
-      combo.lvl[7] - refCombo.lvl[7]  // hndWt
+      combo.lvl[statIndex.mtb]   - refCombo.lvl[statIndex.mtb],
+      combo.lvl[statIndex.spdSr] - refCombo.lvl[statIndex.spdSr],
+      combo.lvl[statIndex.spdRr] - refCombo.lvl[statIndex.spdRr],
+      combo.lvl[statIndex.spdWt] - refCombo.lvl[statIndex.spdWt],
+      combo.lvl[statIndex.acc]   - refCombo.lvl[statIndex.acc],
+      combo.lvl[statIndex.wgt]   - refCombo.lvl[statIndex.wgt],
+      combo.lvl[statIndex.hndSr] - refCombo.lvl[statIndex.hndSr],
+      combo.lvl[statIndex.hndRr] - refCombo.lvl[statIndex.hndRr],
+      combo.lvl[statIndex.hndWt] - refCombo.lvl[statIndex.hndWt]
     ];
 
     const diffSum = diffs.reduce((s, a) => s + a, 0); // sum
@@ -365,7 +369,7 @@ function listCombos(opts = {}) {
 
 function getScore(lvl, factors) {
   let score = 0;
-  for (let i = 0; i < 11; i++) {
+  for (let i = 0; i < 12; i++) {
     score += factors[i] * lvl[i];
   }
   return score;
@@ -808,54 +812,54 @@ function setVersion(version) {
   return;
 }
 
-const classes = { // [spdSr, spdRr, spdWt, acc, wgt, hndSr, hndRr, hndWt, size]
+const classes = { // [mtb, spdSr, spdRr, spdWt, acc, wgt, hndSr, hndRr, hndWt, size]
   drivers: {
-    mario:      [4,3,3,3,4,4,2,2,1],
-    luigi:      [3,4,3,3,4,2,4,2,1],
-    peach:      [3,2,2,4,3,5,3,3,1],
-    yoshi:      [2,3,2,4,3,3,5,3,1],
-    dk:         [5,6,5,1,6,0,2,0,2],
-    bowser:     [6,6,6,0,7,0,0,0,2],
-    bowserJr:   [2,2,3,4,3,3,3,5,1],
-    koopa:      [1,1,2,5,2,4,4,6,0],
-    toad:       [1,2,1,5,2,4,6,4,0],
-    toadette:   [2,1,1,5,2,6,4,4,0],
-    kingboo:    [4,5,4,2,5,1,3,1,2],
-    wario:      [6,5,5,1,6,2,0,0,2],
-    waluigi:    [5,5,6,1,6,0,0,2,2],
-    birdo:      [3,3,4,3,4,2,2,4,1],
-    pauline:    [5,4,4,2,5,3,1,1,2],
-    rosalina:   [4,4,5,2,5,1,1,3,2],
-    marioBb:    [1,0,0,6,1,7,5,5,0],
-    luigiBb:    [0,1,0,6,1,5,7,5,0],
-    peachBb:    [0,0,0,7,0,6,6,6,0],
-    rosalinaBb: [0,0,1,6,1,5,5,7,0]
+    mario:      [1,4,3,3,3,4,4,2,2,1],
+    luigi:      [1,3,4,3,3,4,2,4,2,1],
+    peach:      [2,3,2,2,4,3,5,3,3,1],
+    yoshi:      [2,2,3,2,4,3,3,5,3,1],
+    dk:         [0,5,6,5,1,6,0,2,0,2],
+    bowser:     [0,6,6,6,0,7,0,0,0,2],
+    bowserJr:   [2,2,2,3,4,3,3,3,5,1],
+    koopa:      [3,1,1,2,5,2,4,4,6,0],
+    toad:       [3,1,2,1,5,2,4,6,4,0],
+    toadette:   [3,2,1,1,5,2,6,4,4,0],
+    kingboo:    [0,4,5,4,2,5,1,3,1,2],
+    wario:      [0,6,5,5,1,6,2,0,0,2],
+    waluigi:    [0,5,5,6,1,6,0,0,2,2],
+    birdo:      [1,3,3,4,3,4,2,2,4,1],
+    pauline:    [0,5,4,4,2,5,3,1,1,2],
+    rosalina:   [0,4,4,5,2,5,1,1,3,2],
+    marioBb:    [3,1,0,0,6,1,7,5,5,0],
+    luigiBb:    [3,0,1,0,6,1,5,7,5,0],
+    peachBb:    [4,0,0,0,7,0,6,6,6,0],
+    rosalinaBb: [3,0,0,1,6,1,5,5,7,0]
   },
   bodies: {
-    std:       [5,5,5,5,2,5,5,5],
-    rally:     [4,8,4,4,3,3,8,3],
-    stdBike:   [1,1,1,9,0,7,7,7],
-    rallyBike: [0,5,0,8,0,6,10,6],
-    bloop:     [7,2,2,6,1,9,5,5],
-    machBike:  [6,1,1,7,0,10,6,6],
-    truck:     [7,10,7,1,5,1,7,1],
-    dorrie:    [4,4,8,5,4,1,1,6],
-    rod:       [8,4,4,4,3,8,3,3],
-    frog:      [4,4,8,4,3,3,3,8],
-    junk:      [8,8,8,3,4,2,2,2],
-    chopper:   [7,7,7,3,2,5,5,5],
-    lobster:   [7,7,10,2,6,0,0,5],
-    biddy:     [1,6,1,7,1,5,9,5],
-    dreadSled: [3,9,5,3,3,3,9,4],
-    starSled:  [6,8,11,0,5,1,2,8],
-    reel:      [8,8,8,2,3,4,4,4],
-    fin:       [0,0,5,8,0,6,6,10],
-    blast:     [5,5,5,6,3,3,3,3],
-    horn:      [9,6,6,2,5,7,1,1],
-    loco:      [4,4,4,6,1,6,6,6],
-    trike:     [7,7,10,1,5,1,1,7],
-    pipe:      [2,2,2,8,1,6,6,6],
-    gator:     [9,6,6,3,6,5,0,0],
+    std:       [5,5,5,5,5,2,5,5,5],
+    rally:     [4,4,8,4,4,3,3,8,3],
+    stdBike:   [9,1,1,1,9,0,7,7,7],
+    rallyBike: [8,0,5,0,8,0,6,10,6],
+    bloop:     [6,7,2,2,6,1,9,5,5],
+    machBike:  [7,6,1,1,7,0,10,6,6],
+    truck:     [1,7,10,7,1,5,1,7,1],
+    dorrie:    [5,4,4,8,5,4,1,1,6],
+    rod:       [4,8,4,4,4,3,8,3,3],
+    frog:      [4,4,4,8,4,3,3,3,8],
+    junk:      [3,8,8,8,3,4,2,2,2],
+    chopper:   [3,7,7,7,3,2,5,5,5],
+    lobster:   [2,7,7,10,2,6,0,0,5],
+    biddy:     [7,1,6,1,7,1,5,9,5],
+    dreadSled: [3,3,9,5,3,3,3,9,4],
+    starSled:  [0,6,8,11,0,5,1,2,8],
+    reel:      [2,8,8,8,2,3,4,4,4],
+    fin:       [8,0,0,5,8,0,6,6,10],
+    blast:     [6,5,5,5,6,3,3,3,3],
+    horn:      [2,9,6,6,2,5,7,1,1],
+    loco:      [6,4,4,4,6,1,6,6,6],
+    trike:     [1,7,7,10,1,5,1,1,7],
+    pipe:      [8,2,2,2,8,1,6,6,6],
+    gator:     [3,9,6,6,3,6,5,0,0],
   }
 };
 const driverClasses = Object.keys(classes.drivers);

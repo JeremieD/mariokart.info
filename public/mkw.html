@@ -91,6 +91,12 @@
         </div>
 
         <div id="combo-stats" class="values-hidden">
+          <div>
+            <label class="stat-code" id="mtb-label" title="Acceleration">MTB</label>
+            <div class="meter" id="mtb-meter"></div>
+            <output id="mtb-value"></output>
+          </div>
+
           <div id="spd-multimeter">
             <label class="stat-code" id="spd-label" title="Speed">SPD</label>
             <div class="meter smooth" id="spdSr-meter"></div>
@@ -225,6 +231,24 @@
     </header>
 
     <div class="formula-factors">
+      <div class="factor-widget">
+        <hgroup>
+          <h3>Mini-Turbo</h3>
+          <button id="formula-mtb-mode" class="inline">Ignore</button>
+        </hgroup>
+        <div>
+          <jd-slider id="formula-mtb-slider" value="1" min="-16" max="16" step="1" stops="8"></jd-slider>
+          <input aria-label="Mini-Turbo Factor" id="formula-mtb-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
+        </div>
+        <div>
+          <div class="field-group">
+            <label>Min</label><input aria-label="Minimum Mini-Turbo" id="formula-mtb-min" type="number" inputmode="decimal" min="0" max="4" step=".2" placeholder="0"/>
+          </div>
+          <div class="field-group">
+            <label>Max</label><input aria-label="Maximum Mini-Turbo" id="formula-mtb-max" type="number" inputmode="decimal" min="0" max="4" step=".2" placeholder="4"/>
+          </div>
+        </div>
+      </div>
       <div id="formula-spd-collapse" class="collapse-container">
         <button id="formula-use-spd" class="icon inline" title="Toggle Unified Speed."><jd-icon icon="chevron-right"></jd-icon></button>
         <div class="selected">
@@ -515,12 +539,15 @@
       <p>Tap the Random button to replace your currently active combo with random parts.</p>
       <p><em>Lock</em> individual parts to keep them.</p>
 
+      <h3>Mini-Turbo (<abbr class="stat-code">MTB</abbr>)</h3>
+      <p>This hidden stat determines the length of drift boosts, charge jumps, rail jumps, and wall jumps.</p>
+
       <h3>Speed (<abbr class="stat-code">SPD</abbr>)</h3>
       <p>Speed has 3 stats: <em class="smooth-text">Smooth Road (<abbr class="stat-code">SPDSR</abbr>)</em>, <em class="rough">Rough Road (<abbr class="stat-code">SPDRR</abbr>)</em>, and <em class="water">Water&nbsp;(<abbr class="stat-code">SPDWT</abbr>)</em>. They determine your top speed on each surface.</p>
       <p>In-game Speed is an offset average of the component stats. It’s&nbsp;not displayed here due to its&nbsp;strange&nbsp;quirks.</p>
 
       <h3>Acceleration (<abbr class="stat-code">ACC</abbr>)</h3>
-      <p>Determines how fast you can reach top speed, and the&nbsp;duration of mini-turbos.</p>
+      <p>Determines how fast you can reach top speed.</p>
 
       <h3>Weight (<abbr class="stat-code">WGT</abbr>)</h3>
       <p>Determines the physics of collisions with other vehicles. Higher&nbsp;weights push lower weights.</p>

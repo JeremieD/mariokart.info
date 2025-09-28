@@ -1,21 +1,22 @@
 "use strict";
 // Controller
 
-const statIndex = { spdSr: 0, spdRr: 1, spdWt: 2, acc: 3, wgt: 4,
-                    hndSr: 5, hndRr: 6, hndWt: 7, size: 8, spd: 9, hnd: 10 };
-const stats = [ "spdSr", "spdRr", "spdWt", "acc", "wgt",
-                "hndSr", "hndRr", "hndWt", "size", "spd", "hnd" ];
+const statIndex = { mtb: 0, spdSr: 1, spdRr: 2, spdWt: 3, acc: 4,
+                    wgt: 5, hndSr: 6, hndRr: 7, hndWt: 8, size: 9,
+                    spd: 10, hnd: 11 };
+const stats = [ "mtb", "spdSr", "spdRr", "spdWt", "acc",
+                "wgt", "hndSr", "hndRr", "hndWt", "size", "spd", "hnd" ];
 const blankFormula = {
-  factors: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  min:     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  max:     [20,20,20,20,20,20,20,20,2,20,20],
+  factors: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  min:     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  max:     [20,20,20,20,20,20,20,20,20,2,20,20],
   unified: { spd: true, hnd: true },
   excludeKarts: false, excludeATVs: false, excludeBikes: false
 };
 const defaultFormula = {
-  factors: [0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1],
-  min:     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  max:     [20,20,20,20,20,20,20,20,2,20,20],
+  factors: [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1],
+  min:     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  max:     [20,20,20,20,20,20,20,20,20,2,20,20],
   unified: { spd: true, hnd: true },
   excludeKarts: false, excludeATVs: false, excludeBikes: false
 };
@@ -197,7 +198,8 @@ function getDominantCombos(combo) {
       combo.lvl[4],
       combo.lvl[5],
       combo.lvl[6],
-      combo.lvl[7]
+      combo.lvl[7],
+      combo.lvl[8]
     ],
     refCombo: combo,
     driverLock: state.locks.driver, bodyLock: state.locks.body

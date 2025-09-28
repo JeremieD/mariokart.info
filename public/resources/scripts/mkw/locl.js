@@ -228,6 +228,7 @@ const strings = {
       bruiser: "Bowser Bruiser"
     },
     stats: {
+      mtb:   "Mini-Turbo",
       spd:   "Speed (Unified)",
       spdSr: "Smooth Road Speed",
       spdRr: "Rough Road Speed",
@@ -241,6 +242,7 @@ const strings = {
       size:  "Size"
     },
     statsAbbr: {
+      mtb:   "MTB",
       spd:   "SPD",
       spdSr: "SPDSR",
       spdRr: "SPDRR",
