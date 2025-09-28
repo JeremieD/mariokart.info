@@ -447,10 +447,19 @@ function setBlankFormula() {
 }
 function deserializeFormula(serial) {
   const obj = structuredClone(blankFormula);
-  for (let i = 0; i < obj.factors.length; i++) {
-    if (serial.factors?.[i] !== undefined) obj.factors[i] = serial.factors[i];
-    if (serial.min?.[i]     !== undefined) obj.min[i]     = serial.min[i];
-    if (serial.max?.[i]     !== undefined) obj.max[i]     = serial.max[i];
+  if (serial.factors.length === 11) { // Upgrading from v0.7
+    for (let i = 1; i < obj.factors.length; i++) {
+      const j = i-1;
+      if (serial.factors?.[j] !== undefined) obj.factors[i] = serial.factors[j];
+      if (serial.min?.[j]     !== undefined) obj.min[i]     = serial.min[j];
+      if (serial.max?.[j]     !== undefined) obj.max[i]     = serial.max[j];
+    }
+  } else {
+    for (let i = 0; i < obj.factors.length; i++) {
+      if (serial.factors?.[i] !== undefined) obj.factors[i] = serial.factors[i];
+      if (serial.min?.[i]     !== undefined) obj.min[i]     = serial.min[i];
+      if (serial.max?.[i]     !== undefined) obj.max[i]     = serial.max[i];
+    }
   }
   if (serial.unified?.spd !== undefined) obj.unified.spd  = serial.unified.spd;
   if (serial.unified?.hnd !== undefined) obj.unified.hnd  = serial.unified.hnd;
