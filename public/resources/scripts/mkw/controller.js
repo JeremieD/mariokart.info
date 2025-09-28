@@ -717,7 +717,8 @@ function commitState() {
       A: state.slot.A.combo.code,
       B: state.slot.B.combo.code,
       selectedSlot: state.selectedSlotID
-    }
+    },
+    version: state.update.version
   };
   localStorage.setItem("mkw", JSON.stringify(data));
 }
