@@ -1,8 +1,6 @@
 "use strict";
 // Stats Worker
 
-let version = "latest";
-
 onmessage = e => {
   const exchangeID = e.data[0];
   const data = e.data[1];
