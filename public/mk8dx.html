@@ -40,14 +40,14 @@
       <button class="big-type square" id="menu-open" title="Switch Game"><jd-icon icon="menu"></jd-icon>
         <nav id="menu" inert>
           <ol>
-            <li><a href="/mkw"><img src="/resources/graphics/mkw.svg" loading="lazy" width="76" height="76" alt="Mario Kart World Logo" />Mario Kart World Combo Builder</a></li>
-            <li><a href="#"><img src="/resources/graphics/mk8dx.webp" loading="lazy" width="76" height="76" alt="Mario Kart 8 Deluxe Logo"/>Mario Kart 8 Deluxe Combo Builder</a></li>
-            <li><a href="/mk8"><img src="/resources/graphics/mk8.webp" loading="lazy" width="76" height="76" alt="Mario Kart 8 Logo" />Mario Kart 8 Combo Builder</a></li>
-            <li><a href="/mk7"><img src="/resources/graphics/mk7.webp" loading="lazy" width="76" height="76" alt="Mario Kart 7 Logo" />Mario Kart 7 Combo Builder</a></li>
+            <li><a href="/mkw"><img src="/resources/graphics/mkw.svg" loading="lazy" width="76" height="76" alt="Mario Kart World Logo">Mario Kart World Combo Builder</a></li>
+            <li><a href="#"><img src="/resources/graphics/mk8dx.webp" loading="lazy" width="76" height="76" alt="Mario Kart 8 Deluxe Logo">Mario Kart 8 Deluxe Combo Builder</a></li>
+            <li><a href="/mk8"><img src="/resources/graphics/mk8.webp" loading="lazy" width="76" height="76" alt="Mario Kart 8 Logo">Mario Kart 8 Combo Builder</a></li>
+            <li><a href="/mk7"><img src="/resources/graphics/mk7.webp" loading="lazy" width="76" height="76" alt="Mario Kart 7 Logo">Mario Kart 7 Combo Builder</a></li>
           </ol>
         </nav>
       </button>
-      <div id="logo"><img src="/resources/graphics/mk8dx.webp" loading="lazy" width="76" height="76" alt="Mario Kart 8 Deluxe Logo" /><h1>Mario Kart 8 Deluxe <span>Combo Builder</span></h1></div>
+      <div id="logo"><img src="/resources/graphics/mk8dx.webp" loading="lazy" width="76" height="76" alt="Mario Kart 8 Deluxe Logo"><h1>Mario Kart 8 Deluxe <span>Combo Builder</span></h1></div>
     </div>
     <div class="button-group">
       <button class="big-type square" id="help-open" title="Help"><jd-icon icon="help"></jd-icon></button>
@@ -76,19 +76,19 @@
         <div id="combo-display">
           <div class="combo">
             <button id="driver" name="Change driver...">
-              <img id="driver-img" width="128" height="128"/>
+              <img id="driver-img" width="128" height="128">
               <jd-icon id="driver-lock-display" icon="lock"></jd-icon>
             </button>
             <button id="body" name="Change body...">
-              <img id="body-img" width="200" height="128"/>
+              <img id="body-img" width="200" height="128">
               <jd-icon id="body-lock-display" icon="lock"></jd-icon>
             </button>
             <button id="tire" name="Change tire...">
-              <img id="tire-img" width="200" height="128"/>
+              <img id="tire-img" width="200" height="128">
               <jd-icon id="tire-lock-display" icon="lock"></jd-icon>
             </button>
             <button id="glider" name="Change glider...">
-              <img id="glider-img" width="200" height="128"/>
+              <img id="glider-img" width="200" height="128">
               <jd-icon id="glider-lock-display" icon="lock"></jd-icon>
             </button>
           </div>
@@ -199,7 +199,7 @@
 
   <dialog id="driver-picker" inert>
     <header><hgroup>
-      <h2><img id="driver-icon" class="emblem" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" width="64" height="64" alt="Driver Emblem"/><span id="driver-title">Drivers</span></h2>
+      <h2><img id="driver-icon" class="emblem" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" width="64" height="64" alt="Driver Emblem"><span id="driver-title">Drivers</span></h2>
       <button id="driver-lock" class="inline"><label id="driver-lock-label">Lock Driver</label><jd-icon icon="lock"></jd-icon></button>
     </hgroup></header>
     <div id="driver-grid" class="parts-grid square eight"></div>
@@ -277,14 +277,14 @@
         </hgroup>
         <div>
           <jd-slider id="formula-mtb-slider" value="16" min="-16" max="16" step="1" stops="8"></jd-slider>
-          <input aria-label="Mini-Turbo Factor" id="formula-mtb-factor" type="number" inputmode="decimal" min="-16" max="16" step="1" placeholder="0"/>
+          <input aria-label="Mini-Turbo Factor" id="formula-mtb-factor" type="number" inputmode="decimal" min="-16" max="16" step="1" placeholder="0">
         </div>
         <div>
           <div class="field-group">
-            <label>Min</label><input aria-label="Minimum Mini-Turbo" id="formula-mtb-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
+            <label>Min</label><input aria-label="Minimum Mini-Turbo" id="formula-mtb-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0">
           </div>
           <div class="field-group">
-            <label>Max</label><input aria-label="Maximum Mini-Turbo" id="formula-mtb-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
+            <label>Max</label><input aria-label="Maximum Mini-Turbo" id="formula-mtb-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6">
           </div>
         </div>
       </div>
@@ -299,14 +299,14 @@
             </hgroup>
             <div>
               <jd-slider id="formula-spd-slider" value="15" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input aria-label="Speed Factor" id="formula-spd-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
+              <input aria-label="Speed Factor" id="formula-spd-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0">
             </div>
             <div>
               <div class="field-group">
-                <label>Min</label><input aria-label="Minimum Speed" id="formula-spd-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
+                <label>Min</label><input aria-label="Minimum Speed" id="formula-spd-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0">
               </div>
               <div class="field-group">
-                <label>Max</label><input aria-label="Maximum Speed" id="formula-spd-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
+                <label>Max</label><input aria-label="Maximum Speed" id="formula-spd-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6">
               </div>
             </div>
           </div>
@@ -319,14 +319,14 @@
             </hgroup>
             <div>
               <jd-slider id="formula-spdGr-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input aria-label="Ground Speed Factor" id="formula-spdGr-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
+              <input aria-label="Ground Speed Factor" id="formula-spdGr-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0">
             </div>
             <div>
               <div class="field-group">
-                <label>Min</label><input aria-label="Minimum Ground Speed" id="formula-spdGr-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
+                <label>Min</label><input aria-label="Minimum Ground Speed" id="formula-spdGr-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0">
               </div>
               <div class="field-group">
-                <label>Max</label><input aria-label="Maximum Ground Speed" id="formula-spdGr-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
+                <label>Max</label><input aria-label="Maximum Ground Speed" id="formula-spdGr-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6">
               </div>
             </div>
           </div>
@@ -337,14 +337,14 @@
             </hgroup>
             <div>
               <jd-slider id="formula-spdAg-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input aria-label="Anti-Gravity Speed Factor" id="formula-spdAg-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
+              <input aria-label="Anti-Gravity Speed Factor" id="formula-spdAg-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0">
             </div>
             <div>
               <div class="field-group">
-                <label>Min</label><input aria-label="Minimum Anti-Gravity Speed" id="formula-spdAg-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
+                <label>Min</label><input aria-label="Minimum Anti-Gravity Speed" id="formula-spdAg-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0">
               </div>
               <div class="field-group">
-                <label>Max</label><input aria-label="Maximum Anti-Gravity Speed" id="formula-spdAg-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
+                <label>Max</label><input aria-label="Maximum Anti-Gravity Speed" id="formula-spdAg-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6">
               </div>
             </div>
           </div>
@@ -355,14 +355,14 @@
             </hgroup>
             <div>
               <jd-slider id="formula-spdWt-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input aria-label="Underwater Speed Factor" id="formula-spdWt-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
+              <input aria-label="Underwater Speed Factor" id="formula-spdWt-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0">
             </div>
             <div>
               <div class="field-group">
-                <label>Min</label><input aria-label="Minimum Underwater Speed" id="formula-spdWt-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
+                <label>Min</label><input aria-label="Minimum Underwater Speed" id="formula-spdWt-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0">
               </div>
               <div class="field-group">
-                <label>Max</label><input aria-label="Maximum Underwater Speed" id="formula-spdWt-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
+                <label>Max</label><input aria-label="Maximum Underwater Speed" id="formula-spdWt-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6">
               </div>
             </div>
           </div>
@@ -373,14 +373,14 @@
             </hgroup>
             <div>
               <jd-slider id="formula-spdAr-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input aria-label="Air Speed Factor" id="formula-spdAr-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
+              <input aria-label="Air Speed Factor" id="formula-spdAr-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0">
             </div>
             <div>
               <div class="field-group">
-                <label>Min</label><input aria-label="Minimum Air Speed" id="formula-spdAr-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
+                <label>Min</label><input aria-label="Minimum Air Speed" id="formula-spdAr-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0">
               </div>
               <div class="field-group">
-                <label>Max</label><input aria-label="Maximum Air Speed" id="formula-spdAr-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
+                <label>Max</label><input aria-label="Maximum Air Speed" id="formula-spdAr-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6">
               </div>
             </div>
           </div>
@@ -394,14 +394,14 @@
         </hgroup>
         <div>
           <jd-slider id="formula-acc-slider" value="1" min="-16" max="16" step="1" stops="8"></jd-slider>
-          <input aria-label="Acceleration Factor" id="formula-acc-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
+          <input aria-label="Acceleration Factor" id="formula-acc-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0">
         </div>
         <div>
           <div class="field-group">
-            <label>Min</label><input aria-label="Minimum Acceleration" id="formula-acc-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
+            <label>Min</label><input aria-label="Minimum Acceleration" id="formula-acc-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0">
           </div>
           <div class="field-group">
-            <label>Max</label><input aria-label="Maximum Acceleration" id="formula-acc-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
+            <label>Max</label><input aria-label="Maximum Acceleration" id="formula-acc-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6">
           </div>
         </div>
       </div>
@@ -413,14 +413,14 @@
         </hgroup>
         <div>
           <jd-slider id="formula-wgt-slider" value="1" min="-16" max="16" step="1" stops="8"></jd-slider>
-          <input aria-label="Weight Factor" id="formula-wgt-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
+          <input aria-label="Weight Factor" id="formula-wgt-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0">
         </div>
         <div>
           <div class="field-group">
-            <label>Min</label><input aria-label="Minimum Weight" id="formula-wgt-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
+            <label>Min</label><input aria-label="Minimum Weight" id="formula-wgt-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0">
           </div>
           <div class="field-group">
-            <label>Max</label><input aria-label="Maximum Weight" id="formula-wgt-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
+            <label>Max</label><input aria-label="Maximum Weight" id="formula-wgt-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6">
           </div>
         </div>
       </div>
@@ -435,14 +435,14 @@
             </hgroup>
             <div>
               <jd-slider id="formula-hnd-slider" value=".5" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input aria-label="Handling Factor" id="formula-hnd-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
+              <input aria-label="Handling Factor" id="formula-hnd-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0">
             </div>
             <div>
               <div class="field-group">
-                <label>Min</label><input aria-label="Minimum Handling" id="formula-hnd-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
+                <label>Min</label><input aria-label="Minimum Handling" id="formula-hnd-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0">
               </div>
               <div class="field-group">
-                <label>Max</label><input aria-label="Maximum Handling" id="formula-hnd-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
+                <label>Max</label><input aria-label="Maximum Handling" id="formula-hnd-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6">
               </div>
             </div>
           </div>
@@ -455,14 +455,14 @@
             </hgroup>
             <div>
               <jd-slider id="formula-hndGr-slider" value=".5" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input aria-label="Ground Handling Factor" id="formula-hndGr-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
+              <input aria-label="Ground Handling Factor" id="formula-hndGr-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0">
             </div>
             <div>
               <div class="field-group">
-                <label>Min</label><input aria-label="Minimum Ground Handling" id="formula-hndGr-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
+                <label>Min</label><input aria-label="Minimum Ground Handling" id="formula-hndGr-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0">
               </div>
               <div class="field-group">
-                <label>Max</label><input aria-label="Maximum Ground Handling" id="formula-hndGr-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
+                <label>Max</label><input aria-label="Maximum Ground Handling" id="formula-hndGr-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6">
               </div>
             </div>
           </div>
@@ -473,14 +473,14 @@
             </hgroup>
             <div>
               <jd-slider id="formula-hndAg-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input aria-label="Anti-Gravity Handling Factor" id="formula-hndAg-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
+              <input aria-label="Anti-Gravity Handling Factor" id="formula-hndAg-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0">
             </div>
             <div>
               <div class="field-group">
-                <label>Min</label><input aria-label="Minimum Anti-Gravity Handling" id="formula-hndAg-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
+                <label>Min</label><input aria-label="Minimum Anti-Gravity Handling" id="formula-hndAg-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0">
               </div>
               <div class="field-group">
-                <label>Max</label><input aria-label="Maximum Anti-Gravity Handling" id="formula-hndAg-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
+                <label>Max</label><input aria-label="Maximum Anti-Gravity Handling" id="formula-hndAg-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6">
               </div>
             </div>
           </div>
@@ -491,14 +491,14 @@
             </hgroup>
             <div>
               <jd-slider id="formula-hndWt-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input aria-label="Underwater Handling Factor" id="formula-hndWt-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
+              <input aria-label="Underwater Handling Factor" id="formula-hndWt-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0">
             </div>
             <div>
               <div class="field-group">
-                <label>Min</label><input aria-label="Minimum Underwater Handling" id="formula-hndWt-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
+                <label>Min</label><input aria-label="Minimum Underwater Handling" id="formula-hndWt-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0">
               </div>
               <div class="field-group">
-                <label>Max</label><input aria-label="Maximum Underwater Handling" id="formula-hndWt-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
+                <label>Max</label><input aria-label="Maximum Underwater Handling" id="formula-hndWt-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6">
               </div>
             </div>
           </div>
@@ -509,14 +509,14 @@
             </hgroup>
             <div>
               <jd-slider id="formula-hndAr-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-              <input aria-label="Air Handling Factor" id="formula-hndAr-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
+              <input aria-label="Air Handling Factor" id="formula-hndAr-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0">
             </div>
             <div>
               <div class="field-group">
-                <label>Min</label><input aria-label="Minimum Air Handling" id="formula-hndAr-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
+                <label>Min</label><input aria-label="Minimum Air Handling" id="formula-hndAr-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0">
               </div>
               <div class="field-group">
-                <label>Max</label><input aria-label="Maximum Air Handling" id="formula-hndAr-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
+                <label>Max</label><input aria-label="Maximum Air Handling" id="formula-hndAr-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6">
               </div>
             </div>
           </div>
@@ -530,14 +530,14 @@
         </hgroup>
         <div>
           <jd-slider id="formula-trn-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-          <input aria-label="Traction Factor" id="formula-trn-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
+          <input aria-label="Traction Factor" id="formula-trn-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0">
         </div>
         <div>
           <div class="field-group">
-            <label>Min</label><input aria-label="Minimum Traction" id="formula-trn-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
+            <label>Min</label><input aria-label="Minimum Traction" id="formula-trn-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0">
           </div>
           <div class="field-group">
-            <label>Max</label><input aria-label="Maximum Traction" id="formula-trn-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
+            <label>Max</label><input aria-label="Maximum Traction" id="formula-trn-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6">
           </div>
         </div>
       </div>
@@ -549,14 +549,14 @@
         </hgroup>
         <div>
           <jd-slider id="formula-inv-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-          <input aria-label="Invincibility Factor" id="formula-inv-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
+          <input aria-label="Invincibility Factor" id="formula-inv-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0">
         </div>
         <div>
           <div class="field-group">
-            <label>Min</label><input aria-label="Minimum Invincibility" id="formula-inv-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0"/>
+            <label>Min</label><input aria-label="Minimum Invincibility" id="formula-inv-min" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="0">
           </div>
           <div class="field-group">
-            <label>Max</label><input aria-label="Maximum Invincibility" id="formula-inv-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6"/>
+            <label>Max</label><input aria-label="Maximum Invincibility" id="formula-inv-max" type="number" inputmode="decimal" min="0" max="6" step=".25" placeholder="6">
           </div>
         </div>
       </div>
@@ -568,14 +568,14 @@
         </hgroup>
         <div>
           <jd-slider id="formula-size-slider" value="0" min="-16" max="16" step="1" stops="8"></jd-slider>
-          <input aria-label="Size Factor" id="formula-size-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0"/>
+          <input aria-label="Size Factor" id="formula-size-factor" type="number" inputmode="decimal" min="-100" max="100" step="1" placeholder="0">
         </div>
         <div>
           <div class="field-group">
-            <label>Min</label><input aria-label="Minimum Size" id="formula-size-min" type="number" inputmode="decimal" min="0" max="2" step="1" placeholder="0"/>
+            <label>Min</label><input aria-label="Minimum Size" id="formula-size-min" type="number" inputmode="decimal" min="0" max="2" step="1" placeholder="0">
           </div>
           <div class="field-group">
-            <label>Max</label><input aria-label="Maximum Size" id="formula-size-max" type="number" inputmode="decimal" min="0" max="2" step="1" placeholder="2"/>
+            <label>Max</label><input aria-label="Maximum Size" id="formula-size-max" type="number" inputmode="decimal" min="0" max="2" step="1" placeholder="2">
           </div>
         </div>
       </div>
@@ -684,7 +684,7 @@
       <h3>Frame Size</h3>
       <p>The driver determines the combo’s frame size between small, medium, and large. This affects your in&#8209;game hitbox.</p>
 
-      <br/>
+      <br>
 
       <ul class="arrow-list">
         <li>Visit the <a href="https://www.mariowiki.com/Mario_Kart_8_Deluxe" target="_blank">Mario Wiki</a> for more info about the game.</li>
@@ -705,7 +705,7 @@
         <label>Allow Cookies</label>
         <p>Cookies allow the app to remember your settings.<br>This site will not track you or collect your personal data.</p>
       </button>
-      <hr />
+      <hr>
       <div class="input-group">
         <label>Game Language</label>
         <jd-select id="settings-locale">
