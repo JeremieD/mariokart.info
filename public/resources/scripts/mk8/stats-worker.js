@@ -44,14 +44,15 @@ onmessage = e => {
   postMessage(response);
 };
 
-const statIndex = {
-  mtb: 0, spdGr: 1, spdAg: 2, spdWt: 3, spdAr: 4,  acc: 5,
-  wgt: 6, hndGr: 7, hndAg: 8, hndWt: 9, hndAr: 10, trn: 11,
-  size: 12, spd: 13, hnd: 14
-};
+const statCount = 15;
+const realStatCount = 12;
 const stats = [ "mtb", "spdGr", "spdAg", "spdWt", "spdAr", "acc",
                 "wgt", "hndGr", "hndAg", "hndWt", "hndAr", "trn",
                 "size", "spd", "hnd" ];
+const realStats = stats.slice(0, realStatCount);
+const statIndex = {  mtb: 0, spdGr: 1, spdAg: 2, spdWt: 3, spdAr: 4,  acc: 5,
+                     wgt: 6, hndGr: 7, hndAg: 8, hndWt: 9, hndAr: 10, trn: 11,
+                     size: 12, spd: 13, hnd: 14 };
 
 class Combo {
   // TODO: Clean up a bit. Rename some stuff.
@@ -112,7 +113,7 @@ class Combo {
     this.classes.tire   = classes.tires[tireClassID];
     this.classes.glider = classes.gliders[gliderClassID];
 
-    for (let stat = 0; stat < 12; stat++) {
+    for (let stat = 0; stat < realStatCount; stat++) {
       let lvl = 0;
       lvl += this.classes.driver[stat];
       lvl += this.classes.body[stat];
@@ -241,21 +242,21 @@ function listCombos(opts = {}) {
   const bodyLock   = opts.bodyLock   ?? false;
   const tireLock   = opts.tireLock   ?? false;
   const gliderLock = opts.gliderLock ?? false;
-  const mtbMin   = opts.min?.[0]  ?? 0; const mtbMax   = opts.max?.[0]  ?? 20;
-  const spdGrMin = opts.min?.[1]  ?? 0; const spdGrMax = opts.max?.[1]  ?? 20;
-  const spdAgMin = opts.min?.[2]  ?? 0; const spdAgMax = opts.max?.[2]  ?? 20;
-  const spdWtMin = opts.min?.[3]  ?? 0; const spdWtMax = opts.max?.[3]  ?? 20;
-  const spdArMin = opts.min?.[4]  ?? 0; const spdArMax = opts.max?.[4]  ?? 20;
-  const accMin   = opts.min?.[5]  ?? 0; const accMax   = opts.max?.[5]  ?? 20;
-  const wgtMin   = opts.min?.[6]  ?? 0; const wgtMax   = opts.max?.[6]  ?? 20;
-  const hndGrMin = opts.min?.[7]  ?? 0; const hndGrMax = opts.max?.[7]  ?? 20;
-  const hndAgMin = opts.min?.[8]  ?? 0; const hndAgMax = opts.max?.[8]  ?? 20;
-  const hndWtMin = opts.min?.[9]  ?? 0; const hndWtMax = opts.max?.[9]  ?? 20;
-  const hndArMin = opts.min?.[10] ?? 0; const hndArMax = opts.max?.[10] ?? 20;
-  const trnMin   = opts.min?.[11] ?? 0; const trnMax   = opts.max?.[11] ?? 20;
-  const sizeMin  = opts.min?.[12] ?? 0; const sizeMax  = opts.max?.[12] ?? 2;
-  const spdMin   = opts.min?.[13] ?? 0; const spdMax   = opts.max?.[13] ?? 20;
-  const hndMin   = opts.min?.[14] ?? 0; const hndMax   = opts.max?.[14] ?? 20;
+  const mtbMin   = opts.min?.[statIndex.mtb]   ?? 0; const mtbMax   = opts.max?.[statIndex.mtb]   ?? 20;
+  const spdGrMin = opts.min?.[statIndex.spdGr] ?? 0; const spdGrMax = opts.max?.[statIndex.spdGr] ?? 20;
+  const spdAgMin = opts.min?.[statIndex.spdAg] ?? 0; const spdAgMax = opts.max?.[statIndex.spdAg] ?? 20;
+  const spdWtMin = opts.min?.[statIndex.spdWt] ?? 0; const spdWtMax = opts.max?.[statIndex.spdWt] ?? 20;
+  const spdArMin = opts.min?.[statIndex.spdAr] ?? 0; const spdArMax = opts.max?.[statIndex.spdAr] ?? 20;
+  const accMin   = opts.min?.[statIndex.acc]   ?? 0; const accMax   = opts.max?.[statIndex.acc]   ?? 20;
+  const wgtMin   = opts.min?.[statIndex.wgt]   ?? 0; const wgtMax   = opts.max?.[statIndex.wgt]   ?? 20;
+  const hndGrMin = opts.min?.[statIndex.hndGr] ?? 0; const hndGrMax = opts.max?.[statIndex.hndGr] ?? 20;
+  const hndAgMin = opts.min?.[statIndex.hndAg] ?? 0; const hndAgMax = opts.max?.[statIndex.hndAg] ?? 20;
+  const hndWtMin = opts.min?.[statIndex.hndWt] ?? 0; const hndWtMax = opts.max?.[statIndex.hndWt] ?? 20;
+  const hndArMin = opts.min?.[statIndex.hndAr] ?? 0; const hndArMax = opts.max?.[statIndex.hndAr] ?? 20;
+  const trnMin   = opts.min?.[statIndex.trn]   ?? 0; const trnMax   = opts.max?.[statIndex.trn]   ?? 20;
+  const sizeMin  = opts.min?.[statIndex.size]  ?? 0; const sizeMax  = opts.max?.[statIndex.size]  ?? 2;
+  const spdMin   = opts.min?.[statIndex.spd]   ?? 0; const spdMax   = opts.max?.[statIndex.spd]   ?? 20;
+  const hndMin   = opts.min?.[statIndex.hnd]   ?? 0; const hndMax   = opts.max?.[statIndex.hnd]   ?? 20;
   const excludeKarts      = opts.excludeKarts      ?? false;
   const excludeATVs       = opts.excludeATVs       ?? false;
   const excludeBikes      = opts.excludeBikes      ?? false;
@@ -273,9 +274,9 @@ function listCombos(opts = {}) {
     if (classes.drivers[driver][statIndex.size] < sizeMin || classes.drivers[driver][statIndex.size] > sizeMax) continue;
   for (let body of bodyClasses) {
     if (bodyLock && body !== refCombo.parts.body.class) continue;
-    if (excludeKarts      && parts.bodies[body].type === "kart") continue;
-    if (excludeATVs       && parts.bodies[body].type === "atv") continue;
-    if (excludeBikes      && parts.bodies[body].type === "bike") continue;
+    if (excludeKarts      && parts.bodies[body].type === "kart")  continue;
+    if (excludeATVs       && parts.bodies[body].type === "atv")   continue;
+    if (excludeBikes      && parts.bodies[body].type === "bike")  continue;
     if (excludeSportBikes && parts.bodies[body].type === "sport") continue;
   for (let tire of tireClasses) {
     if (tireLock && tire !== refCombo.parts.tire.class) continue;
@@ -290,35 +291,35 @@ function listCombos(opts = {}) {
     const combo = new Combo(driver, body, tire, glider);
 
     // Stat Checks
-    if (combo.lvl[0]  < mtbMin   || combo.lvl[0]  > mtbMax) continue;
-    if (combo.lvl[1]  < spdGrMin || combo.lvl[1]  > spdGrMax) continue;
-    if (combo.lvl[2]  < spdAgMin || combo.lvl[2]  > spdAgMax) continue;
-    if (combo.lvl[3]  < spdWtMin || combo.lvl[3]  > spdWtMax) continue;
-    if (combo.lvl[4]  < spdArMin || combo.lvl[4]  > spdArMax) continue;
-    if (combo.lvl[5]  < accMin   || combo.lvl[5]  > accMax) continue;
-    if (combo.lvl[6]  < wgtMin   || combo.lvl[6]  > wgtMax) continue;
-    if (combo.lvl[7]  < hndGrMin || combo.lvl[7]  > hndGrMax) continue;
-    if (combo.lvl[8]  < hndAgMin || combo.lvl[8]  > hndAgMax) continue;
-    if (combo.lvl[9]  < hndWtMin || combo.lvl[9]  > hndWtMax) continue;
-    if (combo.lvl[10] < hndArMin || combo.lvl[10] > hndArMax) continue;
-    if (combo.lvl[11] < trnMin   || combo.lvl[11] > trnMax) continue;
-    if (combo.lvl[13] < spdMin   || combo.lvl[13] > spdMax) continue;
-    if (combo.lvl[14] < hndMin   || combo.lvl[14] > hndMax) continue;
+    if (combo.lvl[statIndex.mtb]   < mtbMin   || combo.lvl[statIndex.mtb]   > mtbMax)   continue;
+    if (combo.lvl[statIndex.spdGr] < spdGrMin || combo.lvl[statIndex.spdGr] > spdGrMax) continue;
+    if (combo.lvl[statIndex.spdAg] < spdAgMin || combo.lvl[statIndex.spdAg] > spdAgMax) continue;
+    if (combo.lvl[statIndex.spdWt] < spdWtMin || combo.lvl[statIndex.spdWt] > spdWtMax) continue;
+    if (combo.lvl[statIndex.spdAr] < spdArMin || combo.lvl[statIndex.spdAr] > spdArMax) continue;
+    if (combo.lvl[statIndex.acc]   < accMin   || combo.lvl[statIndex.acc]   > accMax)   continue;
+    if (combo.lvl[statIndex.wgt]   < wgtMin   || combo.lvl[statIndex.wgt]   > wgtMax)   continue;
+    if (combo.lvl[statIndex.hndGr] < hndGrMin || combo.lvl[statIndex.hndGr] > hndGrMax) continue;
+    if (combo.lvl[statIndex.hndAg] < hndAgMin || combo.lvl[statIndex.hndAg] > hndAgMax) continue;
+    if (combo.lvl[statIndex.hndWt] < hndWtMin || combo.lvl[statIndex.hndWt] > hndWtMax) continue;
+    if (combo.lvl[statIndex.hndAr] < hndArMin || combo.lvl[statIndex.hndAr] > hndArMax) continue;
+    if (combo.lvl[statIndex.trn]   < trnMin   || combo.lvl[statIndex.trn]   > trnMax)   continue;
+    if (combo.lvl[statIndex.spd]   < spdMin   || combo.lvl[statIndex.spd]   > spdMax)   continue;
+    if (combo.lvl[statIndex.hnd]   < hndMin   || combo.lvl[statIndex.hnd]   > hndMax)   continue;
 
     // Difference Checks
     const diffs = [
-      combo.lvl[0]  - refCombo.lvl[0],  // mtb
-      combo.lvl[1]  - refCombo.lvl[1],  // spdGr
-      combo.lvl[2]  - refCombo.lvl[2],  // spdAg
-      combo.lvl[3]  - refCombo.lvl[3],  // spdWt
-      combo.lvl[4]  - refCombo.lvl[4],  // spdAr
-      combo.lvl[5]  - refCombo.lvl[5],  // acc
-      combo.lvl[6]  - refCombo.lvl[6],  // wgt
-      combo.lvl[7]  - refCombo.lvl[7],  // hndGr
-      combo.lvl[8]  - refCombo.lvl[8],  // hndAg
-      combo.lvl[9]  - refCombo.lvl[9],  // hndWt
-      combo.lvl[10] - refCombo.lvl[10], // hndAr
-      combo.lvl[11] - refCombo.lvl[11]  // trn
+      combo.lvl[statIndex.mtb]   - refCombo.lvl[statIndex.mtb],
+      combo.lvl[statIndex.spdGr] - refCombo.lvl[statIndex.spdGr],
+      combo.lvl[statIndex.spdAg] - refCombo.lvl[statIndex.spdAg],
+      combo.lvl[statIndex.spdWt] - refCombo.lvl[statIndex.spdWt],
+      combo.lvl[statIndex.spdAr] - refCombo.lvl[statIndex.spdAr],
+      combo.lvl[statIndex.acc]   - refCombo.lvl[statIndex.acc],
+      combo.lvl[statIndex.wgt]   - refCombo.lvl[statIndex.wgt],
+      combo.lvl[statIndex.hndGr] - refCombo.lvl[statIndex.hndGr],
+      combo.lvl[statIndex.hndAg] - refCombo.lvl[statIndex.hndAg],
+      combo.lvl[statIndex.hndWt] - refCombo.lvl[statIndex.hndWt],
+      combo.lvl[statIndex.hndAr] - refCombo.lvl[statIndex.hndAr],
+      combo.lvl[statIndex.trn]   - refCombo.lvl[statIndex.trn]
     ];
 
     const diffSum = diffs.reduce((s, a) => s + a, 0); // sum
@@ -360,7 +361,7 @@ function listCombos(opts = {}) {
 
 function getScore(lvl, factors) {
   let score = 0;
-  for (let i = 0; i < 15; i++) {
+  for (let i = 0; i < statCount; i++) {
     score += factors[i] * lvl[i];
   }
   return score;
