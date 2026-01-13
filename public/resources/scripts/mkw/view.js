@@ -40,9 +40,12 @@ whenDOMReady(() => {
   for (const stat of realStats) {
     V.combo[stat] = {
       meter: document.getElementById(stat + "-meter"),
-      value: document.getElementById(stat + "-value")
+      output: document.getElementById(stat + "-value"),
+      prevValue: undefined, animValue: undefined, value: undefined
     };
   }
+
+  V.combo.meterValuesAnim = { start: undefined, frameRequestID: undefined };
 
   V.combo.spdMultimeter = document.getElementById("spd-multimeter");
   V.combo.hndMultimeter = document.getElementById("hnd-multimeter");
@@ -498,24 +501,47 @@ function drawCurrentCombo() {
   }
 
   // Meters
+  cancelAnimationFrame(V.combo.meterValuesAnim.frameRequestID);
   V.combo.meters.classList.toggle("values-hidden", !state.settings.showMeterValues);
   for (let i = 0; i < realStatCount; i++) {
     const stat = stats[i];
     V.combo[stat].meter.style.setProperty("--value", toLvl(combo.lvl[i]));
     V.combo[stat].meter.title = S("stats", stat) + ": " + toLvl(combo.lvl[i], stat) + " / 4";
     V.combo.meters.classList.toggle("internal", state.settings.statScale === "internal");
-    if (state.settings.showMeterValues) {
-      V.combo[stat].value.innerText = scaleStat(combo.lvl[i]).toLocaleString("en", getStatLocaleOptions());
-    } else {
-      V.combo[stat].value.innerText = "";
-    }
+    V.combo[stat].animValue = undefined;
+    V.combo[stat].prevValue = V.combo[stat].value ?? combo.lvl[i];
+    V.combo[stat].value = combo.lvl[i];
   }
+  V.combo.meterValuesAnim.start = undefined;
+  V.combo.meterValuesAnim.frameRequestID = requestAnimationFrame(drawMeterValues);
 
   // Favorite
   V.combo.favorite.classList.toggle("selected", state.selectedSlot.isFavorite);
   V.combo.favorite.title = state.selectedSlot.isFavorite ? "Remove this combo from your favourites." : "Save this combo to your favourites.";
 
   drawPageTitle();
+}
+
+function drawMeterValues(t) {
+  // Anim duration is 150ms, slightly shorter than meter animation
+  V.combo.meterValuesAnim.start ??= t;
+  const completion = Math.max(Math.min((t - V.combo.meterValuesAnim.start) / 150, 1), 0);
+  const numberFormatter = new Intl.NumberFormat("en", getStatLocaleOptions());
+
+  for (const stat of realStats) {
+    if (state.settings.showMeterValues) {
+      const delta = V.combo[stat].value - V.combo[stat].prevValue;
+      const interpolatedValue = Math.round(V.combo[stat].prevValue + delta * completion);
+      if (V.combo[stat].animValue === interpolatedValue) continue; // Skip if identical
+      const displayValue = numberFormatter.format(scaleStat(interpolatedValue));
+      V.combo[stat].output.innerText = displayValue;
+      V.combo[stat].animValue = interpolatedValue;
+    } else {
+      V.combo[stat].output.innerText = "";
+    }
+  }
+
+  if (completion < 1 && state.settings.showMeterValues) V.combo.meterValuesAnim.frameRequestID = requestAnimationFrame(drawMeterValues);
 }
 
 function drawDominantCombos() {
