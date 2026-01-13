@@ -595,10 +595,10 @@ function updateURLParams(forceReplace = false) {
 function changeGameVersion(version) {
   return Stats.post("setVersion", version).then(() => {
     Stats.post("getCombo", state.slot.A.combo.code).then(combo => {
-      whenViewReady(() => { setCombo(combo, "A"); });
+      whenViewReady(() => { setCombo(combo, "A", true); });
     });
     Stats.post("getCombo", state.slot.B.combo.code).then(combo => {
-      whenViewReady(() => { setCombo(combo, "B"); });
+      whenViewReady(() => { setCombo(combo, "B", true); });
     });
     state.settings.gameVersion = version;
     commitState();
