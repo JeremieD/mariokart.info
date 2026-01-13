@@ -41,11 +41,14 @@ onmessage = e => {
   postMessage(response);
 };
 
+const statCount = 12;
+const realStatCount = 9;
+const stats = [ "mtb", "spdSr", "spdRr", "spdWt", "acc",
+                "wgt", "hndSr", "hndRr", "hndWt", "size", "spd", "hnd" ];
+const realStats = stats.slice(0, realStatCount);
 const statIndex = { mtb: 0, spdSr: 1, spdRr: 2, spdWt: 3, acc: 4,
                     wgt: 5, hndSr: 6, hndRr: 7, hndWt: 8, size: 9,
                     spd: 10, hnd: 11 };
-const stats = [ "mtb", "spdSr", "spdRr", "spdWt", "acc",
-                "wgt", "hndSr", "hndRr", "hndWt", "size", "spd", "hnd" ];
 
 class Combo {
   // TODO: Clean up a bit. Rename some stuff.
@@ -88,7 +91,7 @@ class Combo {
 
     if (this.classes.body === undefined) console.log(body, bodyClassID)
 
-    for (let stat = 0; stat < 9; stat++) {
+    for (let stat = 0; stat < realStatCount; stat++) {
       let lvl = 0;
       lvl += this.classes.driver[stat];
       lvl += this.classes.body[stat];
@@ -265,7 +268,7 @@ function listCombos(opts = {}) {
   const maxDiff = opts.maxDiff ?? Infinity;
   const driverLock = opts.driverLock ?? false;
   const bodyLock   = opts.bodyLock   ?? false;
-  const mtbMin   = opts.min?.[statIndex.mtb]   ?? 0; const mtbMax = opts.max?.[statIndex.mtb]     ?? 20;
+  const mtbMin   = opts.min?.[statIndex.mtb]   ?? 0; const mtbMax   = opts.max?.[statIndex.mtb]   ?? 20;
   const spdSrMin = opts.min?.[statIndex.spdSr] ?? 0; const spdSrMax = opts.max?.[statIndex.spdSr] ?? 20;
   const spdRrMin = opts.min?.[statIndex.spdRr] ?? 0; const spdRrMax = opts.max?.[statIndex.spdRr] ?? 20;
   const spdWtMin = opts.min?.[statIndex.spdWt] ?? 0; const spdWtMax = opts.max?.[statIndex.spdWt] ?? 20;
@@ -367,7 +370,7 @@ function listCombos(opts = {}) {
 
 function getScore(lvl, factors) {
   let score = 0;
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < statCount; i++) {
     score += factors[i] * lvl[i];
   }
   return score;

@@ -44,14 +44,17 @@ onmessage = e => {
   postMessage(response);
 };
 
+const statCount = 15;
+const realStatCount = 12;
+const stats = [ "mtb", "spdGr", "spdWt", "spdAr", "acc",
+                "wgt", "hndGr", "hndWt", "hndAr", "off", "stb", "dft",
+                "size", "spd", "hnd" ];
+const realStats = stats.slice(0, realStatCount);
 const statIndex = {
   mtb: 0, spdGr: 1, spdWt: 2, spdAr: 3, acc: 4,
   wgt: 5, hndGr: 6, hndWt: 7, hndAr: 8, off: 9, stb: 10, dft: 11,
   size: 12, spd: 13, hnd: 14
 };
-const stats = [ "mtb", "spdGr", "spdWt", "spdAr", "acc",
-                "wgt", "hndGr", "hndWt", "hndAr", "off", "stb", "dft",
-                "size", "spd", "hnd" ];
 
 class Combo {
   // TODO: Clean up a bit. Rename some stuff.
@@ -112,7 +115,7 @@ class Combo {
     this.classes.tire   = classes.tires[tireClassID];
     this.classes.glider = classes.gliders[gliderClassID];
 
-    for (let stat = 0; stat < 15; stat++) {
+    for (let stat = 0; stat < realStatCount; stat++) {
       let lvl = 0;
       lvl += this.classes.driver[stat];
       lvl += this.classes.body[stat];
@@ -193,21 +196,21 @@ function listCombos(opts = {}) {
   const bodyLock   = opts.bodyLock   ?? false;
   const tireLock   = opts.tireLock   ?? false;
   const gliderLock = opts.gliderLock ?? false;
-  const mtbMin   = opts.min?.[0]  ?? 0; const mtbMax   = opts.max?.[0]  ?? 20;
-  const spdGrMin = opts.min?.[1]  ?? 0; const spdGrMax = opts.max?.[1]  ?? 20;
-  const spdWtMin = opts.min?.[2]  ?? 0; const spdWtMax = opts.max?.[2]  ?? 20;
-  const spdArMin = opts.min?.[3]  ?? 0; const spdArMax = opts.max?.[3]  ?? 20;
-  const accMin   = opts.min?.[4]  ?? 0; const accMax   = opts.max?.[4]  ?? 20;
-  const wgtMin   = opts.min?.[5]  ?? 0; const wgtMax   = opts.max?.[5]  ?? 20;
-  const hndGrMin = opts.min?.[6]  ?? 0; const hndGrMax = opts.max?.[6]  ?? 20;
-  const hndWtMin = opts.min?.[7]  ?? 0; const hndWtMax = opts.max?.[7]  ?? 20;
-  const hndArMin = opts.min?.[8]  ?? 0; const hndArMax = opts.max?.[8]  ?? 20;
-  const offMin   = opts.min?.[9]  ?? 0; const offMax   = opts.max?.[9]  ?? 20;
-  const stbMin   = opts.min?.[10] ?? 0; const stbMax   = opts.max?.[10] ?? 20;
-  const dftMin   = opts.min?.[11] ?? 0; const dftMax   = opts.max?.[11] ?? 20;
-  const sizeMin  = opts.min?.[12] ?? 0; const sizeMax  = opts.max?.[12] ?? 2;
-  const spdMin   = opts.min?.[13] ?? 0; const spdMax   = opts.max?.[13] ?? 20;
-  const hndMin   = opts.min?.[14] ?? 0; const hndMax   = opts.max?.[14] ?? 20;
+  const mtbMin   = opts.min?.[statIndex.mtb]   ?? 0; const mtbMax   = opts.max?.[statIndex.mtb]   ?? 20;
+  const spdGrMin = opts.min?.[statIndex.spdGr] ?? 0; const spdGrMax = opts.max?.[statIndex.spdGr] ?? 20;
+  const spdWtMin = opts.min?.[statIndex.spdWt] ?? 0; const spdWtMax = opts.max?.[statIndex.spdWt] ?? 20;
+  const spdArMin = opts.min?.[statIndex.spdAr] ?? 0; const spdArMax = opts.max?.[statIndex.spdAr] ?? 20;
+  const accMin   = opts.min?.[statIndex.acc]   ?? 0; const accMax   = opts.max?.[statIndex.acc]   ?? 20;
+  const wgtMin   = opts.min?.[statIndex.wgt]   ?? 0; const wgtMax   = opts.max?.[statIndex.wgt]   ?? 20;
+  const hndGrMin = opts.min?.[statIndex.hndGr] ?? 0; const hndGrMax = opts.max?.[statIndex.hndGr] ?? 20;
+  const hndWtMin = opts.min?.[statIndex.hndWt] ?? 0; const hndWtMax = opts.max?.[statIndex.hndWt] ?? 20;
+  const hndArMin = opts.min?.[statIndex.hndAr] ?? 0; const hndArMax = opts.max?.[statIndex.hndAr] ?? 20;
+  const offMin   = opts.min?.[statIndex.off]   ?? 0; const offMax   = opts.max?.[statIndex.off]   ?? 20;
+  const stbMin   = opts.min?.[statIndex.stb]   ?? 0; const stbMax   = opts.max?.[statIndex.stb]   ?? 20;
+  const dftMin   = opts.min?.[statIndex.dft]   ?? 0; const dftMax   = opts.max?.[statIndex.dft]   ?? 20;
+  const sizeMin  = opts.min?.[statIndex.size]  ?? 0; const sizeMax  = opts.max?.[statIndex.size]  ?? 2;
+  const spdMin   = opts.min?.[statIndex.spd]   ?? 0; const spdMax   = opts.max?.[statIndex.spd]   ?? 20;
+  const hndMin   = opts.min?.[statIndex.hnd]   ?? 0; const hndMax   = opts.max?.[statIndex.hnd]   ?? 20;
   const sortBy = opts.sortBy ?? "diff";
   const factors = opts.factors ?? [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
   const limit = opts.limit ?? 51;
@@ -233,35 +236,35 @@ function listCombos(opts = {}) {
     const combo = new Combo(driver, body, tire, glider);
 
     // Stat Checks
-    if (combo.lvl[0]  < mtbMin   || combo.lvl[0]  > mtbMax) continue;
-    if (combo.lvl[1]  < spdGrMin || combo.lvl[1]  > spdGrMax) continue;
-    if (combo.lvl[2]  < spdWtMin || combo.lvl[2]  > spdWtMax) continue;
-    if (combo.lvl[3]  < spdArMin || combo.lvl[3]  > spdArMax) continue;
-    if (combo.lvl[4]  < accMin   || combo.lvl[4]  > accMax) continue;
-    if (combo.lvl[5]  < wgtMin   || combo.lvl[5]  > wgtMax) continue;
-    if (combo.lvl[6]  < hndGrMin || combo.lvl[6]  > hndGrMax) continue;
-    if (combo.lvl[7]  < hndWtMin || combo.lvl[7]  > hndWtMax) continue;
-    if (combo.lvl[8]  < hndArMin || combo.lvl[8]  > hndArMax) continue;
-    if (combo.lvl[9]  < offMin   || combo.lvl[9]  > offMax) continue;
-    if (combo.lvl[10] < stbMin   || combo.lvl[10] > stbMax) continue;
-    if (combo.lvl[11] < dftMin   || combo.lvl[11] > dftMax) continue;
-    if (combo.lvl[13] < spdMin   || combo.lvl[13] > spdMax) continue;
-    if (combo.lvl[14] < hndMin   || combo.lvl[14] > hndMax) continue;
+    if (combo.lvl[statIndex.mtb]   < mtbMin   || combo.lvl[statIndex.mtb]   > mtbMax)   continue;
+    if (combo.lvl[statIndex.spdGr] < spdGrMin || combo.lvl[statIndex.spdGr] > spdGrMax) continue;
+    if (combo.lvl[statIndex.spdWt] < spdWtMin || combo.lvl[statIndex.spdWt] > spdWtMax) continue;
+    if (combo.lvl[statIndex.spdAr] < spdArMin || combo.lvl[statIndex.spdAr] > spdArMax) continue;
+    if (combo.lvl[statIndex.acc]   < accMin   || combo.lvl[statIndex.acc]   > accMax)   continue;
+    if (combo.lvl[statIndex.wgt]   < wgtMin   || combo.lvl[statIndex.wgt]   > wgtMax)   continue;
+    if (combo.lvl[statIndex.hndGr] < hndGrMin || combo.lvl[statIndex.hndGr] > hndGrMax) continue;
+    if (combo.lvl[statIndex.hndWt] < hndWtMin || combo.lvl[statIndex.hndWt] > hndWtMax) continue;
+    if (combo.lvl[statIndex.hndAr] < hndArMin || combo.lvl[statIndex.hndAr] > hndArMax) continue;
+    if (combo.lvl[statIndex.off]   < offMin   || combo.lvl[statIndex.off]   > offMax)   continue;
+    if (combo.lvl[statIndex.stb]   < stbMin   || combo.lvl[statIndex.stb]   > stbMax)   continue;
+    if (combo.lvl[statIndex.dft]   < dftMin   || combo.lvl[statIndex.dft]   > dftMax)   continue;
+    if (combo.lvl[statIndex.spd]   < spdMin   || combo.lvl[statIndex.spd]   > spdMax)   continue;
+    if (combo.lvl[statIndex.hnd]   < hndMin   || combo.lvl[statIndex.hnd]   > hndMax)   continue;
 
     // Difference Checks
     const diffs = [
-      combo.lvl[0]  - refCombo.lvl[0],  // mtb
-      combo.lvl[1]  - refCombo.lvl[1],  // spdGr
-      combo.lvl[2]  - refCombo.lvl[2],  // spdWt
-      combo.lvl[3]  - refCombo.lvl[3],  // spdAr
-      combo.lvl[4]  - refCombo.lvl[4],  // acc
-      combo.lvl[5]  - refCombo.lvl[5],  // wgt
-      combo.lvl[6]  - refCombo.lvl[6],  // hndGr
-      combo.lvl[7]  - refCombo.lvl[7],  // hndWt
-      combo.lvl[8]  - refCombo.lvl[8],  // hndAr
-      combo.lvl[9]  - refCombo.lvl[9],  // off
-      combo.lvl[10] - refCombo.lvl[10], // stb
-      combo.lvl[11] - refCombo.lvl[11]  // dft
+      combo.lvl[statIndex.mtb]   - refCombo.lvl[statIndex.mtb],
+      combo.lvl[statIndex.spdGr] - refCombo.lvl[statIndex.spdGr],
+      combo.lvl[statIndex.spdWt] - refCombo.lvl[statIndex.spdWt],
+      combo.lvl[statIndex.spdAr] - refCombo.lvl[statIndex.spdAr],
+      combo.lvl[statIndex.acc]   - refCombo.lvl[statIndex.acc],
+      combo.lvl[statIndex.wgt]   - refCombo.lvl[statIndex.wgt],
+      combo.lvl[statIndex.hndGr] - refCombo.lvl[statIndex.hndGr],
+      combo.lvl[statIndex.hndWt] - refCombo.lvl[statIndex.hndWt],
+      combo.lvl[statIndex.hndAr] - refCombo.lvl[statIndex.hndAr],
+      combo.lvl[statIndex.off]   - refCombo.lvl[statIndex.off],
+      combo.lvl[statIndex.stb]   - refCombo.lvl[statIndex.stb],
+      combo.lvl[statIndex.dft]   - refCombo.lvl[statIndex.dft]
     ];
 
     const diffSum = diffs.reduce((s, a) => s + a, 0); // sum
@@ -303,7 +306,7 @@ function listCombos(opts = {}) {
 
 function getScore(lvl, factors) {
   let score = 0;
-  for (let i = 0; i < 15; i++) {
+  for (let i = 0; i < statCount; i++) {
     score += factors[i] * lvl[i];
   }
   return score;

@@ -37,42 +37,12 @@ whenDOMReady(() => {
   V.combo.details    = document.getElementById("combo-details");
   V.combo.meters     = document.getElementById("combo-stats");
 
-  V.combo.mtb = {
-    meter: document.getElementById("mtb-meter"),
-    value: document.getElementById("mtb-value")
-  };
-  V.combo.spdSr = {
-    meter: document.getElementById("spdSr-meter"),
-    value: document.getElementById("spdSr-value")
-  };
-  V.combo.spdRr = {
-    meter: document.getElementById("spdRr-meter"),
-    value: document.getElementById("spdRr-value")
-  };
-  V.combo.spdWt = {
-    meter: document.getElementById("spdWt-meter"),
-    value: document.getElementById("spdWt-value")
-  };
-  V.combo.acc = {
-    meter: document.getElementById("acc-meter"),
-    value: document.getElementById("acc-value")
-  };
-  V.combo.wgt = {
-    meter: document.getElementById("wgt-meter"),
-    value: document.getElementById("wgt-value")
-  };
-  V.combo.hndSr = {
-    meter: document.getElementById("hndSr-meter"),
-    value: document.getElementById("hndSr-value")
-  };
-  V.combo.hndRr = {
-    meter: document.getElementById("hndRr-meter"),
-    value: document.getElementById("hndRr-value")
-  };
-  V.combo.hndWt = {
-    meter: document.getElementById("hndWt-meter"),
-    value: document.getElementById("hndWt-value")
-  };
+  for (const stat of realStats) {
+    V.combo[stat] = {
+      meter: document.getElementById(stat + "-meter"),
+      value: document.getElementById(stat + "-value")
+    };
+  }
 
   V.combo.spdMultimeter = document.getElementById("spd-multimeter");
   V.combo.hndMultimeter = document.getElementById("hnd-multimeter");
@@ -276,7 +246,7 @@ whenDOMReady(() => {
   V.formula.cancel.addEventListener("click", revertFormula, { passive: true });
   V.formula.save.addEventListener("click", commitFormula, { passive: true });
 
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < statCount; i++) {
     const stat = stats[i];
     const factor = V.formula[stat].factor;
     const slider = V.formula[stat].slider;
@@ -302,7 +272,7 @@ whenDOMReady(() => {
     }, { passive: true });
     mode.addEventListener("click", e => {
       if (e.altKey) {
-        for (let j = 0; j < 12; j++) {
+        for (let j = 0; j < statCount; j++) {
           toggleFactorSign(j, true);
         }
       } else {
@@ -529,7 +499,7 @@ function drawCurrentCombo() {
 
   // Meters
   V.combo.meters.classList.toggle("values-hidden", !state.settings.showMeterValues);
-  for (let i = 0; i < 9; i++) {
+  for (let i = 0; i < realStatCount; i++) {
     const stat = stats[i];
     V.combo[stat].meter.style.setProperty("--value", toLvl(combo.lvl[i]));
     V.combo[stat].meter.title = S("stats", stat) + ": " + toLvl(combo.lvl[i], stat) + " / 4";
@@ -607,7 +577,7 @@ function drawComboTable(container, combos, limit = 50) {
 
     const statsDisplay = document.createElement("div");
     statsDisplay.classList.add("stat-diffs");
-    for (let i = 0; i < 9; i++) {
+    for (let i = 0; i < realStatCount; i++) {
       const stat = stats[i];
       const diff = combo.diffs[i];
       if (diff === 0) continue;

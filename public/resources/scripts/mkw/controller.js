@@ -1,11 +1,15 @@
 "use strict";
 // Controller
 
+const statCount = 12;
+const realStatCount = 9;
+const stats = [ "mtb", "spdSr", "spdRr", "spdWt", "acc",
+                "wgt", "hndSr", "hndRr", "hndWt", "size", "spd", "hnd" ];
+const realStats = stats.slice(0, realStatCount);
 const statIndex = { mtb: 0, spdSr: 1, spdRr: 2, spdWt: 3, acc: 4,
                     wgt: 5, hndSr: 6, hndRr: 7, hndWt: 8, size: 9,
                     spd: 10, hnd: 11 };
-const stats = [ "mtb", "spdSr", "spdRr", "spdWt", "acc",
-                "wgt", "hndSr", "hndRr", "hndWt", "size", "spd", "hnd" ];
+
 const blankFormula = {
   factors: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   min:     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -190,17 +194,7 @@ function updateRelatedCombos(slot) {
 function getDominantCombos(combo) {
   const opts = {
     mustDiffer: true, sortBy: "diff",
-    min: [
-      combo.lvl[0],
-      combo.lvl[1],
-      combo.lvl[2],
-      combo.lvl[3],
-      combo.lvl[4],
-      combo.lvl[5],
-      combo.lvl[6],
-      combo.lvl[7],
-      combo.lvl[8]
-    ],
+    min: combo.lvl.slice(0, realStatCount),
     refCombo: combo,
     driverLock: state.locks.driver, bodyLock: state.locks.body
   };
