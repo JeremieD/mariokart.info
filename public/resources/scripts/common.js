@@ -484,7 +484,6 @@ function drawMenu() {
   V.menu.open.classList.toggle("open", state.menuOpened);
 }
 
-
 function drawFormulaHelpDialog() {
   if (state.openedDialog !== "formula-help") {
     V.formula.helpDialog.inert = true;
@@ -559,6 +558,8 @@ function drawDominantCombos() {
   state.selectedSlot.dominant.then(data => {
     V.dominant.count.innerText = data.length;
     if (state.selectedTab !== "dominant") return;
+    V.similar.rows.innerHTML = "";
+    V.custom.rows.innerHTML  = "";
     drawComboTable(V.dominant.rows, data.combos);
   });
 }
@@ -567,6 +568,8 @@ function drawSimilarCombos() {
   state.selectedSlot.similar.then(data => {
     V.similar.count.innerText = data.length;
     if (state.selectedTab !== "similar") return;
+    V.dominant.rows.innerHTML = "";
+    V.custom.rows.innerHTML   = "";
     drawComboTable(V.similar.rows, data.combos);
   });
 }
@@ -575,6 +578,8 @@ function drawCustomCombos() {
   state.selectedSlot.custom.then(data => {
     V.custom.count.innerText = data.length;
     if (state.selectedTab !== "search") return;
+    V.dominant.rows.innerHTML = "";
+    V.similar.rows.innerHTML  = "";
     V.custom.formula.innerHTML = formatFormula(state.formula);
     drawComboTable(V.custom.rows, data.combos);
   });
