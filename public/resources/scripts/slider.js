@@ -12,6 +12,7 @@ class JDSlider extends HTMLElement {
     this.step = step;
     this.stops = stops;
     this.held = false;
+    this.clickOrigin = undefined;
   }
 
   connectedCallback() {
@@ -50,6 +51,7 @@ class JDSlider extends HTMLElement {
   pointerDownHandler = e => {
     if (e.button === 0 || (e.type === "touchstart" && e.touches.length === 1)) {
       this.held = true;
+      this.clickOrigin = e.clientX;
       this.classList.add("held");
       forAllScrollContainers(this, disableScroll);
     }
@@ -58,21 +60,33 @@ class JDSlider extends HTMLElement {
   pointerMoveHandler = e => {
     if (!this.held || (e.type === "touchend" && e.touches.length > 1)) return;
     e.preventDefault();
-    const scale = this.scale.getBoundingClientRect();
-    let value = (unify(e).clientX - scale.left) / scale.width * (this.max - this.min) + this.min;
-    if (value < this.min) value = this.min;
-    if (value > this.max) value = this.max;
-    const roundedValue = toNearestMultiple(value, this.step);
-    if (this.#value === roundedValue) return;
-    this.value = roundedValue;
+    const newValue = this.#getPointerValue(e);
+    if (this.#value === newValue) return;
+    this.value = newValue;
     this.dispatchEvent(new Event("change"));
   }
 
   pointerUpHandler = e => {
     if (!this.held || (e.type === "mouseup" && e.button !== 0)) return;
-    this.held = false;
-    this.classList.remove("held");
     forAllScrollContainers(this, enableScroll);
+    this.classList.remove("held");
+    const clickDelta = Math.round(Math.abs(e.clientX - this.clickOrigin));
+    this.clickOrigin = undefined;
+    this.held = false;
+    if (clickDelta < 1) { // Move knob if deltaX is negligeable
+      const newValue = this.#getPointerValue(e);
+      if (this.#value === newValue) return;
+      this.value = newValue;
+      this.dispatchEvent(new Event("change"));
+    }
+  }
+
+  #getPointerValue = e => {
+    const scale = this.scale.getBoundingClientRect();
+    let value = (unify(e).clientX - scale.left) / scale.width * (this.max - this.min) + this.min;
+    if (value < this.min) value = this.min;
+    if (value > this.max) value = this.max;
+    return toNearestMultiple(value, this.step);
   }
 
   set value(x) {
