@@ -67,7 +67,7 @@ class Combo {
   lvl = [0,0,0,0,0,0,0,0,0];
   size = -1;
 
-  constructor(driver = "mario", body = "std") {
+  constructor(driver = "mario", body = "std", skipName = false) {
     // TODO: Check parts
     try {
       this.code = parts.drivers[driver].code + parts.bodies[body].code;
@@ -106,7 +106,7 @@ class Combo {
                                   + this.lvl[statIndex.hndRr] * Combo.PERCENT_RR
                                   + this.lvl[statIndex.hndWt] * Combo.PERCENT_WT, 3);
 
-    this.name = getComboName(driver, body);
+    if (!skipName) this.name = getComboName(driver, body);
   }
 
   static fromCode(code) {
@@ -287,7 +287,6 @@ function listCombos(opts = {}) {
   const factors = opts.factors ?? [0,0,0,0,0,0,0,0,0,0,0];
   const limit = opts.limit ?? 51;
 
-
   // IDEA: If this is still too slow, I should try to calculate partial diffs
   //       and scores to eliminate whole classes in droves.
   const list = [];
@@ -303,7 +302,7 @@ function listCombos(opts = {}) {
     // Auto variants
     if (refCombo.parts.driver.class === driver) driver = refCombo.driverID;
     if (refCombo.parts.body.class   === body)     body = refCombo.bodyID;
-    const combo = new Combo(driver, body);
+    const combo = new Combo(driver, body, true);
 
     // Stat Checks
     if (combo.lvl[statIndex.mtb]   < mtbMin   || combo.lvl[statIndex.mtb]   > mtbMax)   continue;
@@ -359,7 +358,7 @@ function listCombos(opts = {}) {
       };
       break;
     case "score":
-      compare = (a, b) => getScore(b.lvl, factors) - getScore(a.lvl, factors);
+      compare = (a, b) => getScore(b, factors) - getScore(a, factors);
   }
 
   list.sort(compare);
@@ -368,14 +367,15 @@ function listCombos(opts = {}) {
            combos: list.slice(0, limit) };
 }
 
-function getScore(lvl, factors) {
+function getScore(combo, factors) {
+  if (combo._cachedScore !== undefined) return combo._cachedScore;
   let score = 0;
   for (let i = 0; i < statCount; i++) {
-    score += factors[i] * lvl[i];
+    score += factors[i] * combo.lvl[i];
   }
+  combo._cachedScore = score;
   return score;
 }
-
 function getAvailableParts(set) {
   return {
     drivers: [

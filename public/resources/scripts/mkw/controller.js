@@ -203,7 +203,6 @@ function getCustomCombos(combo) {
     opts.factors[statIndex.hnd] = 0; opts.max[statIndex.hnd] = 20; opts.min[statIndex.hnd] = 0;
   }
 
-
   return Stats.post("listCombos", opts);
 }
 

@@ -81,7 +81,6 @@
   }
 }
 
-
 .meter {
   @include mask(url(/resources/graphics/metermask-4.svg));
   @include mask-size(100% 100%);

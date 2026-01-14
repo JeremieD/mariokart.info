@@ -427,7 +427,6 @@ whenDOMReady(() => {
     if (isOutside(V.changelog.dialog, e)) closeChangelogDialog();
   }, { passive: true });
 
-
   V.credits.open.addEventListener("click", e => {
     openCreditsDialog();
     e.preventDefault(); // To conserve page scroll position

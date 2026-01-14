@@ -80,7 +80,7 @@ class Combo {
   lvl = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
   size = -1;
 
-  constructor(driver = "mario", body = "std", tire = "std", glider = "super") {
+  constructor(driver = "mario", body = "std", tire = "std", glider = "super", skipName = false) {
     // TODO: Check parts
     try {
       this.code = parts.drivers[driver].code
@@ -134,7 +134,7 @@ class Combo {
                                   + this.lvl[statIndex.hndWt] * Combo.PERCENT_WT
                                   + this.lvl[statIndex.hndAr] * Combo.PERCENT_AR, 3);
 
-    this.name = getComboName(driver, body, tire, glider);
+    if (!skipName) this.name = getComboName(driver, body, tire, glider);
   }
 
   static fromCode(code) {
@@ -281,7 +281,6 @@ function listCombos(opts = {}) {
   const factors = opts.factors ?? [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
   const limit = opts.limit ?? 51;
 
-
   // IDEA: If this is still too slow, I should try to calculate partial diffs
   //       and scores to eliminate whole classes in droves.
   const list = [];
@@ -304,7 +303,7 @@ function listCombos(opts = {}) {
     if (refCombo.parts.body.class   === body)     body = refCombo.bodyID;
     if (refCombo.parts.tire.class   === tire)     tire = refCombo.tireID;
     if (refCombo.parts.glider.class === glider) glider = refCombo.gliderID;
-    const combo = new Combo(driver, body, tire, glider);
+    const combo = new Combo(driver, body, tire, glider, true);
 
     // Stat Checks
     if (combo.lvl[statIndex.mtb]   < mtbMin   || combo.lvl[statIndex.mtb]   > mtbMax)   continue;
@@ -368,7 +367,7 @@ function listCombos(opts = {}) {
       };
       break;
     case "score":
-      compare = (a, b) => getScore(b.lvl, factors) - getScore(a.lvl, factors);
+      compare = (a, b) => getScore(b, factors) - getScore(a, factors);
   }
 
   list.sort(compare);
@@ -377,14 +376,15 @@ function listCombos(opts = {}) {
            combos: list.slice(0, limit) };
 }
 
-function getScore(lvl, factors) {
+function getScore(combo, factors) {
+  if (combo._cachedScore !== undefined) return combo._cachedScore;
   let score = 0;
   for (let i = 0; i < statCount; i++) {
-    score += factors[i] * lvl[i];
+    score += factors[i] * combo.lvl[i];
   }
+  combo._cachedScore = score;
   return score;
 }
-
 function getAvailableParts(set) {
   return {
     drivers: [
