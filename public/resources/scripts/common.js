@@ -503,6 +503,9 @@ function drawHelpDialog() {
   if (state.openedDialog !== "help") {
     V.help.dialog.inert = true;
     V.help.dialog.close();
+    const url = new URL(location.href);
+    url.hash = "";
+    history.replaceState({}, "", url.toString());
     return;
   }
   V.help.dialog.inert = false;
@@ -514,6 +517,9 @@ function drawCreditsDialog() {
   if (state.openedDialog !== "credits") {
     V.credits.dialog.inert = true;
     V.credits.dialog.close();
+    const url = new URL(location.href);
+    url.hash = "";
+    history.replaceState({}, "", url.toString());
     return;
   }
   V.credits.dialog.inert = false;
@@ -525,6 +531,9 @@ function drawChangelogDialog() {
   if (state.openedDialog !== "changelog") {
     V.changelog.dialog.inert = true;
     V.changelog.dialog.close();
+    const url = new URL(location.href);
+    url.hash = "";
+    history.replaceState({}, "", url.toString());
     return;
   }
   V.changelog.dialog.inert = false;
