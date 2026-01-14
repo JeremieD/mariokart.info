@@ -60,6 +60,8 @@ class JDSlider extends HTMLElement {
   pointerMoveHandler = e => {
     if (!this.held || (e.type === "touchend" && e.touches.length > 1)) return;
     e.preventDefault();
+    const deltaX = Math.round(Math.abs(e.clientX - this.clickOrigin));
+    if (deltaX < 2) return;
     const newValue = this.#getPointerValue(e);
     if (this.#value === newValue) return;
     this.value = newValue;
@@ -70,10 +72,10 @@ class JDSlider extends HTMLElement {
     if (!this.held || (e.type === "mouseup" && e.button !== 0)) return;
     forAllScrollContainers(this, enableScroll);
     this.classList.remove("held");
-    const clickDelta = Math.round(Math.abs(e.clientX - this.clickOrigin));
+    const deltaX = Math.round(Math.abs(e.clientX - this.clickOrigin));
     this.clickOrigin = undefined;
     this.held = false;
-    if (clickDelta < 1) { // Move knob if deltaX is negligeable
+    if (deltaX < 2) { // Move knob if deltaX is negligeable
       const newValue = this.#getPointerValue(e);
       if (this.#value === newValue) return;
       this.value = newValue;
