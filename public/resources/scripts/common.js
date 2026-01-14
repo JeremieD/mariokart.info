@@ -558,6 +558,7 @@ function drawMeterValues(t) {
 function drawDominantCombos() {
   state.selectedSlot.dominant.then(data => {
     V.dominant.count.innerText = data.length;
+    if (state.selectedTab !== "dominant") return;
     drawComboTable(V.dominant.rows, data.combos);
   });
 }
@@ -565,6 +566,7 @@ function drawDominantCombos() {
 function drawSimilarCombos() {
   state.selectedSlot.similar.then(data => {
     V.similar.count.innerText = data.length;
+    if (state.selectedTab !== "similar") return;
     drawComboTable(V.similar.rows, data.combos);
   });
 }
@@ -572,6 +574,7 @@ function drawSimilarCombos() {
 function drawCustomCombos() {
   state.selectedSlot.custom.then(data => {
     V.custom.count.innerText = data.length;
+    if (state.selectedTab !== "search") return;
     V.custom.formula.innerHTML = formatFormula(state.formula);
     drawComboTable(V.custom.rows, data.combos);
   });

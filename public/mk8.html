@@ -156,34 +156,34 @@
       </div>
     </section>
 
-    <section class="tab-container">
+    <section class="tab-container" id="tab-container">
       <nav class="tab-handles">
-        <button data-tab-id="dominant-combos" class="selected">Dominant<sup id="dominant-combos-count">0</sup></button>
-        <button data-tab-id="similar-combos">Similar<sup id="similar-combos-count">0</sup></button>
-        <button data-tab-id="custom-combos">Custom Search<sup id="custom-combos-count">0</sup></button>
+        <button data-tab-id="dominant" class="selected">Dominant<sup id="dominant-count">0</sup></button>
+        <button data-tab-id="similar">Similar<sup id="similar-count">0</sup></button>
+        <button data-tab-id="search">Custom Search<sup id="custom-count">0</sup></button>
       </nav>
       <div class="tab-panels">
-        <div class="selected" id="dominant-combos">
+        <div class="selected" id="dominant">
           <header>
             <p>These have the same value or better for every stat.</p>
           </header>
-          <ol id="dominant-combos-rows"></ol>
+          <ol id="dominant-rows"></ol>
         </div>
 
-        <div id="similar-combos">
+        <div id="similar">
           <header>
             <p>These have very similar stats.</p>
           </header>
-          <ol id="similar-combos-rows"></ol>
+          <ol id="similar-rows"></ol>
         </div>
 
-        <div id="custom-combos">
+        <div id="search">
           <header>
             <p>Find the best combo according to a&nbsp;custom formula.</p>
             <output id="custom-formula"></output>
             <button id="customize-formula">Customize Formula...</button>
           </header>
-          <ol id="custom-combos-rows"></ol>
+          <ol id="custom-rows"></ol>
         </div>
       </div>
     </section>
