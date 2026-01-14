@@ -252,17 +252,23 @@ function readState() {
   const BCode = url.searchParams.get("B");
   let   bCode = url.searchParams.get("b") ?? BCode;
 
-  let slot;
+  let slot, tab, dialog;
   if (ACode !== null) slot = "A";
   if (BCode !== null) slot ??= "B";
-  let tab = url.hash.slice(1);
-
-  url.hash = "";
-  history.replaceState({}, "", url.toString());
 
   if (aCode === "") aCode = undefined;
   if (bCode === "") bCode = undefined;
-  if (tab   === "") tab   = undefined;
+
+  let fragment = url.hash.slice(1);
+  if (fragment === "dominant" || fragment === "similar" || fragment === "search") {
+    tab = fragment;
+    url.hash = "";
+    history.replaceState({}, "", url.toString());
+
+  } else if (fragment === "help" || fragment === "settings" ||
+             fragment === "credits" || fragment === "changelog") {
+    dialog = fragment;
+  }
 
   // Read from storage
   const data = JSON.parse(localStorage.getItem("mk7"));
@@ -292,10 +298,11 @@ function readState() {
   }
 
   // Fallback
-  slot  ??= "A";
-  aCode ??= "MAAA";
-  bCode ??= "LpMA";
-  tab   ??= "dominant";
+  slot   ??= "A";
+  aCode  ??= "MAAA";
+  bCode  ??= "LpMA";
+  tab    ??= "dominant";
+  dialog ??= "";
 
   // Set combos
   state.selectedSlotID = slot;
@@ -306,7 +313,14 @@ function readState() {
     whenViewReady(() => { setCombo(combo, "B", true); });
   });
   state.selectedTab = tab;
-  whenViewReady(drawTabs);
+  state.openedDialog = dialog;
+  whenViewReady(() => {
+    drawTabs();
+    drawHelpDialog();
+    drawSettingsDialog();
+    drawCreditsDialog();
+    drawChangelogDialog();
+  });
 }
 function commitState() {
   if (!state.settings.allowCookies) return;

@@ -849,6 +849,9 @@ function drawSettingsDialog() {
   if (state.openedDialog !== "settings") {
     V.settings.dialog.inert = true;
     V.settings.dialog.close();
+    const url = new URL(location.href);
+    url.hash = "";
+    history.replaceState({}, "", url.toString());
     return;
   }
 
