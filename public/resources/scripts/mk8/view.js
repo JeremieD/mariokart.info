@@ -183,14 +183,14 @@ whenDOMReady(() => {
     if (isMobile) {
       toggleSelectedCombo();
     } else {
-      selectA();
+      selectSlot("A");
     }
   }, { passive: true });
   V.combo.b.addEventListener("click", () => {
     if (isMobile) {
       toggleSelectedCombo();
     } else {
-      selectB();
+      selectSlot("B");
     }
   }, { passive: true });
 
@@ -432,9 +432,9 @@ whenDOMReady(() => {
     document.body.classList.toggle("opt-down", e.altKey);
     if (e.shiftKey || e.ctrlKey || e.altKey || e.metaKey) return;
     if (e.key === "a" || e.key === "A") {
-      selectA();
+      selectSlot("A");
     } else if (e.key === "b" || e.key === "B") {
-      selectB();
+      selectSlot("B");
     } else if (e.key === "Escape") {
       if (state.openedDialog !== "") e.preventDefault();
       switch (state.openedDialog) {
@@ -1241,7 +1241,7 @@ function removeFavorite(combo) {
   const li = document.getElementById(combo.code);
   if (li === null) return;
   li.style.height = li.offsetHeight + "px";
-  li.getClientRects(); // Force recalculation of layout.
+  forceLayoutCalculation(li);
   li.classList.add("remove");
   li.addEventListener("transitionend", () => {
     li.remove();
