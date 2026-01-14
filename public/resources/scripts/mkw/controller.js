@@ -96,6 +96,7 @@ const state = {
   workingFormula: structuredClone(defaultFormula),
   formulaDialogScrollTop: 0,
   openedDialog: "",
+  selectedTab: "",
   inspectorTimeout: 0,
   menuOpened: false,
   update: {
@@ -338,9 +339,14 @@ function readState() {
   let slot;
   if (ACode !== null) slot = "A";
   if (BCode !== null) slot ??= "B";
+  let tab = url.hash.slice(1);
+
+  url.hash = "";
+  history.replaceState({}, "", url.toString());
 
   if (aCode === "") aCode = undefined;
   if (bCode === "") bCode = undefined;
+  if (tab   === "") tab   = undefined;
 
   // Read from storage
   const data = JSON.parse(localStorage.getItem("mkw"));
@@ -350,9 +356,10 @@ function readState() {
       state.settings[prop] = data.settings[prop];
     }
 
-    slot ??= data.lastState?.selectedSlot;
+    slot  ??= data.lastState?.selectedSlot;
     aCode ??= data.lastState?.A;
     bCode ??= data.lastState?.B;
+    tab   ??= data.lastState?.selectedTab;
 
     if (data.locks !== undefined) {
       state.locks = structuredClone(data.locks);
@@ -376,11 +383,13 @@ function readState() {
   slot  ??= "A";
   aCode ??= "MA";
   bCode ??= "LR";
+  tab   ??= "dominant";
 
   state.selectedSlotID = slot;
   state.slot.A.combo.code = aCode;
   state.slot.B.combo.code = bCode;
   changeGameVersion(state.settings.gameVersion);
+  state.selectedTab = tab;
 }
 function commitState() {
   if (!state.settings.allowCookies) return;
@@ -393,7 +402,8 @@ function commitState() {
     lastState: {
       A: state.slot.A.combo.code,
       B: state.slot.B.combo.code,
-      selectedSlot: state.selectedSlotID
+      selectedSlot: state.selectedSlotID,
+      selectedTab: state.selectedTab
     },
     version: state.update.version
   };

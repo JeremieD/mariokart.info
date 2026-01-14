@@ -4,6 +4,7 @@ const graphicsRoot = "/resources/graphics/mk7/";
 const V = {
   menu: {},
   combo: {},
+  tabContainer: undefined,
   dominant: {},
   similar: {},
   custom: {},
@@ -57,12 +58,14 @@ whenDOMReady(() => {
   V.combo.spdMultimeter = document.getElementById("spd-multimeter");
   V.combo.hndMultimeter = document.getElementById("hnd-multimeter");
 
-  V.dominant.rows    = document.getElementById("dominant-combos-rows");
-  V.dominant.count   = document.getElementById("dominant-combos-count");
-  V.similar.rows     = document.getElementById("similar-combos-rows");
-  V.similar.count    = document.getElementById("similar-combos-count");
-  V.custom.rows      = document.getElementById("custom-combos-rows");
-  V.custom.count     = document.getElementById("custom-combos-count");
+  V.tabContainer = document.getElementById("tab-container");
+
+  V.dominant.rows    = document.getElementById("dominant-rows");
+  V.dominant.count   = document.getElementById("dominant-count");
+  V.similar.rows     = document.getElementById("similar-rows");
+  V.similar.count    = document.getElementById("similar-count");
+  V.custom.rows      = document.getElementById("custom-rows");
+  V.custom.count     = document.getElementById("custom-count");
   V.custom.formula   = document.getElementById("custom-formula");
   V.custom.customize = document.getElementById("customize-formula");
 
@@ -230,6 +233,14 @@ whenDOMReady(() => {
     V.combo.hndMultimeter.addEventListener("animationend", () => {
       V.combo.hndMultimeter.classList.remove("show");
     }, { passive: true });
+  }, { passive: true });
+
+  V.tabContainer.addEventListener("change", () => {
+    state.selectedTab = V.tabContainer.dataset.selectedTabId;
+    drawDominantCombos();
+    drawSimilarCombos();
+    drawCustomCombos();
+    commitState();
   }, { passive: true });
 
   V.custom.customize.addEventListener("click", openFormulaDialog, { passive: true });
@@ -412,6 +423,12 @@ whenDOMReady(() => {
       selectSlot("A");
     } else if (e.key === "b" || e.key === "B") {
       selectSlot("B");
+    } else if (e.key === "1") {
+      V.tabContainer.selectTab("dominant");
+    } else if (e.key === "2") {
+      V.tabContainer.selectTab("similar");
+    } else if (e.key === "3") {
+      V.tabContainer.selectTab("search");
     } else if (e.key === "Escape") {
       if (state.openedDialog !== "") e.preventDefault();
       switch (state.openedDialog) {
@@ -447,6 +464,7 @@ whenDOMReady(() => {
 /******** View IN ********/
 
 function initView() {
+  V.tabContainer.selectTab(state.selectedTab, false);
   initDriverDialog();
   initBodyDialog();
   initTireDialog();
