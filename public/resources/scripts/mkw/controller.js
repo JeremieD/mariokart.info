@@ -389,6 +389,7 @@ function readState() {
   state.slot.B.combo.code = bCode;
   changeGameVersion(state.settings.gameVersion);
   state.selectedTab = tab;
+  whenViewReady(drawTabs);
 }
 function commitState() {
   if (!state.settings.allowCookies) return;

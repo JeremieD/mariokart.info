@@ -488,7 +488,6 @@ whenDOMReady(() => {
 /******** View IN ********/
 
 function initView() {
-  V.tabContainer.selectTab(state.selectedTab, false);
   initDriverDialog();
   initBodyDialog();
   initTireDialog();

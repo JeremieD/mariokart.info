@@ -347,6 +347,7 @@ function readState() {
     whenViewReady(() => { setCombo(combo, "B", true); });
   });
   state.selectedTab = tab;
+  whenViewReady(drawTabs);
 }
 function commitState() {
   if (!state.settings.allowCookies) return;

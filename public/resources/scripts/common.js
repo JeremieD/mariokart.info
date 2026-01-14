@@ -484,6 +484,10 @@ function drawMenu() {
   V.menu.open.classList.toggle("open", state.menuOpened);
 }
 
+function drawTabs() {
+  V.tabContainer.selectTab(state.selectedTab, false);
+}
+
 function drawFormulaHelpDialog() {
   if (state.openedDialog !== "formula-help") {
     V.formula.helpDialog.inert = true;
