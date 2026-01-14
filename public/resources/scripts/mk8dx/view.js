@@ -445,6 +445,8 @@ whenDOMReady(() => {
       selectSlot("A");
     } else if (e.key === "b" || e.key === "B") {
       selectSlot("B");
+    } else if (e.key === "r" || e.key === "R") {
+      randomCombo();
     } else if (e.key === "1") {
       V.tabContainer.selectTab("dominant");
     } else if (e.key === "2") {
