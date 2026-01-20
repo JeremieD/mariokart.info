@@ -627,8 +627,12 @@ function drawComboTable(container, combos, limit = 50) {
     loadInB.title = "Load this combo into slot B.";
     loadInA.classList.toggle("primary", state.selectedSlotID === "A");
     loadInB.classList.toggle("primary", state.selectedSlotID === "B");
-    loadInA.addEventListener("click", () => { setCombo(combo, "A"); }, { passive: true });
-    loadInB.addEventListener("click", () => { setCombo(combo, "B"); }, { passive: true });
+    loadInA.addEventListener("click", () => {
+      Stats.post("getCombo", combo.code).then(c => { setCombo(c, "A"); });
+    }, { passive: true });
+    loadInB.addEventListener("click", () => {
+      Stats.post("getCombo", combo.code).then(c => { setCombo(c, "B"); });
+    }, { passive: true });
     buttonsDisplay.append(loadInA, loadInB);
 
     top.append(comboDisplay, buttonsDisplay);
