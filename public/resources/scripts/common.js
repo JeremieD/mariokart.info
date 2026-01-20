@@ -270,9 +270,9 @@ function selectSlot(slot) {
 }
 function toggleSelectedCombo() {
   if (state.selectedSlotID === "A") {
-    selectSlot("A");
-  } else {
     selectSlot("B");
+  } else {
+    selectSlot("A");
   }
 }
 
