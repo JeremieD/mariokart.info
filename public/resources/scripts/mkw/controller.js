@@ -100,7 +100,7 @@ const state = {
   inspectorTimeout: 0,
   menuOpened: false,
   update: {
-    version: "0.8.1",
+    version: "0.8.2",
     message: "",
     open: false,
     dismissed: false
