@@ -17,7 +17,7 @@ class JDSelect extends HTMLElement {
   connectedCallback() {
     this.tabIndex = 0;
     const optionEls = this.querySelectorAll("option");
-    this.innerHTML = "";
+    this.textContent = "";
     const icon = new JDIcon("chevron-down");
     this.append(this.#outputEl, icon, this.#dropdownEl);
     for (const option of optionEls) {

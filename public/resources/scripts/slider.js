@@ -26,7 +26,7 @@ class JDSlider extends HTMLElement {
   }
 
   init() {
-    this.innerHTML = "";
+    this.textContent = "";
     if (this.hasAttribute("value")) this.#value = parseFloat(this.getAttribute("value"));
     if (this.hasAttribute("min")) this.min = parseFloat(this.getAttribute("min"));
     if (this.hasAttribute("max")) this.max = parseFloat(this.getAttribute("max"));

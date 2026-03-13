@@ -510,7 +510,7 @@ function drawCurrentCombo() {
   }
   V.combo.details.children[0].innerText = detailStr;
 
-  V.combo.details.children[1].innerHTML = "";
+  V.combo.details.children[1].textContent = "";
   V.combo.details.children[1].title = "";
   if (state.settings.gameVersion !== "latest") {
     V.combo.details.children[1].title = "Showing stats for game version " + state.settings.gameVersion + ".";

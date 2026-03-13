@@ -571,8 +571,8 @@ function drawDominantCombos() {
   state.selectedSlot.dominant.then(data => {
     V.dominant.count.innerText = data.length;
     if (state.selectedTab !== "dominant") return;
-    V.similar.rows.innerHTML = "";
-    V.custom.rows.innerHTML  = "";
+    V.similar.rows.textContent = "";
+    V.custom.rows.textContent  = "";
     drawComboTable(V.dominant.rows, data.combos);
   });
 }
@@ -581,8 +581,8 @@ function drawSimilarCombos() {
   state.selectedSlot.similar.then(data => {
     V.similar.count.innerText = data.length;
     if (state.selectedTab !== "similar") return;
-    V.dominant.rows.innerHTML = "";
-    V.custom.rows.innerHTML   = "";
+    V.dominant.rows.textContent = "";
+    V.custom.rows.textContent   = "";
     drawComboTable(V.similar.rows, data.combos);
   });
 }
@@ -591,8 +591,8 @@ function drawCustomCombos() {
   state.selectedSlot.custom.then(data => {
     V.custom.count.innerText = data.length;
     if (state.selectedTab !== "search") return;
-    V.dominant.rows.innerHTML = "";
-    V.similar.rows.innerHTML  = "";
+    V.dominant.rows.textContent = "";
+    V.similar.rows.textContent  = "";
     V.custom.formula.innerHTML = formatFormula(state.formula);
     drawComboTable(V.custom.rows, data.combos);
   });
@@ -600,7 +600,7 @@ function drawCustomCombos() {
 
 // TODO: Find a way to pass the limit from listCombos.
 function drawComboTable(container, combos, limit = 50) {
-  container.innerHTML = "";
+  container.textContent = "";
 
   if (combos.length === 0) {
     container.classList.add("empty");
@@ -751,7 +751,7 @@ function drawFavoritesDialog() {
     return;
   }
 
-  V.favorites.list.innerHTML = "";
+  V.favorites.list.textContent = "";
 
   if (state.settings.allowCookies) {
     if (state.favorites.length === 0) {
