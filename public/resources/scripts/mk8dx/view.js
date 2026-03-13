@@ -448,10 +448,13 @@ whenDOMReady(() => {
     } else if (e.key === "r" || e.key === "R") {
       randomCombo();
     } else if (e.key === "1") {
+      if (state.openedDialog !== "") return;
       V.tabContainer.selectTab("dominant");
     } else if (e.key === "2") {
+      if (state.openedDialog !== "") return;
       V.tabContainer.selectTab("similar");
     } else if (e.key === "3") {
+      if (state.openedDialog !== "") return;
       V.tabContainer.selectTab("search");
     } else if (e.key === "Escape") {
       if (state.openedDialog !== "") e.preventDefault();
