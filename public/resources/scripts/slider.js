@@ -28,10 +28,10 @@ class JDSlider extends HTMLElement {
   init() {
     this.textContent = "";
     if (this.hasAttribute("value")) this.#value = parseFloat(this.getAttribute("value"));
-    if (this.hasAttribute("min")) this.min = parseFloat(this.getAttribute("min"));
-    if (this.hasAttribute("max")) this.max = parseFloat(this.getAttribute("max"));
-    if (this.hasAttribute("step")) this.step = parseFloat(this.getAttribute("step"));
-    if (this.hasAttribute("stops")) this.stops = parseInt(this.getAttribute("stops"));
+    if (this.hasAttribute("min"))   this.min    = parseFloat(this.getAttribute("min"));
+    if (this.hasAttribute("max"))   this.max    = parseFloat(this.getAttribute("max"));
+    if (this.hasAttribute("step"))  this.step   = parseFloat(this.getAttribute("step"));
+    if (this.hasAttribute("stops")) this.stops  = parseInt(this.getAttribute("stops"));
     this.scale = document.createElement("div");
     this.scale.classList.add("scale");
     for (let i = 0; i < this.stops; i++) {
@@ -39,11 +39,11 @@ class JDSlider extends HTMLElement {
     }
     this.knob = document.createElement("div");
     this.knob.classList.add("knob");
-    this.addEventListener("mousedown", this.pointerDownHandler, { passive: true });
+    this.addEventListener("mousedown",  this.pointerDownHandler, { passive: true });
     this.addEventListener("touchstart", this.pointerDownHandler, { passive: true });
     addEventListener("mousemove", this.pointerMoveHandler, { passive: false });
     addEventListener("touchmove", this.pointerMoveHandler, { passive: false });
-    addEventListener("mouseup", this.pointerUpHandler, { passive: true });
+    addEventListener("mouseup",  this.pointerUpHandler, { passive: true });
     addEventListener("touchend", this.pointerUpHandler, { passive: true });
     this.append(this.scale, this.knob);
   }
@@ -134,7 +134,8 @@ function toNearestMultiple(n, p = 1) {
 
 const unify = e => e.changedTouches ? e.changedTouches[0] : e;
 
-const forAllScrollContainers = (el, fn) => { // except root
+/** Passes each scroll-container of `el` to function `fn`, except the document root. */
+const forAllScrollContainers = (el, fn) => {
   const parent = el.parentElement;
   if (parent === document.documentElement) return;
   if (parent.scrollHeight > parent.clientHeight) fn(parent);

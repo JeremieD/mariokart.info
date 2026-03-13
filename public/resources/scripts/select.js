@@ -86,10 +86,12 @@ class JDSelect extends HTMLElement {
           this.value = e.target.getAttribute("value");
         }
         break;
+
       case "Tab":
       case "Escape":
         this.close();
         break;
+
       case "ArrowDown":
         e.preventDefault();
         newOptIndex = this.#options.indexOf(e.target.getAttribute("value")) + 1;
@@ -101,6 +103,7 @@ class JDSelect extends HTMLElement {
           }
         }
         break;
+
       case "ArrowUp":
         e.preventDefault();
         newOptIndex = this.#options.indexOf(e.target.getAttribute("value")) - 1;

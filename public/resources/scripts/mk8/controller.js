@@ -119,8 +119,8 @@ function setGlider(glider) {
 }
 
 function setCombo(combo, slot, replaceURL = false) {
-  if (slot === "A" && state.selectedSlotID === "B"
-   || slot === "B" && state.selectedSlotID === "A") {
+  if (slot === "A" && state.selectedSlotID === "B" ||
+      slot === "B" && state.selectedSlotID === "A") {
     state.offSlot.combo = combo;
     state.offSlot.isFavorite = isFavorite(combo);
     state.offSlot.dominant = getDominantCombos(combo);
@@ -132,7 +132,8 @@ function setCombo(combo, slot, replaceURL = false) {
     for (const driverGroup of Object.keys(state.driverPrefs)) {
       if (state.driver.startsWith(driverGroup)) {
         state.driverPrefs[driverGroup] = state.driver;
-    } }
+      }
+    }
     drawCurrentCombo();
     updateRelatedCombos(slot);
     drawDominantCombos();
@@ -144,8 +145,8 @@ function setCombo(combo, slot, replaceURL = false) {
 }
 
 function updateRelatedCombos(slot) {
-  if (slot === "A" && state.selectedSlotID === "B"
-   || slot === "B" && state.selectedSlotID === "A") {
+  if (slot === "A" && state.selectedSlotID === "B" ||
+      slot === "B" && state.selectedSlotID === "A") {
     state.offSlot.dominant = getDominantCombos(state.offSlot.combo);
     state.offSlot.similar = getSimilarCombos(state.offSlot.combo);
     state.offSlot.custom = getCustomCombos(state.offSlot.combo);
@@ -210,8 +211,8 @@ function randomCombo() {
   if (state.openedDialog !== "") return;
   const locks = [
     state.locks.driver ? state.driver : undefined,
-    state.locks.body   ? state.body : undefined,
-    state.locks.tire   ? state.tire : undefined,
+    state.locks.body   ? state.body   : undefined,
+    state.locks.tire   ? state.tire   : undefined,
     state.locks.glider ? state.glider : undefined
   ];
   Stats.post("getRandomCombo", ...locks).then(setCombo);
@@ -258,8 +259,8 @@ function updateURLParams(forceReplace = false) {
     url.searchParams.set("A", aCode);
     url.searchParams.set("b", bCode);
   }
-  if (!forceReplace && (aCode !== state.lastState.aCode
-                     || bCode !== state.lastState.bCode)) {
+  if (!forceReplace && (aCode !== state.lastState.aCode ||
+                        bCode !== state.lastState.bCode)) {
     history.pushState({}, "", url.toString());
   } else {
     history.replaceState({}, "", url.toString());
@@ -272,12 +273,8 @@ function updateURLParams(forceReplace = false) {
 function toggleCookies() {
   state.settings.allowCookies = !state.settings.allowCookies;
 
-  if (state.settings.allowCookies) { // Store Cookies
-    commitState();
-
-  } else { // Delete cookies
-    localStorage.removeItem("mk8");
-  }
+  if (state.settings.allowCookies) commitState(); // Store Cookies
+  else localStorage.removeItem("mk8");            // Delete cookies
 
   drawSettingsDialog();
 }

@@ -183,47 +183,29 @@ whenDOMReady(() => {
   V.combo.random.addEventListener("click", randomCombo, { passive: true });
   V.combo.share.addEventListener("click", share, { passive: true });
   V.combo.a.addEventListener("click", () => {
-    if (isMobile) {
-      toggleSelectedCombo();
-    } else {
-      selectSlot("A");
-    }
+    if (isMobile) toggleSelectedCombo();
+    else selectSlot("A");
   }, { passive: true });
   V.combo.b.addEventListener("click", () => {
-    if (isMobile) {
-      toggleSelectedCombo();
-    } else {
-      selectSlot("B");
-    }
+    if (isMobile) toggleSelectedCombo();
+    else selectSlot("B");
   }, { passive: true });
 
   V.combo.driver.addEventListener("click", e => {
-    if (e.altKey) {
-      toggleDriverLock(true);
-    } else {
-      openDriverDialog();
-    }
+    if (e.altKey) toggleDriverLock(true);
+    else openDriverDialog();
   }, { passive: true });
   V.combo.body.addEventListener("click", e => {
-    if (e.altKey) {
-      toggleBodyLock(true);
-    } else {
-      openBodyDialog();
-    }
+    if (e.altKey) toggleBodyLock(true);
+    else openBodyDialog();
   }, { passive: true });
   V.combo.tire.addEventListener("click", e => {
-    if (e.altKey) {
-      toggleTireLock(true);
-    } else {
-      openTireDialog();
-    }
+    if (e.altKey) toggleTireLock(true);
+    else openTireDialog();
   }, { passive: true });
   V.combo.glider.addEventListener("click", e => {
-    if (e.altKey) {
-      toggleGliderLock(true);
-    } else {
-      openGliderDialog();
-    }
+    if (e.altKey) toggleGliderLock(true);
+    else openGliderDialog();
   }, { passive: true });
 
   V.combo.spdMultimeter.addEventListener("click", () => {
@@ -292,11 +274,8 @@ whenDOMReady(() => {
     if (e.key === "Alt") V.formula.reset.innerText = "Revert to Default Formula";
   });
   V.formula.reset.addEventListener("click", e => {
-    if (e.altKey) {
-      setBlankFormula();
-    } else {
-      setDefaultFormula();
-    }
+    if (e.altKey) setBlankFormula();
+    else setDefaultFormula();
   }, { passive: true });
   V.formula.cancel.addEventListener("click", revertFormula, { passive: true });
   V.formula.save.addEventListener("click", commitFormula, { passive: true });
@@ -327,9 +306,7 @@ whenDOMReady(() => {
     }, { passive: true });
     mode.addEventListener("click", e => {
       if (e.altKey) {
-        for (let j = 0; j < statCount; j++) {
-          toggleFactorSign(j, true);
-        }
+        for (let j = 0; j < statCount; j++) toggleFactorSign(j, true);
       } else {
         toggleFactorSign(i);
       }
@@ -607,8 +584,7 @@ function formatFormula(formula) {
     let term = "<span";
     if (factor < 0) term += " class='negative'";
     if (factor > 0) term += " class='positive'";
-    term += " title='" + S("stats", stat) + "'";
-    term += ">";
+    term += " title='" + S("stats", stat) + "'>";
     factor = Math.abs(factor).toString();
     if (factor[0] === "0") factor = factor.substr(1);
     term += sign;
@@ -622,12 +598,12 @@ function formatFormula(formula) {
     term += "</span>";
     terms.push(term);
   }
-  s += '<span class="formula">' + terms.join(" + ") + "</span>";
+  s += "<span class='formula'>" + terms.join(" + ") + "</span>";
 
   const locks = [];
   if (state.locks.driver) locks.push(S("drivers", combo.driverID));
-  if (state.locks.body) locks.push(S("bodies", combo.bodyID));
-  if (state.locks.tire) locks.push(S("tires", combo.tireID));
+  if (state.locks.body)   locks.push(S("bodies", combo.bodyID));
+  if (state.locks.tire)   locks.push(S("tires", combo.tireID));
   if (state.locks.glider) locks.push(S("gliders", combo.gliderID));
 
   let exclusionsString = "";
@@ -638,15 +614,15 @@ function formatFormula(formula) {
      (combo.parts.body.type === "sport" && formula.excludeSportBikes));
   if (!state.locks.body || bodyConflict) {
     const exclusions = [];
-    if (formula.excludeKarts) exclusions.push("karts");
-    if (formula.excludeATVs) exclusions.push("ATVs");
-    if (formula.excludeBikes) exclusions.push("outside drifting bikes");
+    if (formula.excludeKarts)      exclusions.push("karts");
+    if (formula.excludeATVs)       exclusions.push("ATVs");
+    if (formula.excludeBikes)      exclusions.push("outside drifting bikes");
     if (formula.excludeSportBikes) exclusions.push("inside drifting bikes");
 
     if (exclusions.length === 3) {
-      if (!formula.excludeKarts) exclusionsString = "Karts only";
-      else if (!formula.excludeATVs) exclusionsString = "ATVs only";
-      else if (!formula.excludeBikes) exclusionsString = "Outside drifting bikes only";
+      if (!formula.excludeKarts)           exclusionsString = "Karts only";
+      else if (!formula.excludeATVs)       exclusionsString = "ATVs only";
+      else if (!formula.excludeBikes)      exclusionsString = "Outside drifting bikes only";
       else if (!formula.excludeSportBikes) exclusionsString = "Inside drifting bikes only";
     } else if (!formula.excludeKarts && !formula.excludeATVs &&
                 formula.excludeBikes && formula.excludeSportBikes) {
@@ -663,8 +639,8 @@ function formatFormula(formula) {
   }
 
   if (locks.length > 0 || exclusionsString.length > 0) s += "<br>";
-  if (!bodyConflict) { s += "<span>"; }
-  else { s += "<span class=\"invalid\">"; }
+  if (!bodyConflict) s += "<span>";
+  else s += "<span class=\"invalid\">";
   if (locks.length > 0) s += "<jd-icon class='inline no-animation' icon='lock'></jd-icon>";
   const listFormatter = new Intl.ListFormat(state.settings.locale, {
     style: "short",
@@ -679,7 +655,7 @@ function formatFormula(formula) {
 }
 
 function initDriverDialog() {
-  state.parts.then(({drivers}) => {
+  state.parts.then(({ drivers }) => {
     for (const driver of drivers) {
       let eventHandler, folder;
       const id = driver.id;
@@ -718,7 +694,7 @@ function initDriverDialog() {
       const button = newPartButton("drivers", folder === undefined ? id : undefined, buttonID);
       button.dataset.value = id;
       button.addEventListener("click", eventHandler, { passive: true });
-      if (folder !== undefined) { button.append(folder); }
+      if (folder !== undefined) button.append(folder);
       button.addEventListener("mouseenter", () => { drawDriverTitle(button.dataset.value); }, { passive: true });
       button.addEventListener("mouseleave", () => { delay(() => drawDriverTitle(state.driver)) }, { passive: true });
       button.addEventListener("focus", () => { drawDriverTitle(button.dataset.value); }, { passive: true });
@@ -734,7 +710,7 @@ function drawDriverDialog() {
     enableScroll(document.documentElement);
     return;
   }
-  state.parts.then(({drivers}) => {
+  state.parts.then(({ drivers }) => {
     for (const driver of drivers) {
       const id = driver.id;
       if (driver.folder === undefined) {
@@ -778,31 +754,30 @@ function drawDriverDialog() {
 }
 
 function initBodyDialog() {
-  state.parts.then(({bodies: types}) => {
+  state.parts.then(({ bodies: types }) => {
     for (const bodies of types) {
-    for (const body of bodies.folder) {
-      const id = body.id;
-      const button = newPartButton("bodies", id, "body-" + id);
-      button.addEventListener("click", () => { setBody(id); }, { passive: true });
-      button.addEventListener("mouseenter", () => {
-        drawBodyTitle(id, bodies.id);
-      }, { passive: true });
-      button.addEventListener("mouseleave", () => {
-        delay(() => drawBodyTitle(state.body, state.selectedSlot.combo.parts.body.type));
-      }, { passive: true });
-      button.addEventListener("focus", () => {
-        drawBodyTitle(id, bodies.id);
-      }, { passive: true });
-      button.addEventListener("blur", () => {
-        drawBodyTitle(state.body, state.selectedSlot.combo.parts.body.type);
-      }, { passive: true });
-      V.bodies.grid.append(button);
-    }
-    V.bodies.grid.append(document.createElement("hr"));
+      for (const body of bodies.folder) {
+        const id = body.id;
+        const button = newPartButton("bodies", id, "body-" + id);
+        button.addEventListener("click", () => { setBody(id); }, { passive: true });
+        button.addEventListener("mouseenter", () => {
+          drawBodyTitle(id, bodies.id);
+        }, { passive: true });
+        button.addEventListener("mouseleave", () => {
+          delay(() => drawBodyTitle(state.body, state.selectedSlot.combo.parts.body.type));
+        }, { passive: true });
+        button.addEventListener("focus", () => {
+          drawBodyTitle(id, bodies.id);
+        }, { passive: true });
+        button.addEventListener("blur", () => {
+          drawBodyTitle(state.body, state.selectedSlot.combo.parts.body.type);
+        }, { passive: true });
+        V.bodies.grid.append(button);
+      }
+      V.bodies.grid.append(document.createElement("hr"));
     }
     // Remove last hr. (ugly)
     V.bodies.grid.children[V.bodies.grid.children.length - 1].remove();
-
   });
 }
 function drawBodyDialog() {
@@ -812,8 +787,8 @@ function drawBodyDialog() {
     enableScroll(document.documentElement);
     return;
   }
-  state.parts.then(({bodies: types}) => {
-    for (const bodies of types) {
+  state.parts.then(({ bodies: types }) => {
+    for (const bodies of types)
     for (const body of bodies.folder) {
       const id = body.id;
       const button = document.getElementById("body-" + id);
@@ -822,7 +797,7 @@ function drawBodyDialog() {
       button.title = name;
       button.classList.toggle("selected", id === state.body);
       button.classList.toggle("highlight", body.group === state.selectedSlot.combo.parts.body.group);
-    } }
+    }
   });
   V.bodies.icon.setAttribute("icon", state.selectedSlot.combo.parts.body.type);
   V.bodies.title.innerText = S("bodies", state.body);
@@ -928,16 +903,16 @@ function drawFormulaDialog() {
   const formula = state.workingFormula;
   for (const stat of stats) {
     const i = statIndex[stat];
-    const scaledMin = getScaledMin(i);
-    const scaledMax = getScaledMax(i);
+    const scaledMin  = getScaledMin(i);
+    const scaledMax  = getScaledMax(i);
     const scaledStep = getScaledStep(i);
     const scaledPlaceholder = getScaledPlaceholder(i);
 
-    V.formula[stat].min.min = scaledMin;
-    V.formula[stat].min.max = scaledMax;
+    V.formula[stat].min.min  = scaledMin;
+    V.formula[stat].min.max  = scaledMax;
     V.formula[stat].min.step = scaledStep;
-    V.formula[stat].max.min = scaledMin;
-    V.formula[stat].max.max = scaledMax;
+    V.formula[stat].max.min  = scaledMin;
+    V.formula[stat].max.max  = scaledMax;
     V.formula[stat].max.step = scaledStep;
     V.formula[stat].max.placeholder = scaledPlaceholder;
 

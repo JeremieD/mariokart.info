@@ -66,11 +66,11 @@ function isOutside(el, e) {
   if (e.detail === 0) {
     // In that case, clientX and Y will be 0, so we use the target element's position instead.
     const target = e.target.getBoundingClientRect();
-    return target.top < rect.top   || target.bottom > rect.bottom
-        || target.left < rect.left || target.right > rect.right;
+    return target.top  < rect.top  || target.bottom > rect.bottom ||
+           target.left < rect.left || target.right  > rect.right;
   }
-  return e.clientY < rect.top  || e.clientY > rect.bottom
-      || e.clientX < rect.left || e.clientX > rect.right;
+  return e.clientY < rect.top  || e.clientY > rect.bottom ||
+         e.clientX < rect.left || e.clientX > rect.right;
 }
 
 function disableScroll(el) { el.classList.add("no-scroll"); }
@@ -269,11 +269,8 @@ function selectSlot(slot) {
   drawCustomCombos();
 }
 function toggleSelectedCombo() {
-  if (state.selectedSlotID === "A") {
-    selectSlot("B");
-  } else {
-    selectSlot("A");
-  }
+  if (state.selectedSlotID === "A") selectSlot("B");
+  else selectSlot("A");
 }
 
 function toggleDriverLock(draw = false) {
@@ -417,9 +414,7 @@ function nameFavorite(combo, newName) {
   for (const fav of state.favorites) {
     if (fav.combo.code === combo.code) {
       fav.name = newName;
-      if (state.selectedSlot.combo.code === combo.code) {
-        drawPageTitle();
-      }
+      if (state.selectedSlot.combo.code === combo.code) drawPageTitle();
       commitState();
       break;
     }
@@ -436,7 +431,7 @@ function serializeFavorites(obj) {
   return serial;
 }
 function deserializeFavorites(serial) {
-  if (serial === undefined) { return []; }
+  if (serial === undefined) return [];
   const obj = [];
   for (const fav of serial) {
     Stats.post("getCombo", fav.combo).then(combo => {
@@ -676,8 +671,8 @@ function drawComboTable(container, combos, limit = 50) {
 function formatStatDiff(x) {
   let s = Math.abs(x).toString();
   if (x !== 0 && s[0] === "0") s = s.substring(1);
-  if (x >= 0) { s = "+" + s; }
-  else { s = "−" + s; }
+  if (x >= 0) s = "+" + s;
+  else s = "−" + s;
   return s;
 }
 
@@ -847,9 +842,7 @@ function removeFavorite(combo) {
   li.classList.add("remove");
   li.addEventListener("transitionend", () => {
     li.remove();
-    if (V.favorites.list.children.length === 0) {
-      drawFavoritesDialog();
-    }
+    if (V.favorites.list.children.length === 0) drawFavoritesDialog();
   }, { passive: true });
 }
 function drawUnfavoriteConfirmDialog(combo) {
@@ -885,7 +878,7 @@ function drawUnfavoriteConfirmDialog(combo) {
 }
 
 function initTireDialog() {
-  state.parts.then(({tires}) => {
+  state.parts.then(({ tires }) => {
     for (const tire of tires) {
       const id = tire.id;
       const button = newPartButton("tires", id, "tire-" + id);
@@ -905,7 +898,7 @@ function drawTireDialog() {
     enableScroll(document.documentElement);
     return;
   }
-  state.parts.then(({tires}) => {
+  state.parts.then(({ tires }) => {
     for (const tire of tires) {
       const id = tire.id;
       const button = document.getElementById("tire-" + id);
@@ -924,7 +917,7 @@ function drawTireDialog() {
 }
 
 function initGliderDialog() {
-  state.parts.then(({gliders}) => {
+  state.parts.then(({ gliders }) => {
     for (const glider of gliders) {
       const id = glider.id;
       const button = newPartButton("gliders", id, "glider-" + id);

@@ -89,7 +89,7 @@ class Combo {
     this.classes.driver = classes.drivers[driverClassID];
     this.classes.body   = classes.bodies[bodyClassID];
 
-    if (this.classes.body === undefined) console.log(body, bodyClassID)
+    if (this.classes.body === undefined) console.log(body, bodyClassID);
 
     for (let stat = 0; stat < realStatCount; stat++) {
       let lvl = 0;
@@ -134,11 +134,8 @@ class Combo {
 }
 
 function getCombo(...args) {
-  if (args.length === 1) { // From code
-    return Combo.fromCode(args[0]);
-  } else if (args.length === 2) { // From part IDs
-    return new Combo(...args);
-  }
+  if (args.length === 1) return Combo.fromCode(args[0]); // From code
+  if (args.length === 2) return new Combo(...args);      // From part IDs
   return "Error: Invalid arguments for getCombo: “" + args + "”";
 }
 
@@ -370,12 +367,11 @@ function listCombos(opts = {}) {
 function getScore(combo, factors) {
   if (combo._cachedScore !== undefined) return combo._cachedScore;
   let score = 0;
-  for (let i = 0; i < statCount; i++) {
-    score += factors[i] * combo.lvl[i];
-  }
+  for (let i = 0; i < statCount; i++) score += factors[i] * combo.lvl[i];
   combo._cachedScore = score;
   return score;
 }
+
 function getAvailableParts(set) {
   return {
     drivers: [
@@ -805,10 +801,10 @@ function setTerrainRatios(gr, rr, wt) {
 function setVersion(version) {
   switch (version) {
     case "1.1.2":
-      classes.bodies.rallyBike[statIndex.hndSr] = 0
+      classes.bodies.rallyBike[statIndex.hndSr] = 0;
       break;
     default:
-      classes.bodies.rallyBike[statIndex.hndSr] = 6
+      classes.bodies.rallyBike[statIndex.hndSr] = 6;
   }
   return;
 }
@@ -1883,17 +1879,13 @@ const driverParts = Object.keys(parts.drivers);
 const bodyParts   = Object.keys(parts.bodies);
 const driverPartCount = driverParts.length;
 const bodyPartCount   = bodyParts.length;
-for (const id of driverParts) { parts.drivers[id].id = id; }
-for (const id of bodyParts) { parts.bodies[id].id = id; }
+for (const id of driverParts) parts.drivers[id].id = id;
+for (const id of bodyParts)   parts.bodies[id].id  = id;
 
 const driverCodes = {};
-for (const driver of driverParts) {
-  driverCodes[parts.drivers[driver].code] = driver;
-}
+for (const driver of driverParts) driverCodes[parts.drivers[driver].code] = driver;
 const bodyCodes = {};
-for (const body of bodyParts) {
-  bodyCodes[parts.bodies[body].code] = body;
-}
+for (const body of bodyParts) bodyCodes[parts.bodies[body].code] = body;
 
 const bodyVariants = {
   std: {
@@ -2449,19 +2441,19 @@ function getComboName(driver, body) {
   // Generative
   if (Object.keys(bodyMorphs)[0] === "full") {
     if (driverMorphs.full) return fuse(driverMorphs.full, bodyMorphs.full);
-    if (driverMorphs.pre) return fuse(driverMorphs.pre, bodyMorphs.full);
-    if (driverMorphs.or) return fuse(driverMorphs.or, bodyMorphs.full);
+    if (driverMorphs.pre)  return fuse(driverMorphs.pre, bodyMorphs.full);
+    if (driverMorphs.or)   return fuse(driverMorphs.or, bodyMorphs.full);
   }
   if (!driverMorphs.pre || !driverMorphs.post) {
     for (const form of Object.keys(driverMorphs)) {
       switch (form) {
         case "pre":
           if (bodyMorphs.post) return fuse(driverMorphs.pre, bodyMorphs.post);
-          if (bodyMorphs.or) return fuse(driverMorphs.pre, bodyMorphs.or);
+          if (bodyMorphs.or)   return fuse(driverMorphs.pre, bodyMorphs.or);
           break;
         case "post":
           if (bodyMorphs.pre) return fuse(bodyMorphs.pre, driverMorphs.post);
-          if (bodyMorphs.or) return fuse(bodyMorphs.or, driverMorphs.post);
+          if (bodyMorphs.or)  return fuse(bodyMorphs.or, driverMorphs.post);
           break;
       }
     }
@@ -2470,14 +2462,14 @@ function getComboName(driver, body) {
     switch (bodyForm) {
       case "pre":
         if (driverMorphs.post) return fuse(bodyMorphs.pre, driverMorphs.post);
-        if (driverMorphs.or) return fuse(bodyMorphs.pre, driverMorphs.or);
+        if (driverMorphs.or)   return fuse(bodyMorphs.pre, driverMorphs.or);
       case "post":
         if (driverMorphs.pre) return fuse(driverMorphs.pre, bodyMorphs.post);
-        if (driverMorphs.or) return fuse(driverMorphs.or, bodyMorphs.post);
+        if (driverMorphs.or)  return fuse(driverMorphs.or, bodyMorphs.post);
       case "or":
-        if (driverMorphs.pre) return fuse(driverMorphs.pre, bodyMorphs.or);
+        if (driverMorphs.pre)  return fuse(driverMorphs.pre, bodyMorphs.or);
         if (driverMorphs.post) return fuse(bodyMorphs.or, driverMorphs.post);
-        if (driverMorphs.or) return fuse(driverMorphs.or, bodyMorphs.or);
+        if (driverMorphs.or)   return fuse(driverMorphs.or, bodyMorphs.or);
     }
   }
   throw [driver, body];
@@ -2486,7 +2478,7 @@ function fuse(fst, snd) {
   const fstDashed = fst.endsWith("-");
   const sndDashed = snd.startsWith("-");
   if (fstDashed !== sndDashed) return fst + snd; // XOR
-  if (fstDashed && sndDashed) return fst + snd.substring(1);
+  if (fstDashed && sndDashed)  return fst + snd.substring(1);
   return fst + " " + snd;
 }
 String.prototype.isAny = function(...patterns) {
