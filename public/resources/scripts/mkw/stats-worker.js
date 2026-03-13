@@ -2432,7 +2432,7 @@ const partMorphemes = {
 };
 function getComboName(driver, body) {
   let driverMorphs = partMorphemes.drivers[driver];
-  if (!driverMorphs) driverMorphs = partMorphemes.drivers[driver.replaceAll(/-\w+$/g, "")];
+  if (!driverMorphs) driverMorphs = partMorphemes.drivers[driver.split("-")[0]];
   const bodyMorphs = partMorphemes.bodies[body];
 
   // Special Cases

@@ -795,7 +795,6 @@ const partMorphemes = {
 };
 function getComboName(driver, body, tire, glider) {
   let driverMorphs = partMorphemes.drivers[driver];
-  if (!driverMorphs) driverMorphs = partMorphemes.drivers[driver.replaceAll(/\d$/g, "")];
   const bodyMorphs = partMorphemes.bodies[body];
 
   // Special Cases
