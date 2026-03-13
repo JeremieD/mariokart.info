@@ -207,6 +207,7 @@ function getCustomCombos(combo) {
 }
 
 function randomCombo() {
+  if (state.openedDialog !== "") return;
   const locks = [
     state.locks.driver ? state.driver : undefined,
     state.locks.body   ? state.body : undefined
