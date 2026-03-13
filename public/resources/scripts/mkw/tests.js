@@ -26,15 +26,14 @@ state.parts.then(parts => {
     }
     driverCodes.push(driver.code);
   }
-  for (const folder of parts.bodies) {
-    for (const body of folder.folder) {
-      bodyCount++;
-      if (bodyCodes.includes(body.code)) {
-        console.error("Duplicate body code: " + body.code);
-        continue;
-      }
-      bodyCodes.push(body.code);
+  for (const folder of parts.bodies)
+  for (const body of folder.folder) {
+    bodyCount++;
+    if (bodyCodes.includes(body.code)) {
+      console.error("Duplicate body code: " + body.code);
+      continue;
     }
+    bodyCodes.push(body.code);
   }
 
   const codeSpace = [ "A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",
@@ -113,8 +112,7 @@ testRandomDistribution();
 
 // In-game stats: spd [?], acc[3], wgt[4], hnd[?], (size[8])
 function testStats(driver, body, expectedStats) {
-  Stats.post("getCombo", driver, body)
-  .then(combo => {
+  Stats.post("getCombo", driver, body).then(combo => {
     // if (toLvl(combo.lvl[statIndex.spd]) !== expectedStats[0]) throw new Error("spd does not match for combo " + combo.code);
     if (toLvl(combo.lvl[statIndex.acc]) !== expectedStats[1]) throw new Error("acc does not match for combo " + combo.code);
     if (toLvl(combo.lvl[statIndex.wgt]) !== expectedStats[2]) throw new Error("wgt does not match for combo " + combo.code);
@@ -125,26 +123,18 @@ function testStats(driver, body, expectedStats) {
 
 function testRandomDistribution() {
   const combos = [];
-  for (let i = 0; i < 5000; i++) {
-    combos.push(Stats.post("getRandomCombo"));
-  }
+  for (let i = 0; i < 5000; i++) combos.push(Stats.post("getRandomCombo"));
 
   Promise.all(combos).then(combos => {
     const drivers = {};
     const bodies = {};
 
     for (const combo of combos) {
-      if (drivers[combo.driverID] === undefined) {
-        drivers[combo.driverID] = 1;
-      } else {
-        drivers[combo.driverID]++;
-      }
+      if (drivers[combo.driverID] === undefined) drivers[combo.driverID] = 1;
+      else drivers[combo.driverID]++;
 
-      if (bodies[combo.bodyID] === undefined) {
-        bodies[combo.bodyID] = 1;
-      } else {
-        bodies[combo.bodyID]++;
-      }
+      if (bodies[combo.bodyID] === undefined) bodies[combo.bodyID] = 1;
+      else bodies[combo.bodyID]++;
     }
 
     console.log(drivers, bodies);

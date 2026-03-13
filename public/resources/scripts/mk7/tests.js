@@ -30,15 +30,14 @@ state.parts.then(parts => {
     }
     driverCodes.push(driver.code);
   }
-  for (const folder of parts.bodies) {
-    for (const body of folder.folder) {
-      bodyCount++;
-      if (bodyCodes.includes(body.code)) {
-        console.error("Duplicate body code: " + body.code);
-        continue;
-      }
-      bodyCodes.push(body.code);
+  for (const folder of parts.bodies)
+  for (const body of folder.folder) {
+    bodyCount++;
+    if (bodyCodes.includes(body.code)) {
+      console.error("Duplicate body code: " + body.code);
+      continue;
     }
+    bodyCodes.push(body.code);
   }
   for (const tire of parts.tires) {
     tireCount++;
@@ -90,8 +89,7 @@ testRandomDistribution();
 
 // In-game stats: spdGr[1], acc[4], wgt[5], hndGr[6], off[9], (size)
 function testStats(driver, body, tire, glider, expectedStats) {
-  Stats.post("getCombo", driver, body, tire, glider)
-  .then(combo => {
+  Stats.post("getCombo", driver, body, tire, glider).then(combo => {
     if (toLvl(combo.lvl[1]) !== expectedStats[0]) throw new Error("spdGr does not match for combo " + combo.code);
     if (toLvl(combo.lvl[4]) !== expectedStats[1]) throw new Error("acc does not match for combo " + combo.code);
     if (toLvl(combo.lvl[5]) !== expectedStats[2]) throw new Error("wgt does not match for combo " + combo.code);
@@ -103,9 +101,7 @@ function testStats(driver, body, tire, glider, expectedStats) {
 
 function testRandomDistribution() {
   const combos = [];
-  for (let i = 0; i < 5000; i++) {
-    combos.push(Stats.post("getRandomCombo"));
-  }
+  for (let i = 0; i < 5000; i++) combos.push(Stats.post("getRandomCombo"));
 
   Promise.all(combos).then(combos => {
     const drivers = {};
@@ -114,29 +110,17 @@ function testRandomDistribution() {
     const gliders = {};
 
     for (const combo of combos) {
-      if (drivers[combo.driverID] === undefined) {
-        drivers[combo.driverID] = 1;
-      } else {
-        drivers[combo.driverID]++;
-      }
+      if (drivers[combo.driverID] === undefined) drivers[combo.driverID] = 1;
+      else drivers[combo.driverID]++;
 
-      if (bodies[combo.bodyID] === undefined) {
-        bodies[combo.bodyID] = 1;
-      } else {
-        bodies[combo.bodyID]++;
-      }
+      if (bodies[combo.bodyID] === undefined) bodies[combo.bodyID] = 1;
+      else bodies[combo.bodyID]++;
 
-      if (tires[combo.tireID] === undefined) {
-        tires[combo.tireID] = 1;
-      } else {
-        tires[combo.tireID]++;
-      }
+      if (tires[combo.tireID] === undefined) tires[combo.tireID] = 1;
+      else tires[combo.tireID]++;
 
-      if (gliders[combo.gliderID] === undefined) {
-        gliders[combo.gliderID] = 1;
-      } else {
-        gliders[combo.gliderID]++;
-      }
+      if (gliders[combo.gliderID] === undefined) gliders[combo.gliderID] = 1;
+      else gliders[combo.gliderID]++;
     }
 
     console.log(drivers, bodies, tires, gliders);
