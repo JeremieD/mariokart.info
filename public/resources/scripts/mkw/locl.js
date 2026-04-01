@@ -1533,7 +1533,7 @@ const strings = {
       frog: "Żabriolet",
       radio: "Radiowóz",
       junk: "Złombil",
-      royale: "Artystokart",
+      royale: "Arystokart",
       dasher: "B-Ścigacz",
       chopper: "Dwurura",
       lobster: "Motocykl HO-M4R",
